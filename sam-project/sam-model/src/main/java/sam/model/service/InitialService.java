@@ -1,4 +1,4 @@
-package sam.service;
+package sam.model.service;
 
 public class InitialService {
     
