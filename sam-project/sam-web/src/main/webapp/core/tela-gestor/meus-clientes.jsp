@@ -1,0 +1,78 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <title>Meus clientes</title>
+    </head>
+    <body>
+        <header>
+            <a href="../tela-cliente/dashboard.jsp">
+                <img id="logotipo" src="/imgs/logotipo.png" alt="Logotipo SAM"> 
+            </a>
+            <h1>Clientes</h1>
+            <nav>
+                <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
+                <a href="../tela-clienteGestor/transacoes.jsp">Transações</a>
+                <a href="empresas.jsp">Empresas</a>
+                <a href="../tela-clienteGestor/notificacoes.jsp">Notificações</a>
+                <a href="../tela-clienteGestor/suporte.jsp">Suporte</a>
+            </nav>
+            <div class="login-menu">
+                <a href="../login.jsp">Login/Cadastrar-se</a>
+            </div>
+            <div class="hamburger-menu">
+                <button id="hamburger-btn">&#9776;</button>
+                <div id="hamburger-dropdown" class="dropdown-content">
+                    <a href="../tela-clienteGestor/perfil.jsp">Visualizar Perfil</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="content">
+            <h2>Meus clientes</h2>
+            <table>
+                <tr>
+                    <th>Nome</th>
+                    <th>Plano de acesso</th>
+                    <th>Programa</th>
+                    <th>Ações</th>
+                </tr>
+                <tr>
+                    <td>Jorge</td>
+                    <td>Premiun</td>
+                    <td>Latam Pass</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>Ana</td>
+                    <td>Basic</td>
+                    <td>Azul Fidelidade</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </table>
+
+            <section id="edição">
+                <div class="dados">
+                    <input name="nome" type="text" placeholder="Nome">
+                </div>
+                <div class="dados">
+                    <input name="plano" type="text" placeholder="Plano de acesso">
+                </div>
+                <div class="dados">
+                    <input name="programa" type="text" placeholder="Programa">
+                </div>
+            </section>
+        </main>
+        <script src="/js/script.js"></script>
+
+    </body>
+</html>
