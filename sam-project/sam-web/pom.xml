@@ -15,7 +15,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.apache.tomcat</groupId>
@@ -24,7 +24,7 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>sam-model</artifactId>
@@ -36,12 +36,6 @@
             <artifactId>jakarta.servlet-api</artifactId>
             <version>6.1.0</version>
             <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>3.0.2</version>
         </dependency>
 
         <dependency>
@@ -55,13 +49,8 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.4.0</version>
         </dependency>
-        
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -84,11 +73,11 @@
                 <version>3.3.2</version>
                 <configuration>
                     <!--<attachClasses>true</attachClasses>-->
-                    <!--<webXml>target/web.xml</webXml>-->                    
+                    <!--<webXml>target/web.xml</webXml>-->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -121,67 +110,23 @@
                                     </dependency>
                                     <contextPath>/</contextPath>
                                 </warRunDependency>
-                            </warRunDependencies>                            
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>tomcat-run</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>7.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>jakarta.servlet</groupId>
-                                    <artifactId>jakarta.servlet-api</artifactId>
-                                    <version>5.0.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                            <warRunDependencies>
-                                <warRunDependency>
-                                    <dependency>
-                                        <groupId>a groupId</groupId>
-                                        <artifactId>and artifactId</artifactId>
-                                        <version>version</version>
-                                        <type>war</type>
-                                    </dependency>
-                                    <contextPath>/</contextPath>
-                                </warRunDependency>
                             </warRunDependencies>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            
+
+
+
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
                     <port>8080</port>
-                    <path>/mywebapp</path>
+                    <path>/sam</path>
                 </configuration>
-            </plugin> 
+            </plugin>
         </plugins>
     </build>
     <reporting>
