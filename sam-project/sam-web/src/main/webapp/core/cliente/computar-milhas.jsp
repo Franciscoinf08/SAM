@@ -13,7 +13,7 @@
 
     <body>
         <header>
-                <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Dashboard</h1>
             <nav>
                 <a href="dashboard.jsp" class="active">Dashboard</a>
@@ -48,9 +48,6 @@
 
                     <label for="valorCompra">Valor Total da Compra (R$):</label>
                     <input type="number" id="valorCompra" placeholder="Ex: 350">
-
-                    <!-- <label for="valorMilheiro">Valor do Milheiro de Segurança (R$):</label>
-                    <input type="number" id="valorMilheiro" placeholder="Ex: 28"> -->
 
                     <button type="button" onclick="calcularVantagem()">Calcular Vantagem</button>
                 </form>

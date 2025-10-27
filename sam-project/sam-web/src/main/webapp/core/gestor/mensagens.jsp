@@ -13,9 +13,7 @@
 
     <body>
         <header>
-            <a href="../cliente/dashboard.jsp">
-                <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            </a>
+            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Mensagens e Avisos</h1>
             <nav>
                 <a href="../cliente/dashboard.jsp">Dashboard</a>

@@ -13,7 +13,7 @@
 
     <body>
         <header>
-
+            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Apuração</h1>
             <nav>
                 <a href="../transacoes.jsp">Transações</a>

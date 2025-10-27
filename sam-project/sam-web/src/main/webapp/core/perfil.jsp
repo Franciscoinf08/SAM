@@ -11,10 +11,8 @@
 
     <body>
         <header>
-            <a href="cliente/dashboard.jsp">
-                <img id="logotipo" src="../imgs/logotipo.png" alt="Logotipo SAM">
-            </a>
-            <h1>Transações</h1>
+            <img id="logotipo" src="../imgs/logotipo.png" alt="Logotipo SAM">
+            <h1>Perfil</h1>
             <nav>
                 <a href="cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp" class="active">Transações</a>
