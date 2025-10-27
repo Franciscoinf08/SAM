@@ -14,18 +14,18 @@
 
     <body>
         <header>
-            <a href="../tela-cliente/dashboard.jsp">
-                <img id="logotipo" src="/imgs/logotipo.png" alt="Logotipo SAM"> 
+            <a href="cliente/dashboard.jsp">
+                <img id="logotipo" src="../imgs/logotipo.png" alt="Logotipo SAM">
             </a>
             <h1>Suporte</h1>
             <nav>
-                <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
+                <a href="cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp">Transações</a>
-                <a href="tela-gestor/empresas.jsp">Empresas</a>
+                <a href="gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp" class="active">Suporte</a>
             </nav>
-            <div class="login-menu"><a href="../login.jsp">Login/Cadastrar-se</a></div>
+
             <div class="hamburger-menu">
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
@@ -40,11 +40,11 @@
                 <label>Título:</label>
                 <input type="text" placeholder="Informe o problema">
                 <label>Descrição:</label>
-                <textarea placeholder="Descreva detalhadamente..."></textarea>
+                <textarea> placeholder="Descreva detalhadamente..."</textarea>
                 <button>Enviar Ticket</button>
             </form>
         </main>
-        <script src="/js/script.js"></script>
+        <script src="../js/script.js"></script>
     </body>
 
 </html>

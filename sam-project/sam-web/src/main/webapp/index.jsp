@@ -34,29 +34,32 @@
                     </div>
                 </form>
             </div>
-            <div id="cadastro" class="campo-inativo">
-                <h2>Cadastre-se</h2>
-                <form>
-                    <div class="input-identificacao">
-                        <input name="nome" type="text" placeholder="Nome">
-                    </div>
-                    <div class="input-identificacao">
-                        <input name="e-mail" type="text" placeholder="E-mail">
-                    </div>
-                    <div class="input-identificacao">
-                        <input name="cpf" type="text" placeholder="CPF">
-                    </div>
-                    <div class="input-identificacao">
-                        <input name="senha" type="text" placeholder="Senha">
-                    </div>
-                    <div class="input-identificacao">
-                        <input name="senha-confirmar" type="text" placeholder="Confirmar Senha">
-                    </div>
-                    <div class="input-identificacao enviar-identificacao">
-                        <input name="continuar" type="submit" value="Continuar">
-                    </div>
-                </form>
-            </div>
+            <form method="POST">
+                <div id="cadastro" class="campo-inativo">
+                    <h2>Cadastre-se</h2>
+                    <form>
+                        <div class="input-identificacao">
+                            <input name="nome" type="text" placeholder="Nome">
+                        </div>
+                        <div class="input-identificacao">
+                            <input name="e-mail" type="text" placeholder="E-mail">
+                        </div>
+                        <div class="input-identificacao">
+                            <input name="cpf" type="text" placeholder="CPF">
+                        </div>
+                        <div class="input-identificacao">
+                            <input name="senha" type="text" placeholder="Senha">
+                        </div>
+                        <div class="input-identificacao">
+                            <input name="senha-confirmar" type="text" placeholder="Confirmar Senha">
+                        </div>
+                        <div class="input-identificacao enviar-identificacao">
+                            <input name="continuar" type="submit" value="Continuar">
+                        </div>
+                    </form>
+                </div>
+            </form>
+
         </main>
         <footer>
             <p id="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>

@@ -13,14 +13,14 @@
 
     <body>
         <header>
-            <a href="../tela-cliente/dashboard.jsp">
-                <img id="logotipo" src="/imgs/logotipo.png" alt="Logotipo SAM"> 
+            <a href="cliente/dashboard.jsp">
+                <img id="logotipo" src="../imgs/logotipo.png" alt="Logotipo SAM">
             </a>
             <h1>Suporte</h1>
             <nav>
-                <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
+                <a href="cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp">Transações</a>
-                <a href="tela-gestor/empresas.jsp">Empresas</a>
+                <a href="gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
             </nav>
@@ -103,7 +103,7 @@
             </section>
         </main>
 
-        <script src="/js/script.js"></script>
+        <script src="../js/script.js"></script>
     </body>
 
 </html>

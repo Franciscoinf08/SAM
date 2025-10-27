@@ -18,7 +18,6 @@
             <nav>
                 <a href="dashboard.jsp" class="active">Dashboard</a>
                 <a href="../transacoes.jsp">Transações</a>
-                <a href="../gestor/empresas.jsp">Empresas</a>
                 <a href="../notificacoes.jsp">Notificações</a>
                 <a href="../suporte.jsp">Suporte</a>
             </nav>
