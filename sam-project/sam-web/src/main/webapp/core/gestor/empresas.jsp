@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Empresas e Programas</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,10 +20,10 @@
             <h1>Empresas</h1>
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
-                <a href="../tela-clienteGestor/transacoes.jsp">Transações</a>
+                <a href="../transacoes.jsp">Transações</a>
                 <a href="empresas.jsp" class="active">Empresas</a>
-                <a href="../tela-clienteGestor/notificacoes.jsp">Notificações</a>
-                <a href="../tela-clienteGestor/suporte.jsp">Suporte</a>
+                <a href="../notificacoes.jsp">Notificações</a>
+                <a href="../suporte.jsp">Suporte</a>
             </nav>
             <div class="login-menu">
                 <a href="../login.jsp">Login/Cadastrar-se</a>
@@ -31,7 +31,7 @@
             <div class="hamburger-menu">
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="../tela-clienteGestor/perfil.jsp">Visualizar Perfil</a>
+                    <a href="../perfil.jsp">Visualizar Perfil</a>
                 </div>
             </div>
         </header>

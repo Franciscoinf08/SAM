@@ -4,8 +4,8 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Central de Suporte</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Transações</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +17,13 @@
             <a href="../tela-cliente/dashboard.jsp">
                 <img id="logotipo" src="/imgs/logotipo.png" alt="Logotipo SAM"> 
             </a>
-            <h1>Suporte</h1>
+            <h1>Transações</h1>
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
-                <a href="transacoes.jsp">Transações</a>
-                <a href="../tela-gestor/empresas.jsp">Empresas</a>
+                <a href="transacoes.jsp" class="active">Transações</a>
+                <a href="tela-gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
-                <a href="suporte.jsp" class="active">Suporte</a>
+                <a href="suporte.jsp">Suporte</a>
             </nav>
             <div class="login-menu"><a href="../login.jsp">Login/Cadastrar-se</a></div>
             <div class="hamburger-menu">
@@ -35,13 +35,22 @@
         </header>
 
         <main class="content">
-            <h2>Tickets e FAQ</h2>
+            <h2>Registrar Transação</h2>
             <form class="formulario">
-                <label>Título:</label>
-                <input type="text" placeholder="Informe o problema">
-                <label>Descrição:</label>
-                <textarea placeholder="Descreva detalhadamente..."></textarea>
-                <button>Enviar Ticket</button>
+                <label>Tipo:</label>
+                <select>
+                    <option>Compra</option>
+                    <option>Venda</option>
+                    <option>Bônus</option>
+                </select>
+
+                <label>Quantidade:</label>
+                <input type="number" placeholder="Digite a quantidade">
+
+                <label>Valor (R$):</label>
+                <input type="text" placeholder="0,00">
+
+                <button>Registrar</button>
             </form>
         </main>
         <script src="/js/script.js"></script>

@@ -5,7 +5,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Perfil do Usuário</title>
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        
     </head>
 
     <body>
@@ -17,11 +18,11 @@
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp" class="active">Transações</a>
-                <a href="../tela-gestor/empresas.jsp">Empresas</a>
+                <a href="tela-gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
             </nav>
-            <div class="login-menu"><a href="../login.jsp">Login/Cadastrar-se</a></div>
+            <div class="login-menu"><a href="../index.html">Login/Cadastrar-se</a></div>
             <div class="hamburger-menu">
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">

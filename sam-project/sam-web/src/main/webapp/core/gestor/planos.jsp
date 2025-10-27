@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>Configuração de Planos — REQ023</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
     </head>
 
     <body>
@@ -17,10 +17,10 @@
             <h1>Orçamentos</h1>
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
-                <a href="../tela-clienteGestor/transacoes.jsp">Transações</a>
+                <a href="../transacoes.jsp">Transações</a>
                 <a href="empresas.jsp">Empresas</a>
-                <a href="../tela-clienteGestor/notificacoes.jsp">Notificações</a>
-                <a href="../tela-clienteGestor/suporte.jsp">Suporte</a>
+                <a href="../notificacoes.jsp">Notificações</a>
+                <a href="../suporte.jsp">Suporte</a>
             </nav>
             <div class="login-menu">
                 <a href="../login.jsp">Login/Cadastrar-se</a>
@@ -28,7 +28,7 @@
             <div class="hamburger-menu">
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="../tela-clienteGestor/perfil.jsp">Visualizar Perfil</a>
+                    <a href="../perfil.jsp">Visualizar Perfil</a>
                 </div>
             </div>
         </header>

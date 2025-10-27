@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Histórico de Usuários</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp">Transações</a>
-                <a href="../tela-gestor/empresas.jsp">Empresas</a>
+                <a href="tela-gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
             </nav>

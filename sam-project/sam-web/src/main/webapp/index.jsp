@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -16,22 +16,8 @@
 
     <body>
         <header>
-            <a href="../Tela-cliente/index.html"><img id="logotipo" src="../logotipo.png" alt="Logotipo SAM"></a>
+            <a href="/sam"><img id="logotipo" src="imgs/logotipo.png" alt="Logotipo SAM"></a>
             <h1>Login e Cadastro</h1>
-            <nav>
-                <a href="../Tela-cliente/index.html">Dashboard</a>
-                <a href="transacoes.html">Transações</a>
-                <a href="../Tela-gestor/empresas.html">Empresas</a>
-                <a href="notificacoes.html">Notificações</a>
-                <a href="suporte.html">Suporte</a>
-            </nav>
-            <div class="login-menu"><a href="login.html" class="active">Login/Cadastrar-se</a></div>
-            <div class="hamburger-menu">
-                <button id="hamburger-btn">&#9776;</button>
-                <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="perfil.html">Visualizar Perfil</a>
-                </div>
-            </div>
         </header>
         <main>
             <div id="login">
@@ -75,8 +61,8 @@
         <footer>
             <p id="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>
         </footer>
-        <script src="/js/script.js"></script>
-        <script src="/js/login.js"></script>
+        <script src="js/script.js"></script>
+        <script src="js/login.js"></script>
     </body>
 
 </html>

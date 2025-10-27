@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Transações</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,16 +20,18 @@
             <h1>Transações</h1>
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
-                <a href="transacoes.jsp" class="active">Transações</a>
-                <a href="../tela-gestor/empresas.jsp">Empresas</a>
-                <a href="notificacoes.jsp">Notificações</a>
-                <a href="suporte.jsp">Suporte</a>
+                <a href="../transacoes.jsp">Transações</a>
+                <a href="empresas.jsp">Empresas</a>
+                <a href="../notificacoes.jsp">Notificações</a>
+                <a href="../suporte.jsp">Suporte</a>
             </nav>
-            <div class="login-menu"><a href="../login.jsp">Login/Cadastrar-se</a></div>
+            <div class="login-menu">
+                <a href="../login.jsp">Login/Cadastrar-se</a>
+            </div>
             <div class="hamburger-menu">
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="perfil.jsp">Visualizar Perfil</a>
+                    <a href="../perfil.jsp">Visualizar Perfil</a>
                 </div>
             </div>
         </header>
@@ -37,6 +39,13 @@
         <main class="content">
             <h2>Registrar Transação</h2>
             <form class="formulario">
+                <label>Cliente:</label>
+                <select>
+                    <option>Antônio Carlos</option>
+                    <option>João Pedro</option>
+                    <option>Paulo José</option>
+                </select>
+
                 <label>Tipo:</label>
                 <select>
                     <option>Compra</option>

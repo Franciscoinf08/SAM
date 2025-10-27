@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Notificações</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp">Transações</a>
-                <a href="../tela-gestor/empresas.jsp">Empresas</a>
+                <a href="tela-gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp" class="active">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
             </nav>

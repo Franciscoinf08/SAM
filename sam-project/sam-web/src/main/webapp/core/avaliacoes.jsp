@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>SAM - Avaliações e Denúncias</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -13,14 +13,14 @@
 
     <body>
         <header>
-            <a href="../tela-cliente/dashboard.jsp">
-                <img id="logotipo" src="/imgs/logotipo.png" alt="Logotipo SAM"> 
+            <a href="../cliente/dashboard.jsp">
+                <img id="logotipo" src="../imgs/logotipo.png" alt="Logotipo SAM">
             </a>
             <h1>Avaliações</h1>
             <nav>
                 <a href="../tela-cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp">Transações</a>
-                <a href="../tela-gestor/empresas.jsp">Empresas</a>
+                <a href="tela-gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
             </nav>
