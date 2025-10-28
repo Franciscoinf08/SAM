@@ -35,10 +35,12 @@
         <main class="content">
             <h2>Tickets e FAQ</h2>
             <form class="formulario">
-                <label>Título:</label>
-                <input type="text" placeholder="Informe o problema">
-                <label>Descrição:</label>
-                <textarea> placeholder="Descreva detalhadamente..."</textarea>
+                <label>Título:
+                    <input type="text" placeholder="Informe o problema">
+                </label>
+                <label>Descrição:
+                    <textarea placeholder="Descreva detalhadamente"></textarea>
+                </label>
                 <button>Enviar Ticket</button>
             </form>
         </main>

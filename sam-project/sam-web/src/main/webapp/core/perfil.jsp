@@ -33,19 +33,19 @@
             <div class="formulario">
                 <form>
                     <label for="nome">Nome:
-                        <input type="text" name="nome" value="Ana Sofia">
+                        <input type="text" name="nome">
                     </label>
 
                     <label for="nome">CPF:
-                        <input type="text" name="cpf" value="111.222.333-44">
+                        <input type="text" name="cpf">
                     </label>
 
                     <label for="email">Email:
-                        <input type="email" name="email" value="ana@email.com">
+                        <input type="email" name="email">
                     </label>
 
                     <label for="senha">Senha:
-                        <input type="password" name="senha" value="123456">
+                        <input type="password" name="senha">
                     </label>
 
                     <button type="submit">Salvar Alterações</button>
