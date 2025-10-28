@@ -3,18 +3,23 @@
 <html lang="pt-BR">
 
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
+        <title>SAM - Planos de Uso</title>
 
-        <title>SAM - Configuração de Planos</title>
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Planos</h1>
+            <h1>Planos de Uso</h1>
             <nav>
-                <a href="../cliente/dashboard.jsp">Dashboard</a>
                 <a href="../transacoes.jsp">Transações</a>
                 <a href="empresas.jsp">Empresas</a>
                 <a href="../notificacoes.jsp">Notificações</a>

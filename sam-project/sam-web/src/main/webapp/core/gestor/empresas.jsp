@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>SAM - Empresas e Programas</title>
+        <title>SAM - Empresas</title>
 
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
@@ -20,7 +20,6 @@
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Empresas</h1>
             <nav>
-                <a href="../cliente/dashboard.jsp">Dashboard</a>
                 <a href="../transacoes.jsp">Transações</a>
                 <a href="empresas.jsp" class="active">Empresas</a>
                 <a href="../notificacoes.jsp">Notificações</a>

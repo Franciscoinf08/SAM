@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>SAM - Gestão de Associações</title>
+        <title>SAM - Associações</title>
 
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
@@ -18,7 +18,7 @@
     <body>
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Associaciações</h1>
+            <h1>Gestão de Associaciações</h1>
             <nav>
                 <a href="../transacoes.jsp">Transações</a>
                 <a href="empresas.jsp">Empresas</a>

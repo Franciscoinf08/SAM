@@ -18,7 +18,7 @@
     <body>
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Apuração</h1>
+            <h1>Apuração de Resultados</h1>
             <nav>
                 <a href="../transacoes.jsp">Transações</a>
                 <a href="empresas.jsp">Empresas</a>

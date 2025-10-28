@@ -20,7 +20,6 @@
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Orçamentos</h1>
             <nav>
-                <a href="../cliente/dashboard.jsp">Dashboard</a>
                 <a href="../transacoes.jsp">Transações</a>
                 <a href="empresas.jsp">Empresas</a>
                 <a href="../notificacoes.jsp">Notificações</a>
