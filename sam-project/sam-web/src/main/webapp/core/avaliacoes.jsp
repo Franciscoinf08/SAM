@@ -36,20 +36,23 @@
             <section class="card" style="flex:1 1 100%;">
                 <h2>Adicionar Avaliação</h2>
                 <form class="formulario" id="formAvaliacao">
-                    <label for="usuario">Usuário avaliado:</label>
-                    <input type="text" id="usuario" placeholder="Nome do usuário">
+                    <label for="usuario">Usuário avaliado:
+                        <input type="text" placeholder="Nome do usuário">
+                    </label>
 
-                    <label for="nota">Nota:</label>
-                    <select id="nota">
-                        <option value="5">⭐️⭐️⭐️⭐️⭐️ - Excelente</option>
-                        <option value="4">⭐️⭐️⭐️⭐️ - Bom</option>
-                        <option value="3">⭐️⭐️⭐️ - Regular</option>
-                        <option value="2">⭐️⭐️ - Ruim</option>
-                        <option value="1">⭐️ - Péssimo</option>
-                    </select>
+                    <label for="nota">Nota:
+                        <select>
+                            <option value="5">⭐️⭐️⭐️⭐️⭐️ - Excelente</option>
+                            <option value="4">⭐️⭐️⭐️⭐️ - Bom</option>
+                            <option value="3">⭐️⭐️⭐️ - Regular</option>
+                            <option value="2">⭐️⭐️ - Ruim</option>
+                            <option value="1">⭐️ - Péssimo</option>
+                        </select>
+                    </label>
 
-                    <label for="comentario">Comentário:</label>
-                    <textarea id="comentario" rows="3" placeholder="Escreva seu comentário..."></textarea>
+                    <label for="comentario">Comentário:
+                        <textarea rows="3" placeholder="Escreva seu comentário..."></textarea>
+                    </label>
 
                     <button type="button" onclick="adicionarAvaliacao()">Enviar Avaliação</button>
                 </form>
@@ -57,7 +60,7 @@
 
             <section class="card" style="flex:1 1 100%;">
                 <h2>Avaliações Recentes</h2>
-                <ul id="listaAvaliacoes" class="notificacoes">
+                <ul class="notificacoes">
                     <li><strong>Maria S.</strong> — ⭐️⭐️⭐️⭐️⭐️<br>Excelente atendimento e suporte rápido.</li>
                     <li><strong>João P.</strong> — ⭐️⭐️⭐️<br>Poderia responder mensagens com mais agilidade.</li>
                 </ul>
@@ -65,20 +68,23 @@
 
             <section class="card" style="flex:1 1 100%;">
                 <h2>Denunciar Usuário</h2>
-                <form class="formulario" id="formDenuncia">
-                    <label for="denunciado">Usuário denunciado:</label>
-                    <input type="text" id="denunciado" placeholder="Nome do usuário">
+                <form class="formulario">
+                    <label for="denunciado">Usuário denunciado:
+                        <input type="text" placeholder="Nome do usuário">
+                    </label>
 
-                    <label for="motivo">Motivo:</label>
-                    <select id="motivo">
-                        <option>Comportamento inadequado</option>
-                        <option>Fraude ou má conduta</option>
-                        <option>Spam ou propaganda</option>
-                        <option>Outro</option>
-                    </select>
+                    <label for="motivo">Motivo:
+                        <select>
+                            <option>Comportamento inadequado</option>
+                            <option>Fraude ou má conduta</option>
+                            <option>Spam ou propaganda</option>
+                            <option>Outro</option>
+                        </select>
+                    </label>
 
-                    <label for="detalhes">Detalhes:</label>
-                    <textarea id="detalhes" rows="3" placeholder="Descreva o ocorrido..."></textarea>
+                    <label for="detalhes">Detalhes:
+                        <textarea rows="3" placeholder="Descreva o ocorrido..."></textarea>
+                    </label>
 
                     <button type="button" onclick="enviarDenuncia()">Enviar Denúncia</button>
                 </form>

@@ -1,6 +1,6 @@
-
-<!DOCTYPE html>
-<html lang="pt-br">
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+    <!DOCTYPE html>
+    <html lang="pt-br">
 
     <head>
         <meta charset="UTF-8">
@@ -11,7 +11,8 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet">
 
         <title>SAM - Login/Cadastro</title>
     </head>
@@ -23,41 +24,27 @@
         </header>
         <main>
             <div id="login">
-                <h2>Acesse sua conta</h2>
-                <form>
-                    <div class="input-identificacao">
+                <h2 style="margin-bottom: 1em">Acesse sua conta</h2>
+                <div class="formulario">
+                    <form method="POST">
                         <input name="cpf" type="text" placeholder="CPF">
-                    </div>
-                    <div class="input-identificacao">
-                        <input name="cpf" type="text" placeholder="Senha">
-                    </div>
-                    <div class="input-identificacao enviar-identificacao">
-                        <input name="continuar" type="submit" value="Continuar">
-                    </div>
-                </form>
+                        <input name="senha" type="password" placeholder="Senha">
+                        <input name="continuar" type="submit" value="Continuar" style="background-color: #e4e4e5">
+                    </form>
+                </div>
             </div>
             <div id="cadastro" class="campo-inativo">
-                <h2>Cadastre-se</h2>
-                <form method="POST">
-                    <div class="input-identificacao">
+                <h2 style="margin-bottom: 1em">Cadastre-se</h2>
+                <div class="formulario">
+                    <form method="POST">
                         <input name="nome" type="text" placeholder="Nome">
-                    </div>
-                    <div class="input-identificacao">
                         <input name="e-mail" type="text" placeholder="E-mail">
-                    </div>
-                    <div class="input-identificacao">
                         <input name="cpf" type="text" placeholder="CPF">
-                    </div>
-                    <div class="input-identificacao">
-                        <input name="senha" type="text" placeholder="Senha">
-                    </div>
-                    <div class="input-identificacao">
-                        <input name="senha-confirmar" type="text" placeholder="Confirmar Senha">
-                    </div>
-                    <div class="input-identificacao enviar-identificacao">
-                        <input name="continuar" type="submit" value="Continuar">
-                    </div>
-                </form>
+                        <input name="senha" type="password" placeholder="Senha">
+                        <input name="senha-confirmar" type="password" placeholder="Confirmar Senha">
+                        <input name="continuar" type="submit" value="Continuar" style="background-color: #e4e4e5">
+                    </form>
+                </div>
             </div>
         </main>
         <footer>
@@ -67,4 +54,4 @@
         <script src="js/login.js"></script>
     </body>
 
-</html>
+    </html>

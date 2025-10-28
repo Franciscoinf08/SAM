@@ -31,18 +31,22 @@
 
         <main>
             <div class="formulario">
-                <form id="perfilForm">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="nome" value="Ana Sofia">
+                <form>
+                    <label for="nome">Nome:
+                        <input type="text" name="nome" value="Ana Sofia">
+                    </label>
 
-                    <label for="nome">CPF:</label>
-                    <input type="text" id="cpf" name="cpf" value="111.222.333-44">
+                    <label for="nome">CPF:
+                        <input type="text" name="cpf" value="111.222.333-44">
+                    </label>
 
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" value="ana@email.com">
+                    <label for="email">Email:
+                        <input type="email" name="email" value="ana@email.com">
+                    </label>
 
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" value="123456">
+                    <label for="senha">Senha:
+                        <input type="password" name="senha" value="123456">
+                    </label>
 
                     <button type="submit">Salvar Alterações</button>
                 </form>

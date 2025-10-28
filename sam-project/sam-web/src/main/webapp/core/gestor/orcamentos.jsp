@@ -4,11 +4,15 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Orçamentos de Viagem</title>
+        <title>SAM - Orçamentos</title>
+
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
@@ -35,35 +39,42 @@
             <section class="content" style="flex:1 1 100%;">
                 <h2>Gerar Orçamento</h2>
                 <form class="formulario">
-                    <label for="destino">Destino:</label>
-                    <input type="text" id="destino" placeholder="Cidade ou país">
+                    <label for="destino">Destino:
+                        <input type="text" placeholder="Cidade ou país">
+                    </label>
 
-                    <label for="dataIda">Data de Ida:</label>
-                    <input type="date" id="dataIda">
+                    <label for="dataIda">Data de Ida:
+                        <input type="date">
+                    </label>
 
-                    <label for="dataVolta">Data de Volta:</label>
-                    <input type="date" id="dataVolta">
+                    <label for="dataVolta">Data de Volta:
+                        <input type="date">
+                    </label>
 
-                    <label for="adultos">Quantidade de Adultos:</label>
-                    <input type="number" id="adultos" min="1" value="1">
+                    <label for="adultos">Quantidade de Adultos:
+                        <input type="number" min="1" value="1">
+                    </label>
 
-                    <label for="criancas">Quantidade de Crianças:</label>
-                    <input type="number" id="criancas" min="0" value="0">
+                    <label for="criancas">Quantidade de Crianças:
+                        <input type="number" min="0" value="0">
+                    </label>
 
-                    <label for="conexoes">Conexões:</label>
-                    <select id="conexoes">
-                        <option>Direto</option>
-                        <option>1 Conexão</option>
-                        <option>2 Conexões</option>
-                    </select>
+                    <label for="conexoes">Conexões:
+                        <select>
+                            <option>Direto</option>
+                            <option>1 Conexão</option>
+                            <option>2 Conexões</option>
+                        </select>
+                    </label>
 
-                    <label for="companhia">Companhia Aérea:</label>
-                    <select id="companhia">
-                        <option>Indiferente</option>
-                        <option>Latam</option>
-                        <option>Azul</option>
-                        <option>Gol</option>
-                    </select>
+                    <label for="companhia">Companhia Aérea:
+                        <select>
+                            <option>Indiferente</option>
+                            <option>Latam</option>
+                            <option>Azul</option>
+                            <option>Gol</option>
+                        </select>
+                    </label>
 
                     <button type="button">Gerar Orçamento</button>
                 </form>

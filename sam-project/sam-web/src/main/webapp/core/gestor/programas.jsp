@@ -35,14 +35,17 @@
             <section class="content">
                 <h2>Adicionar Programa de Fidelidade</h2>
                 <form class="formulario">
-                    <label for="nomePrograma">Nome do Programa:</label>
-                    <input type="text" id="nomePrograma" placeholder="Ex: Latam Pass">
+                    <label for="nomePrograma">Nome do Programa:
+                        <input type="text" placeholder="Ex: Latam Pass">
+                    </label>
 
-                    <label for="empresaAssociada">Empresa Associada:</label>
-                    <input type="text" id="empresaAssociada" placeholder="Ex: LATAM Airlines">
+                    <label for="empresaAssociada">Empresa Associada:
+                        <input type="text" placeholder="Ex: LATAM Airlines">
+                    </label>
 
-                    <label for="regrasPrograma">Regras do Programa:</label>
-                    <textarea id="regrasPrograma" rows="3" placeholder="Descreva as regras do programa"></textarea>
+                    <label for="regrasPrograma">Regras do Programa:
+                        <textarea rows="3" placeholder="Descreva as regras do programa"></textarea>
+                    </label>
 
                     <button type="button">Adicionar Programa</button>
                 </form>

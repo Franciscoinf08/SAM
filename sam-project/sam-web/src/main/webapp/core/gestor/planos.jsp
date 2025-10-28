@@ -4,15 +4,15 @@
 
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Configuração de Planos — REQ023</title>
+
+        <title>SAM - Configuração de Planos</title>
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
     </head>
 
     <body>
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Orçamentos</h1>
+            <h1>Planos</h1>
             <nav>
                 <a href="../cliente/dashboard.jsp">Dashboard</a>
                 <a href="../transacoes.jsp">Transações</a>
@@ -79,46 +79,44 @@
                     </table>
                 </div>
 
-
-
-
-                <div class="formulario card" id="form-panel" style="flex:0.9; min-width:320px;">
-                    <h2 id="form-title">Criar / Editar Plano</h2>
+                <div class="formulario">
+                    <h2 id="form-title">Criar Plano</h2>
                     <form id="plan-form">
-                        <label for="plan-name">Nome do plano</label>
+                        <label for="plan-name"><strong>Nome do plano</strong></label>
                         <input id="plan-name" required placeholder="Ex: Básico, Premium">
 
-
-                        <label for="plan-price">Preço (R$)</label>
+                        <label for="plan-price"><strong>Preço (R$)</strong></label>
                         <input id="plan-price" type="number" min="0" step="0.01" placeholder="0.00">
 
-
-                        <label for="plan-duration">Duração (meses)</label>
+                        <label for="plan-duration"><strong>Duração (meses)</strong></label>
                         <input id="plan-duration" type="number" min="1" step="1" value="1">
 
+                        <label><strong>Recursos</strong></label>
+                        <label class="checkbox-container">
+                            Acesso às transações e dashboard<input type="checkbox" name="feature" value="acesso_transacoes">
+                        </label>
+                        <label class="checkbox-container">
+                            Importar dados externos<input type="checkbox" name="feature" value="importar_dados">
+                        </label>
+                        <label class="checkbox-container">
+                            Criar propostas/orçamentos<input type="checkbox" name="feature" value="criar_propostas">
+                        </label>
+                        <label class="checkbox-container">
+                            Comparar milhas entre programas<input type="checkbox" name="feature" value="comparar_programas">
+                        </label>
+                        <label class="checkbox-container">
+                            Criar campanhas promocionais<input type="checkbox" name="feature" value="campanhas_promocionais">
+                        </label>
+                        <label class="checkbox-container">
+                            Acesso ao sistema de tickets e FAQ<input type="checkbox" name="feature" value="suporte_ticket">
+                        </label>
+                        <label class="checkbox-container">
+                            Receber notificações automatizadas<input type="checkbox" name="feature" value="notificacoes">
+                        </label>
 
-                        <label>Recursos (marque os que o plano deve liberar)</label>
-                        <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;">
-                            <label>Acesso às transações e
-                                dashboard<input type="checkbox" name="feature" value="acesso_transacoes"></label>
-                            <label>Importar dados
-                                externos<input type="checkbox" name="feature" value="importar_dados"></label>
-                            <label>Criar
-                                propostas/orçamentos<input type="checkbox" name="feature" value="criar_propostas"></label>
-                            <label> Comparar milhas entre
-                                programas<input type="checkbox" name="feature" value="comparar_programas"></label>
-                            <label>Criar campanhas
-                                promocionais<input type="checkbox" name="feature" value="campanhas_promocionais"></label>
-                            <label>Acesso ao sistema de
-                                tickets e FAQ<input type="checkbox" name="feature" value="suporte_ticket"></label>
-                            <label>Receber notificações
-                                automatizadas<input type="checkbox" name="feature" value="notificacoes"></label>
-                        </div>
-
-
-                        <label style="margin-top:10px;">Definir como plano
-                            padrão<input type="checkbox" id="plan-default"></label>
-
+                        <label class="checkbox-container" style="margin-top:2em">
+                            Definir como plano padrão<input type="checkbox" id="plan-default">
+                        </label>
 
                         <div style="display:flex;gap:10px;flex-wrap:wrap;">
                             <button type="submit" id="btn-save">Salvar plano</button>

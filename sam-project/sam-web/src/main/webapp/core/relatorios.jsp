@@ -22,7 +22,6 @@
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
             </nav>
-            <div class="login-menu"><a href="../login.jsp">Login/Cadastrar-se</a></div>
             <div class="hamburger-menu">
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
@@ -32,24 +31,23 @@
         </header>
 
         <main class="dashboard">
-            <!-- Filtro de busca -->
             <section class="card">
                 <h2>Buscar Usuário</h2>
                 <form class="formulario">
-                    <label for="tipoUsuario">Tipo de Usuário:</label>
-                    <select id="tipoUsuario">
-                        <option>Cliente</option>
-                        <option>Gestor</option>
-                    </select>
+                    <label for="tipoUsuario">Tipo de Usuário:
+                        <select>
+                            <option>Cliente</option>
+                            <option>Gestor</option>
+                        </select>
+                    </label>
 
-                    <label for="nomeUsuario">Nome do Usuário:</label>
-                    <input type="text" id="nomeUsuario" placeholder="Digite o nome para pesquisar">
-
-                    <button type="button" id="btnBuscar">Pesquisar</button>
+                    <label for="nomeUsuario">Nome do Usuário:
+                        <input type="text" placeholder="Digite o nome para pesquisar">
+                    </label>
+                    <button type="button">Pesquisar</button>
                 </form>
             </section>
 
-            <!-- Resultados da busca -->
             <section class="content">
                 <h2>Resultados</h2>
                 <table>
@@ -64,7 +62,7 @@
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="resultadoTabela">
+                    <tbody>
                         <tr>
                             <td>Maria S.</td>
                             <td>Cliente</td>
@@ -87,8 +85,7 @@
                 </table>
             </section>
 
-            <!-- Card de detalhes -->
-            <section class="card" id="detalhesUsuario" style="display:none;">
+            <section class="card" style="display:none;">
                 <h2>Detalhes do Usuário</h2>
                 <p><strong>Nome:</strong> <span id="detNome">—</span></p>
                 <p><strong>Tipo:</strong> <span id="detTipo">—</span></p>

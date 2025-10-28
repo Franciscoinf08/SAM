@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SAM - Clientes</title>
 
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
@@ -11,7 +11,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-        <title>Meus clientes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <header>
@@ -55,18 +55,6 @@
                     <td><button>Editar</button></td>
                 </tr>
             </table>
-
-            <section id="edição">
-                <div class="dados">
-                    <input name="nome" type="text" placeholder="Nome">
-                </div>
-                <div class="dados">
-                    <input name="plano" type="text" placeholder="Plano de acesso">
-                </div>
-                <div class="dados">
-                    <input name="programa" type="text" placeholder="Programa">
-                </div>
-            </section>
         </main>
         <script src="../../js/script.js"></script>
 

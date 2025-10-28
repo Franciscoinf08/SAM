@@ -4,11 +4,15 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Mensagens e Avisos</title>
+        <title>SAM - Mensagens e Avisos</title>
+
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
@@ -35,16 +39,19 @@
             <section class="content" style="flex:1 1 100%;">
                 <h2>Enviar Mensagem</h2>
                 <form class="formulario">
-                    <label for="destinatario">Destinatário:</label>
-                    <input type="text" id="destinatario" placeholder="Nome do usuário ou cliente">
+                    <label for="destinatario">Destinatário:
+                        <input type="text" placeholder="Nome do usuário ou cliente">
+                    </label>
 
-                    <label for="assunto">Assunto:</label>
-                    <input type="text" id="assunto" placeholder="Assunto da mensagem">
+                    <label for="assunto">Assunto:
+                        <input type="text" placeholder="Assunto da mensagem">
+                    </label>
 
-                    <label for="mensagem">Mensagem:</label>
-                    <textarea id="mensagem" rows="4" placeholder="Escreva sua mensagem..."></textarea>
+                    <label for="mensagem">Mensagem:
+                        <textarea rows="4" placeholder="Escreva sua mensagem..."></textarea>
+                    </label>
 
-                    <button type="button">Enviar Mensagem</button>
+                    <button type="submit">Enviar Mensagem</button>
                 </form>
             </section>
         </main>

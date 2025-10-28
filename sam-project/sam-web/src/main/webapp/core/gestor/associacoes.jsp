@@ -4,11 +4,15 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Gestão de Associações</title>
+        <title>SAM - Gestão de Associações</title>
+
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
@@ -26,7 +30,6 @@
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
                     <a href="../perfil.jsp">Visualizar Perfil</a>
-                    <a href="/sam">Logout</a>
                 </div>
             </div>
         </header>
@@ -35,19 +38,21 @@
             <section class="content">
                 <h2>Associar Cliente a Programa</h2>
                 <form class="formulario">
-                    <label for="cliente">Cliente:</label>
-                    <select id="cliente">
-                        <option>Maria S.</option>
-                        <option>João P.</option>
-                        <option>Ana Sofia</option>
-                    </select>
+                    <label for="cliente">Cliente:
+                        <select>
+                            <option>Maria S.</option>
+                            <option>João P.</option>
+                            <option>Ana Sofia</option>
+                        </select>
+                    </label>
 
-                    <label for="programa">Programa de Fidelidade:</label>
-                    <select id="programa">
-                        <option>Latam Pass</option>
-                        <option>Smiles</option>
-                        <option>Azul Fidelidade</option>
-                    </select>
+                    <label for="programa">Programa de Fidelidade:
+                        <select>
+                            <option>Latam Pass</option>
+                            <option>Smiles</option>
+                            <option>Azul Fidelidade</option>
+                        </select>
+                    </label>
 
                     <button type="button">Associar</button>
                 </form>

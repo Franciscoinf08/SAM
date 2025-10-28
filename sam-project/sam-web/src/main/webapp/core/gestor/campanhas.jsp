@@ -4,11 +4,15 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Gestão de Propostas e Campanhas</title>
+        <title>SAM - Gestão de Propostas e Campanhas</title>
+
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
@@ -46,13 +50,15 @@
                         <option value="novos">Novos clientes</option>
                     </select>
 
-                    <label for="objetivo">Objetivo da Campanha:</label>
-                    <textarea id="objetivo" rows="3" placeholder="Defina o objetivo da campanha (ex: aumentar engajamento, vendas etc.)"></textarea>
+                    <label for="objetivo">Objetivo da Campanha:
+                        <textarea rows="3" placeholder="Defina o objetivo da campanha (ex: aumentar engajamento, vendas etc.)"></textarea>
+                    </label>
 
-                    <label for="mensagemCampanha">Mensagem Promocional:</label>
-                    <textarea id="mensagemCampanha" rows="4" placeholder="Escreva a mensagem que será enviada aos clientes..."></textarea>
+                    <label for="mensagemCampanha">Mensagem Promocional:
+                        <textarea rows="4" placeholder="Escreva a mensagem que será enviada aos clientes..."></textarea>
+                    </label>
 
-                    <button type="button" id="btnEnviarCampanha">Enviar Campanha</button>
+                    <button type="button">Enviar Campanha</button>
                 </form>
             </section>
             <section class="content">
@@ -67,7 +73,7 @@
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="tabelaHistorico">
+                    <tbody>
                         <tr>
                             <td>Campanha: Fim de Ano</td>
                             <td>Campanha Promocional</td>
