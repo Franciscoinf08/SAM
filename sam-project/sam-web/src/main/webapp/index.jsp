@@ -25,23 +25,23 @@
             <div id="login">
                 <h2 style="margin-bottom: 1em">Acesse sua conta</h2>
                 <div class="formulario">
-                    <form method="POST">
-                        <input name="cpf" type="text" placeholder="CPF">
+                    <form name="formLogin" method="POST">
+                        <input name="usuario" type="text" placeholder="Usuário">
                         <input name="senha" type="password" placeholder="Senha">
-                        <input name="continuar" type="submit" value="Continuar" style="background-color: #e4e4e5">
+                        <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposLogin(document.formLogin)">
                     </form>
                 </div>
             </div>
             <div id="cadastro" class="campo-inativo">
                 <h2 style="margin-bottom: 1em">Cadastre-se</h2>
                 <div class="formulario">
-                    <form method="POST">
+                    <form name="formCadastro" method="POST">
                         <input name="nome" type="text" placeholder="Nome">
-                        <input name="e-mail" type="text" placeholder="E-mail">
-                        <input name="cpf" type="text" placeholder="CPF">
+                        <input name="email" type="text" placeholder="E-mail">
+                        <input name="cpf" type="text" placeholder="CPF (xxxxxxxxxxx)">
                         <input name="senha" type="password" placeholder="Senha">
-                        <input name="senha-confirmar" type="password" placeholder="Confirmar Senha">
-                        <input name="continuar" type="submit" value="Continuar" style="background-color: #e4e4e5">
+                        <input name="senhaConfirmar" type="password" placeholder="Confirmar Senha">
+                        <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposCadastro(document.formCadastro)">
                     </form>
                 </div>
             </div>
@@ -49,8 +49,8 @@
         <footer>
             <p id="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>
         </footer>
-        <script src="js/script.js"></script>
-        <script src="js/login.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/toggle-login.js"></script>
     </body>
 
     </html>
