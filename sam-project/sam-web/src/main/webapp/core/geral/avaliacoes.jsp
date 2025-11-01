@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <title>SAM - Avaliações</title>
 
-        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,22 +17,9 @@
 
     <body>
         <header>
-            <img id="logotipo" src="../imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Avaliações</h1>
-            <nav>
-                <a href="cliente/dashboard.jsp">Dashboard</a>
-                <a href="transacoes.jsp">Transações</a>
-                <a href="gestor/empresas.jsp">Empresas</a>
-                <a href="notificacoes.jsp">Notificações</a>
-                <a href="suporte.jsp">Suporte</a>
-            </nav>
-
-            <div class="hamburger-menu">
-                <button id="hamburger-btn">&#9776;</button>
-                <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="perfil.jsp">Visualizar Perfil</a>
-                </div>
-            </div>
+            <%@include file="/core/header.jsp" %>
         </header>
 
         <main class="dashboard">

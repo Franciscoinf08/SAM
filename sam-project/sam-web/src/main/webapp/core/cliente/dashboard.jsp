@@ -18,19 +18,7 @@
     <body>
         <header><img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Dashboard</h1>
-            <nav>
-                <a href="dashboard.jsp" class="active">Dashboard</a>
-                <a href="../transacoes.jsp">Transações</a>
-                <a href="../notificacoes.jsp">Notificações</a>
-                <a href="../suporte.jsp">Suporte</a>
-            </nav>
-
-            <div class="hamburger-menu">
-                <button id="hamburger-btn">&#9776;</button>
-                <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="../perfil.jsp">Visualizar Perfil</a>
-                </div>
-            </div>
+            <%@include file="/core/header.jsp" %>
         </header>
 
 

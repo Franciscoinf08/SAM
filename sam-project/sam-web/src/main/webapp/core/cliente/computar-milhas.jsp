@@ -19,18 +19,7 @@
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Computar Milhas</h1>
-            <nav>
-                <a href="dashboard.jsp">Dashboard</a>
-                <a href="../notificacoes.jsp">Notificações</a>
-                <a href="../suporte.jsp">Suporte</a>
-                <a href="../transacoes.jsp">Transações</a>
-            </nav>
-            <div class="hamburger-menu">
-                <button id="hamburger-btn">&#9776;</button>
-                <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="../perfil.jsp">Visualizar Perfil</a>
-                </div>
-            </div>
+            <%@include file="/core/header.jsp" %>
         </header>
 
 
