@@ -23,25 +23,43 @@
         </header>
         <main>
             <div id="login">
-                <h2 style="margin-bottom: 1em">Acesse sua conta</h2>
-                <div class="formulario">
+                <h2>Acesse sua conta</h2>
+                <div class="formulario form-autenticacao">
                     <form name="formLogin" method="POST">
-                        <input name="usuario" type="text" placeholder="Usuário">
-                        <input name="senha" type="password" placeholder="Senha">
-                        <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposLogin(document.formLogin)">
+                        <label>
+                            <input name="cpf" type="text" placeholder="CPF (xxxxxxxxxxx)">
+                        </label>
+                        <label>
+                            <input name="senha" type="password" placeholder="Senha">
+                        </label>
+                        <label>
+                            <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposLogin(document.formLogin)">
+                        </label>
                     </form>
                 </div>
             </div>
             <div id="cadastro" class="campo-inativo">
-                <h2 style="margin-bottom: 1em">Cadastre-se</h2>
-                <div class="formulario">
+                <h2>Cadastre-se</h2>
+                <div class="formulario form-autenticacao">
                     <form name="formCadastro" method="POST">
-                        <input name="nome" type="text" placeholder="Nome">
-                        <input name="email" type="text" placeholder="E-mail">
-                        <input name="cpf" type="text" placeholder="CPF (xxxxxxxxxxx)">
-                        <input name="senha" type="password" placeholder="Senha">
-                        <input name="senhaConfirmar" type="password" placeholder="Confirmar Senha">
-                        <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposCadastro(document.formCadastro)">
+                        <label>
+                            <input name="nome" type="text" placeholder="Nome">
+                        </label>
+                        <label>
+                            <input name="email" type="text" placeholder="E-mail">
+                        </label>
+                        <label>
+                            <input name="cpf" type="text" placeholder="CPF (xxxxxxxxxxx)">
+                        </label>
+                        <label>
+                            <input name="senha" type="password" placeholder="Senha">
+                        </label>
+                        <label>
+                            <input name="senhaConfirmar" type="password" placeholder="Confirmar Senha">
+                        </label>
+                        <label>
+                            <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposCadastro(document.formCadastro)">
+                        </label>
                     </form>
                 </div>
             </div>

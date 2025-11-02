@@ -1,11 +1,16 @@
 function validarCamposLogin(form) {
-    let usuario = form.usuario.value;
+    let cpf = form.cpf.value;
     let senha = form.senha.value;
     let resultado = false;
 
-    if (usuario === "") {
+    if (cpf === "") {
         alert("Preencha o campo Usuário");
-        form.usuario.focus();
+        form.cpf.focus();
+    }
+    else if (!validarCPF(cpf)) {
+        alert("CPF inválido");
+        form.cpf.value = "";
+        form.cpf.focus();
     }
     else if (senha === "") {
         alert("Preencha o campo Senha");
@@ -72,8 +77,49 @@ function validarCamposCadastro(form) {
     return resultado;
 }
 
+function validarCamposAlteracaoPerfil(form) {
+    let nome = form.nome.value;
+    let email = form.email.value;
+    let senha = form.senha.value;
+    let senhaConfirmar = form.senhaConfirmar.value;
+    let resultado = false;
+
+    let strConfirmacao = "";
+    if (nome !== "") {
+        strConfirmacao += "Nome ";
+    } if (email !== "") {
+        strConfirmacao += "Email ";
+    } if (senha !== "") {
+        strConfirmacao += "Senha";
+    } if (strConfirmacao !== "") {
+        strConfirmacao.replaceAll(" ", ", ")
+    }
+
+    if (nome === "" && email === "" && senha === "") {
+        alert("Preencha algum dos campos");
+        form.nome.focus();
+    }
+    else if (email !== "" && !validarEmail(email)) {
+        alert("E-mail inválido");
+        form.email.value = "";
+        form.email.focus();
+    }
+    else if (senha !== senhaConfirmar) {
+        alert("Senhas diferentes");
+        form.senhaConfirmar.value = "";
+        form.senhaConfirmar.focus();
+    }
+    else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)){
+        form.action ="/sam/main?acao=alterarPerfil";
+        form.submit();
+        resultado = true;
+    }
+
+    return resultado;
+}
+
 function validarCPF(cpf) {
-    if (cpf === "00000000000" || cpf.length < 11)
+    if (cpf === "00000000000" || cpf.length !== 11 || isNaN(cpf))
         return false;
 
     let soma = 0;

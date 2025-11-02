@@ -21,7 +21,7 @@
             <h1>Perfil</h1>
             <nav>
                 <a href="cliente/dashboard.jsp">Dashboard</a>
-                <a href="transacoes.jsp" class="active">Transações</a>
+                <a href="transacoes.jsp">Transações</a>
                 <a href="gestor/empresas.jsp">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
@@ -37,13 +37,9 @@
 
         <main>
             <div class="formulario">
-                <form>
+                <form name="formAlteracao" method="POST">
                     <label for="nome">Nome:
                         <input type="text" name="nome">
-                    </label>
-
-                    <label for="nome">CPF:
-                        <input type="text" name="cpf">
                     </label>
 
                     <label for="email">Email:
@@ -54,12 +50,17 @@
                         <input type="password" name="senha">
                     </label>
 
-                    <button type="submit">Salvar Alterações</button>
+                    <label for="senha-confirmar">Confirmar Senha:
+                        <input type="password" name="senhaConfirmar">
+                    </label>
+
+                    <button onclick="validarCamposAlteracaoPerfil(document.formAlteracao)">Salvar Alterações</button>
                 </form>
 
                 <button id="solicitar-gestor">Solicitar conta de gestor</button>
             </div>
         </main>
+        <script src="../js/helper.js"></script>
         <script src="../js/script.js"></script>
         <script src="../js/botao-solicitar.js"></script>
     </body>
