@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sam.controller.LoginController"%> <!-- MUDAR PARA O CONTROLLER EQUIVALENTE NO PROJETO -->
-<%@page import="sam.model.domain.Usuario"%> <!-- MUDAR PARA A CLASS EQUIVALENTE NO PROJETO -->
+<%@page import="sam.model.domain.Usuario"%>
 <%@page import="sam.autorizacao.ControleAutorizacao"%>
 
 <%

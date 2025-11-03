@@ -1,4 +1,4 @@
-package sam.model.domain;
+package sam.model.domain.util;
 
 public enum UsuarioTipo {
    DESENVOLVEDOR,

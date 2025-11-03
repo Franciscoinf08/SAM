@@ -2,7 +2,7 @@ package sam.autorizacao;
 
 import java.util.HashSet;
 import java.util.Set;
-import sam.model.domain.UsuarioTipo;
+import sam.model.domain.util.UsuarioTipo;
 
 class Permissao {
 

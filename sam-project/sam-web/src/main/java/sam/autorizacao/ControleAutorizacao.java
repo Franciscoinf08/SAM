@@ -3,7 +3,7 @@ package sam.autorizacao;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import sam.model.domain.UsuarioTipo;
+import sam.model.domain.util.UsuarioTipo;
 import sam.model.domain.AcessosBloqueios;
 
 public class ControleAutorizacao {
