@@ -11,6 +11,7 @@ public class Usuario {
 
     public Usuario(String cpf) {
         this.cpf = cpf;
+        tipo = UsuarioTipo.CLIENTE;
     }
 
     public String getNome() { return senha; }
