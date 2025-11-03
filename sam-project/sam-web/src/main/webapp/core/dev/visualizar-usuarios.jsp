@@ -16,6 +16,7 @@
     </head>
 
     <body>
+
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Visulizar Usuários</h1>
@@ -29,9 +30,8 @@
                     <th>Nome</th>
                     <th>Tipo</th>
                     <th>Ações</th>
-                </tr>
-                <tr>
-                    <td>Andeson</td>
+                <tr><!-- ADICIONAR for LISTAR USUARIOS -->
+                    <td></td>
                     <td>Gestor</td>
                     <td>
                         <button>Relatórios</button>
