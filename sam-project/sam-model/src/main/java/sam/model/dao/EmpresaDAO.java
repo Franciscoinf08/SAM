@@ -13,13 +13,13 @@ public class EmpresaDAO {
     public EmpresaDAO(Connection conexao) {
         this.conexao = conexao;
     }
-    public Connection salvar(Empresa empresa) throws SQLException{
-            String sql = "insert into **tabela do BD** values(nome, CNPJ, programasFidelidade )";
+    public Empresa salvar(Empresa empresa) throws SQLException{
+            String sql = "insert into **tabela do BD** values(?, ?, ?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCNPJ());
             stmt.setObject(3, empresa.getListaProgramasFidelidade());
-            stmt.setObject(3, empresa.getListaProgramasFidelidade());
+            stmt.setObject(4, empresa.getMilheiroSeguranca());
             stmt.executeUpdate();
             
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -30,7 +30,7 @@ public class EmpresaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return empresa;
     }
     public Empresa buscarPorId(int id) {
         Empresa empresa = null;
@@ -49,4 +49,26 @@ public class EmpresaDAO {
         }
         return empresa;
     }
+    public void atualizarEmpresa(int id, String nome, String CNPJ, double milheiroSeguranca) throws SQLException {
+        String sql = "UPDATE empresas SET nome = ?, CNPJ = ?, milheiroSeguranca = ? WHERE id = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            stmt.setString(2, CNPJ);
+            stmt.setInt(3, id);
+            stmt.setDouble(4, milheiroSeguranca);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao atualizar usuário", e);
+        }
+    }
+    public void excluirEmpresa(int id) throws SQLException {
+        String sql = "DELETE FROM empresas WHERE id = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao excluir a empresa", e);
+        }
+    }
+
 }

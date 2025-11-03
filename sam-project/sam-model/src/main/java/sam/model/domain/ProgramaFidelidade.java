@@ -7,20 +7,23 @@ package sam.model.domain;
 
 public class ProgramaFidelidade {
     
-    private final int idProgramaFidelidade;
+  private int idProgramaFidelidade;
     private String nome;
     private double bonusMilhas;
     private int qtdeMilhasMes;
     private int duracao;
 
-    public ProgramaFidelidade(int idProgramaFidelidade, String nome, double bonusMilhas, int qtdeMilhasMes, int duracao) {
-        this.idProgramaFidelidade = idProgramaFidelidade;
+    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao) {
         this.nome = nome;
         this.bonusMilhas = bonusMilhas;
         this.qtdeMilhasMes = qtdeMilhasMes;
         this.duracao = duracao;
     }
-    
+    public ProgramaFidelidade(){}
+    public void setIdProgramaFidelidade(int idProgramaFidelidade) {
+        this.idProgramaFidelidade = idProgramaFidelidade;
+    }
+
     public int getIdProgramaFidelidade() {
         return idProgramaFidelidade;
     }

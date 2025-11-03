@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class Conexao {
     
     private final String URL = "jdbc:localhost://localhost:3306/**nomedobancodedados**";
-    private final String usuario = "admin";
+    private final String usuario = "root";
     private final String senha = "admin";
     
     public Connection getConnection(){
