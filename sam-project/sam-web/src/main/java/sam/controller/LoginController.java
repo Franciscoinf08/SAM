@@ -6,7 +6,7 @@ import sam.model.service.GestaoUsuariosService;
 
 public class LoginController {
     public static String logar(HttpServletRequest request) {
-        String jsp = "/";
+        String jsp = "";
 
         try {
             String cpf = request.getParameter("cpf");
@@ -31,14 +31,12 @@ public class LoginController {
                     case DESENVOLVEDOR:
                         jsp = "/core/perfil.jsp";
                         break;
-                    default:
-                        jsp = "/";
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            jsp = "/";
+            jsp = "";
         }
         return jsp;
     }

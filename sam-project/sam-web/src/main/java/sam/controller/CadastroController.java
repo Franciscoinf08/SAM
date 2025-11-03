@@ -6,7 +6,7 @@ import sam.model.service.GestaoUsuariosService;
 
 public class CadastroController {
     public static String cadastrar(HttpServletRequest request) {
-        String jsp = "/";
+        String jsp = "";
 
         try {
             String nome = request.getParameter("nome");
@@ -33,11 +33,11 @@ public class CadastroController {
                 manterUsuario.cadastrar(usuario);
                 request.getSession().setAttribute("usuario", usuario);
 
-                jsp = "/core/cliente/dashboard.jsp";
+                jsp = "/sam/core/cliente/dashboard.jsp";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            jsp = "/";
+            jsp = "";
         }
         return jsp;
     }
