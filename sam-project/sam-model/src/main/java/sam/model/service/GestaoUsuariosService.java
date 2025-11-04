@@ -5,9 +5,10 @@ import sam.model.domain.Usuario;
 // Placeholder
 public class GestaoUsuariosService {
     public Usuario pesquisarConta(String cpf, String senha) {
-        Usuario usuario = new Usuario("cpf");
-        usuario.setNome("Mateus");
-        usuario.setSenha("senha");
+        Usuario usuario = new Usuario(cpf);
+        usuario.setNome("Mateus0Vasconcelos");
+        usuario.setEmail("mateus17vasc@gmail.com");
+        usuario.setSenha(senha);
         return usuario;
     }
 
@@ -20,15 +21,18 @@ public class GestaoUsuariosService {
     }
 
     public Usuario pesquisarPorCPF(String cpf) {
-        Usuario usuario = new Usuario("cpf");
+        Usuario usuario = new Usuario(cpf);
+        usuario.setNome("Mateus0Vasconcelos");
+        usuario.setEmail("mateus17vasc@gmail.com");
         usuario.setSenha("senha");
         return usuario;
     }
 
     public Usuario pesquisarPorEmail(String email) {
         Usuario usuario = new Usuario("cpf");
-        usuario.setNome("Mateus");
+        usuario.setNome("Mateus0Vasconcelos");
         usuario.setEmail(email);
+        usuario.setSenha("senha");
         return usuario;
     }
 }

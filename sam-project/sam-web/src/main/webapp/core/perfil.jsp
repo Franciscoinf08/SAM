@@ -1,4 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sam.model.domain.Usuario"%>
+<%@page import="sam.controller.LoginController"%>
+
+<%
+    LoginController.validarSessao(request, response);
+
+    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -28,6 +37,7 @@
             </nav>
 
             <div class="hamburger-menu">
+                <h1><%=usuario.getNome()%></h1>
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
                     <a href="/sam/core/perfil.jsp">Visualizar Perfil</a>
@@ -39,19 +49,19 @@
             <div class="formulario">
                 <form name="formAlteracao" method="POST">
                     <label for="nome">Nome:
-                        <input type="text" name="nome">
+                        <input type="text" name="nome" placeholder="<%=usuario.getNome()%>">
                     </label>
 
                     <label for="email">Email:
-                        <input type="email" name="email">
+                        <input type="email" name="email" placeholder="<%=usuario.getEmail()%>">
                     </label>
 
                     <label for="senha">Senha:
-                        <input type="password" name="senha">
+                        <input type="password" autocomplete="new-password" name="senha">
                     </label>
 
                     <label for="senha-confirmar">Confirmar Senha:
-                        <input type="password" name="senhaConfirmar">
+                        <input type="password" autocomplete="new-password" name="senhaConfirmar">
                     </label>
 
                     <button onclick="validarCamposAlteracaoPerfil(document.formAlteracao)">Salvar Alterações</button>
@@ -60,7 +70,7 @@
                 <button id="solicitar-gestor">Solicitar conta de gestor</button>
             </div>
         </main>
-        
+
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/script.js"></script>
         <script src="/sam/js/botao-solicitar.js"></script>

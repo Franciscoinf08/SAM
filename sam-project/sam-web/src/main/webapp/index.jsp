@@ -33,7 +33,7 @@
                             <input name="senha" type="password" placeholder="Senha">
                         </label>
                         <label>
-                            <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposLogin(document.formLogin)">
+                            <input type="button" value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposLogin(document.formLogin)">
                         </label>
                     </form>
                 </div>
@@ -52,13 +52,13 @@
                             <input name="cpf" type="text" placeholder="CPF (xxxxxxxxxxx)">
                         </label>
                         <label>
-                            <input name="senha" type="password" placeholder="Senha">
+                            <input name="senha" type="password" autocomplete="new-password" placeholder="Senha">
                         </label>
                         <label>
-                            <input name="senhaConfirmar" type="password" placeholder="Confirmar Senha">
+                            <input name="senhaConfirmar" type="password" autocomplete="new-password" placeholder="Confirmar Senha">
                         </label>
                         <label>
-                            <input value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposCadastro(document.formCadastro)">
+                            <input type="button" value="Continuar" style="background-color:#e4e4e5;text-align:center" onclick="validarCamposCadastro(document.formCadastro)">
                         </label>
                     </form>
                 </div>

@@ -10,9 +10,9 @@ public class CadastroController {
 
         try {
             String nome = request.getParameter("nome");
+            String email = request.getParameter("email");
             String cpf = request.getParameter("cpf");
-            String senha = request.getParameter("email");
-            String email = request.getParameter("senha");
+            String senha = request.getParameter("senha");
 
             GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
 
@@ -33,7 +33,7 @@ public class CadastroController {
                 manterUsuario.cadastrar(usuario);
                 request.getSession().setAttribute("usuario", usuario);
 
-                jsp = "/sam/core/cliente/dashboard.jsp";
+                jsp = "/core/cliente/dashboard.jsp";
             }
         } catch (Exception e) {
             e.printStackTrace();

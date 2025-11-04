@@ -1,4 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sam.model.domain.Usuario"%>
+<%@page import="sam.controller.LoginController"%>
+
+<%
+    LoginController.validarSessao(request, response);
+
+    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -27,6 +36,7 @@
             </nav>
 
             <div class="hamburger-menu">
+                <h1><%=usuario.getNome()%></h1>
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
                     <a href="/sam/core/perfil.jsp">Visualizar Perfil</a>

@@ -1,8 +1,13 @@
 package sam.controller;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
+
+import java.io.IOException;
 
 public class LoginController {
     public static String logar(HttpServletRequest request) {
@@ -39,5 +44,13 @@ public class LoginController {
             jsp = "";
         }
         return jsp;
+    }
+
+    public static void validarSessao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+        if (usuario == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        }
     }
 }
