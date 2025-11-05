@@ -8,11 +8,11 @@ import java.sql.SQLException;
 
 public class Conexao {
     
-    private final String URL = "jdbc:localhost://localhost:3306/**nomedobancodedados**";
-    private final String usuario = "root";
-    private final String senha = "admin";
+    private final static String URL = "jdbc:mysql://localhost:3306/samproject";
+    private final static String usuario = "root";
+    private final static String senha = "admin";
     
-    public Connection getConnection(){
+    public static Connection getConnection(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(URL, usuario, senha);

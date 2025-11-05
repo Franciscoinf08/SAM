@@ -10,10 +10,9 @@ public class Empresa {
     private double milheiroSeguranca;
     private List<ProgramaFidelidade> listaProgramasFidelidade;
     
-    public Empresa(String nome, String CNPJ, List<ProgramaFidelidade> lista, int id, int milheiroSeguranca){
+    public Empresa(String nome, String CNPJ, double milheiroSeguranca){
         this.nome = nome;
         this.CNPJ = CNPJ;
-        this.listaProgramasFidelidade = lista;
         this.milheiroSeguranca = milheiroSeguranca;
     }
 

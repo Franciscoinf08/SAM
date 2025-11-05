@@ -8,18 +8,17 @@ import java.sql.SQLException;
 import sam.model.domain.Empresa;
 
 public class EmpresaDAO {
-    private final Connection conexao;
+    private  Connection conexao;
 
-    public EmpresaDAO(Connection conexao) {
-        this.conexao = conexao;
+    public EmpresaDAO() {
+        this.conexao = Conexao.getConnection();
     }
     public Empresa salvar(Empresa empresa) throws SQLException{
-            String sql = "insert into **tabela do BD** values(?, ?, ?, ?)";
+            String sql = "insert into empresa(nome, cnpj, milheiroSeguranca) values(?, ?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCNPJ());
-            stmt.setObject(3, empresa.getListaProgramasFidelidade());
-            stmt.setObject(4, empresa.getMilheiroSeguranca());
+            stmt.setDouble(3, empresa.getMilheiroSeguranca());
             stmt.executeUpdate();
             
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -54,8 +53,8 @@ public class EmpresaDAO {
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, nome);
             stmt.setString(2, CNPJ);
-            stmt.setInt(3, id);
-            stmt.setDouble(4, milheiroSeguranca);
+            stmt.setDouble(3, milheiroSeguranca);
+            stmt.setInt(4, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Erro ao atualizar usuário", e);
