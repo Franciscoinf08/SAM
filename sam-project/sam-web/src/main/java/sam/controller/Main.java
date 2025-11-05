@@ -24,8 +24,8 @@ public class Main extends HttpServlet {
             case "cadastrar":
                 jsp = CadastroController.cadastrar(request);
                 break;
-            case "alterarPerfil":
-                jsp = AlteracaoPerfilController.alterar(request);
+            case "atualizarPerfil":
+                jsp = AlteracaoPerfilController.atualizar(request);
                 break;
         }
 

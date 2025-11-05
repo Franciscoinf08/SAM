@@ -5,7 +5,7 @@ import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
 
 public class AlteracaoPerfilController {
-    public static String alterar(HttpServletRequest request) {
+    public static String atualizar(HttpServletRequest request) {
         String jsp = "/core/perfil.jsp";
 
         try {

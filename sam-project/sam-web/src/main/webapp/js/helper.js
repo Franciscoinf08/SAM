@@ -110,7 +110,7 @@ function validarCamposAlteracaoPerfil(form) {
         form.senhaConfirmar.focus();
     }
     else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)){
-        form.action ="/sam/main?acao=alterarPerfil";
+        form.action ="/sam/main?acao=atualizarPerfil";
         form.submit();
         resultado = true;
     }

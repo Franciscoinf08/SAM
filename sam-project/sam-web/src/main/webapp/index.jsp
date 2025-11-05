@@ -21,6 +21,7 @@
             <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Login e Cadastro</h1>
         </header>
+
         <main>
             <div id="login">
                 <h2>Acesse sua conta</h2>
@@ -67,6 +68,21 @@
         <footer>
             <p id="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>
         </footer>
+
+        <%
+            String erro = (String) request.getAttribute("erro");
+            if (erro != null) {%>
+        <div class="mensagem-card"><%=erro%></div>
+        <script>
+            let mensagemEl = document.querySelector(".mensagem-card");
+            setTimeout(() => {
+                mensagemEl.style.top = "4em";
+            }, 1);
+            setTimeout(() => {
+                mensagemEl.style.display = "none";
+            }, 4000);
+        </script>
+        <%}%>
         
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/toggle-login.js"></script>
