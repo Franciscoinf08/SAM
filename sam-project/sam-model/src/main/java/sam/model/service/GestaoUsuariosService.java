@@ -1,38 +1,29 @@
 package sam.model.service;
 
+import sam.model.dao.exception.PersistenciaException;
 import sam.model.domain.Usuario;
+import sam.model.dao.UsuarioDAO;
+
+import java.sql.SQLException;
 
 // Placeholder
 public class GestaoUsuariosService {
-    public Usuario pesquisarConta(String cpf, String senha) {
-        Usuario usuario = new Usuario(cpf);
-        usuario.setNome("Mateus0Vasconcelos");
-        usuario.setEmail("mateus17vasc@gmail.com");
-        usuario.setSenha(senha);
-        return usuario;
+
+    private final UsuarioDAO usuarioDAO;
+
+    public GestaoUsuariosService() {
+        usuarioDAO = UsuarioDAO.getInstance();
     }
 
-    public void cadastrar(Usuario usuario) {
-
+    public Usuario pesquisarConta(String cpf, String senha) throws PersistenciaException, SQLException {
+        return usuarioDAO.pesquisarPorCPFSenha(cpf, senha);
     }
 
-    public void alterar(Usuario usuario) {
-
+    public void cadastrar(Usuario usuario) throws PersistenciaException, SQLException {
+        usuarioDAO.inserir(usuario);
     }
 
-    public Usuario pesquisarPorCPF(String cpf) {
-        Usuario usuario = new Usuario(cpf);
-        usuario.setNome("Mateus0Vasconcelos");
-        usuario.setEmail("mateus17vasc@gmail.com");
-        usuario.setSenha("senha");
-        return usuario;
-    }
-
-    public Usuario pesquisarPorEmail(String email) {
-        Usuario usuario = new Usuario("cpf");
-        usuario.setNome("Mateus0Vasconcelos");
-        usuario.setEmail(email);
-        usuario.setSenha("senha");
-        return usuario;
+    public void atualizar(Usuario usuario) throws PersistenciaException, SQLException {
+        usuarioDAO.atualizar(usuario);
     }
 }

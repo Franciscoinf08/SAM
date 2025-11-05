@@ -1,49 +1,47 @@
 package sam.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
 
-import java.io.IOException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
 
-public class LoginController {
-    public static String logar(HttpServletRequest request) {
-        String jsp = "";
+import java.io.IOException;
+import java.sql.SQLException;
+
+@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
+public class LoginController extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String cpf = request.getParameter("cpf");
+        String senha = request.getParameter("senha");
+
+        GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
 
         try {
-            String cpf = request.getParameter("cpf");
-            String senha = request.getParameter("senha");
-
-            GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
             Usuario usuario = manterUsuario.pesquisarConta(cpf, senha);
+            request.getSession().setAttribute("usuario", usuario);
 
-            if (usuario == null) {
-                String erro = "Usuario não encontrado";
-                request.setAttribute("erro", erro);
-                jsp = "";
-            } else {
-                request.getSession().setAttribute("usuario", usuario);
-                switch (usuario.getTipo()) {
-                    case CLIENTE:
-                        jsp = "/core/cliente/dashboard.jsp";
-                        break;
-                    case GESTOR:
-                        jsp = "/core/gestor/apuracao.jsp";
-                        break;
-                    case DESENVOLVEDOR:
-                        jsp = "/core/perfil.jsp";
-                        break;
-                }
+            String jsp = "";
+            switch (usuario.getTipo()) {
+                case CLIENTE:
+                    jsp = "/sam/core/cliente/dashboard.jsp";
+                    break;
+                case GESTOR:
+                    jsp = "/sam/core/gestor/apuracao.jsp";
+                    break;
+                case DESENVOLVEDOR:
+                    jsp = "/sam/core/perfil.jsp";
+                    break;
             }
-
+            response.sendRedirect(jsp);
         } catch (Exception e) {
-            e.printStackTrace();
-            jsp = "";
+            throw new RuntimeException(e);
         }
-        return jsp;
     }
 
     public static void validarSessao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

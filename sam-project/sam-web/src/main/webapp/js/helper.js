@@ -17,7 +17,7 @@ function validarCamposLogin(form) {
         form.senha.focus();
     }
     else {
-        form.action ="/sam/main?acao=logar";
+        form.action ="/sam/LoginController";
         form.submit();
         resultado = true;
     }
@@ -69,7 +69,7 @@ function validarCamposCadastro(form) {
         form.senhaConfirmar.focus();
     }
     else {
-        form.action ="/sam/main?acao=cadastrar";
+        form.action ="/sam/CadastroController";
         form.submit();
         resultado = true;
     }
@@ -110,7 +110,7 @@ function validarCamposAlteracaoPerfil(form) {
         form.senhaConfirmar.focus();
     }
     else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)){
-        form.action ="/sam/main?acao=atualizarPerfil";
+        form.action ="/sam/AlteracaoPerfilController";
         form.submit();
         resultado = true;
     }
