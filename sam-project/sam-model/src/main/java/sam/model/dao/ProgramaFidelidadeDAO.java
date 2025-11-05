@@ -54,7 +54,7 @@ public class ProgramaFidelidadeDAO {
     }
 
     public void atualizarProgramaFidelidade(int id, String nome, double bonusMilhas, double duracao, int qtdeMilhasMes) throws SQLException {
-        String sql = "UPDATE programasFidelidade SET nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ? WHERE id = ?";
+        String sql = "update programasFidelidade set nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ? where id = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, nome);
             stmt.setDouble(2, bonusMilhas);
