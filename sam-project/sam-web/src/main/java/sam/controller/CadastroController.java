@@ -6,12 +6,13 @@ import sam.model.service.GestaoUsuariosService;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.sql.SQLException;
+import java.io.IOException;
 
 @WebServlet(name="CadastroController", urlPatterns = {"/CadastroController"})
 public class CadastroController extends HttpServlet {
@@ -27,10 +28,16 @@ public class CadastroController extends HttpServlet {
         Usuario usuario = new Usuario(nome, email, cpf, senha);
 
         try {
-            manterUsuario.cadastrar(usuario);
+            usuario.setId(manterUsuario.cadastrar(usuario));
             request.getSession().setAttribute("usuario", usuario);
             response.sendRedirect("/sam/core/cliente/dashboard.jsp");
-        } catch (Exception e) {
+        } catch (PersistenciaException e) {
+            e.printStackTrace();
+            String erro = e.getLocalizedMessage();
+            request.setAttribute("erro", erro);
+            RequestDispatcher rd = request.getRequestDispatcher("/sam");
+            rd.forward(request, response);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

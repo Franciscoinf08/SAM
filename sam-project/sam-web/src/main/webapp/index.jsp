@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-    <!DOCTYPE html>
-    <html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 
     <head>
         <meta charset="UTF-8">
@@ -69,9 +69,20 @@
         <footer>
             <p id="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>
         </footer>
+
+        <%
+            String erro = (String) request.getAttribute("erro");
+            if (erro != null) {%>
+        <div class="mensagem-card"><%=erro%></div>
+        <script>
+            let mensagemEl = document.querySelector(".mensagem-card");
+            setTimeout(() => { mensagemEl.style.top = "4em"; }, 1);
+            setTimeout(() => { mensagemEl.style.display = "none"; }, 4000);
+        </script>
+        <%}%>
         
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/toggle-login.js"></script>
     </body>
 
-    </html>
+</html>

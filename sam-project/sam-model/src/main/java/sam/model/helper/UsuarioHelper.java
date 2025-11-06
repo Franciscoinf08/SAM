@@ -1,13 +1,10 @@
 package sam.model.helper;
 
+import sam.model.dao.UsuarioDAO;
 import sam.model.dao.exception.PersistenciaException;
 import sam.model.domain.Usuario;
-import sam.model.dao.UsuarioDAO;
 
 import java.sql.SQLException;
-
-import java.util.List;
-import java.util.ArrayList;
 
 public class UsuarioHelper {
 
@@ -19,18 +16,18 @@ public class UsuarioHelper {
 
     public static String validarAtualizacaoUsuario(Usuario usuario) throws PersistenciaException, SQLException {
         String erro = "";
-        if (validarAtualizacaoEmail(usuario))
+        if (!validarAtualizacaoEmail(usuario))
             erro += "E-mail já cadastrado ";
-        if (validarAtualizacaoCPF(usuario))
+        if (!validarAtualizacaoCPF(usuario))
             erro += "CPF já cadastrado";
         return erro;
     }
 
     public static String validarCadastroUsuario(Usuario usuario) throws PersistenciaException, SQLException {
         String erro = "";
-        if (validarCadastroEmail(usuario))
+        if (!validarCadastroEmail(usuario))
             erro += "E-mail já cadastrado ";
-        if (validarCadastroCPF(usuario))
+        if (!validarCadastroCPF(usuario))
             erro += "CPF já cadastrado";
         return erro;
     }

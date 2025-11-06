@@ -23,10 +23,19 @@ public class Usuario {
         tipo = UsuarioTipo.CLIENTE;
     }
 
+    public Usuario(Usuario usuario) {
+        id = usuario.getId();
+        nome = usuario.getNome();
+        email = usuario.getEmail();
+        cpf = usuario.getCPF();
+        senha = usuario.getSenha();
+        tipo = usuario.getTipo();
+    }
+
     @Override
     public boolean equals(Object comparar) {
         Usuario usuarioComparar = (Usuario) comparar;
-        return (id.equals(usuarioComparar.getId()));
+        return id.equals(usuarioComparar.getId());
     }
 
     public Long getId() { return id; }

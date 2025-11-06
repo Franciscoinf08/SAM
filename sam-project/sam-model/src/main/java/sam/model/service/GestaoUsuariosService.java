@@ -19,20 +19,18 @@ public class GestaoUsuariosService {
         try {
             return usuarioDAO.pesquisarPorCPFSenha(cpf, senha);
         } catch (PersistenciaException e) {
-            throw new SQLException(e);
+            throw new PersistenciaException(e);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
-    public void cadastrar(Usuario usuario) throws PersistenciaException, SQLException {
-        if (usuarioDAO.pesquisarPorEmail(usuario.getEmail()) != null)
-            throw new PersistenciaException("E-mail já cadastrado");
-        else if (usuarioDAO.pesquisarPorCPF(usuario.getCPF()) != null)
-            throw new PersistenciaException("CPF já cadastrado");
+    public Long cadastrar(Usuario usuario) throws PersistenciaException, SQLException {
+        if (!UsuarioHelper.validarCadastroUsuario(usuario).equals(""))
+            throw new PersistenciaException(UsuarioHelper.validarCadastroUsuario(usuario));
 
         try {
-            usuario.setId(usuarioDAO.inserir(usuario));
+            return usuarioDAO.inserir(usuario);
         } catch (SQLException e) {
             throw new SQLException(e);
         }

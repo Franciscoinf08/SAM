@@ -6,13 +6,13 @@ import sam.model.service.GestaoUsuariosService;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.RequestDispatcher;
 
-import java.io.IOException;
 import java.sql.SQLException;
+import java.io.IOException;
 
 @WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
 public class LoginController extends HttpServlet {
@@ -40,7 +40,13 @@ public class LoginController extends HttpServlet {
                     break;
             }
             response.sendRedirect(jsp);
-        } catch (Exception e) {
+        } catch (PersistenciaException e) {
+            e.printStackTrace();
+            String erro = e.getLocalizedMessage();
+            request.setAttribute("erro", erro);
+            RequestDispatcher rd = request.getRequestDispatcher("");
+            rd.forward(request, response);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

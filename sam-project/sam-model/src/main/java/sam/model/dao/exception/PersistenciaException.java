@@ -9,4 +9,8 @@ public class PersistenciaException extends Exception {
     public PersistenciaException(String message) {
         super(message);
     }
+
+    public PersistenciaException(Exception exception) {
+        super(exception);
+    }
 }

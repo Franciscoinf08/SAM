@@ -49,7 +49,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     }
 
     @Override
-    public Long atualizar(Usuario usuario) throws SQLException {
+    public void atualizar(Usuario usuario) throws SQLException {
         String sql = "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, senha = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, usuario.getNome());
@@ -62,7 +62,6 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
         } catch (SQLException e) {
             throw new SQLException("Erro ao atualizar usuário", e);
         }
-        return usuario.getId();
     }
 
     @Override
@@ -75,27 +74,6 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 String nome = rs.getString("nome");
-                String email = rs.getString("email");
-                String cpf = rs.getString("cpf");
-                String senha = rs.getString("senha");
-                usuario = new Usuario(nome,email, cpf, senha);
-                usuario.setId(id);
-            }
-        } catch (SQLException e) {
-            throw new SQLException("Erro ao pesquisar usuário", e);
-        }
-        return usuario;
-    }
-
-    public Usuario pesquisarPorNome(String nome) throws SQLException {
-        Usuario usuario = null;
-        String sql = "SELECT * FROM usuarios WHERE nome = ?";
-        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-            preparedStatement.setString(1, nome);
-
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                Long id = rs.getLong("id");
                 String email = rs.getString("email");
                 String cpf = rs.getString("cpf");
                 String senha = rs.getString("senha");
@@ -153,9 +131,9 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     public Usuario pesquisarPorCPFSenha(String cpf, String senha) throws PersistenciaException, SQLException {
         try {
             Usuario usuario = pesquisarPorCPF(cpf);
-            if (senha.equals(usuario.getSenha()))
+            if (usuario != null && senha.equals(usuario.getSenha()))
                 return usuario;
-            throw new PersistenciaException("Senha incorreta");
+            throw new PersistenciaException("CPF ou Senha incorreto");
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);
         }

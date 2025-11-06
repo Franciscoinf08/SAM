@@ -6,12 +6,13 @@ import sam.model.service.GestaoUsuariosService;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.sql.SQLException;
+import java.io.IOException;
 
 
 @WebServlet(name = "AlteracaoPerfilController", urlPatterns = {"/AlteracaoPerfilController"})
@@ -23,22 +24,28 @@ public class AlteracaoPerfilController extends HttpServlet {
         String senha = request.getParameter("senha");
         String email = request.getParameter("email");
 
-        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+        Usuario usuario = new Usuario((Usuario) request.getSession().getAttribute("usuario"));
         GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
 
         try {
             if (!"".equals(nome))
                 usuario.setNome(nome);
-            if (!"".equals(senha))
-                usuario.setSenha(senha);
             if (!"".equals(email))
                 usuario.setEmail(email);
+            if (!"".equals(senha))
+                usuario.setSenha(senha);
 
             manterUsuario.atualizar(usuario);
+
             request.getSession().setAttribute("usuario", usuario);
-            response.sendRedirect("/sam/core/perfil.jsp");
-        } catch (Exception e) {
+        } catch (PersistenciaException e) {
+            e.printStackTrace();
+            String erro = e.getLocalizedMessage();
+            request.setAttribute("erro", erro);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        RequestDispatcher rd = request.getRequestDispatcher("/core/perfil.jsp");
+        rd.forward(request, response);
     }
 }
