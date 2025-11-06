@@ -7,44 +7,38 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import sam.model.domain.util.ListAcessos;
-import sam.model.domain.Usuario;
-import sam.autorizacao.ControleAutorizacao;
 
-@WebServlet(name = "AutorizacoesController", urlPatterns = {"/AutorizacoesController"})
-public class AutorizacoesController extends HttpServlet {
+@WebServlet(name = "AcessosBlockController", urlPatterns = {"/AcessosBlockController"})
+public class AcessosBlockController extends HttpServlet {
 
     private String jsp = "";
-    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String acao = request.getParameter("acao");
-        
+
         switch (acao) {
-            case "ListarAutoGestor":
-                jsp = this.listarGestor(request);
+            case "Ativar":
+                jsp = this.ativar(request);
                 break;
-            case "ListarAutoCliente":
-                jsp = this.litarCliente(request);
+            case "Bloquear":
+                jsp = this.bloquear(request);
                 break;
         }
 
     }
 
-    public static String listarGestor(HttpServletRequest request) {
-        String jsp = "";
-        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+    public String ativar(HttpServletRequest request) {
 
     }
 
-    public static String listarCliente(HttpServletRequest request) {
-        String jsp = "";
+    public String bloquear(HttpServletRequest request) {
 
     }
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

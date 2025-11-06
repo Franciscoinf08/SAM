@@ -127,7 +127,7 @@ public class ControleAutorizacao {
         return false;
     }
     
-    public static boolean checkBloqueio(String recurso, List<UsuarioTipo> tipoList) {
+    public static boolean checkBloqueio(String recurso, String tipoList) { //CONECTAR COM A CLASS AcessosService 
         for (UsuarioTipo usuario: tipoList)
             if (permissoes.get(recurso).check(usuario))
                 return true;

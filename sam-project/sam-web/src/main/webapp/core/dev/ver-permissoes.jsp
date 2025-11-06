@@ -1,6 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sam.controller.BloqueiosController"%>
-<%@page import="sam.controller.AutorizacoesController"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="sam.controller.AcessosBlockController" %>
 
 
 <!DOCTYPE html>
@@ -14,7 +13,9 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -36,20 +37,242 @@
                     <th>Ações</th>
                 </tr>
                 </tr>
-                <tr><!-- ADICIONAR for LISTA DE FUNCIONALIDADES DO USUARIO -->
-                    <td><!-- NOME DA PERMISSÃO --></td>
-                    <% if (ControleAutorizacao.checkBloqueio(/*NOME DA PERMISSÃO EM STRING*/, usuario.getCPF())) {%>
+                <tr>
+                    <% if (ControleAutorizacao.checkPermissao("dashboard-cliente", usuario.getTipo())) {%>
+                    <td>Dashboard</td>
+                    <% if (ControleAutorizacao.checkBloqueio("dashboard-cliente", usuario.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/BloqueiosController?acao=Ativar'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
                     </td>
-                    <% } else{%>
+                    <% } else {%>
                     <td>ATIVO</td>
                     <td>
-                        <button><a href='/sam/BloqueiosController?acao=Bloquear'>Bloquear</a></button>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
                     </td>
-                    <%}%>
-
+                    <%}} if (ControleAutorizacao.checkPermissao("transacoes-clientes", usuario.getTipo())) {%>
+                    <td>Transações</td>
+                    <% if (ControleAutorizacao.checkBloqueio("transacoes-clientes", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("empresas", usuario.getTipo())) {%> 
+                    <td>Empresas</td>
+                    <% if (ControleAutorizacao.checkBloqueio("empresas", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("notificacoes", usuario.getTipo())) {%>
+                    <td>Notificacoes</td>
+                    <% if (ControleAutorizacao.checkBloqueio("notificacoes", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("suporte", usuario.getTipo())) {%>
+                    <td>Suporte</td>
+                    <% if (ControleAutorizacao.checkBloqueio("suporte", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("perfil", usuario.getTipo())) {%>
+                    <td>Perfil</td>
+                    <% if (ControleAutorizacao.checkBloqueio("perfil", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("computar-milhas", usuario.getTipo())) {%>
+                    <td>Computar Milhas</td>
+                    <% if (ControleAutorizacao.checkBloqueio("computar-milhas", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("dashboard-gestor", usuario.getTipo())) {%>
+                    <td>Dashboard</td>
+                    <% if (ControleAutorizacao.checkBloqueio("dashboard-gestor", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("associacoes", usuario.getTipo())) {%>
+                    <td>Associar Clientes</td>
+                    <% if (ControleAutorizacao.checkBloqueio("associacoes", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo())) {%>
+                    <td>Orcamentos</td>
+                    <% if (ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("planos", usuario.getTipo())) {%>
+                    <td>Planos</td>
+                    <% if (ControleAutorizacao.checkBloqueio("planos", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("mensagens-avisos", usuario.getTipo())) {%>
+                    <td>Enviar mensagens e avisos</td>
+                    <% if (ControleAutorizacao.checkBloqueio("mensagens-avisos", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("acesso-clientes", usuario.getTipo())) {%>
+                    <td>Acesso aos clientes</td>
+                    <% if (ControleAutorizacao.checkBloqueio("acesso-clientes", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("programa", usuario.getTipo())) {%>
+                    <td>Programas de fidelidade</td>
+                    <% if (ControleAutorizacao.checkBloqueio("programa", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo())) {%>
+                    <td>Avaliações</td>
+                    <% if (ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo())) {%>
+                    <td>Relatórios</td>
+                    <% if (ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("transacoes-gestor", usuario.getTipo())) {%>
+                    <td>Transacoes</td>
+                    <% if (ControleAutorizacao.checkBloqueio("transacoes-gestor", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}if (ControleAutorizacao.checkPermissao("campanhas", usuario.getTipo())) {%>
+                    <td>Campanhas</td>
+                    <% if (ControleAutorizacao.checkBloqueio("campanhas", usuario.getCPF())) {%>
+                    <td>BLOQUEADO</td>
+                    <td>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                    </td>
+                    <% } else {%>
+                    <td>ATIVO</td>
+                    <td>
+                        <button><a
+                                href='/sam/AcessosBlockController?acao=Bloquear'>Bloquear</a></button>
+                    </td>
+                    <%}}%>
                 </tr>
             </table>
         </main>
