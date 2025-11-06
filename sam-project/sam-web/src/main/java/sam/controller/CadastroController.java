@@ -1,5 +1,6 @@
 package sam.controller;
 
+import sam.model.dao.exception.PersistenciaException;
 import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
 
@@ -30,7 +31,7 @@ public class CadastroController extends HttpServlet {
             request.getSession().setAttribute("usuario", usuario);
             response.sendRedirect("/sam/core/cliente/dashboard.jsp");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

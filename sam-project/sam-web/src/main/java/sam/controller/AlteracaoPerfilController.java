@@ -1,5 +1,6 @@
 package sam.controller;
 
+import sam.model.dao.exception.PersistenciaException;
 import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
 
@@ -37,7 +38,7 @@ public class AlteracaoPerfilController extends HttpServlet {
             request.getSession().setAttribute("usuario", usuario);
             response.sendRedirect("/sam/core/perfil.jsp");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

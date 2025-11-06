@@ -3,32 +3,23 @@ package sam.model.dao;
 import sam.model.dao.exception.PersistenciaException;
 import sam.model.domain.Usuario;
 
-import javax.swing.plaf.nimbus.State;
-import javax.xml.transform.Result;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.HashMap;
 
 public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
     private Connection conexao;
-
-    private final Map<Long, Usuario> usuarios;
-
     private static UsuarioDAO usuarioDAO;
-    private static Long sequenciaId;
 
     static {
         UsuarioDAO.usuarioDAO = null;
-        UsuarioDAO.sequenciaId = 0L;
     }
-
-    public static Long getNextId() { return UsuarioDAO.sequenciaId++; }
 
     private UsuarioDAO() {
         this.conexao = Conexao.getConnection();
-        usuarios = new HashMap();
     }
     public static UsuarioDAO getInstance() {
         if (usuarioDAO == null)
@@ -38,9 +29,9 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     }
 
     @Override
-    public void inserir(Usuario usuario) throws PersistenciaException, SQLException {
+    public Long inserir(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuarios(nome, email, cpf, senha) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, usuario.getNome());
             preparedStatement.setString(2, usuario.getEmail());
             preparedStatement.setString(3, usuario.getCPF());
@@ -49,13 +40,16 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next())
                 usuario.setId(rs.getLong(1));
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Erro ao cadastrar usuário", e);
         }
+        return usuario.getId();
     }
 
     @Override
-    public void atualizar(Usuario usuario) throws PersistenciaException, SQLException {
+    public Long atualizar(Usuario usuario) throws SQLException {
         String sql = "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, senha = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, usuario.getNome());
@@ -68,13 +62,14 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
         } catch (SQLException e) {
             throw new SQLException("Erro ao atualizar usuário", e);
         }
+        return usuario.getId();
     }
 
     @Override
-    public Usuario pesquisar(Long id) throws PersistenciaException, SQLException {
+    public Usuario pesquisar(Long id) throws SQLException {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE id = ?";
-        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -84,6 +79,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
                 String cpf = rs.getString("cpf");
                 String senha = rs.getString("senha");
                 usuario = new Usuario(nome,email, cpf, senha);
+                usuario.setId(id);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);
@@ -91,7 +87,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
         return usuario;
     }
 
-    public Usuario pesquisarPorNome(String nome) throws PersistenciaException, SQLException {
+    public Usuario pesquisarPorNome(String nome) throws SQLException {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE nome = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
@@ -99,10 +95,12 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
+                Long id = rs.getLong("id");
                 String email = rs.getString("email");
                 String cpf = rs.getString("cpf");
                 String senha = rs.getString("senha");
                 usuario = new Usuario(nome,email, cpf, senha);
+                usuario.setId(id);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);
@@ -110,7 +108,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
         return usuario;
     }
 
-    public Usuario pesquisarPorEmail(String email) throws PersistenciaException, SQLException {
+    public Usuario pesquisarPorEmail(String email) throws SQLException {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE email = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
@@ -118,10 +116,12 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
+                Long id = rs.getLong("id");
                 String nome = rs.getString("nome");
                 String cpf = rs.getString("cpf");
                 String senha = rs.getString("senha");
-                usuario = new Usuario(nome,email, cpf, senha);
+                usuario = new Usuario(nome, email, cpf, senha);
+                usuario.setId(id);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);
@@ -129,7 +129,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
         return usuario;
     }
 
-    public Usuario pesquisarPorCPF(String cpf) throws PersistenciaException, SQLException {
+    public Usuario pesquisarPorCPF(String cpf) throws SQLException {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE cpf = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
@@ -137,10 +137,12 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
+                Long id = rs.getLong("id");
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String senha = rs.getString("senha");
-                usuario = new Usuario(nome,email, cpf, senha);
+                usuario = new Usuario(nome, email, cpf, senha);
+                usuario.setId(id);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);

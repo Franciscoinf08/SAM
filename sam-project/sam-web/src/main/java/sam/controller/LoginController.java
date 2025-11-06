@@ -1,5 +1,6 @@
 package sam.controller;
 
+import sam.model.dao.exception.PersistenciaException;
 import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
 
@@ -40,7 +41,7 @@ public class LoginController extends HttpServlet {
             }
             response.sendRedirect(jsp);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

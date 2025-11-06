@@ -5,8 +5,8 @@ import sam.model.domain.util.UsuarioTipo;
 public class Usuario {
     private Long id;
     private String nome;
-    private final String cpf;
     private String email;
+    private final String cpf;
     private String senha;
     private UsuarioTipo tipo;
 
@@ -23,6 +23,12 @@ public class Usuario {
         tipo = UsuarioTipo.CLIENTE;
     }
 
+    @Override
+    public boolean equals(Object comparar) {
+        Usuario usuarioComparar = (Usuario) comparar;
+        return (id.equals(usuarioComparar.getId()));
+    }
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -31,11 +37,11 @@ public class Usuario {
 
     public void setNome(String nome) { this.nome = nome; }
 
-    public String getCPF() {return cpf;}
-
     public String getEmail() { return email; }
 
     public void setEmail(String email) { this.email = email; }
+
+    public String getCPF() {return cpf;}
 
     public String getSenha() { return senha; }
 

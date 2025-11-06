@@ -5,7 +5,7 @@ import sam.model.dao.exception.PersistenciaException;
 import java.sql.SQLException;
 
 public interface GenericDAO<E, K> {
-    void inserir(E entidade) throws PersistenciaException, SQLException;
-    void atualizar(E entidade) throws PersistenciaException, SQLException;
-    E pesquisar(K chave) throws PersistenciaException, SQLException;
+    K inserir(E entidade) throws SQLException;
+    K atualizar(E entidade) throws SQLException;
+    E pesquisar(K chave) throws SQLException;
 }
