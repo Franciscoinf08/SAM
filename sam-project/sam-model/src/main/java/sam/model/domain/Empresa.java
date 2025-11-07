@@ -39,6 +39,8 @@ public class Empresa {
 
     public void setListaProgramasFidelidade(List<ProgramaFidelidade> listaProgramasFidelidade) {
         this.listaProgramasFidelidade = listaProgramasFidelidade;
+    }public void vincularProgramasFidelidade(ProgramaFidelidade p){
+        listaProgramasFidelidade.add(p);
     }
     public int getId(){
         return getIdEmpresa();

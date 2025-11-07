@@ -69,6 +69,7 @@ public class EmpresaController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+
     private void inserirEmpresa(HttpServletRequest request, HttpServletResponse response)
             throws IOException, SQLException {
         Empresa empresa = new Empresa(

@@ -26,6 +26,7 @@ public class ProgramaFidelidadeController extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+
         try{
             switch(action){
                 case "listar":
@@ -77,8 +78,9 @@ public class ProgramaFidelidadeController extends HttpServlet{
         int duracao = Integer.parseInt(request.getParameter("duracao"));
         int qtdeMilhasMes = Integer.parseInt(request.getParameter("qtdeMilhasMes"));
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
+        double preco = Double.parseDouble(request.getParameter("preco"));
 
-        ProgramaFidelidade programaFidelidade = new ProgramaFidelidade(nome, bonusMilhas, duracao, qtdeMilhasMes, idEmpresa);
+        ProgramaFidelidade programaFidelidade = new ProgramaFidelidade(nome, bonusMilhas, duracao, qtdeMilhasMes, idEmpresa, preco);
         try {
             dao.salvar(programaFidelidade);
         }catch (Exception e){

@@ -14,14 +14,14 @@ public class AvaliadorProgramaFidelidade {
 
     public AvaliadorProgramaFidelidade(Connection conexao) {
         this.conexao = conexao;
-        this.programaDAO = new ProgramaFidelidadeDAO(conexao);
+        this.programaDAO = new ProgramaFidelidadeDAO();
         this.empresaDAO = new EmpresaDAO();
         
     }
 
     public void avaliarPrograma(int idPrograma) throws Exception {
         ProgramaFidelidade programa = programaDAO.buscarPorId(idPrograma);
-        Empresa empresa = empresaDAO.buscarPorId(programa.getEmpresa().getIdEmpresa());
+        Empresa empresa = empresaDAO.buscarPorId(programa.getIdEmpresa());
 
         double preco = programa.getPrecoMensal();
         double milhasMes = programa.getQtdeMilhasMes();

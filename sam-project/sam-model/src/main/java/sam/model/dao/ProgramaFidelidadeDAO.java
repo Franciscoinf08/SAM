@@ -8,11 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class ProgramaFidelidadeDAO {
     private final Connection conexao;
 
-    public ProgramaFidelidadeDAO(Connection conexao) {
-        this.conexao = conexao;
+    public ProgramaFidelidadeDAO() {
+        this.conexao = Conexao.getConnection();
     }
 
     public ProgramaFidelidade salvar(ProgramaFidelidade progFidelidade) throws SQLException {
@@ -56,13 +57,14 @@ public class ProgramaFidelidadeDAO {
         return programaFidelidade;
     }
 
-    public void atualizarProgramaFidelidade(int id, String nome, double bonusMilhas, double duracao, int qtdeMilhasMes) throws SQLException {
-        String sql = "update programasFidelidade set nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ? where id = ?";
+    public void atualizarProgramaFidelidade(int id, String nome, double bonusMilhas, double duracao, int qtdeMilhasMes, double preco) throws SQLException {
+        String sql = "update programasFidelidade set nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ? preco = ? where id = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, nome);
             stmt.setDouble(2, bonusMilhas);
-            stmt.setInt(4, qtdeMilhasMes);
-            stmt.setDouble(5, duracao);
+            stmt.setInt(3, qtdeMilhasMes);
+            stmt.setDouble(4, duracao);
+            stmt.setDouble(5, preco);
             stmt.setInt(6, id);
             stmt.executeUpdate();
         } catch (SQLException e) {

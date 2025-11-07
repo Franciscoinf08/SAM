@@ -10,6 +10,7 @@ import java.util.List;
 
 import sam.model.domain.Empresa;
 
+
 public class EmpresaDAO {
     private  Connection conexao;
 

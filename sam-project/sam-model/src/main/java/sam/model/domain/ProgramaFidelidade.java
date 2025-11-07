@@ -13,9 +13,10 @@ public class ProgramaFidelidade {
     private int qtdeMilhasMes;
     private int duracao;
     private double precoMensal;
+    private int idEmpresa;
     private String avaliacao;
 
-    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao, double precoMensal, String avaliacao) {
+    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao, double precoMensal, double preco) {
         this.nome = nome;
         this.bonusMilhas = bonusMilhas;
         this.qtdeMilhasMes = qtdeMilhasMes;
@@ -81,8 +82,11 @@ public class ProgramaFidelidade {
         this.avaliacao = avaliacao;
     }
 
+    public void setIdEmpresa(int idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
 
-
-
-    
+    public int getIdEmpresa() {
+        return idEmpresa;
+    }
 }

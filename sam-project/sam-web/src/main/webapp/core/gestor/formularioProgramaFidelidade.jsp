@@ -14,6 +14,7 @@
 </head>
 <body>
 <header>
+
     <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Empresas</h1>
     <nav>
@@ -50,6 +51,10 @@
             <label>
                 <span> Milhas por mês</span>
                 <input type="number" name="qtdeMilhasMes" required>
+            </label>
+            <label>
+                <span>preco mensal</span>
+                <input type="number" name="preco" required>
             </label>
 
             <label>Empresas</label><br>
