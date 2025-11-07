@@ -32,27 +32,45 @@
 
 <main class="content">
     <div class="formulario">
-        <form action="<%= request.getContextPath() %>/empresa" method="post">
-            <input type="hidden" name="action" value="<%= request.getAttribute("empresa") == null ? "inserir" : "atualizar" %>">
-            <input type="hidden" name="id" value="<%= request.getAttribute("empresa") != null ? ((Empresa)request.getAttribute("empresa")).getIdEmpresa() : "" %>">
 
-            <label for="nomeEmpresa">Nome:</label>
-            <input type="text" id="nomeEmpresa" name="nomeEmpresa" required
-                   value="<%= request.getAttribute("empresa") != null ? ((Empresa)request.getAttribute("empresa")).getNome() : "" %>">
+        <form action="<%= request.getContextPath() %>/programaFidelidade" method="post">
+            <label>Nome do Programa</label>
+            <input type="text" name="nome" required>
 
-            <label for="cnpj">CNPJ:</label>
-            <input type="text" id="cnpj" name="cnpj" required
-                   value="<%= request.getAttribute("empresa") != null ? ((Empresa)request.getAttribute("empresa")).getCNPJ() : "" %>">
 
-            <label for="milheiroSeguranca">Milheiro Segurança:</label>
-            <input type="number" id="milheiroSeguranca" name="milheiroSeguranca" step="0.01" required
-                   value="<%= request.getAttribute("empresa") != null ? ((Empresa)request.getAttribute("empresa")).getMilheiroSeguranca() : "" %>">
+            <label>
+                <span>Bonus de Milhas</span>
+                <input type="number" name="bonusMilhas" required>
+            </label>
 
-            <a href="<%=request.getContextPath()%>/programaFidelidade?action=novo">Proximo</a>
-            <a href="<%=request.getContextPath()%>/empresa">Cancelar</a>
+            <label>
+                <span>Duração</span>
+                <input type="number" name="duracao" required>
+            </label>
+            <label>
+                <span> Milhas por mês</span>
+                <input type="number" name="qtdeMilhasMes" required>
+            </label>
+
+            <label>Empresas</label><br>
+            <%
+                List<Empresa> empresas = (List<Empresa>) request.getAttribute("empresas");
+                if (empresas != null) {
+                    for (Empresa e : empresas) {
+            %>
+
+            <label>
+                <span><%=e.getNome()%></span>
+                <input type="radio" name="idEmpresa" value="<%= e.getIdEmpresa() %>">
+            </label>
+            <%
+                    }
+                }
+            %>
+
+            <button type="submit">Salvar</button>
         </form>
     </div>
-
 </main>
 </body>
 </html>

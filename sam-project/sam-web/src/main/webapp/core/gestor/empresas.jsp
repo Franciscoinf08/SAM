@@ -74,7 +74,10 @@
             <td><%= empresa.getNome() %></td>
             <td><%= empresa.getCNPJ() %></td>
             <td><%= empresa.getMilheiroSeguranca() %></td>
-            <td><button >Editar</button></td>
+            <td><a href="<%=request.getContextPath()%>/empresa?action=editar&id=<%= empresa.getIdEmpresa()%>"><button>Editar</button></a></td>
+
+            <td><a href="<%=request.getContextPath()%>/empresa?action=excluir&id=<%=empresa.getIdEmpresa()%>"><button>Excluir</button></a></td>
+            <td><a href="<%= %>"</td>
         </tr>
         <%
             }
@@ -85,7 +88,7 @@
             }
         %>
     </table>
-    <a href="${pageContext.request.contextPath}/core/gestor/formularioEmpresas.jsp" class="btn">Adicionar Empresa</a>
+    <a href="<%= request.getContextPath() %>/empresa?action=novo"><button>Adicionar Empresa</button></a>
 </main>
 
 <script src="<%= request.getContextPath() %>/js/script.js"></script>
