@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class ProgramaFidelidadeDAO {
     private final Connection conexao;
 
-    public ProgramaFidelidadeDAO(Connection conexao) {
-        this.conexao = conexao;
+    public ProgramaFidelidadeDAO(){
+        this.conexao = Conexao.getConnection();
     }
 
     public ProgramaFidelidade salvar(ProgramaFidelidade progFidelidade) throws SQLException {

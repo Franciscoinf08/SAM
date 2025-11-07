@@ -1,4 +1,4 @@
-package sam.model.service;
+package sam.model.domain;
 
 import sam.model.dao.EmpresaDAO;
 import sam.model.dao.ProgramaFidelidadeDAO;
@@ -7,21 +7,12 @@ import sam.model.domain.ProgramaFidelidade;
 import java.sql.Connection;
 
 public class AvaliadorProgramaFidelidade {
-    private final Connection conexao;
-    private final ProgramaFidelidadeDAO programaDAO;
-    private final EmpresaDAO empresaDAO;
-     
-
-    public AvaliadorProgramaFidelidade(Connection conexao) {
-        this.conexao = conexao;
-        this.programaDAO = new ProgramaFidelidadeDAO(conexao);
-        this.empresaDAO = new EmpresaDAO();
-        
-    }
+    
 
     public void avaliarPrograma(int idPrograma) throws Exception {
-        ProgramaFidelidade programa = programaDAO.buscarPorId(idPrograma);
-        Empresa empresa = empresaDAO.buscarPorId(programa.getEmpresa().getIdEmpresa());
+        
+        Empresa empresa = new Empresa();
+        ProgramaFidelidade = new ProgramaFidelidade();
 
         double preco = programa.getPrecoMensal();
         double milhasMes = programa.getQtdeMilhasMes();
