@@ -2,32 +2,29 @@ package sam.model.dao;
 
 import sam.model.domain.Empresa;
 import sam.model.domain.ProgramaFidelidade;
-import sam.model.dao.EmpresaDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProgramaFidelidadeDAO {
     private final Connection conexao;
-    private final EmpresaDAO daoEmpresa = new EmpresaDAO();
 
-    public ProgramaFidelidadeDAO() {
-        this.conexao = Conexao.getConnection();
+    public ProgramaFidelidadeDAO(Connection conexao) {
+        this.conexao = conexao;
     }
 
     public ProgramaFidelidade salvar(ProgramaFidelidade progFidelidade) throws SQLException {
-        String sql = "insert into progrmasFidelidade values(?, ?, ?, ?, ?)";
+        String sql = "insert into programasFidelidade values(?, ?, ?, ?, ?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setString(1, progFidelidade.getNome());
             stmt.setDouble(2, progFidelidade.getBonusMilhas());
             stmt.setInt(3, progFidelidade.getDuracao());
             stmt.setInt(4, progFidelidade.getQtdeMilhasMes());
-            stmt.setObject(5, progFidelidade.getIdEmpresa());
-
+            stmt.setDouble(5, progFidelidade.getPrecoMensal());
+            stmt.setString(6, progFidelidade.getAvaliacao());
+            
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -80,27 +77,6 @@ public class ProgramaFidelidadeDAO {
         } catch (SQLException e) {
             throw new SQLException("Erro ao excluir a empresa", e);
         }
-    }
-    public List<ProgramaFidelidade> listarTodos() {
-        List<ProgramaFidelidade> lista = new ArrayList<>();
-        String sql = "SELECT * FROM programa_fidelidade ";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                ProgramaFidelidade programaFidelidade = new ProgramaFidelidade();
-                programaFidelidade.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
-                programaFidelidade.setNome(rs.getString("nome"));
-                programaFidelidade.setBonusMilhas(rs.getInt("bonusMilhas"));
-                programaFidelidade.setDuracao(rs.getInt("duracao"));
-                programaFidelidade.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
-                lista.add(programaFidelidade);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return lista;
     }
 
 }
