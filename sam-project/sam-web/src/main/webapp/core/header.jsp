@@ -1,8 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sam.model.domain.Usuario"%>
 <%@page import="sam.autorizacao.ControleAutorizacao"%>
+<%@page import="sam.controller.LoginController"%>
 
 <%
+    LoginController.validarSessao(request, response);
+
     Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 %>
 
@@ -48,8 +51,8 @@
         <a href="../geral/transacoes.jsp">Transações Gestor</a>
         <%} if (ControleAutorizacao.checkPermissao("campanhas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("campanhas", usuario.getCPF())) {%>
         <a href="../gestor/planos.jsp">Campanhas</a>
-        <%} if (ControleAutorizacao.checkPermissao("ver-usuarios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("campanhas", usuario.getCPF())) {%>
-        <a href="../gestor/planos.jsp">Campanhas</a>
+        <%} if (ControleAutorizacao.checkPermissao("ver-usuarios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-usuarios", usuario.getCPF())) {%>
+        <a href="../dev/visualizar-usuarios.jsp">Ver Usuários</a>
         <%}%>
     </div>
 </div>

@@ -56,7 +56,7 @@
                     <% if (ControleAutorizacao.checkBloqueio("transacoes-clientes", usuario.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=transacoes-clientes'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>

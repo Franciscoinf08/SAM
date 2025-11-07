@@ -7,14 +7,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import sam.model.service.AcessosBlockService;
 
 @WebServlet(name = "AcessosBlockController", urlPatterns = {"/AcessosBlockController"})
 public class AcessosBlockController extends HttpServlet {
 
+    private static AcessosBlockService bloqueios;
     private String jsp = "";
 
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response)
+    static {
+        bloqueios = new AcessosBlockService();
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String acao = request.getParameter("acao");
@@ -31,11 +36,31 @@ public class AcessosBlockController extends HttpServlet {
     }
 
     public String ativar(HttpServletRequest request) {
-
+        String jsp = "";
+        try {
+            String usuario = (String) request.getParameter("usuario");
+            String recurso = (String) request.getParameter("recurso");
+            bloqueios.ativar(recurso, usuario);
+            jsp = "/core/dev/visualizar-usuarios.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsp = "";
+        }
+        return jsp;
     }
 
     public String bloquear(HttpServletRequest request) {
-
+        String jsp = "";
+        try {
+            String usuario = (String) request.getParameter("usuario");
+            String recurso = (String) request.getParameter("recurso");
+            bloqueios.bloquear(recurso, usuario);
+            jsp = "/core/dev/visualizar-usuarios.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsp = "";
+        }
+        return jsp;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

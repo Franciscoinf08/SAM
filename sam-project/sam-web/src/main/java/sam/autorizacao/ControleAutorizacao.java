@@ -1,16 +1,19 @@
 package sam.autorizacao;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import sam.model.domain.util.UsuarioTipo;
-import sam.model.domain.AcessosBloqueios;
+import sam.model.service.AcessosBlockService;
 
 public class ControleAutorizacao {
     private final static Map<String, Permissao> permissoes;
+    private static AcessosBlockService bloqueios;
 
     static {
         permissoes = new HashMap();
+        bloqueios = new AcessosBlockService();
         ControleAutorizacao.inicializarPermissoes();
     }
     
@@ -127,12 +130,8 @@ public class ControleAutorizacao {
         return false;
     }
     
-    public static boolean checkBloqueio(String recurso, String tipoList) { //CONECTAR COM A CLASS AcessosService 
-        for (UsuarioTipo usuario: tipoList)
-            if (permissoes.get(recurso).check(usuario))
-                return true;
-        
-        return false; /*ALTERAR CONFORME FOR PRECISO*/
+    public static boolean checkBloqueio(String recurso, String usuario) throws SQLException { //CONECTAR COM A CLASS AcessosService 
+        return bloqueios.check(recurso, usuario);
     }
     
 }
