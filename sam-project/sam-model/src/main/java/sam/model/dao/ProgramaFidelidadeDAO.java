@@ -16,12 +16,15 @@ public class ProgramaFidelidadeDAO {
     }
 
     public ProgramaFidelidade salvar(ProgramaFidelidade progFidelidade) throws SQLException {
-        String sql = "insert into progrmasFidelidade values(?, ?, ?, ?)";
+        String sql = "insert into programasFidelidade values(?, ?, ?, ?, ?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setString(1, progFidelidade.getNome());
             stmt.setDouble(2, progFidelidade.getBonusMilhas());
             stmt.setInt(3, progFidelidade.getDuracao());
             stmt.setInt(4, progFidelidade.getQtdeMilhasMes());
+            stmt.setDouble(5, progFidelidade.getPrecoMensal());
+            stmt.setString(6, progFidelidade.getAvaliacao());
+            
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {

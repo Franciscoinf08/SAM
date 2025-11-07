@@ -12,12 +12,16 @@ public class ProgramaFidelidade {
     private double bonusMilhas;
     private int qtdeMilhasMes;
     private int duracao;
+    private double precoMensal;
+    private String avaliacao;
 
-    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao) {
+    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao, double precoMensal, String avaliacao) {
         this.nome = nome;
         this.bonusMilhas = bonusMilhas;
         this.qtdeMilhasMes = qtdeMilhasMes;
         this.duracao = duracao;
+        this.precoMensal = precoMensal;
+        this.avaliacao = avaliacao;
     }
     public ProgramaFidelidade(){}
     public void setIdProgramaFidelidade(int idProgramaFidelidade) {
@@ -52,6 +56,7 @@ public class ProgramaFidelidade {
         this.qtdeMilhasMes = qtdeMilhasMes;
     }
 
+  
     public int getDuracao() {
         return duracao;
     }
@@ -59,5 +64,25 @@ public class ProgramaFidelidade {
     public void setDuracao(int duracao) {
         this.duracao = duracao;
     }
+
+    public double getPrecoMensal() {
+        return precoMensal;
+    }
+
+    public void setPrecoMensal(double precoMensal) {
+        this.precoMensal = precoMensal;
+    }
+
+    public String getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(String avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
+
+
+
     
 }
