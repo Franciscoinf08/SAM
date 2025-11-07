@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
-    private Connection conexao;
+    private final Connection conexao;
     private static UsuarioDAO usuarioDAO;
 
     static {
@@ -29,7 +29,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     }
 
     @Override
-    public Long inserir(Usuario usuario) throws SQLException {
+    public void inserir(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuarios(nome, email, cpf, senha) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, usuario.getNome());
@@ -37,15 +37,14 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             preparedStatement.setString(3, usuario.getCPF());
             preparedStatement.setString(4, usuario.getSenha());
 
+            preparedStatement.executeUpdate();
+
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next())
                 usuario.setId(rs.getLong(1));
-
-            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Erro ao cadastrar usuário", e);
         }
-        return usuario.getId();
     }
 
     @Override
@@ -72,6 +71,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             preparedStatement.setLong(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
+
             if (rs.next()) {
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");

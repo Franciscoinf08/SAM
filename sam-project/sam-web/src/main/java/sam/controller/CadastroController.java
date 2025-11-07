@@ -28,14 +28,14 @@ public class CadastroController extends HttpServlet {
         Usuario usuario = new Usuario(nome, email, cpf, senha);
 
         try {
-            usuario.setId(manterUsuario.cadastrar(usuario));
+            manterUsuario.cadastrar(usuario);
             request.getSession().setAttribute("usuario", usuario);
             response.sendRedirect("/sam/core/cliente/dashboard.jsp");
         } catch (PersistenciaException e) {
             e.printStackTrace();
             String erro = e.getLocalizedMessage();
             request.setAttribute("erro", erro);
-            RequestDispatcher rd = request.getRequestDispatcher("/sam");
+            RequestDispatcher rd = request.getRequestDispatcher("");
             rd.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();

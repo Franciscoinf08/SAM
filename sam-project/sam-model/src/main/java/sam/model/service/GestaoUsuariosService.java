@@ -19,25 +19,25 @@ public class GestaoUsuariosService {
         try {
             return usuarioDAO.pesquisarPorCPFSenha(cpf, senha);
         } catch (PersistenciaException e) {
-            throw new PersistenciaException(e);
+            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
-    public Long cadastrar(Usuario usuario) throws PersistenciaException, SQLException {
-        if (!UsuarioHelper.validarCadastroUsuario(usuario).equals(""))
+    public void cadastrar(Usuario usuario) throws PersistenciaException, SQLException {
+        if (!"".equals(UsuarioHelper.validarCadastroUsuario(usuario)))
             throw new PersistenciaException(UsuarioHelper.validarCadastroUsuario(usuario));
 
         try {
-            return usuarioDAO.inserir(usuario);
+            usuarioDAO.inserir(usuario);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
     public void atualizar(Usuario usuario) throws PersistenciaException, SQLException {
-        if (!UsuarioHelper.validarAtualizacaoUsuario(usuario).equals(""))
+        if (!"".equals(UsuarioHelper.validarAtualizacaoUsuario(usuario)))
             throw new PersistenciaException(UsuarioHelper.validarAtualizacaoUsuario(usuario));
 
         try {
