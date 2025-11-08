@@ -1,4 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sam.model.dao.UsuarioDAO"%>
+
+<% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -19,32 +23,35 @@
 
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Visulizar Usuários</h1>
+            <h1>Gerenciar Usuários</h1>
             <%@include file="/core/header.jsp" %>
         </header>
 
         <main class="content">
-            <h2>Gerenciar Empresas</h2>
+            <h2>Gerenciar Usuarios</h2>
             <table>
                 <tr>
                     <th>Nome</th>
                     <th>Tipo</th>
                     <th>Ações</th>
-                <tr><!-- ADICIONAR for LISTAR USUARIOS -->
-                    <td></td>
-                    <td>Gestor</td>
-                    <td>
-                        <button>Relatórios</button>
-                        <button><a href="ver-permissoes.jsp">Permissões</a></button>
-                    </td>
-                </tr>
                 <tr>
-                    <td>Ana</td>
-                    <td>Cliente</td>
+                    <% int cont = 0;
+                        while (true) {
+                            Usuario cliente = usuarioDAO.pesquisar(cont);
+                            if (cliente != null) {%>
+                    <td><%cliente.getNome();%></td>
+                    <td><%cliente.getTipo();%></td>
                     <td>
                         <button>Relatórios</button>
-                        <button><a href="ver-permissoes.jsp">Permissões</a></button>
+                        <button><a href="ver-permissoes.jsp?id=<%=cont%>">Permissões</a></button>
                     </td>
+                    <%} else {
+                                break;
+                            }
+                            cont++;
+                        }
+
+                    %>
                 </tr>
             </table>
         </main>

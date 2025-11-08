@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@page import="sam.controller.AcessosBlockController" %>
+<%@page import="sam.model.dao.UsuarioDAO"%>
 
+<% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();%>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -28,6 +30,9 @@
         </header>
 
         <main class="content">
+            <% String id = request.getParameter("id");
+            Usuario cliente = usuarioDAO.pesquisar(id);
+            %>
             <!-- BUSCAR INFORMAÇÕES DO USUÁRIO ENVIADO POR CPF -->
             <h2>Gerenciar Permissões de <!-- NOME DO USUARIO --></h2>
             <table>
@@ -38,239 +43,239 @@
                 </tr>
                 </tr>
                 <tr>
-                    <% if (ControleAutorizacao.checkPermissao("dashboard-cliente", usuario.getTipo())) {%>
+                    <% if (ControleAutorizacao.checkPermissao("dashboard-cliente", cliente.getTipo())) {%>
                     <td>Dashboard</td>
-                    <% if (ControleAutorizacao.checkBloqueio("dashboard-cliente", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("dashboard-cliente", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=dashboard-clientes'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=dashboard-clientes'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=dashboard-clientes'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=dashboard-clientes'>Bloquear</a></button>
                     </td>
-                    <%}} if (ControleAutorizacao.checkPermissao("transacoes-clientes", usuario.getTipo())) {%>
+                    <%}} if (ControleAutorizacao.checkPermissao("transacoes-clientes", cliente.getTipo())) {%>
                     <td>Transações</td>
-                    <% if (ControleAutorizacao.checkBloqueio("transacoes-clientes", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("transacoes-clientes", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=transacoes-clientes'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=transacoes-clientes'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=transacoes-clientes'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=transacoes-clientes'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("empresas", usuario.getTipo())) {%> 
+                    <%}}if (ControleAutorizacao.checkPermissao("empresas", cliente.getTipo())) {%> 
                     <td>Empresas</td>
-                    <% if (ControleAutorizacao.checkBloqueio("empresas", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("empresas", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=empresas'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=empresas'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=empresas'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=empresas'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("notificacoes", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("notificacoes", cliente.getTipo())) {%>
                     <td>Notificacoes</td>
-                    <% if (ControleAutorizacao.checkBloqueio("notificacoes", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("notificacoes", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=notificacoes'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=notificacoes'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=notificacoes'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=notificacoes'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("suporte", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("suporte", cliente.getTipo())) {%>
                     <td>Suporte</td>
-                    <% if (ControleAutorizacao.checkBloqueio("suporte", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("suporte", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=suporte'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=suporte'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=suporte'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=suporte'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("perfil", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("perfil", cliente.getTipo())) {%>
                     <td>Perfil</td>
-                    <% if (ControleAutorizacao.checkBloqueio("perfil", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("perfil", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=perfil'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=perfil'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=perfil'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=perfil'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("computar-milhas", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("computar-milhas", cliente.getTipo())) {%>
                     <td>Computar Milhas</td>
-                    <% if (ControleAutorizacao.checkBloqueio("computar-milhas", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("computar-milhas", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=computar-milhas'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=computar-milhas'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=computar-milhas'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=computar-milhas'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("dashboard-gestor", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("dashboard-gestor", cliente.getTipo())) {%>
                     <td>Dashboard</td>
-                    <% if (ControleAutorizacao.checkBloqueio("dashboard-gestor", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("dashboard-gestor", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=dashboard-gestor'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=dashboard-gestor'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=dashboard-gestor'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=dashboard-gestor'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("associacoes", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("associacoes", cliente.getTipo())) {%>
                     <td>Associar Clientes</td>
-                    <% if (ControleAutorizacao.checkBloqueio("associacoes", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("associacoes", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=associacoes'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=associacoes'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=associacoes'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=associacoes'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("orcamentos", cliente.getTipo())) {%>
                     <td>Orcamentos</td>
-                    <% if (ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("orcamentos", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=orcamentos'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=orcamentos'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=&usuario=<%= usuario.getCPF() %>&recurso=orcamentos'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=&usuario=<%= cliente.getCPF() %>&recurso=orcamentos'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("planos", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("planos", cliente.getTipo())) {%>
                     <td>Planos</td>
-                    <% if (ControleAutorizacao.checkBloqueio("planos", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("planos", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=planos'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=planos'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=planos'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=planos'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("mensagens-avisos", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("mensagens-avisos", cliente.getTipo())) {%>
                     <td>Enviar mensagens e avisos</td>
-                    <% if (ControleAutorizacao.checkBloqueio("mensagens-avisos", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("mensagens-avisos", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=mensagens-avisos'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=mensagens-avisos'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=mensagens-avisos'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=mensagens-avisos'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("acesso-clientes", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("acesso-clientes", cliente.getTipo())) {%>
                     <td>Acesso aos clientes</td>
-                    <% if (ControleAutorizacao.checkBloqueio("acesso-clientes", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("acesso-clientes", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=acesso-clientes'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=acesso-clientes'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=acesso-clientes'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=acesso-clientes'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("programa", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("programa", cliente.getTipo())) {%>
                     <td>Programas de fidelidade</td>
-                    <% if (ControleAutorizacao.checkBloqueio("programa", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("programa", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=prorama'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=prorama'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=programa'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=programa'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("avaliacoes", cliente.getTipo())) {%>
                     <td>Avaliações</td>
-                    <% if (ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("avaliacoes", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=avaliacoes'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=avaliacoes'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=avaliacoes'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=avaliacoes'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("relatorios", cliente.getTipo())) {%>
                     <td>Relatórios</td>
-                    <% if (ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("relatorios", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=relatorios'></a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=relatorios'></a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=relatorios'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=relatorios'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("transacoes-gestor", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("transacoes-gestor", cliente.getTipo())) {%>
                     <td>Transacoes</td>
-                    <% if (ControleAutorizacao.checkBloqueio("transacoes-gestor", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("transacoes-gestor", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=transacoes-gestor'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=transacoes-gestor'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=transacoes-gestor'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=transacoes-gestor'>Bloquear</a></button>
                     </td>
-                    <%}}if (ControleAutorizacao.checkPermissao("campanhas", usuario.getTipo())) {%>
+                    <%}}if (ControleAutorizacao.checkPermissao("campanhas", cliente.getTipo())) {%>
                     <td>Campanhas</td>
-                    <% if (ControleAutorizacao.checkBloqueio("campanhas", usuario.getCPF())) {%>
+                    <% if (ControleAutorizacao.checkBloqueio("campanhas", cliente.getCPF())) {%>
                     <td>BLOQUEADO</td>
                     <td>
-                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= usuario.getCPF() %>&recurso=campanhas'>Ativar</a></button>
+                        <button><a href='/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=campanhas'>Ativar</a></button>
                     </td>
                     <% } else {%>
                     <td>ATIVO</td>
                     <td>
                         <button><a
-                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= usuario.getCPF() %>&recurso=campanhas'>Bloquear</a></button>
+                                href='/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=campanhas'>Bloquear</a></button>
                     </td>
                     <%}}%>
                 </tr>

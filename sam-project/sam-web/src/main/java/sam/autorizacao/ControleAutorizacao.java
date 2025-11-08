@@ -9,7 +9,7 @@ import sam.model.service.AcessosBlockService;
 
 public class ControleAutorizacao {
     private final static Map<String, Permissao> permissoes;
-    private static AcessosBlockService bloqueios;
+    private final static AcessosBlockService bloqueios;
 
     static {
         permissoes = new HashMap();
