@@ -126,7 +126,7 @@ li {
     margin: 10% 0;
 }
 
-button {
+button, .button-a {
     background-color: #0066cc;
     color: white;
     border: none;

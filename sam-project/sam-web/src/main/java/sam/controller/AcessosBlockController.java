@@ -1,5 +1,6 @@
 package sam.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -32,7 +33,9 @@ public class AcessosBlockController extends HttpServlet {
                 jsp = this.bloquear(request);
                 break;
         }
-
+        
+        RequestDispatcher rd = request.getRequestDispatcher(jsp);
+        rd.forward(request, response);
     }
 
     public String ativar(HttpServletRequest request) {

@@ -12,26 +12,14 @@ public class AcessosBlockService {
     }
 
     public void bloquear(String recurso, String usuario) throws SQLException {
-        try {
-            bloqueios.bloquear(recurso, usuario);
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        }
+        bloqueios.bloquear(recurso, usuario);
     }
 
     public void ativar(String recurso, String usuario) throws SQLException {
-        try {
-            bloqueios.ativar(recurso, usuario);
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        }
+        bloqueios.ativar(recurso, usuario);
     }
 
     public boolean check(String recurso, String usuario) throws SQLException {
-        try {
-            return bloqueios.check(recurso, usuario);
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        }
+        return bloqueios.check(recurso, usuario);
     }
 }

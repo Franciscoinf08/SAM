@@ -30,7 +30,7 @@
         <%} if (ControleAutorizacao.checkPermissao("computar-milhas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("computar-milhas", usuario.getCPF())) {%>
         <a href="../gestor/computar-milhas.jsp">Computar Milhas</a>
         <%} if (ControleAutorizacao.checkPermissao("dashboard-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("dashboard-gestor", usuario.getCPF())) {%>
-        <a href="../gestor/apuracao.jsp">Apuração (Dashboard Gestor)</a>
+        <a href="../gestor/apuracao.jsp">Apuração(Dashboard Gestor)</a>
         <%} if (ControleAutorizacao.checkPermissao("associacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("associacoes", usuario.getCPF())) {%>
         <a href="../gestor/associacoes.jsp">Associações</a>
         <%} if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>

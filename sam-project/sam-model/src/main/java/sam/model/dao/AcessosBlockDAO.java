@@ -1,4 +1,4 @@
-package sam.model.dao; //FAZER USANDO O BANCO DE DADOS
+package sam.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ public class AcessosBlockDAO {
     }
 
     public void bloquear(String recurso, String usuario) throws SQLException {
-        String sql = "INSERT INTO acessos_block(usuario, recurso) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO acessos_block(usuario, recurso) VALUES (?, ?)";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setString(1, usuario);
             preparedStatement.setString(2, recurso);

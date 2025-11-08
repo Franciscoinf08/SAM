@@ -39,8 +39,8 @@
                         while (true) {
                             Usuario cliente = usuarioDAO.pesquisar(cont);
                             if (cliente != null) {%>
-                    <td><%cliente.getNome();%></td>
-                    <td><%cliente.getTipo();%></td>
+                    <td><%=cliente.getNome()%></td>
+                    <td><%=cliente.getTipo()%></td>
                     <td>
                         <button>Relatórios</button>
                         <button><a href="ver-permissoes.jsp?id=<%=cont%>">Permissões</a></button>
