@@ -14,7 +14,7 @@
     <h1>Formulário de Definição de Perfil e Objetivos</h1>
     <p>Preencha e atualize este formulário para um planejamento de objetivos e viagens eficaz.</p>
 
-    <form action="/processarObjetivos" method="POST">
+    <form action="/processarObjetivos" method="POST" id="formObjetivos">
 
         <fieldset>
             <legend>1. Informações Básicas e de Contato</legend>
@@ -78,6 +78,6 @@
         </fieldset>
         <button type="submit" value="enviarDados">Salvar/Atualizar Informações</button>
     </form>
-    <script src="script.js"></script>
+    <script src="../../js/form-objetivos.js"></script>
 </div>
 </body>

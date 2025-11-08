@@ -85,3 +85,8 @@ button:hover {
     font-size: 0.9em;
     color: #666;
 }
+
+.campo-invalido{
+    background-color: rgba(212, 0, 0, 0.33);
+}
+
