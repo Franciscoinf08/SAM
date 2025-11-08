@@ -30,7 +30,7 @@
     <h1>Empresas</h1>
     <nav>
         <a href="../transacoes.jsp">Transações</a>
-        <a href="empresas.jsp" class="active">Empresas</a>
+        <a href="<%=request.getContextPath()%>/empresa" class="active">Empresas</a>
         <a href="../notificacoes.jsp">Notificações</a>
         <a href="../suporte.jsp">Suporte</a>
     </nav>
@@ -58,6 +58,10 @@
     %>
 
     <table>
+        <%
+            if (empresas != null && !empresas.isEmpty()) {
+                for (Empresa empresa : empresas) {
+        %>
         <tr>
             <th>ID</th>
             <th>Nome</th>
@@ -65,17 +69,13 @@
             <th>Milheiro Segurança</th>
         </tr>
 
-        <%
-            if (empresas != null && !empresas.isEmpty()) {
-                for (Empresa empresa : empresas) {
-        %>
         <tr>
             <td><%= empresa.getIdEmpresa() %></td>
             <td><%= empresa.getNome() %></td>
             <td><%= empresa.getCNPJ() %></td>
             <td><%= empresa.getMilheiroSeguranca() %></td>
             <td><a href="<%=request.getContextPath()%>/empresa?action=editar&id=<%= empresa.getIdEmpresa()%>"><button>Editar</button></a></td>
-
+            <td><a href="<%= request.getContextPath() %>/programaFidelidade?action=listar&idEmpresa=<%=empresa.getIdEmpresa()%>"><button>Programas de Fidelidade</button></a></td>
             <td><a href="<%=request.getContextPath()%>/empresa?action=excluir&id=<%=empresa.getIdEmpresa()%>"><button>Excluir</button></a></td>
 
         </tr>

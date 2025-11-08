@@ -1,10 +1,7 @@
 
 package sam.model.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class EmpresaDAO {
     }
     public Empresa salvar(Empresa empresa) throws SQLException{
             String sql = "insert into empresa(nome, cnpj, milheiroSeguranca) values(?, ?, ?)";
-        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+        try(PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCNPJ());
             stmt.setDouble(3, empresa.getMilheiroSeguranca());
@@ -27,7 +24,8 @@ public class EmpresaDAO {
             
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    empresa.setIdEmpresa(rs.getInt(1));  // Aqui pegamos o id gerado e colocamos no objeto
+
+                    empresa.setIdEmpresa(rs.getInt(1));
                 }
             }
         } catch (SQLException e) {

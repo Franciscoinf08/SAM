@@ -1,8 +1,5 @@
-<%@page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="sam.model.domain.Empresa"%>
-<%@ page import="sam.model.domain.ProgramaFidelidade" %>
-<%@ page import="java.util.List" %>
 
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
@@ -10,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Empresa</title>
+    <title>Cadastro de PF</title>
 </head>
 <body>
 <header>
@@ -30,52 +27,40 @@
         </div>
     </div>
 </header>
-
 <main class="content">
-    <div class="formulario">
+        <div class="formulario">
+            <form action="<%= request.getContextPath() %>/programaFidelidade" method="post">
 
-        <form action="<%= request.getContextPath() %>/programaFidelidade" method="post">
-            <label>Nome do Programa</label>
-            <input type="text" name="nome" required>
+                <label>
+                    <span>Nome do Programa</span>
+                    <input type="text" name="nome" required>
+                </label>
 
 
-            <label>
-                <span>Bonus de Milhas</span>
-                <input type="number" name="bonusMilhas" required>
-            </label>
+                <label>
+                    <span>Bonus de Milhas</span>
+                    <input type="number" name="bonusMilhas" required>
+                </label>
 
-            <label>
-                <span>Duração</span>
-                <input type="number" name="duracao" required>
-            </label>
-            <label>
-                <span> Milhas por mês</span>
-                <input type="number" name="qtdeMilhasMes" required>
-            </label>
-            <label>
-                <span>preco mensal</span>
-                <input type="number" name="preco" required>
-            </label>
+                <label>
+                    <span>Duração</span>
+                    <input type="number" name="duracao" required>
+                </label>
+                <label>
+                    <span> Milhas por mês</span>
+                    <input type="number" name="qtdeMilhasMes" required>
+                </label>
 
-            <label>Empresas</label><br>
-            <%
-                List<Empresa> empresas = (List<Empresa>) request.getAttribute("empresas");
-                if (empresas != null) {
-                    for (Empresa e : empresas) {
-            %>
+                <label>
+                    <span>preco mensal</span>
+                    <input type="number" name="preco" required>
+                </label>
 
-            <label>
-                <span><%=e.getNome()%></span>
-                <input type="radio" name="idEmpresa" value="<%= e.getIdEmpresa() %>">
-            </label>
-            <%
-                    }
-                }
-            %>
-
-            <button type="submit">Salvar</button>
-        </form>
-    </div>
+                <input type="hidden" name="idEmpresa" value="<%= request.getParameter("idEmpresa") %>">
+                <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
 </main>
 </body>
 </html>

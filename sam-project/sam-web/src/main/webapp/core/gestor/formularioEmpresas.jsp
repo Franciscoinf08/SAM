@@ -49,7 +49,7 @@
             <input type="number" id="milheiroSeguranca" name="milheiroSeguranca" step="0.01" required
                    value="<%= request.getAttribute("empresa") != null ? ((Empresa)request.getAttribute("empresa")).getMilheiroSeguranca() : "" %>">
 
-            <a href="<%=request.getContextPath()%>/programaFidelidade?action=novo">Proximo</a>
+            <button type="submit">Enviar</button>
             <a href="<%=request.getContextPath()%>/empresa">Cancelar</a>
         </form>
     </div>
