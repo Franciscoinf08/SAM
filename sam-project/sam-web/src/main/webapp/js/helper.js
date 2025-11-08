@@ -143,8 +143,8 @@ function validarCPF(cpf) {
 }
 
 function validarEmail(email) {
-    usuario = email.substring(0, email.indexOf("@"));
-    dominio = email.substring(email.indexOf("@") + 1, email.length);
+    let usuario = email.substring(0, email.indexOf("@"));
+    let dominio = email.substring(email.indexOf("@") + 1, email.length);
 
     return usuario.length >= 1 &&
         dominio.length >= 1 &&

@@ -23,6 +23,14 @@ public class Usuario {
         tipo = UsuarioTipo.CLIENTE;
     }
 
+    public Usuario(String nome, String email, String cpf, String senha, UsuarioTipo tipo) {
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.tipo = tipo;
+    }
+
     public Usuario(Usuario usuario) {
         id = usuario.getId();
         nome = usuario.getNome();
