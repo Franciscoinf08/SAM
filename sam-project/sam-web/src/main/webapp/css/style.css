@@ -66,6 +66,10 @@ li {
     list-style-type: none;
 }
 
+h2 {
+    margin-bottom: 1em;
+}
+
 .dashboard {
     display: flex;
     gap: 20px;
@@ -92,7 +96,11 @@ li {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    max-width: 25em;
+    max-width: 25vw;
+}
+
+.form-autenticacao {
+    min-width: 25vw;
 }
 
 .formulario label {
@@ -205,4 +213,25 @@ table td {
 
 .dropdown-content a:hover {
     background-color: #ddd;
+}
+
+.mensagem-card {
+    position: absolute;
+    top: -5vw;
+    left: 0;
+    right: 0;
+
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    width: 35vw;
+    margin: 0 auto;
+    padding: 1em;
+    border-radius: 10px;
+
+    transition: 0.5s ease-out;
+}
+
+.show {
+    display: block !important;
 }
