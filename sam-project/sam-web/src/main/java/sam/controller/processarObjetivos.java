@@ -3,16 +3,14 @@ package sam.controller;
 import java.time.LocalDate;
 import java.io.IOException;
 
-//tirar este import
-import jakarta.servlet.RequestDispatcher;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import sam.model.domain.FormObjetivos;
 
+import sam.model.domain.FormObjetivos;
+import sam.model.dao.FormObjetivosDao;
 
 @WebServlet(name = "processarObjetivos", urlPatterns = "/processarObjetivos")
 public class processarObjetivos extends HttpServlet {
@@ -34,8 +32,6 @@ public class processarObjetivos extends HttpServlet {
 
         formObjetivos.setObjetivosGerais(request.getParameter("objetivos_gerais"));
         formObjetivos.setObjetivosEspecificos(request.getParameter("objetivos_especificos"));
-
-
         formObjetivos.setDestPrincipal(request.getParameter("destino_principal"));
 
         String numPessoasStr = request.getParameter("num_pessoas");
@@ -59,10 +55,16 @@ public class processarObjetivos extends HttpServlet {
         }
 
         formObjetivos.setNivelDetalhamento(request.getParameter("detalhamento_orcamento"));
-
         formObjetivos.setReqEspecificos(request.getParameter("outros_requisitos_viagem"));
 
-        request.setAttribute("dadosForm", formObjetivos);
+        boolean sucesso = FormObjetivosDao.inserir(formObjetivos);
+
+        if (sucesso) {
+            response.sendRedirect("sucesso.jsp");
+        } else {
+            request.setAttribute("mensagemErro", "Erro ao salvar os objetivos. Tente novamente.");
+            request.getRequestDispatcher("/seuFormulario.jsp").forward(request, response);
+        }
 
     }
 }
