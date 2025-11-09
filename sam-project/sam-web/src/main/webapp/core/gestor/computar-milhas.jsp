@@ -54,7 +54,7 @@
                 <p id="textoResultado">Preencha os campos acima e clique em Calcular.</p>
             </section>
         </main>
-        <script src="../../js/script.js"></script>
+        <script src="/sam/js/script.js"></script>
     </body>
 
 </html>

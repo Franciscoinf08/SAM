@@ -56,5 +56,3 @@
         <%}%>
     </div>
 </div>
-    
-    <script src="../js/hamburger.js"></script>

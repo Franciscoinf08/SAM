@@ -5,7 +5,7 @@ import sam.model.dao.AcessosBlockDAO;
 
 public class AcessosBlockService {
 
-    private final AcessosBlockDAO bloqueios;
+    private AcessosBlockDAO bloqueios;
 
     public AcessosBlockService() {
         this.bloqueios = new AcessosBlockDAO();

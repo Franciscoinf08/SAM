@@ -47,8 +47,8 @@
                 <button id="solicitar-gestor">Solicitar conta de gestor</button>
             </div>
         </main>
-        <script src="../js/script.js"></script>
-        <script src="../js/botao-solicitar.js"></script>
+        <script src="/sam/js/script.js"></script>
+        <script src="/sam/js/botao-solicitar.js"></script>
     </body>
 
 </html>

@@ -34,25 +34,26 @@
                     <th>Nome</th>
                     <th>Tipo</th>
                     <th>Ações</th>
+                </tr>
+                <% long cont = 1;
+                    while (true) {
+                        Usuario cliente = usuarioDAO.pesquisar(cont);
+                        if (cliente != null) {%>
                 <tr>
-                    <% int cont = 0;
-                        while (true) {
-                            Usuario cliente = usuarioDAO.pesquisar(cont);
-                            if (cliente != null) {%>
                     <td><%=cliente.getNome()%></td>
                     <td><%=cliente.getTipo()%></td>
                     <td>
                         <button>Relatórios</button>
                         <button><a href="ver-permissoes.jsp?id=<%=cont%>">Permissões</a></button>
                     </td>
-                    <%} else {
-                                break;
-                            }
-                            cont++;
-                        }
-
-                    %>
                 </tr>
+                <%} else {
+                            break;
+                        }
+                        cont++;
+                    }
+
+                %>
             </table>
         </main>
         <script src="../../js/script.js"></script>

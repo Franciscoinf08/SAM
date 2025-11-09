@@ -25,45 +25,38 @@ public class AcessosBlockController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String acao = request.getParameter("acao");
 
+        String id = request.getParameter("id");
+
         switch (acao) {
             case "Ativar":
-                jsp = this.ativar(request);
+                this.ativar(request);
                 break;
             case "Bloquear":
-                jsp = this.bloquear(request);
+                this.bloquear(request);
                 break;
         }
-        
-        RequestDispatcher rd = request.getRequestDispatcher(jsp);
-        rd.forward(request, response);
+
+        response.sendRedirect(request.getContextPath() + "/core/dev/ver-permissoes.jsp?id=" + id);
     }
 
-    public String ativar(HttpServletRequest request) {
-        String jsp = "";
+    public void ativar(HttpServletRequest request) {
         try {
             String usuario = (String) request.getParameter("usuario");
             String recurso = (String) request.getParameter("recurso");
             bloqueios.ativar(recurso, usuario);
-            jsp = "/core/dev/visualizar-usuarios.jsp";
         } catch (Exception e) {
             e.printStackTrace();
-            jsp = "";
         }
-        return jsp;
     }
 
-    public String bloquear(HttpServletRequest request) {
-        String jsp = "";
+    public void bloquear(HttpServletRequest request) {
         try {
             String usuario = (String) request.getParameter("usuario");
             String recurso = (String) request.getParameter("recurso");
             bloqueios.bloquear(recurso, usuario);
-            jsp = "/core/dev/visualizar-usuarios.jsp";
         } catch (Exception e) {
             e.printStackTrace();
-            jsp = "";
         }
-        return jsp;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

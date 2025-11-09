@@ -2,7 +2,7 @@
 <%@page import="sam.controller.AcessosBlockController" %>
 <%@page import="sam.model.dao.UsuarioDAO"%>
 
-<% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();%>
+<% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance(); %>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -30,7 +30,9 @@
         </header>
 
         <main class="content">
-            <% String id = request.getParameter("id");
+            <% 
+            String idParam = request.getParameter("id");
+            long id = Long.parseLong(idParam);
             Usuario cliente = usuarioDAO.pesquisar(id);
             %>
             <h2>Gerenciar Permissões de <%=cliente.getNome()%></h2>
@@ -74,9 +76,9 @@
                             <td><%= bloqueado ? "BLOQUEADO" : "ATIVO" %></td>
                             <td>
                                 <% if (bloqueado) { %>
-                                    <a class="button-a" href="/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=<%= recurso %>">Ativar</a>
+                                    <a class="button-a" href="/sam/AcessosBlockController?acao=Ativar&usuario=<%= cliente.getCPF() %>&recurso=<%= recurso %>&id=<%= id%>">Ativar</a>
                                 <% } else { %>
-                                    <a class="button-a" href="/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=<%= recurso %>">Bloquear</a>
+                                    <a class="button-a" href="/sam/AcessosBlockController?acao=Bloquear&usuario=<%= cliente.getCPF() %>&recurso=<%= recurso %>&id=<%= id%>">Bloquear</a>
                                 <% } %>
                             </td>
                         </tr>

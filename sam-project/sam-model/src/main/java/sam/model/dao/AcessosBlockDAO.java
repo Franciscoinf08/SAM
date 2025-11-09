@@ -11,6 +11,12 @@ public class AcessosBlockDAO {
 
     public AcessosBlockDAO() {
         this.conexao = Conexao.getConnection();
+        
+        try {
+            conexao.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void bloquear(String recurso, String usuario) throws SQLException {
@@ -35,7 +41,7 @@ public class AcessosBlockDAO {
         }
     }
 
-    public boolean check(String usuario, String recurso) throws SQLException {
+     public boolean check(String recurso, String usuario) throws SQLException {
         String sql = "SELECT 1 FROM acessos_block WHERE usuario = ? AND recurso = ? LIMIT 1";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setString(1, usuario);
