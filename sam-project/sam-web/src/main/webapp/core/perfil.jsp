@@ -48,6 +48,7 @@
         <main>
             <div class="formulario">
                 <label>CPF: <%=usuario.getCPF()%></label>
+                <label>Tipo do Usuário: <%=usuario.getTipo()%></label>
                 <form name="formAlteracao" method="POST">
                     <label for="nome">Nome:
                         <input type="text" name="nome" placeholder="<%=usuario.getNome()%>">
