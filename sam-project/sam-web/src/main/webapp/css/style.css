@@ -134,7 +134,7 @@ h2 {
     margin: 10% 0;
 }
 
-button {
+button, .btn {
     background-color: #0066cc;
     color: white;
     border: none;

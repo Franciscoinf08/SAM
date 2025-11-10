@@ -1,13 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sam.model.domain.Usuario"%>
-<%@page import="sam.controller.LoginController"%>
-
-<%
-    LoginController.validarSessao(request, response);
-
-    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-%>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -15,7 +6,7 @@
         <meta charset="UTF-8">
         <title>SAM - Perfil</title>
 
-        <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,21 +17,20 @@
 
     <body>
         <header>
-            <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Perfil</h1>
             <nav>
-                <a href="/sam/core/cliente/dashboard.jsp">Dashboard</a>
-                <a href="/sam/core/transacoes.jsp">Transações</a>
-                <a href="/sam/core/gestor/empresas.jsp">Empresas</a>
-                <a href="/sam/core/notificacoes.jsp">Notificações</a>
-                <a href="/sam/core/suporte.jsp">Suporte</a>
+                <a href="cliente/dashboard.jsp">Dashboard</a>
+                <a href="transacoes.jsp" class="active">Transações</a>
+                <a href="<%=request.getContextPath()%>/empresa" class="active">Empresas</a>
+                <a href="notificacoes.jsp">Notificações</a>
+                <a href="suporte.jsp">Suporte</a>
             </nav>
 
             <div class="hamburger-menu">
-                <h1><%=usuario.getNome()%></h1>
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="/sam/core/perfil.jsp">Visualizar Perfil</a>
+                    <a href="perfil.jsp">Visualizar Perfil</a>
                 </div>
             </div>
         </header>
@@ -51,42 +41,29 @@
                 <label>Tipo do Usuário: <%=usuario.getTipo()%></label>
                 <form name="formAlteracao" method="POST">
                     <label for="nome">Nome:
-                        <input type="text" name="nome" placeholder="<%=usuario.getNome()%>">
+                        <input type="text" name="nome">
+                    </label>
+
+                    <label for="nome">CPF:
+                        <input type="text" name="cpf">
                     </label>
 
                     <label for="email">Email:
-                        <input type="email" name="email" placeholder="<%=usuario.getEmail()%>">
+                        <input type="email" name="email">
                     </label>
 
                     <label for="senha">Senha:
-                        <input type="password" autocomplete="new-password" name="senha">
+                        <input type="password" name="senha">
                     </label>
 
-                    <label for="senha-confirmar">Confirmar Senha:
-                        <input type="password" autocomplete="new-password" name="senhaConfirmar">
-                    </label>
-
-                    <button onclick="validarCamposAlteracaoPerfil(document.formAlteracao)">Salvar Alterações</button>
+                    <button type="submit">Salvar Alterações</button>
                 </form>
 
                 <button id="solicitar-gestor">Solicitar conta de gestor</button>
             </div>
         </main>
-
-        <%
-            String erro = (String) request.getAttribute("erro");
-            if (erro != null) {%>
-        <div class="mensagem-card"><%=erro%></div>
-        <script>
-            let mensagemEl = document.querySelector(".mensagem-card");
-            setTimeout(() => { mensagemEl.style.top = "4em"; }, 1);
-            setTimeout(() => { mensagemEl.style.display = "none"; }, 4000);
-        </script>
-        <%}%>
-
-        <script src="/sam/js/helper.js"></script>
-        <script src="/sam/js/script.js"></script>
-        <script src="/sam/js/botao-solicitar.js"></script>
+        <script src="../js/script.js"></script>
+        <script src="../js/botao-solicitar.js"></script>
     </body>
 
 </html>

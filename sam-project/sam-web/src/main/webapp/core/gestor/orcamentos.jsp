@@ -1,13 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sam.model.domain.Usuario"%>
-<%@page import="sam.controller.LoginController"%>
-
-<%
-    LoginController.validarSessao(request, response);
-
-    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-%>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -15,7 +6,7 @@
         <meta charset="UTF-8">
         <title>SAM - Orçamentos</title>
 
-        <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,20 +17,19 @@
 
     <body>
         <header>
-            <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Orçamentos</h1>
             <nav>
-                <a href="/sam/core/transacoes.jsp">Transações</a>
-                <a href="/sam/core/gestor/empresas.jsp">Empresas</a>
-                <a href="/sam/core/notificacoes.jsp">Notificações</a>
-                <a href="/sam/core/suporte.jsp">Suporte</a>
+                <a href="../transacoes.jsp">Transações</a>
+                <a href="<%=request.getContextPath()%>/empresa" class="active">Empresas</a>
+                <a href="../notificacoes.jsp">Notificações</a>
+                <a href="../suporte.jsp">Suporte</a>
             </nav>
 
             <div class="hamburger-menu">
-                <h1><%=usuario.getNome()%></h1>
                 <button id="hamburger-btn">&#9776;</button>
                 <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="/sam/core/perfil.jsp">Visualizar Perfil</a>
+                    <a href="../perfil.jsp">Visualizar Perfil</a>
                 </div>
             </div>
         </header>
@@ -134,7 +124,7 @@
             </section>
         </main>
 
-        <script src="/sam/js/script.js"></script>
+        <script src="../../js/script.js"></script>
     </body>
 
 </html>
