@@ -14,7 +14,7 @@ public class ProgramaFidelidadeDAO {
 
 
     public ProgramaFidelidade salvar(ProgramaFidelidade programa) {
-        String sql = "INSERT INTO programa_fidelidade (nome, bonusMilhas, qtdeMilhasMes, duracao, empresa_id, precoMes) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO programa_fidelidade (nome, bonusMilhas, qtdeMilhasMes, duracao, empresa_id, precoMes, avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, programa.getNome());
             stmt.setDouble(2, programa.getBonusMilhas());
@@ -22,6 +22,7 @@ public class ProgramaFidelidadeDAO {
             stmt.setInt(4, programa.getDuracao());
             stmt.setInt(5, programa.getIdEmpresa());
             stmt.setDouble(6, programa.getPrecoMensal());
+            stmt.setString(7, programa.getAvaliacao());
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -58,14 +59,15 @@ public class ProgramaFidelidadeDAO {
     }
 
     public void atualizarProgramaFidelidade(ProgramaFidelidade programaFidelidade) throws SQLException {
-        String sql = "UPDATE programa_fidelidade SET nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ?, precoMes = ? WHERE idProgramaFidelidade = ?";
+        String sql = "UPDATE programa_fidelidade SET nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ?, precoMes = ?, avaliacao = ? WHERE idProgramaFidelidade = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, programaFidelidade.getNome());
             stmt.setDouble(2, programaFidelidade.getBonusMilhas());
             stmt.setInt(3, programaFidelidade.getQtdeMilhasMes());
             stmt.setInt(4, programaFidelidade.getDuracao());
             stmt.setDouble(5, programaFidelidade.getPrecoMensal());
-            stmt.setInt(6, programaFidelidade.getIdProgramaFidelidade());
+            stmt.setString(6, programaFidelidade.getAvaliacao());
+            stmt.setInt(7, programaFidelidade.getIdProgramaFidelidade());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -98,6 +100,7 @@ public class ProgramaFidelidadeDAO {
                     programaFidelidade.setDuracao(rs.getInt("duracao"));
                     programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
                     programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
+                    programaFidelidade.setAvaliacao(rs.getString("avaliacao"));
                     lista.add(programaFidelidade);
                 }
             }

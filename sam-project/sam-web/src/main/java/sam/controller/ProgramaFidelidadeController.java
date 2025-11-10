@@ -4,6 +4,8 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import sam.model.dao.EmpresaDAO;
+import sam.model.service.AvaliadorProgramaFidelidadeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sam.model.dao.ProgramaFidelidadeDAO;
@@ -35,7 +37,11 @@ public class ProgramaFidelidadeController extends HttpServlet {
                 excluirProgramaFidelidade(request, response);
                 break;
             default:
-                listarProgramasFidelidade(request, response);
+                try {
+                    listarProgramasFidelidade(request, response);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 break;
         }
     }
@@ -55,9 +61,10 @@ public class ProgramaFidelidadeController extends HttpServlet {
     }
 
     private void listarProgramasFidelidade(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws Exception {
 
         String idParam = request.getParameter("idEmpresa");
+
         if (idParam == null || idParam.isEmpty()) {
             throw new ServletException("ID da empresa é obrigatório para listar programas de fidelidade.");
         }
@@ -94,7 +101,7 @@ public class ProgramaFidelidadeController extends HttpServlet {
     }
 
     private void adicionarProgramaFidelidade(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException, ServletException {
+            throws Exception {
 
         String nome = request.getParameter("nome");
         double bonusMilhas = Double.parseDouble(request.getParameter("bonusMilhas"));
@@ -103,11 +110,15 @@ public class ProgramaFidelidadeController extends HttpServlet {
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         double preco = Double.parseDouble(request.getParameter("preco"));
 
+        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), programaFidelidadeDAO);
+
         ProgramaFidelidade programa = new ProgramaFidelidade(
                 nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa
         );
 
+
         programaFidelidadeDAO.salvar(programa);
+        avaliador.avaliarPrograma(programa);
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
     }
 
@@ -126,6 +137,7 @@ public class ProgramaFidelidadeController extends HttpServlet {
         programa.setIdProgramaFidelidade(id);
 
         programaFidelidadeDAO.atualizarProgramaFidelidade(programa);
+
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
     }
 

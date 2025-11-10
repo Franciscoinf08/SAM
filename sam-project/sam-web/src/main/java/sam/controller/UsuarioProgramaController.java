@@ -40,8 +40,6 @@ public class UsuarioProgramaController extends HttpServlet {
     }
 
     private void associar(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        Integer idUsuario =  session.getAttribute("usuario");
 
 
     }
