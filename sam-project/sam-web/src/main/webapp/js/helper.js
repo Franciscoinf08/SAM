@@ -160,8 +160,8 @@ function gerarMensagemErro(erro) {
     let body = document.body;
     let mensagemErroEl = document.createElement("div");
     let conteudo = document.createTextNode(erro);
-    mensagemErroEl.appendChild(conteudo);
 
+    mensagemErroEl.appendChild(conteudo);
     mensagemErroEl.classList.add("mensagem-card");
     body.appendChild(mensagemErroEl);
 
