@@ -134,7 +134,7 @@ h2 {
     margin: 10% 0;
 }
 
-button, .btn {
+button, .btn, .button-a {
     background-color: #0066cc;
     color: white;
     border: none;
@@ -197,7 +197,6 @@ table td {
     display: none;
     position: absolute;
     right: 0;
-    top: 50px;
     background-color: #f9f9f9;
     min-width: 150px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -215,6 +214,12 @@ table td {
     background-color: #ddd;
 }
 
+#hamburger-dropdown {
+    top: 50px;
+}
+#hamburger-dropdown.active {
+    top: 0;
+}
 .mensagem-card {
     position: absolute;
     top: -5vw;

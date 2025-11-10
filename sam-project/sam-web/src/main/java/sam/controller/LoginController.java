@@ -36,7 +36,7 @@ public class LoginController extends HttpServlet {
                     jsp = "/sam/core/gestor/apuracao.jsp";
                     break;
                 case DESENVOLVEDOR:
-                    jsp = "/sam/core/perfil.jsp";
+                    jsp = "/sam/core/geral/perfil.jsp";
                     break;
             }
             response.sendRedirect(jsp);
