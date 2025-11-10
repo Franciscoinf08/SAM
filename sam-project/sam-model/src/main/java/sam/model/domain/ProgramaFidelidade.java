@@ -1,5 +1,4 @@
 package sam.model.domain;
-
 public class ProgramaFidelidade {
 
     private int idProgramaFidelidade;
@@ -20,6 +19,7 @@ public class ProgramaFidelidade {
         this.duracao = duracao;
         this.precoMensal = precoMensal;
         this.idEmpresa = idEmpresa;
+
     }
 
     public int getIdProgramaFidelidade() {
@@ -84,5 +84,9 @@ public class ProgramaFidelidade {
 
     public void setIdEmpresa(int idEmpresa) {
         this.idEmpresa = idEmpresa;
+    }
+
+    public String getAvaliaco() {
+        return avaliacao;
     }
 }

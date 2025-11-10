@@ -44,6 +44,7 @@
                 <th>Milhas por Mês</th>
                 <th>Duração (meses)</th>
                 <th>Preço Mensal (R$)</th>
+                <th>Avaliação</th>
                 <th>Ações</th>
             </tr>
 
@@ -57,7 +58,11 @@
                 <td><%= p.getQtdeMilhasMes() %></td>
                 <td><%= p.getDuracao() %></td>
                 <td><%= p.getPrecoMensal() %></td>
+                <td><%= p.getAvaliaco() %></td>
                 <td>
+                    <a href="<%= request.getContextPath() %>/usuarioPrograma&id=<%= p.getIdProgramaFidelidade()%>&idEmpresa=<%=request.getAttribute("idEmpresa")%>&idUsuario=<%=%>">
+                        <button>Associar</button>
+                    </a>
                     <a href="<%= request.getContextPath() %>/programaFidelidade?action=editar&id=<%= p.getIdProgramaFidelidade()%>&idEmpresa=<%=request.getAttribute("idEmpresa")%>">
                         <button>Editar</button>
                     </a>

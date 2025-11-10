@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.domain.ProgramaFidelidade;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -76,13 +75,15 @@ public class ProgramaFidelidadeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
-
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
 
-            if (id > 0) {
+            String idParam = request.getParameter("id");
+            Integer id = null;
+
+            if (idParam != null && !idParam.isEmpty()) {
+                id = Integer.parseInt(idParam);
+            }
+            if (id != null && id > 0) {
                 editarProgramaFidelidade(request, response);
             } else {
                 adicionarProgramaFidelidade(request, response);

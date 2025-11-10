@@ -57,7 +57,7 @@
                 </label>
 
                 <input type="hidden" name="idEmpresa" value="<%= request.getParameter("idEmpresa") %>">
-                <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+                <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>">
                 <button type="submit">Salvar</button>
             </form>
         </div>
