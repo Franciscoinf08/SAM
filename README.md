@@ -1,5 +1,5 @@
 # Sistema de Administração de Milhas
-Descrição do projeto.
+Esse software tem a missão de automatizar e facilitar a análise de transações e gestão das milhas dos clientes, ou seja, visa atender os gestores e analistas no mercado de milhas.
 
 ## Equipe de Desenvolvimento
 | Ordem | Nome               |
