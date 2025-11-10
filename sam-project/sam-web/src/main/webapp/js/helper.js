@@ -4,16 +4,16 @@ function validarCamposLogin(form) {
     let resultado = false;
 
     if (cpf === "") {
-        gerarMensagemErro("Preencha o campo Usuário");
+        alert("Preencha o campo Usuário");
         form.cpf.focus();
     }
     else if (!validarCPF(cpf)) {
-        gerarMensagemErro("CPF inválido");
+        alert("CPF inválido");
         form.cpf.value = "";
         form.cpf.focus();
     }
     else if (senha === "") {
-        gerarMensagemErro("Preencha o campo Senha");
+        alert("Preencha o campo Senha");
         form.senha.focus();
     }
     else {
@@ -34,37 +34,37 @@ function validarCamposCadastro(form) {
     let resultado = false;
 
     if (nome === "") {
-        gerarMensagemErro("Preencha o campo Nome");
+        alert("Preencha o campo Nome");
         form.nome.focus();
     }
     else if (email === "") {
-        gerarMensagemErro("Preencha o campo E-mail");
+        alert("Preencha o campo E-mail");
         form.email.focus();
     }
     else if (!validarEmail(email)) {
-        gerarMensagemErro("E-mail inválido");
+        alert("E-mail inválido");
         form.email.value = "";
         form.email.focus();
     }
     else if (cpf === "") {
-        gerarMensagemErro("Preencha o campo CPF");
+        alert("Preencha o campo CPF");
         form.cpf.focus();
     }
     else if (!validarCPF(cpf)) {
-        gerarMensagemErro("CPF inválido");
+        alert("CPF inválido");
         form.cpf.value = "";
         form.cpf.focus();
     }
     else if (senha === "") {
-        gerarMensagemErro("Preencha o campo Senha");
+        alert("Preencha o campo Senha");
         form.senha.focus();
     }
     else if (senhaConfirmar === "") {
-        gerarMensagemErro("Confirme sua senha");
+        alert("Confirme sua senha");
         form.senhaConfirmar.focus();
     }
     else if (senha !== senhaConfirmar) {
-        gerarMensagemErro("Senhas diferentes");
+        alert("Senhas diferentes");
         form.senhaConfirmar.value = "";
         form.senhaConfirmar.focus();
     }
@@ -96,16 +96,16 @@ function validarCamposAlteracaoPerfil(form) {
     }
 
     if (nome === "" && email === "" && senha === "") {
-        gerarMensagemErro("Preencha algum dos campos");
+        alert("Preencha algum dos campos");
         form.nome.focus();
     }
     else if (email !== "" && !validarEmail(email)) {
-        gerarMensagemErro("E-mail inválido");
+        alert("E-mail inválido");
         form.email.value = "";
         form.email.focus();
     }
     else if (senha !== senhaConfirmar) {
-        gerarMensagemErro("Senhas diferentes");
+        alert("Senhas diferentes");
         form.senhaConfirmar.value = "";
         form.senhaConfirmar.focus();
     }
@@ -143,8 +143,8 @@ function validarCPF(cpf) {
 }
 
 function validarEmail(email) {
-    let usuario = email.substring(0, email.indexOf("@"));
-    let dominio = email.substring(email.indexOf("@") + 1, email.length);
+    usuario = email.substring(0, email.indexOf("@"));
+    dominio = email.substring(email.indexOf("@") + 1, email.length);
 
     return usuario.length >= 1 &&
         dominio.length >= 1 &&
@@ -154,17 +154,4 @@ function validarEmail(email) {
         dominio.indexOf(" ") === -1 &&
         dominio.indexOf(".") >= 1 &&
         dominio.lastIndexOf(".") < dominio.length - 1;
-}
-
-function gerarMensagemErro(erro) {
-    let body = document.body;
-    let mensagemErroEl = document.createElement("div");
-    let conteudo = document.createTextNode(erro);
-    mensagemErroEl.appendChild(conteudo);
-
-    mensagemErroEl.classList.add("mensagem-card");
-    body.appendChild(mensagemErroEl);
-
-    setTimeout(() => { mensagemErroEl.style.top = "4em"; }, 1);
-    setTimeout(() => { mensagemErroEl.style.display = "none"; }, 4000);
 }

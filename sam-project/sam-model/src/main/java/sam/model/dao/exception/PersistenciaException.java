@@ -1,4 +1,4 @@
-package sam.model.common.exception;
+package sam.model.dao.exception;
 
 public class PersistenciaException extends Exception {
 
