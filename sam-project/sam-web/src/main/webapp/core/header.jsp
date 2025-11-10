@@ -1,4 +1,4 @@
-
+<%@page pageEncoding="UTF-8"%>
 <%@page import="sam.model.domain.Usuario"%>
 <%@page import="sam.autorizacao.ControleAutorizacao"%>
 <%@page import="sam.controller.LoginController"%>

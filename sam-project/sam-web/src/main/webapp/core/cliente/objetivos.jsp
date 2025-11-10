@@ -1,13 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sam.model.domain.Usuario"%>
+<%@page import="sam.model.domain.FormObjetivos" %>
 <%@page import="sam.controller.LoginController"%>
-<%@ page import="sam.model.domain.FormObjetivos" %>
+
+<% LoginController.validarSessao(request, response); %>
 
 <%
-    LoginController.validarSessao(request, response);
-
-    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-
     FormObjetivos form = (FormObjetivos) request.getAttribute("formulario");
 
     String contextPath = request.getContextPath();
