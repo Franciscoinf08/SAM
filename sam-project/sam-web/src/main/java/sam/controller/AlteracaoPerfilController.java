@@ -24,10 +24,11 @@ public class AlteracaoPerfilController extends HttpServlet {
         String senha = request.getParameter("senha");
         String email = request.getParameter("email");
 
-        Usuario usuario = new Usuario((Usuario) request.getSession().getAttribute("usuario"));
         GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
 
         try {
+            Usuario usuario = new Usuario((Usuario) request.getSession().getAttribute("usuario"));
+
             if (!"".equals(nome))
                 usuario.setNome(nome);
             if (!"".equals(email))
@@ -45,7 +46,7 @@ public class AlteracaoPerfilController extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        RequestDispatcher rd = request.getRequestDispatcher("/core/perfil.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/core/geral/perfil.jsp");
         rd.forward(request, response);
     }
 }

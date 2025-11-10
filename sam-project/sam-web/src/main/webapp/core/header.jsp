@@ -23,6 +23,7 @@
 </nav>
 
 <div class="hamburger-menu">
+    <h1><%=usuario.getNome()%></h1>
     <button id="hamburger-btn">&#9776;</button>
     <div id="hamburger-dropdown" class="dropdown-content">
         <%} if (ControleAutorizacao.checkPermissao("perfil", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("perfil", usuario.getCPF())) {%>
@@ -44,7 +45,7 @@
         <%} if (ControleAutorizacao.checkPermissao("programa", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("programa", usuario.getCPF())) {%>
         <a href="../gestor/programas.jsp">Programas de fidelidade</a>
         <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
-        <a href="../geral/avaliacoes.jsp">Avaliações</a>
+        <a href="../geral/relatorios.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>
         <a href="../geral/avaliacoes.jsp">Relatórios</a>
         <%} if (ControleAutorizacao.checkPermissao("transacoes-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("transacoes-gestor", usuario.getCPF())) {%>

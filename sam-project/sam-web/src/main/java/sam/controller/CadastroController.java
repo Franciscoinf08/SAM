@@ -25,9 +25,10 @@ public class CadastroController extends HttpServlet {
         String senha = request.getParameter("senha");
 
         GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
-        Usuario usuario = new Usuario(nome, email, cpf, senha);
 
         try {
+            Usuario usuario = new Usuario(nome, email, cpf, senha);
+
             manterUsuario.cadastrar(usuario);
             request.getSession().setAttribute("usuario", usuario);
             response.sendRedirect("/sam/core/cliente/dashboard.jsp");
