@@ -83,11 +83,11 @@ Descrição do projeto.
 | CSU04  | Gestão de transações                       | REQ005, REQ006                                | RN004, RN007, RN011, RN013     |
 | CSU05  | Computar milhas                            | REQ007, REQ010, REQ026                        | RN008, RN011                   |
 | CSU06  | Gestão de notificações                     | REQ008, REQ009, REQ017                        | RN006, RN010                   |
-| CSU07  | Solicitar conta de gestor                  | REQ011                                        | RN001                          |
+| CSU07  | Solicitar conta de gestor                  | REQ011, REQ019                                | RN001                          |
 | CSU08  | Gestão de avaliações                       | REQ013                                        | RN012                          |
 | CSU09  | Gestão de propostas/orçamentos             | REQ014, REQ016, REQ020, REQ027                | RN003, RN008, RN014            |
 | CSU10  | Gestão de objetivos                        | REQ015                                        | RN014                          |
-| CSU11  | Gestão de usuários                         | REQ018, REQ019                                | RN001                          |
+| CSU11  | Gestão de usuários                         | REQ018                                        | RN001                          |
 | CSU12  | Recuperação de dados                       | REQ022                                        | RN015                          |
 | CSU13  | Visualizar relatórios de perfil            | REQ021                                        | —                              |
 | CSU14  | Configuração de planos                     | REQ023                                        | —                              |
