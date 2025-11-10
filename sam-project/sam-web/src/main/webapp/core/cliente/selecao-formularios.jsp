@@ -48,7 +48,6 @@
     <a href="<%= contextPath %>/core/cliente/objetivos.jsp">
         <button style="margin-bottom: 20px;">+ Criar Novo Formulário</button>
     </a>
-
     <table>
         <thead>
         <tr>
