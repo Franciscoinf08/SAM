@@ -22,7 +22,7 @@
             <nav>
                 <a href="cliente/dashboard.jsp">Dashboard</a>
                 <a href="transacoes.jsp">Transações</a>
-                <a href="gestor/empresas.jsp">Empresas</a>
+                <a href="<%=request.getContextPath()%>/empresa" class="active">Empresas</a>
                 <a href="notificacoes.jsp">Notificações</a>
                 <a href="suporte.jsp">Suporte</a>
             </nav>

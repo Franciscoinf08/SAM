@@ -19,7 +19,7 @@
             <h1>Clientes</h1>
             <nav>
                 <a href="../transacoes.jsp">Transações</a>
-                <a href="empresas.jsp">Empresas</a>
+                <a href="<%=request.getContextPath()%>/empresa" class="active">Empresas</a>
                 <a href="../notificacoes.jsp">Notificações</a>
                 <a href="../suporte.jsp">Suporte</a>
             </nav>
