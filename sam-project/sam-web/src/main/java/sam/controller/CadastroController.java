@@ -1,6 +1,6 @@
 package sam.controller;
 
-import sam.model.dao.exception.PersistenciaException;
+import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
 

@@ -37,7 +37,9 @@
 
         <main>
             <div class="formulario">
-                <form>
+                <label>CPF: <%=usuario.getCPF()%></label>
+                <label>Tipo do Usuário: <%=usuario.getTipo()%></label>
+                <form name="formAlteracao" method="POST">
                     <label for="nome">Nome:
                         <input type="text" name="nome">
                     </label>
