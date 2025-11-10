@@ -40,13 +40,6 @@ nav a,
     font-weight: 500;
 }
 
-nav a.active,
-nav a:hover,
-.login-menu a.active,
-.login-menu a:hover {
-    text-decoration: underline;
-}
-
 input {
     width: 100%;
     background-color: #c9c9c9;

@@ -53,7 +53,7 @@
             <div class="formulario">
                 <form action="/sam/core/cliente/selecao-formularios.jsp">
                     <h1>Formularios de definição de objetivos</h1>
-                    <button type="submit">Acessar meus formularios</button>
+                    <button>Acessar meus formularios</button>
                 </form>
             </div>
         </main>
