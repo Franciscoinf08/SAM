@@ -1,4 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sam.model.domain.Usuario"%>
+<%@page import="sam.controller.LoginController"%>
+
+<%
+    LoginController.validarSessao(request, response);
+
+    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -14,25 +23,15 @@
     <h1>Formulário de Definição de Perfil e Objetivos</h1>
     <p>Preencha e atualize este formulário para um planejamento de objetivos e viagens eficaz.</p>
 
-    <form action="/processarObjetivos" method="POST" id="formObjetivos">
+    <form action="/sam/processarObjetivos" method="POST" id="formObjetivos">
 
         <fieldset>
-            <legend>1. Informações Básicas e de Contato</legend>
-
-            <label for="nome">Nome Completo:</label>
-            <input type="text" id="nome" name="nome" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <div class="data-atualizacao">
-                <label for="data_ultima_atualizacao">Data da Última Atualização:</label>
-                <input type="date" id="data_ultima_atualizacao" name="data_ultima_atualizacao" style="width: auto; display: inline-block;">
-            </div>
+            <legend>Título do Formulário</legend>
+            <textarea id="titulo" name="titulo" rows="1" placeholder="Ex: Viagem em família"></textarea>
         </fieldset>
 
         <fieldset>
-            <legend>2. Definição de Objetivos</legend>
+            <legend>1. Definição de Objetivos</legend>
 
             <label for="objetivos_gerais">Objetivos Gerais (Visão de Longo Prazo):</label>
             <textarea id="objetivos_gerais" name="objetivos_gerais" rows="4" placeholder="Ex: Alcançar estabilidade financeira para viajar anualmente; Definir roteiro anual de férias."></textarea>
@@ -43,7 +42,7 @@
         </fieldset>
 
         <fieldset>
-            <legend>3. Dados para Orçamento de Viagens</legend>
+            <legend>2. Dados para Orçamento de Viagens</legend>
 
             <label for="destino_principal">Destino Principal (Cidade/País):</label>
             <input type="text" id="destino_principal" name="destino_principal" placeholder="Ex: Tóquio, Japão">

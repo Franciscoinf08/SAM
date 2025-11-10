@@ -45,8 +45,9 @@
             </div>
         </header>
 
-        <main>
+        <main class="main-perfil">
             <div class="formulario">
+                <h1>Alterar dados de Usuario</h1>
                 <form name="formAlteracao" method="POST">
                     <label for="nome">Nome:
                         <input type="text" name="nome" placeholder="<%=usuario.getNome()%>">
@@ -68,6 +69,12 @@
                 </form>
 
                 <button id="solicitar-gestor">Solicitar conta de gestor</button>
+            </div>
+            <div class="formulario">
+                <form action="/sam/core/cliente/selecao-formularios.jsp">
+                    <h1>Formularios de definição de objetivos</h1>
+                    <button type="submit">Acessar meus formularios</button>
+                </form>
             </div>
         </main>
 
