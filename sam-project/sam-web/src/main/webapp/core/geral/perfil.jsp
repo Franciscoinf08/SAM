@@ -24,7 +24,7 @@
         </header>
 
         <main class="main-perfil">
-            <div class="formulario">
+            <div class="formulario form-autenticacao">
                 <h1>Alterar dados de Usuario</h1>
                 <label>CPF: <%=usuario.getCPF()%></label>
                 <label>Tipo do Usuário: <%=usuario.getTipo()%></label>
@@ -45,7 +45,9 @@
                         <input type="password" autocomplete="new-password" name="senhaConfirmar">
                     </label>
 
-                    <button onclick="validarCamposAlteracaoPerfil(document.formAlteracao)">Salvar Alterações</button>
+                    <label>
+                        <button type="button" onclick="validarCamposAlteracaoPerfil(document.formAlteracao)">Salvar Alterações</button>
+                    </label>
                 </form>
 
                 <button id="solicitar-gestor">Solicitar conta de gestor</button>
