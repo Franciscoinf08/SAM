@@ -52,7 +52,7 @@ public class UsuarioHelper {
         if (Objects.equals(cpf, "00000000000") || cpf.length() != 11)
             return false;
         try {
-            Integer.parseInt(cpf);
+            Long.parseLong(cpf);
         } catch (NumberFormatException e) {
             return false;
         }
