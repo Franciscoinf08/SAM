@@ -1,8 +1,7 @@
 
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="sam.model.domain.Empresa"%>
-<%@ page import="sam.model.domain.ProgramaFidelidade" %>
-<%@ page import="java.util.List" %>
+
 
 <html>
 <head>
