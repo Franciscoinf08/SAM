@@ -72,14 +72,12 @@
             </td>
             <td>
                 <a href="<%= contextPath %>/processarObjetivos?id=<%= form.getId() %>">
-                    <button>Editar</button>
+                    <button>Visualizar</button>
                 </a>
 
-                    <input type="hidden" name="id" value="<%= form.getId() %>"/>
-
-                    <a href="<%=request.getContextPath()%>/processarObjetivos?action=excluir&id=<%=form.getId()%>"><button>
-                        Excluir
-                    </button></a>
+                <form action="<%= contextPath %>/excluirFormulario" method="POST" style="display: inline;">
+                    <input type="hidden" name="id" value="<%= form.getId() %>" />
+                </form>
             </td>
         </tr>
         <%

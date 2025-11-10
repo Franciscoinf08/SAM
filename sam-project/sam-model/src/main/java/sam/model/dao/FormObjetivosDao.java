@@ -57,7 +57,6 @@ public class FormObjetivosDao {
             return false;
         }
     }
-    // sam.model.dao.FormObjetivosDao.java
 
     public static List<FormObjetivos> buscarTodos(Usuario usuario) {
 
@@ -89,4 +88,108 @@ public class FormObjetivosDao {
         }
         return listaFormularios;
     }
+
+    public static FormObjetivos buscarPorId(int idFormulario) {
+        String sql = "SELECT * FROM form_objetivos WHERE id = ?";
+        FormObjetivos form = null;
+
+        try (Connection conn = ConexaoDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idFormulario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    form = new FormObjetivos();
+
+                    form.setId(rs.getInt("id"));
+                    form.setId_usuario(rs.getLong("id_usuario"));
+
+                    form.setTitulo(rs.getString("titulo_formulario"));
+                    if (rs.getDate("data_ultima_atualizacao") != null) {
+                        form.setData(rs.getDate("data_ultima_atualizacao").toLocalDate());
+                    }
+
+                    form.setObjetivosGerais(rs.getString("objetivos_gerais"));
+                    form.setObjetivosEspecificos(rs.getString("objetivos_especificos"));
+                    form.setDestPrincipal(rs.getString("destino_principal"));
+                    form.setNumPessoas(rs.getInt("num_pessoas"));
+                    form.setPrefCompanhia(rs.getString("pref_companhia"));
+                    form.setOrcTotal(rs.getFloat("orcamento_total"));
+                    form.setNivelDetalhamento(rs.getString("nivel_detalhamento"));
+                    form.setReqEspecificos(rs.getString("req_especificos"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar formulário por ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return form;
+    }
+
+    public static boolean atualizar(FormObjetivos form) {
+        String sql = "UPDATE `form_objetivos` SET "
+                + "titulo_formulario = ?, objetivos_gerais = ?, objetivos_especificos = ?, "
+                + "destino_principal = ?, num_pessoas = ?, pref_companhia = ?, "
+                + "orcamento_total = ?, nivel_detalhamento = ?, req_especificos = ?, "
+                + "data_ultima_atualizacao = ? "
+                + "WHERE id = ? AND id_usuario = ?";
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            int i = 1; // Contador para os parâmetros
+
+            stmt.setString(i++, form.getTitulo());
+            stmt.setString(i++, form.getObjetivosGerais());
+            stmt.setString(i++, form.getObjetivosEspecificos());
+            stmt.setString(i++, form.getDestPrincipal());
+
+            // Tratamento de NULL para INT
+            if (form.getNumPessoas() != null) {
+                stmt.setInt(i++, form.getNumPessoas());
+            } else {
+                stmt.setNull(i++, java.sql.Types.INTEGER);
+            }
+
+            stmt.setString(i++, form.getPrefCompanhia());
+
+            // Tratamento de NULL para FLOAT
+            if (form.getOrcTotal() != null) {
+                stmt.setFloat(i++, form.getOrcTotal());
+            } else {
+                stmt.setNull(i++, java.sql.Types.FLOAT);
+            }
+
+            stmt.setString(i++, form.getNivelDetalhamento());
+            stmt.setString(i++, form.getReqEspecificos());
+
+            // 2. Data de Atualização (Deve ser o último campo antes do WHERE)
+            stmt.setObject(i++, form.getData());
+
+            // 3. Cláusula WHERE (Identificação do Registro)
+            stmt.setInt(i++, form.getId()); // O ID do formulário
+            stmt.setLong(i++, form.getId_usuario()); // O ID do usuário logado
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar dados no banco de dados: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+
+
+
+        }
+        public static void excluir(int id) {
+            String sql = "DELETE FROM `form_objetivos` WHERE id = ?";
+            try (Connection conn = ConexaoDB.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 }
