@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import sam.model.domain.FormObjetivos;
 import sam.model.dao.FormObjetivosDao;
+import sam.model.domain.Usuario;
 
 @WebServlet(name = "processarObjetivos", urlPatterns = "/processarObjetivos")
 public class processarObjetivos extends HttpServlet {
@@ -18,17 +19,12 @@ public class processarObjetivos extends HttpServlet {
             throws ServletException, IOException {
         FormObjetivos formObjetivos = new FormObjetivos();
 
-        formObjetivos.setNome(request.getParameter("nome"));
-        formObjetivos.setEmail(request.getParameter("email"));
+        LocalDate dataDoEnvio = LocalDate.now();
+        Long idUsuario = ((Usuario) request.getSession().getAttribute("usuario")).getId();
 
-        String dataStr = request.getParameter("data_ultima_atualizacao");
-        if (dataStr != null && !dataStr.isEmpty()) {
-            try {
-                formObjetivos.setData(LocalDate.parse(dataStr));
-            } catch (Exception e) {
-                System.err.println("Erro ao converter data: " + e.getMessage());
-            }
-        }
+        formObjetivos.setId_usuario(idUsuario);
+        formObjetivos.setTitulo(request.getParameter("titulo"));
+        formObjetivos.setData(dataDoEnvio);
 
         formObjetivos.setObjetivosGerais(request.getParameter("objetivos_gerais"));
         formObjetivos.setObjetivosEspecificos(request.getParameter("objetivos_especificos"));
@@ -60,11 +56,14 @@ public class processarObjetivos extends HttpServlet {
         boolean sucesso = FormObjetivosDao.inserir(formObjetivos);
 
         if (sucesso) {
-            response.sendRedirect("sucesso.jsp");
-        } else {
-            request.setAttribute("mensagemErro", "Erro ao salvar os objetivos. Tente novamente.");
-            request.getRequestDispatcher("/seuFormulario.jsp").forward(request, response);
-        }
+            String contextPath = request.getContextPath();
+            String urlCompleta = contextPath + "/core/cliente/sucesso.jsp";
+            System.out.println("DEBUG REDIRECT: " + urlCompleta);
 
+            response.sendRedirect(urlCompleta);
+        } else {
+            request.setAttribute("erro", "Erro ao salvar os objetivos. Tente novamente.");
+            request.getRequestDispatcher("/core/cliente/objetivos.jsp").forward(request, response);
+        }
     }
 }

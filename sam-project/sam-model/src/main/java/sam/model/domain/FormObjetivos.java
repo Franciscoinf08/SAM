@@ -3,11 +3,10 @@ package sam.model.domain;
 import java.time.LocalDate;
 
 public class FormObjetivos {
-    private String nome;
-    private String email;
-
+    private Integer id;
+    private Long id_usuario;
+    private String titulo_formulario;
     private LocalDate data;
-
     private String objetivosGerais;
     private String objetivosEspecificos;
     private String destPrincipal;
@@ -17,22 +16,17 @@ public class FormObjetivos {
     private String nivelDetalhamento;
     private String reqEspecificos;
 
+    public Long getId_usuario(){return id_usuario;}
 
-    public String getNome() {
-        return this.nome;
-    }
+    public void setId_usuario(Long id_usuario){this.id_usuario=id_usuario;}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public Integer getId() {return id;}
 
-    public String getEmail() {
-        return email;
-    }
+    public void setId(Integer id) {this.id = id;}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getTitulo() {return titulo_formulario;}
+
+    public void setTitulo(String titulo) {this.titulo_formulario = titulo;}
 
     public LocalDate getData() {
         return data;
