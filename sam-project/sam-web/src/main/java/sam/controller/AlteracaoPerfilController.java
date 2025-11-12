@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.sql.SQLException;
 import java.io.IOException;
 
 
@@ -43,7 +42,7 @@ public class AlteracaoPerfilController extends HttpServlet {
             e.printStackTrace();
             String erro = e.getLocalizedMessage();
             request.setAttribute("erro", erro);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         RequestDispatcher rd = request.getRequestDispatcher("/core/geral/perfil.jsp");
