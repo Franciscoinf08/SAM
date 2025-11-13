@@ -12,10 +12,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sam.model.dao.EmpresaDAO;
 import sam.model.domain.Empresa;
+import sam.model.service.EmpresaService;
 
 @WebServlet(name = "EmpresaController", urlPatterns = {"/empresa"})
 public class EmpresaController extends HttpServlet {
-    private final EmpresaDAO empresaDAO = new EmpresaDAO();
+    private final EmpresaService empresaService = new EmpresaService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +63,7 @@ public class EmpresaController extends HttpServlet {
 
     private void listarEmpresas(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Empresa> lista = empresaDAO.listarTodas();
+        List<Empresa> lista = empresaService.listarEmpresas();
         request.setAttribute("empresas", lista);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/empresas.jsp");
         dispatcher.forward(request, response);
@@ -76,14 +77,14 @@ public class EmpresaController extends HttpServlet {
                 request.getParameter("cnpj"),
                 Double.parseDouble(request.getParameter("milheiroSeguranca"))
         );
-        empresaDAO.salvar(empresa);
+        empresaService.cadastrarEmpresa(empresa);
         response.sendRedirect(request.getContextPath() + "/empresa");
     }
 
     private void excluirEmpresa(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, SQLException {
+            throws IOException{
         int id = Integer.parseInt(request.getParameter("id"));
-        empresaDAO.excluirEmpresa(id);
+        empresaService.excluir(id);
         response.sendRedirect(request.getContextPath() + "/empresa");
     }
 
@@ -96,7 +97,7 @@ public class EmpresaController extends HttpServlet {
     private void mostrarFormularioEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Empresa empresa = empresaDAO.buscarPorId(id);
+        Empresa empresa = empresaService.buscarEmpresa(id);
         request.setAttribute("empresa", empresa);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/formularioEmpresas.jsp");
 
@@ -108,7 +109,7 @@ public class EmpresaController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Empresa empresa = new Empresa(request.getParameter("nomeEmpresa"), request.getParameter("cnpj"), Double.parseDouble(request.getParameter("milheiroSeguranca")));
         empresa.setIdEmpresa(id);
-        empresaDAO.atualizarEmpresa(empresa);
+        empresaService.atualizarEmpresa(empresa);
         response.sendRedirect(request.getContextPath() + "/empresa");
     }
 }

@@ -51,7 +51,8 @@
             <a href="<%=request.getContextPath()%>/empresa">Cancelar</a>
         </form>
     </div>
-
+    <script src="<%= request.getContextPath() %>/js/script.js"></script>
+    <script src="<%= request.getContextPath() %>/js/erroCadastroEmpresa.js"></script>
 </main>
 </body>
 </html>
