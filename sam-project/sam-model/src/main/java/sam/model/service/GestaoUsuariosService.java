@@ -3,9 +3,12 @@ package sam.model.service;
 import sam.model.dao.UsuarioDAO;
 import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Usuario;
+import sam.model.domain.util.UsuarioTipo;
 import sam.model.helper.UsuarioHelper;
 
 import java.sql.SQLException;
+
+import java.util.List;
 
 public class GestaoUsuariosService {
 
@@ -45,5 +48,12 @@ public class GestaoUsuariosService {
         } catch (SQLException e) {
             throw new SQLException(e);
         }
+    }
+
+    public List<Usuario> getListaClientes(Usuario usuario) throws SQLException {
+        if (usuario.getTipo() == UsuarioTipo.CLIENTE || usuario.getTipo() == UsuarioTipo.DESENVOLVEDOR)
+            throw new RuntimeException("Acesso negado");
+
+        return usuarioDAO.getListaClientes(usuario);
     }
 }

@@ -12,8 +12,8 @@
 <nav>
     <% if (ControleAutorizacao.checkPermissao("dashboard-cliente", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("dashboard-cliente", usuario.getCPF())) {%>
     <a href="/sam/core/cliente/dashboard.jsp">Dashboard</a>
-    <%} if (ControleAutorizacao.checkPermissao("transacoes-clientes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("transacoes-clientes", usuario.getCPF())) {%>
-    <a href="/sam/core/geral/transacoes.jsp">Transações Clientes</a>
+    <%} if (ControleAutorizacao.checkPermissao("transacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("transacoes", usuario.getCPF())) {%>
+    <a href="/sam/core/geral/transacoes.jsp">Transações</a>
     <%} if (ControleAutorizacao.checkPermissao("empresas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("empresas", usuario.getCPF())) {%>
     <a href="/sam/core/gestor/empresas.jsp">Empresas</a>
     <%} if (ControleAutorizacao.checkPermissao("notificacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("notificacoes", usuario.getCPF())) {%>
@@ -46,8 +46,6 @@
         <a href="/sam/core/geral/relatorios.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>
         <a href="/sam/core/geral/avaliacoes.jsp">Relatórios</a>
-        <%} if (ControleAutorizacao.checkPermissao("transacoes-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("transacoes-gestor", usuario.getCPF())) {%>
-        <a href="/sam/core/geral/transacoes.jsp">Transações Gestor</a>
         <%} if (ControleAutorizacao.checkPermissao("campanhas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("campanhas", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/planos.jsp">Campanhas</a>
         <%} if (ControleAutorizacao.checkPermissao("ver-usuarios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-usuarios", usuario.getCPF())) {%>

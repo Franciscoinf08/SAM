@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="sam.model.domain.util.UsuarioTipo" %>
+<%@ page import="sam.model.service.GestaoUsuariosService" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -24,23 +26,43 @@
 
         <main class="content">
             <h2>Registrar Transação</h2>
-            <form class="formulario">
-                <label>Tipo:</label>
-                <select>
-                    <option>Compra</option>
-                    <option>Venda</option>
-                    <option>Bônus</option>
-                </select>
+            <form class="formulario" action="/CadastroTransacaoController" method="POST">
+                <%if (usuario.getTipo() == UsuarioTipo.GESTOR) {%>
+                <label>Cliente:
+                    <% GestaoUsuariosService manterUsuario = new GestaoUsuariosService(); %>
+                    <select>
+                        <% for (Usuario cliente : manterUsuario.getListaClientes(usuario)) {%>
+                        <option value="<%= cliente.getId() %>"><%= cliente.getNome() %></option>
+                        <%}%>
+                    </select>
+                </label>
+                <%}%>
 
-                <label>Quantidade:</label>
-                <input type="number" placeholder="Digite a quantidade">
+                <label for="tipo">Tipo:
+                    <select>
+                        <option>Compra</option>
+                        <option>Venda</option>
+                    </select>
+                </label>
 
-                <label>Valor (R$):</label>
-                <input type="text" placeholder="0,00">
+                <label for="quantidade">Quantidade:
+                    <input type="number" min="1" placeholder="1">
+                </label>
+
+                <label for="valor">Valor (R$):
+                    <input type="number" step="0.01" min="0.01" placeholder="0,01">
+                </label>
+
+                <label for="bonus">Valor (R$):
+                    <input type="number" step="0.01" min="0.00" placeholder="0,00">
+                </label>
 
                 <button>Registrar</button>
             </form>
         </main>
+
+        <%@include file="/core/mensagens-erro.jsp"%>
+
         <script src="/sam/js/script.js"></script>
     </body>
 
