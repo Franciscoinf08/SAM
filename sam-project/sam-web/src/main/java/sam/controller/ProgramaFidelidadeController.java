@@ -123,7 +123,7 @@ public class ProgramaFidelidadeController extends HttpServlet {
     }
 
     private void editarProgramaFidelidade(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException, ServletException {
+            throws Exception {
 
         int id = Integer.parseInt(request.getParameter("id"));
         String nome = request.getParameter("nome");
@@ -137,7 +137,8 @@ public class ProgramaFidelidadeController extends HttpServlet {
         programa.setIdProgramaFidelidade(id);
 
         programaFidelidadeDAO.atualizarProgramaFidelidade(programa);
-
+        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), programaFidelidadeDAO);
+        avaliador.avaliarPrograma(programa);
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
     }
 

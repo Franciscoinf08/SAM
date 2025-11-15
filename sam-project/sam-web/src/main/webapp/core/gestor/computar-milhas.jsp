@@ -1,21 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sam.model.domain.Usuario"%>
-<%@page import="sam.controller.LoginController"%>
-
-<%
-    LoginController.validarSessao(request, response);
-
-    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-%>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
     <head>
         <meta charset="UTF-8">
-        <title>SAM - Perfil</title>
+        <title>SAM - Computar Milhas</title>
 
-        <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,22 +17,9 @@
 
     <body>
         <header>
-            <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Perfil</h1>
-            <nav>
-                <a href="/sam/core/cliente/dashboard.jsp">Dashboard</a>
-                <a href="/sam/core/transacoes.jsp">Transações</a>
-                <a href="/sam/core/notificacoes.jsp">Notificações</a>
-                <a href="/sam/core/suporte.jsp">Suporte</a>
-            </nav>
-            
-            <div class="hamburger-menu">
-                <h1><%=usuario.getNome()%></h1>
-                <button id="hamburger-btn">&#9776;</button>
-                <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="/sam/core/perfil.jsp">Visualizar Perfil</a>
-                </div>
-            </div>
+            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+            <h1>Computar Milhas</h1>
+            <%@include file="/core/header.jsp" %>
         </header>
 
 
@@ -76,7 +54,6 @@
                 <p id="textoResultado">Preencha os campos acima e clique em Calcular.</p>
             </section>
         </main>
-        
         <script src="/sam/js/script.js"></script>
     </body>
 

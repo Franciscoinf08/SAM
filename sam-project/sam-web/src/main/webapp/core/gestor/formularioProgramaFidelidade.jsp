@@ -1,4 +1,4 @@
-
+<%@ page import="sam.model.domain.ProgramaFidelidade" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -28,39 +28,39 @@
     </div>
 </header>
 <main class="content">
-        <div class="formulario">
-            <form action="<%= request.getContextPath() %>/programaFidelidade" method="post">
+    <div class="formulario">
+        <form action="<%= request.getContextPath() %>/programaFidelidade" method="post">
 
-                <label>
-                    <span>Nome do Programa</span>
-                    <input type="text" name="nome" required>
-                </label>
+            <label>
+                <span>Nome do Programa</span>
+                <input type="text" name="nome" required value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getNome() : "" %>">
+            </label>
 
 
-                <label>
-                    <span>Bonus de Milhas</span>
-                    <input type="number" name="bonusMilhas" required>
-                </label>
+            <label>
+                <span>Bonus de Milhas</span>
+                <input type="number" name="bonusMilhas" required  value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getBonusMilhas(): "" %>">
+            </label>
 
-                <label>
-                    <span>Duração</span>
-                    <input type="number" name="duracao" required>
-                </label>
-                <label>
-                    <span> Milhas por mês</span>
-                    <input type="number" name="qtdeMilhasMes" required>
-                </label>
+            <label>
+                <span>Duração</span>
+                <input type="number" name="duracao" required  value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getDuracao() : "" %>">
+            </label>
+            <label>
+                <span> Milhas por mês</span>
+                <input type="number" name="qtdeMilhasMes" required  value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getQtdeMilhasMes() : "" %>">
+            </label>
 
-                <label>
-                    <span>preco mensal</span>
-                    <input type="number" name="preco" required>
-                </label>
+            <label>
+                <span>preco mensal</span>
+                <input type="number" name="preco" required value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getPrecoMensal() : "" %>">
+            </label>
 
-                <input type="hidden" name="idEmpresa" value="<%= request.getParameter("idEmpresa") %>">
-                <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>">
-                <button type="submit">Salvar</button>
-            </form>
-        </div>
+            <input type="hidden" name="idEmpresa" value="<%= request.getParameter("idEmpresa") %>">
+            <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>">
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
 </main>
 </body>
 </html>

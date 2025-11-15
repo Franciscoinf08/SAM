@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
@@ -57,8 +58,10 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     public void atualizar(Usuario usuario) throws SQLException {
         String sql = "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, senha = ?, tipo = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            String senhaCriptografada = PasswordDigest.passwordDigestMD5(usuario.getSenha());
-            usuario.setSenha(senhaCriptografada);
+            if (!Objects.equals(pesquisar(usuario.getId()).getSenha(), usuario.getSenha())) {
+                String senhaCriptografada = PasswordDigest.passwordDigestMD5(usuario.getSenha());
+                usuario.setSenha(senhaCriptografada);
+            }
 
             preparedStatement.setString(1, usuario.getNome());
             preparedStatement.setString(2, usuario.getEmail());

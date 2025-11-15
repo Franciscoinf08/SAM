@@ -1,9 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sam.model.dao.UsuarioDAO"%>
+
+<% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();%>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
     <head>
         <meta charset="UTF-8">
-        <title>SAM - Clientes</title>
+        <title>SAM - Visulizar Usuários</title>
 
         <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
@@ -13,37 +18,45 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+
     <body>
+
         <header>
             <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Clientes</h1>
+            <h1>Gerenciar Usuários</h1>
             <%@include file="/core/header.jsp" %>
         </header>
 
         <main class="content">
-            <h2>Meus clientes</h2>
+            <h2>Gerenciar Usuarios</h2>
             <table>
                 <tr>
                     <th>Nome</th>
-                    <th>Plano de acesso</th>
-                    <th>Programa</th>
+                    <th>Tipo</th>
                     <th>Ações</th>
                 </tr>
+                <% long cont = 1;
+                    while (true) {
+                        Usuario cliente = usuarioDAO.pesquisar(cont);
+                        if (cliente != null) {%>
                 <tr>
-                    <td>Jorge</td>
-                    <td>Premiun</td>
-                    <td>Latam Pass</td>
-                    <td><button>Editar</button></td>
+                    <td><%=cliente.getNome()%></td>
+                    <td><%=cliente.getTipo()%></td>
+                    <td>
+                        <button>Relatórios</button>
+                        <button><a href="ver-permissoes.jsp?id=<%=cont%>">Permissões</a></button>
+                    </td>
                 </tr>
-                <tr>
-                    <td>Ana</td>
-                    <td>Basic</td>
-                    <td>Azul Fidelidade</td>
-                    <td><button>Editar</button></td>
-                </tr>
+                <%} else {
+                            break;
+                        }
+                        cont++;
+                    }
+
+                %>
             </table>
         </main>
         <script src="../../js/script.js"></script>
-
     </body>
+
 </html>

@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.sql.SQLException;
 import java.io.IOException;
 
 @WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
@@ -36,7 +35,7 @@ public class LoginController extends HttpServlet {
                     jsp = "/sam/core/gestor/apuracao.jsp";
                     break;
                 case DESENVOLVEDOR:
-                    jsp = "/sam/core/perfil.jsp";
+                    jsp = "/sam/core/geral/perfil.jsp";
                     break;
             }
             response.sendRedirect(jsp);
@@ -46,7 +45,7 @@ public class LoginController extends HttpServlet {
             request.setAttribute("erro", erro);
             RequestDispatcher rd = request.getRequestDispatcher("");
             rd.forward(request, response);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
