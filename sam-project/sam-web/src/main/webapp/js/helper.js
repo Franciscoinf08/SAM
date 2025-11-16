@@ -1,3 +1,7 @@
+/*
+* VALIDAÇÕES DE PREENCHIMENTO DE CAMPOS
+*/
+
 function validarCamposLogin(form) {
     let cpf = form.cpf.value;
     let senha = form.senha.value;
@@ -115,6 +119,27 @@ function validarCamposAlteracaoPerfil(form) {
     return resultado;
 }
 
+function validarCamposCadastroTransacao(form) {
+    let quantidade = form.quantidade.value;
+    let valor = form.valor.value;
+    let bonus = form.bonus.value;
+    let resultado = false;
+
+    if (bonus === "") {
+        form.bonus.value = "0";
+        bonus = form.bonus.value;
+    }
+
+    if (window.confirm(`Confirmar valores?\n Quantidade: ${quantidade}\n Valor: ${valor}\n Bônus: ${bonus}`))
+        resultado = true;
+
+    return resultado;
+}
+
+/*
+* VALIDAÇÕES AUXILIARES
+*/
+
 function validarCPF(cpf) {
     if (cpf === "00000000000" || cpf.length !== 11 || isNaN(cpf))
         return false;
@@ -152,6 +177,10 @@ function validarEmail(email) {
         dominio.indexOf(".") >= 1 &&
         dominio.lastIndexOf(".") < dominio.length - 1;
 }
+
+/*
+* GERADOR DAS MENSAGENS DE ERRO
+*/
 
 function gerarMensagemErro(erro) {
     let body = document.body;

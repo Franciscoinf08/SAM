@@ -3,17 +3,20 @@ package sam.model.domain;
 import sam.model.domain.util.TransacaoTipo;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class Transacao {
     private Long id;
-    private final Usuario cliente;
+    private final Long idCliente;
+    private final Timestamp data;
     private int quantidade;
     private TransacaoTipo tipo;
     private BigDecimal valor;
-    private BigDecimal bonus;
+    private int bonus;
 
-    public Transacao(Usuario cliente, int quantidade, TransacaoTipo tipo, BigDecimal valor, BigDecimal bonus) {
-        this.cliente = cliente;
+    public Transacao(Long idCliente, Timestamp data, int quantidade, TransacaoTipo tipo, BigDecimal valor, int bonus) {
+        this.data = data;
+        this.idCliente = idCliente;
         this.quantidade = quantidade;
         this.tipo = tipo;
         this.valor = valor;
@@ -24,9 +27,11 @@ public class Transacao {
 
     public void setId(Long id) { this.id = id; }
 
-    public Usuario getCliente() { return cliente; }
+    public Long getIdCliente() { return idCliente; }
 
-    public Long getIdCliente() { return cliente.getId(); }
+    public Timestamp getData() {
+        return data;
+    }
 
     public int getQuantidade() {
         return quantidade;
@@ -40,11 +45,11 @@ public class Transacao {
 
     public void setTipo(TransacaoTipo tipo) { this.tipo = tipo; }
 
-    public BigDecimal getBonus() { return bonus; }
-
-    public void setBonus(BigDecimal bonus) { this.bonus = bonus;  }
-
     public BigDecimal getValor() { return valor; }
 
     public void setValor(BigDecimal valor) { this.valor = valor; }
+
+    public int getBonus() { return bonus; }
+
+    public void setBonus(int bonus) { this.bonus = bonus;  }
 }

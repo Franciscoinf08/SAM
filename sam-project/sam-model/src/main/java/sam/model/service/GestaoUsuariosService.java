@@ -51,7 +51,7 @@ public class GestaoUsuariosService {
     }
 
     public List<Usuario> getListaClientes(Usuario usuario) throws SQLException {
-        if (usuario.getTipo() == UsuarioTipo.CLIENTE || usuario.getTipo() == UsuarioTipo.DESENVOLVEDOR)
+        if (usuario.getTipo() != UsuarioTipo.GESTOR)
             throw new RuntimeException("Acesso negado");
 
         return usuarioDAO.getListaClientes(usuario);

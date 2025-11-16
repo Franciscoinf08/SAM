@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="sam.model.service.GestaoUsuariosService" %>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -28,11 +29,12 @@
                 <h2>Filtros</h2>
                 <form class="formulario">
                     <label for="cliente">Cliente:
-                        <select>
+                        <% GestaoUsuariosService manterUsuario = new GestaoUsuariosService(); %>
+                        <select name="cliente">
                             <option>Todos</option>
-                            <option>Maria S.</option>
-                            <option>João P.</option>
-                            <option>Ana Sofia</option>
+                            <% for (Usuario cliente : manterUsuario.getListaClientes(usuario)) {%>
+                            <option value="<%= cliente.getId() %>"><%= cliente.getNome() %></option>
+                            <%}%>
                         </select>
                     </label>
 

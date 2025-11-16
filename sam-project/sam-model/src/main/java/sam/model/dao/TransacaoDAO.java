@@ -6,8 +6,8 @@ import sam.model.domain.util.TransacaoTipo;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
@@ -33,14 +33,15 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
     @Override
     public void inserir(Transacao transacao) throws SQLException {
-        String sql = "INSERT INTO transacoes(id_cliente, quantidade, tipo, valor, bonus) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO transacoes(id_cliente, data, quantidade, tipo, valor, bonus) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, transacao.getIdCliente());
-            preparedStatement.setLong(2, transacao.getQuantidade());
-            preparedStatement.setString(3, transacao.getTipo().toString());
-            preparedStatement.setBigDecimal(4, transacao.getValor());
-            preparedStatement.setBigDecimal(5, transacao.getBonus());
+            preparedStatement.setTimestamp(2, transacao.getData());
+            preparedStatement.setLong(3, transacao.getQuantidade());
+            preparedStatement.setString(4, transacao.getTipo().toString());
+            preparedStatement.setBigDecimal(5, transacao.getValor());
+            preparedStatement.setInt(6, transacao.getBonus());
 
             preparedStatement.executeUpdate();
 
@@ -54,15 +55,16 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
     @Override
     public void atualizar(Transacao transacao) throws SQLException {
-        String sql = "UPDATE transacoes SET id_cliente = ?, quantidade = ?, tipo = ?, valor = ?, bonus = ? WHERE id = ?";
+        String sql = "UPDATE transacoes SET id_cliente = ?, data = ?, quantidade = ?, tipo = ?, valor = ?, bonus = ? WHERE id = ?";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, transacao.getIdCliente());
-            preparedStatement.setInt(2, transacao.getQuantidade());
-            preparedStatement.setString(3, transacao.getTipo().toString());
-            preparedStatement.setBigDecimal(4, transacao.getValor());
-            preparedStatement.setBigDecimal(5, transacao.getBonus());
-            preparedStatement.setLong(6, transacao.getId());
+            preparedStatement.setTimestamp(2, transacao.getData());
+            preparedStatement.setLong(3, transacao.getQuantidade());
+            preparedStatement.setString(4, transacao.getTipo().toString());
+            preparedStatement.setBigDecimal(5, transacao.getValor());
+            preparedStatement.setInt(6, transacao.getBonus());
+            preparedStatement.setLong(7, transacao.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -82,14 +84,15 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
             if (rs.next()) {
                 Long idCliente = rs.getLong("id_cliente");
+                Timestamp data = rs.getTimestamp("data");
                 int quantidade = rs.getInt("quantidade");
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
-                BigDecimal bonus = rs.getBigDecimal("bonus");
+                int bonus = rs.getInt("bonus");
 
                 Usuario cliente = usuarioDAO.pesquisar(idCliente);
 
-                transacao = new Transacao(cliente, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
+                transacao = new Transacao(cliente.getId(), data, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
                 transacao.setId(id);
             }
         } catch (SQLException e) {
@@ -101,7 +104,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
     public List<Transacao> pesquisarPorCliente(Usuario cliente) throws SQLException {
         List<Transacao> listaTransacoes = new ArrayList<>();
         Long idCliente = cliente.getId();
-        String sql = "SELECT * FROM transacoes WHERE id_cliente = ?";
+        String sql = "SELECT * FROM transacoes WHERE id_cliente = ? ORDER BY data DESC";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idCliente);
@@ -109,12 +112,13 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
             while (rs.next()) {
                 Long id = rs.getLong("id");
+                Timestamp data = rs.getTimestamp("data");
                 int quantidade = rs.getInt("quantidade");
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
-                BigDecimal bonus = rs.getBigDecimal("bonus");
+                int bonus = rs.getInt("bonus");
 
-                Transacao transacao = new Transacao(cliente, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
+                Transacao transacao = new Transacao(cliente.getId(), data, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
                 transacao.setId(id);
 
                 listaTransacoes.add(transacao);
@@ -128,7 +132,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
     public List<Transacao> pesquisarPorGestor(Usuario gestor) throws SQLException {
         List<Transacao> listaTransacoes = new ArrayList<>();
         Long idGestor = gestor.getId();
-        String sql = "SELECT t.* FROM transacoes t JOIN usuarios u ON u.id = t.id_cliente WHERE u.id_gestor = 2";
+        String sql = "SELECT t.* FROM transacoes t JOIN usuarios u ON u.id = t.id_cliente WHERE u.id_gestor = ? ORDER BY data DESC";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idGestor);
@@ -136,12 +140,14 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
             while (rs.next()) {
                 Long id = rs.getLong("id");
+                Long idCliente = rs.getLong("idCliente");
+                Timestamp data = rs.getTimestamp("data");
                 int quantidade = rs.getInt("quantidade");
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
-                BigDecimal bonus = rs.getBigDecimal("bonus");
+                int bonus = rs.getInt("bonus");
 
-                Transacao transacao = new Transacao(usuarioDAO.pesquisar(id), quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
+                Transacao transacao = new Transacao(idCliente, data, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
                 transacao.setId(id);
 
                 listaTransacoes.add(transacao);
