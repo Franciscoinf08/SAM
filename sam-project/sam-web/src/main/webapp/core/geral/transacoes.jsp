@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.domain.util.UsuarioTipo" %>
 <%@ page import="sam.model.service.GestaoUsuariosService" %>
+<%@ page import="java.sql.Date" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -39,9 +40,15 @@
                     </label>
                     <%} else {%>
                     <label>
-                      <input name="cliente" type="hidden" value="<%= usuario.getId() %>">
+                        <input name="cliente" type="hidden" value="<%= usuario.getId() %>">
                     </label>
                     <%}%>
+
+                    <label for="programa-fidelidade">Programa de Fidelidade:
+                        <select name="programa-fidelidade">
+                            <option></option>
+                        </select>
+                    </label>
 
                     <label for="tipo">Tipo:
                         <select name="tipo" class="tipo-input">
@@ -60,6 +67,10 @@
 
                     <label for="bonus" class="bonus-input">Bônus:
                         <input name="bonus" type="number" min="0" value="0" placeholder="0">
+                    </label>
+
+                    <label for="data">Data:
+                        <input name="data" type="date" value="<%= new Date(System.currentTimeMillis()).toString() %>" required>
                     </label>
 
                     <button>Registrar</button>

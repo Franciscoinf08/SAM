@@ -15,23 +15,25 @@ import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @WebServlet(name = "CadastroTransacaoController", urlPatterns = {"/CadastroTransacaoController"})
 public class CadastroTransacaoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Long idProgramaFidelidade;
         Long idCliente;
-        Timestamp data;
+        Date data;
         TransacaoTipo tipo;
         int quantidade;
         BigDecimal valor;
         int bonus;
 
         try {
+            idProgramaFidelidade = Long.parseLong(request.getParameter("programa-fidelidade"));
             idCliente = Long.parseLong(request.getParameter("cliente"));
-            data = new Timestamp(System.currentTimeMillis());
+            data = Date.valueOf(request.getParameter("data"));
             tipo = TransacaoTipo.strTo(request.getParameter("tipo"));
             quantidade = Integer.parseInt(request.getParameter("quantidade"));
             valor = new BigDecimal(request.getParameter("valor"));
@@ -53,7 +55,7 @@ public class CadastroTransacaoController extends HttpServlet {
         GestaoTransacoesService manterTransacao = new GestaoTransacoesService();
 
         try {
-            Transacao transacao = new Transacao(idCliente, data, quantidade, tipo, valor, bonus);
+            Transacao transacao = new Transacao(idProgramaFidelidade, idCliente, data, quantidade, tipo, valor, bonus);
 
             manterTransacao.cadastrar(transacao);
         } catch (PersistenciaException e) {

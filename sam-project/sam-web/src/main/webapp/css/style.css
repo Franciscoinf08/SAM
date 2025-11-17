@@ -79,13 +79,14 @@ h2 {
 }
 
 .indicadores h2 {
-    font-size: larger;
+    text-align: left;
+    font-size: medium;
     font-weight: normal;
 }
 
 .indicadores li {
-    font-size: xx-large;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin: 0.5em 0;
 }
 
@@ -94,8 +95,8 @@ h2 {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    min-width: 15vw;
-    min-height: 7.5vw;
+    width: 25%;
+    min-height: 25%;
 }
 
 #card-selecao {
@@ -185,6 +186,10 @@ table td {
     max-width: 60vw;
     background: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tabela-container table {
+    margin: 0;
 }
 
 .notificacoes li {

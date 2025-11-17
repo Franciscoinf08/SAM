@@ -7,7 +7,6 @@ import sam.model.domain.util.UsuarioTipo;
 import sam.model.helper.UsuarioHelper;
 
 import java.sql.SQLException;
-
 import java.util.List;
 
 public class GestaoUsuariosService {

@@ -4,21 +4,23 @@ import sam.model.domain.util.TransacaoStatus;
 import sam.model.domain.util.TransacaoTipo;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Transacao {
     private Long id;
-    private final Long idCliente;
-    private final Timestamp data;
+    private long idProgramaFidelidade;
+    private Long idCliente;
+    private Date data;
     private int quantidade;
     private TransacaoTipo tipo;
     private BigDecimal valor;
     private int bonus;
     private TransacaoStatus status;
 
-    public Transacao(Long idCliente, Timestamp data, int quantidade, TransacaoTipo tipo, BigDecimal valor, int bonus) {
-        this.data = data;
+    public Transacao(Long idProgramaFidelidade, Long idCliente, Date data, int quantidade, TransacaoTipo tipo, BigDecimal valor, int bonus) {
+        this.idProgramaFidelidade = idProgramaFidelidade;
         this.idCliente = idCliente;
+        this.data = data;
         this.quantidade = quantidade;
         this.tipo = tipo;
         this.valor = valor;
@@ -30,9 +32,11 @@ public class Transacao {
 
     public void setId(Long id) { this.id = id; }
 
+    public Long getIdProgramaFidelidade() { return idProgramaFidelidade; }
+
     public Long getIdCliente() { return idCliente; }
 
-    public Timestamp getData() {
+    public Date getData() {
         return data;
     }
 

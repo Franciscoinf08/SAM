@@ -1,9 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.service.GestaoTransacoesService" %>
 <%@ page import="sam.model.domain.Transacao" %>
-<%@ page import="java.util.List" %>
 <%@ page import="sam.model.helper.DataHelper" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.sql.Date" %>
 <%@ page import="java.sql.SQLException" %>
 
 <!DOCTYPE html>
@@ -42,7 +43,7 @@
                 try {
                     quantidadeTotal = manterTransacao.getQuantidadeTotalCliente(usuario);
                     bonusTotal = manterTransacao.getBonusTotalCliente(usuario);
-                    milhasTotal = manterTransacao.getMilhasTotalCliente(usuario);
+                    milhasTotal = quantidadeTotal + bonusTotal;
                     valorTotal = manterTransacao.getValorTotalCliente(usuario);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -54,7 +55,7 @@
                     <h2>Saldo Total</h2>
                     <ul>
                         <li>
-                            <%= manterTransacao.getMilhasTotalCliente(usuario) %>
+                            <%= milhasTotal %>
                              milha<% if (milhasTotal != 1){ %>s<%}%>
                         </li>
                         <li>
@@ -83,11 +84,11 @@
             <section class="tabela-container">
                 <table>
                     <tr>
-                        <th>Data</th><th>Tipo</th><th>Quantidade</th><th>Valor (R$)</th><th>Bônus</th><th>Total</th>
+                        <th>Data</th><th>Tipo</th><th>Quantidade</th><th>Valor (R$)</th><th>Bônus</th><th>Total</th><th>Ação</th>
                     </tr>
                     <%if (listaTransacoes.isEmpty()) {%>
                     <tr>
-                        <td colspan="6">Ainda não há transações</td>
+                        <td colspan="7">Ainda não há transações</td>
                     </tr>
                     <%} else { %>
                     <% for (Transacao transacao : listaTransacoes) { %>
@@ -104,21 +105,29 @@
                             <%}%>
                         </td>
                         <td><%= transacao.getQuantidade() + transacao.getBonus() %></td>
+                        <td>
+                            <form name="formRemocaoTransacao" onsubmit="return window.confirm('Deseja mesmo remover a transação?');" action="/sam/RemocaoTransacaoController" method="POST" >
+                                <button value="<%= transacao.getId() %>" name="remover">Remover</button>
+                            </form>
+                        </td>
                     </tr>
                     <%}%>
                     <tr>
-                        <td>Total</td>
+                        <td>Saldo Total</td>
                         <td>-</td>
                         <td><%= quantidadeTotal %></td>
                         <td><%= valorTotal %></td>
                         <td><%= bonusTotal %></td>
                         <td><%= milhasTotal %></td>
+                        <td>-</td>
                     </tr>
                     <%}%>
                 </table>
             </section>
         </main>
-        
+
+        <%@include file="/core/mensagens-erro.jsp"%>
+
         <script src="/sam/js/script.js"></script>
     </body>
 

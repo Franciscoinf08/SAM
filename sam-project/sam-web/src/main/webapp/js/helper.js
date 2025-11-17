@@ -123,7 +123,6 @@ function validarCamposCadastroTransacao(form) {
     let quantidade = form.quantidade.value;
     let valor = form.valor.value;
     let bonus = form.bonus.value;
-    let resultado = false;
     let strConfirmacao = `Confirmar valores?\n Quantidade: ${quantidade}\n Valor: ${valor}`;
 
     if (bonus === "") {
@@ -132,10 +131,7 @@ function validarCamposCadastroTransacao(form) {
     } else if (bonus !== "0")
         strConfirmacao += `\n Bônus: ${bonus}`;
 
-    if (window.confirm(strConfirmacao))
-        resultado = true;
-
-    return resultado;
+    return window.confirm(strConfirmacao);
 }
 
 /*

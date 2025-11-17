@@ -8,10 +8,10 @@ public class DataHelper {
 
     public static String dataFormat1(String unformattedData) {
         String formatedData;
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date newDate = inputFormat.parse(unformattedData);
-            inputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            inputFormat = new SimpleDateFormat("dd/MM/yyyy");
             formatedData = inputFormat.format(newDate);
         } catch (ParseException e) {
             throw new RuntimeException(e);

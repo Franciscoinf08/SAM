@@ -45,6 +45,17 @@ public class GestaoTransacoesService {
         return transacaoDAO.pesquisarPorGestor(Gestor);
     }
 
+    public void remover(Long id) throws SQLException, PersistenciaException {
+        if (transacaoDAO.pesquisar(id) == null)
+            throw new PersistenciaException("A transação não existe");
+
+        try {
+            transacaoDAO.remover(id);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
     public BigDecimal getValorTotalCliente(Usuario cliente) throws SQLException {
         BigDecimal valor = BigDecimal.ZERO;
 
@@ -77,9 +88,5 @@ public class GestaoTransacoesService {
             bonus += transacao.getBonus();
 
         return bonus;
-    }
-
-    public int getMilhasTotalCliente(Usuario cliente) throws SQLException {
-        return getQuantidadeTotalCliente(cliente) + getBonusTotalCliente(cliente);
     }
 }
