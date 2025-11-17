@@ -2,6 +2,7 @@ package sam.model.dao;
 
 import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
+import sam.model.domain.util.TransacaoStatus;
 import sam.model.domain.util.TransacaoTipo;
 
 import java.math.BigDecimal;
@@ -33,7 +34,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
     @Override
     public void inserir(Transacao transacao) throws SQLException {
-        String sql = "INSERT INTO transacoes(id_cliente, data, quantidade, tipo, valor, bonus) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO transacoes(id_cliente, data, quantidade, tipo, valor, bonus, status) VALUES (?, ?, ?, ?, ?, ?, \"ATIVA\")";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, transacao.getIdCliente());
@@ -55,7 +56,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
     @Override
     public void atualizar(Transacao transacao) throws SQLException {
-        String sql = "UPDATE transacoes SET id_cliente = ?, data = ?, quantidade = ?, tipo = ?, valor = ?, bonus = ? WHERE id = ?";
+        String sql = "UPDATE transacoes SET id_cliente = ?, data = ?, quantidade = ?, tipo = ?, valor = ?, bonus = ? WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, transacao.getIdCliente());
@@ -68,14 +69,26 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Erro ao atualizar usuário", e);
+            throw new SQLException("Erro ao atualizar transação", e);
+        }
+    }
+
+    public void remover(Long id) throws SQLException {
+        String sql = "UPDATE transacoes SET status = \"REMOVIDA\" WHERE id = ? AND status = \"ATIVA\"";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+            preparedStatement.setLong(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao remover transação", e);
         }
     }
 
     @Override
     public Transacao pesquisar(Long id) throws SQLException {
         Transacao transacao = null;
-        String sql = "SELECT * FROM transacoes WHERE id = ?";
+        String sql = "SELECT * FROM transacoes WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
@@ -96,7 +109,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 transacao.setId(id);
             }
         } catch (SQLException e) {
-            throw new SQLException("Erro ao pesquisar usuário", e);
+            throw new SQLException("Erro ao pesquisar transação", e);
         }
         return transacao;
     }
@@ -104,7 +117,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
     public List<Transacao> pesquisarPorCliente(Usuario cliente) throws SQLException {
         List<Transacao> listaTransacoes = new ArrayList<>();
         Long idCliente = cliente.getId();
-        String sql = "SELECT * FROM transacoes WHERE id_cliente = ? ORDER BY data DESC";
+        String sql = "SELECT * FROM transacoes WHERE id_cliente = ? AND status = \"ATIVA\" ORDER BY data DESC";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idCliente);
@@ -132,10 +145,11 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
     public List<Transacao> pesquisarPorGestor(Usuario gestor) throws SQLException {
         List<Transacao> listaTransacoes = new ArrayList<>();
         Long idGestor = gestor.getId();
-        String sql = "SELECT t.* FROM transacoes t JOIN usuarios u ON u.id = t.id_cliente WHERE u.id_gestor = ? ORDER BY data DESC";
+        String sql = "SELECT t.* FROM transacoes t JOIN usuarios u ON u.id = t.id_cliente WHERE u.id_gestor = ? AND t.status = \"ATIVA\" ORDER BY data DESC";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idGestor);
+            preparedStatement.setString(2, TransacaoStatus.ATIVA.toString());
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {

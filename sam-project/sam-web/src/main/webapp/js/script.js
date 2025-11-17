@@ -1,3 +1,7 @@
+/*
+* BOTÃO HAMBÚRGUER
+*/
+
 const btn = document.getElementById("hamburger-btn");
 const dropdown = document.getElementById("hamburger-dropdown");
 

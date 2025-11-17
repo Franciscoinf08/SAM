@@ -44,7 +44,7 @@
                     <%}%>
 
                     <label for="tipo">Tipo:
-                        <select name="tipo">
+                        <select name="tipo" class="tipo-input">
                             <option value="COMPRA">Compra</option>
                             <option value="VENDA">Venda</option>
                         </select>
@@ -58,7 +58,7 @@
                         <input name="valor" type="number" step="0.01" min="0.01" value="0.01" placeholder="0.01" required>
                     </label>
 
-                    <label for="bonus">Bônus:
+                    <label for="bonus" class="bonus-input">Bônus:
                         <input name="bonus" type="number" min="0" value="0" placeholder="0">
                     </label>
 
@@ -69,6 +69,7 @@
 
         <%@include file="/core/mensagens-erro.jsp"%>
 
+        <script src="/sam/js/toggle-bonus.js"></script>
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/script.js"></script>
     </body>

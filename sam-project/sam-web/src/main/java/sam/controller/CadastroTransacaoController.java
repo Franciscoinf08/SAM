@@ -1,18 +1,20 @@
 package sam.controller;
 
+import sam.model.common.exception.PersistenciaException;
+import sam.model.domain.Transacao;
+import sam.model.domain.util.TransacaoTipo;
+import sam.model.service.GestaoTransacoesService;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletException;
-import sam.model.common.exception.PersistenciaException;
-import sam.model.domain.Transacao;
-import sam.model.domain.util.TransacaoTipo;
-import sam.model.service.GestaoTransacoesService;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 
 @WebServlet(name = "CadastroTransacaoController", urlPatterns = {"/CadastroTransacaoController"})
@@ -34,6 +36,9 @@ public class CadastroTransacaoController extends HttpServlet {
             quantidade = Integer.parseInt(request.getParameter("quantidade"));
             valor = new BigDecimal(request.getParameter("valor"));
             bonus = Integer.parseInt(request.getParameter("bonus"));
+
+            if (valor.scale() < 2)
+                valor = valor.setScale(2, RoundingMode.HALF_UP);
         } catch (RuntimeException e) {
             e.printStackTrace();
 

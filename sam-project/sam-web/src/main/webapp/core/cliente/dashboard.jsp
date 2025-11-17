@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="sam.model.helper.DataHelper" %>
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="sam.model.domain.util.TransacaoTipo" %>
+<%@ page import="java.sql.SQLException" %>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -30,91 +30,92 @@
         </header>
 
 
-        <main class="dashboard">
-            <section class="card">
-                <h2>Saldo Total</h2>
-                <p>128.500 milhas</p>
-            </section>
-            <section class="card">
-                <details>
-                    <%
-                        GestaoTransacoesService manterTransacao = new GestaoTransacoesService();
-                        List<Transacao> listaTransacoes = manterTransacao.listarPorCliente(usuario);
-                    %>
-                    <summary>
-                        <h2>Últimas Transações</h2>
-                        <ul>
-                            <% for (int i = 0; i < 3; i++) { Transacao transacao = listaTransacoes.get(i); %>
-                            <li><%= transacao.getTipo().toString() %> - <%= transacao.getQuantidade() + transacao.getBonus() %> milhas</li>
-                            <%}%>
-                        </ul>
-                    </summary>
+        <main>
+            <%
+                GestaoTransacoesService manterTransacao = new GestaoTransacoesService();
+                List<Transacao> listaTransacoes = manterTransacao.listarPorCliente(usuario);
 
-                    <table>
-                        <tr>
-                            <th>Data</th><th>Tipo</th><th>Quantidade</th><th>Valor (R$)</th><th>Bônus</th><th>Total</th>
-                        </tr>
+                int quantidadeTotal = 0;
+                int bonusTotal = 0;
+                int milhasTotal = 0;
+                BigDecimal valorTotal = BigDecimal.ZERO;
+                try {
+                    quantidadeTotal = manterTransacao.getQuantidadeTotalCliente(usuario);
+                    bonusTotal = manterTransacao.getBonusTotalCliente(usuario);
+                    milhasTotal = manterTransacao.getMilhasTotalCliente(usuario);
+                    valorTotal = manterTransacao.getValorTotalCliente(usuario);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    request.setAttribute("erro", "Não foi possível acessar os dados do cliente");
+                }
+            %>
+            <section class="indicadores">
+                <article class="card">
+                    <h2>Saldo Total</h2>
+                    <ul>
+                        <li>
+                            <%= manterTransacao.getMilhasTotalCliente(usuario) %>
+                             milha<% if (milhasTotal != 1){ %>s<%}%>
+                        </li>
+                        <li>
+                            <% if (!valorTotal.equals(valorTotal.abs())) { %>-<%}%>R$ <%= valorTotal.abs() %>
+                        </li>
+                    </ul>
+                </article>
+                <article class="card">
+                    <h2>Últimas Transações</h2>
+                    <%if (listaTransacoes.isEmpty()) { %>
+                    Ainda não há transações
+                    <%} else { %>
+                    <ul>
                         <%
-                            BigDecimal valorTotal = BigDecimal.ZERO;
-                            int quantidadeTotal = 0;
-                            int bonusTotal = 0;
+                            int k = Math.min(listaTransacoes.size(), 3);
                         %>
-                        <%
-                            for (Transacao transacao : listaTransacoes) {
-                                if (transacao.getTipo() == TransacaoTipo.COMPRA) {
-                                    valorTotal = valorTotal.subtract(transacao.getValor());
-                                    quantidadeTotal += transacao.getQuantidade();
-                                    bonusTotal += transacao.getBonus();
-                                } else {
-                                    valorTotal = valorTotal.add(transacao.getValor());
-                                    quantidadeTotal -= transacao.getQuantidade();
-                                    bonusTotal -= transacao.getBonus();
-                                }
-                        %>
-                        <tr>
-                            <td>
-                                <%= DataHelper.dataFormat1(transacao.getData().toString()) %>
-                            </td>
-                            <td>
-                                <%= transacao.getTipo().toString() %>
-                            </td>
-                            <td>
-                                <%= transacao.getQuantidade() %>
-                            </td>
-                            <td>
-                                <%= transacao.getValor() %>
-                            </td>
-                            <td>
-                                <%= transacao.getBonus() %>
-                            </td>
-                            <td>
-                                <%= transacao.getQuantidade() + transacao.getBonus() %>
-                            </td>
-                        </tr>
+                        <% for (Transacao transacao : listaTransacoes.subList(0, k)) { %>
+                        <li>
+                            <%= transacao.getTipo().toString() %> - <%= transacao.getQuantidade() + transacao.getBonus() %> milha<% if (milhasTotal != 1){ %>s<%}%>
+                        </li>
                         <%}%>
-
-                        <tr>
-                            <td>
-                                Total
-                            </td>
-                            <td>
-                                -
-                            </td>
-                            <td>
-                                <%= quantidadeTotal %>
-                            </td>
-                            <td>
-                                <%= valorTotal %>
-                            </td>
-                            <td>
-                                <%= bonusTotal %>
-                            </td>
-                            <td>
-                                <%= quantidadeTotal + bonusTotal %>
-                            </td>
-                        </tr>
-                    </table>
-                </details>
+                    </ul>
+                    <%}%>
+                </article>
+            </section>
+            <section class="tabela-container">
+                <table>
+                    <tr>
+                        <th>Data</th><th>Tipo</th><th>Quantidade</th><th>Valor (R$)</th><th>Bônus</th><th>Total</th>
+                    </tr>
+                    <%if (listaTransacoes.isEmpty()) {%>
+                    <tr>
+                        <td colspan="6">Ainda não há transações</td>
+                    </tr>
+                    <%} else { %>
+                    <% for (Transacao transacao : listaTransacoes) { %>
+                    <tr>
+                        <td><%= DataHelper.dataFormat1(transacao.getData().toString()) %></td>
+                        <td><%= transacao.getTipo().toString() %></td>
+                        <td><%= transacao.getQuantidade() %></td>
+                        <td><%= transacao.getValor() %></td>
+                        <td>
+                            <% if (transacao.getBonus() != 0) {%>
+                            <%= transacao.getBonus() %>
+                            <%} else {%>
+                            -
+                            <%}%>
+                        </td>
+                        <td><%= transacao.getQuantidade() + transacao.getBonus() %></td>
+                    </tr>
+                    <%}%>
+                    <tr>
+                        <td>Total</td>
+                        <td>-</td>
+                        <td><%= quantidadeTotal %></td>
+                        <td><%= valorTotal %></td>
+                        <td><%= bonusTotal %></td>
+                        <td><%= milhasTotal %></td>
+                    </tr>
+                    <%}%>
+                </table>
             </section>
         </main>
         

@@ -1,5 +1,6 @@
 package sam.model.domain;
 
+import sam.model.domain.util.TransacaoStatus;
 import sam.model.domain.util.TransacaoTipo;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ public class Transacao {
     private TransacaoTipo tipo;
     private BigDecimal valor;
     private int bonus;
+    private TransacaoStatus status;
 
     public Transacao(Long idCliente, Timestamp data, int quantidade, TransacaoTipo tipo, BigDecimal valor, int bonus) {
         this.data = data;
@@ -21,6 +23,7 @@ public class Transacao {
         this.tipo = tipo;
         this.valor = valor;
         this.bonus = bonus;
+        this.status = TransacaoStatus.ATIVA;
     }
 
     public Long getId() { return id; }
@@ -52,4 +55,12 @@ public class Transacao {
     public int getBonus() { return bonus; }
 
     public void setBonus(int bonus) { this.bonus = bonus;  }
+
+    public TransacaoStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TransacaoStatus status) {
+        this.status = status;
+    }
 }
