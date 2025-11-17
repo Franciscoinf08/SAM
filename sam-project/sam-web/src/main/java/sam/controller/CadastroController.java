@@ -1,6 +1,6 @@
 package sam.controller;
 
-import sam.model.dao.exception.PersistenciaException;
+import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Usuario;
 import sam.model.service.GestaoUsuariosService;
 
@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.sql.SQLException;
 import java.io.IOException;
 
 @WebServlet(name="CadastroController", urlPatterns = {"/CadastroController"})
@@ -25,9 +24,10 @@ public class CadastroController extends HttpServlet {
         String senha = request.getParameter("senha");
 
         GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
-        Usuario usuario = new Usuario(nome, email, cpf, senha);
 
         try {
+            Usuario usuario = new Usuario(nome, email, cpf, senha);
+
             manterUsuario.cadastrar(usuario);
             request.getSession().setAttribute("usuario", usuario);
             response.sendRedirect("/sam/core/cliente/dashboard.jsp");
@@ -37,7 +37,7 @@ public class CadastroController extends HttpServlet {
             request.setAttribute("erro", erro);
             RequestDispatcher rd = request.getRequestDispatcher("");
             rd.forward(request, response);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

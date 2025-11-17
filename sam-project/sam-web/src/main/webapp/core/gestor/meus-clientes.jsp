@@ -1,13 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>SAM - Clientes</title>
 
-        <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +15,7 @@
     </head>
     <body>
         <header>
-            <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Clientes</h1>
             <%@include file="/core/header.jsp" %>
         </header>
@@ -45,7 +43,7 @@
                 </tr>
             </table>
         </main>
-        
-        <script src="/sam/js/script.js"></script>
+        <script src="../../js/script.js"></script>
+
     </body>
 </html>

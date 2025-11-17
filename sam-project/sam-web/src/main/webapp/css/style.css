@@ -7,6 +7,7 @@
     font-style: normal;
 }
 
+
 body {
     background-color: #e4e4e5;
     color: #222;
@@ -37,13 +38,6 @@ nav a,
     text-decoration: none;
     margin: 0 10px;
     font-weight: 500;
-}
-
-nav a.active,
-nav a:hover,
-.login-menu a.active,
-.login-menu a:hover {
-    text-decoration: underline;
 }
 
 input {
@@ -100,7 +94,7 @@ h2 {
 }
 
 .form-autenticacao {
-    min-width: 25vw;
+    min-width: 35vw;
 }
 
 .formulario label {
@@ -134,7 +128,7 @@ h2 {
     margin: 10% 0;
 }
 
-button, .button-a {
+button {
     background-color: #0066cc;
     color: white;
     border: none;
@@ -197,6 +191,7 @@ table td {
     display: none;
     position: absolute;
     right: 0;
+    top: 50px;
     background-color: #f9f9f9;
     min-width: 150px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -214,12 +209,6 @@ table td {
     background-color: #ddd;
 }
 
-#hamburger-dropdown {
-    top: 50px;
-}
-#hamburger-dropdown.active {
-    top: 0;
-}
 .mensagem-card {
     position: absolute;
     top: -5vw;
@@ -239,4 +228,59 @@ table td {
 
 .show {
     display: block !important;
+}
+
+.div-sucesso {
+    background-color: #1a75b7;
+    color: white;
+    padding: 40px 60px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.div-sucesso h1{
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.div-sucesso h2{
+    font-size: 1.2em;
+    margin-bottom: 0;
+}
+
+.div-retorno {
+    text-align: center;
+    background-color: #007bff;
+}
+
+#secao-geral{
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-perfil{
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.main-perfil .formulario {
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 400px;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }

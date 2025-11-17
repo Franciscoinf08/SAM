@@ -85,15 +85,12 @@ function validarCamposAlteracaoPerfil(form) {
     let resultado = false;
 
     let strConfirmacao = "";
-    if (nome !== "") {
+    if (nome !== "")
         strConfirmacao += "Nome ";
-    } if (email !== "") {
+    if (email !== "")
         strConfirmacao += "Email ";
-    } if (senha !== "") {
+    if (senha !== "")
         strConfirmacao += "Senha";
-    } if (strConfirmacao !== "") {
-        strConfirmacao.replaceAll(" ", ", ")
-    }
 
     if (nome === "" && email === "" && senha === "") {
         gerarMensagemErro("Preencha algum dos campos");
@@ -110,7 +107,7 @@ function validarCamposAlteracaoPerfil(form) {
         form.senhaConfirmar.focus();
     }
     else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)){
-        form.action ="/sam/AlteracaoPerfilController";
+        form.action = "/sam/AlteracaoPerfilController";
         form.submit();
         resultado = true;
     }
@@ -160,8 +157,8 @@ function gerarMensagemErro(erro) {
     let body = document.body;
     let mensagemErroEl = document.createElement("div");
     let conteudo = document.createTextNode(erro);
-    mensagemErroEl.appendChild(conteudo);
 
+    mensagemErroEl.appendChild(conteudo);
     mensagemErroEl.classList.add("mensagem-card");
     body.appendChild(mensagemErroEl);
 
