@@ -1,5 +1,6 @@
 package sam.model.dao;
 
+import sam.model.domain.Empresa;
 import sam.model.domain.ProgramaFidelidade;
 import java.sql.*;
 import java.util.ArrayList;

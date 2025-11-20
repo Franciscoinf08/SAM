@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.domain.ProgramaFidelidade;
+import sam.model.service.ProgramaFidelidadeService;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "ProgramaFidelidadeController", urlPatterns = {"/programaFidelidade"})
 public class ProgramaFidelidadeController extends HttpServlet {
 
-    private final ProgramaFidelidadeDAO programaFidelidadeDAO = new ProgramaFidelidadeDAO();
+    private final ProgramaFidelidadeService pfs = new ProgramaFidelidadeService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -70,7 +72,7 @@ public class ProgramaFidelidadeController extends HttpServlet {
         }
 
         int idEmpresa = Integer.parseInt(idParam);
-        List<ProgramaFidelidade> lista = programaFidelidadeDAO.listarPorEmpresa(idEmpresa);
+        List<ProgramaFidelidade> lista = pfs.listarProgramaFidelidadePorEmpresa(idEmpresa);
 
         request.setAttribute("programas", lista);
         request.setAttribute("idEmpresa", idEmpresa);
@@ -110,14 +112,14 @@ public class ProgramaFidelidadeController extends HttpServlet {
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         double preco = Double.parseDouble(request.getParameter("preco"));
 
-        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), programaFidelidadeDAO);
+        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), new ProgramaFidelidadeDAO());
 
         ProgramaFidelidade programa = new ProgramaFidelidade(
                 nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa
         );
 
 
-        programaFidelidadeDAO.salvar(programa);
+        pfs.cadastrarProgramaFidelidade(programa);
         avaliador.avaliarPrograma(programa);
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
     }
@@ -136,8 +138,8 @@ public class ProgramaFidelidadeController extends HttpServlet {
         ProgramaFidelidade programa = new ProgramaFidelidade(nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa);
         programa.setIdProgramaFidelidade(id);
 
-        programaFidelidadeDAO.atualizarProgramaFidelidade(programa);
-        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), programaFidelidadeDAO);
+        pfs.atualizarProgramaFidelidade(programa);
+        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), new ProgramaFidelidadeDAO());
         avaliador.avaliarPrograma(programa);
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
     }
@@ -148,7 +150,7 @@ public class ProgramaFidelidadeController extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
-            programaFidelidadeDAO.excluirProgramaFidelidade(id);
+            pfs.deletarProgramaFidelidade(id);
             response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
         } catch (Exception e) {
             throw new ServletException("Erro ao excluir programa de fidelidade.", e);
@@ -159,11 +161,11 @@ public class ProgramaFidelidadeController extends HttpServlet {
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-            ProgramaFidelidade programa = programaFidelidadeDAO.buscarPorId(id);
+            ProgramaFidelidade programa = pfs.buscarProgramaFidelidade(id);
             request.setAttribute("programa", programa);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/formularioProgramaFidelidade.jsp");
             dispatcher.forward(request, response);
-        } catch (Exception e) {
+        } catch (ServletException e) {
             throw new ServletException("Erro ao carregar programa de fidelidade para edição.", e);
         }
     }
