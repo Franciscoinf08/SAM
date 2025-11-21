@@ -49,8 +49,9 @@
                         <button type="button" onclick="validarCamposAlteracaoPerfil(document.formAlteracao)">Salvar Alterações</button>
                     </label>
                 </form>
-
-                <button id="solicitar-gestor">Solicitar conta de gestor</button>
+                <%if (ControleAutorizacao.checkPermissao("solicitar-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("solicitar-gestor", usuario.getCPF())){%>
+                <a href="/sam/core/cliente/dashboard.jsp" id="solicitar-gestor">Solicitar conta de gestor</a>
+                <%}%>
             </div>
             <div class="formulario">
                 <form action="/sam/core/cliente/selecao-formularios.jsp">
