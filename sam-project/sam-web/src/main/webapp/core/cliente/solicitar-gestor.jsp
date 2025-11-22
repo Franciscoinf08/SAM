@@ -25,17 +25,19 @@
         </header>
 
         <main class="content">
-            <h2>Solicitações</h2>
-            <form action=""<!-- ADICIONAR SERVLET --> method="POST" name="formSolicitarGestor">
-                <input type="text" placeholder="Forma de pagamento" list="pagamento" name="forma-pagamento">
-                <datalist id="pagamento">
-                    <option value="boleto">Boleto</option>
-                    <option value="cartão">Cartão</option>
-                    <option value="pix">Pix</option>
-                </datalist>
-
-            </form>
-            
+            <div id="novaSolicitacao">
+                <h2>Realizar nova solicitação</h2>
+                <a href="/sam/core/cliente/lista-solicitacoes.jsp" id="solicitar-gestor" class="button-a">Listar solicitação</a>
+                <form action="/solicitarGestor?acao=Pedir&nome=<%=usuario.getNome()%>&email=<%=usuario.getEmail()%>" method="POST" name="formSolicitarGestor">
+                    <input type="text" placeholder="Forma de pagamento" list="pagamento" name="forma-pagamento">
+                    <datalist id="pagamento">
+                        <option value="boleto">Boleto</option>
+                        <option value="cartão">Cartão</option>
+                        <option value="pix">Pix</option>
+                    </datalist>
+                    <input type="submit" value="Confirmar solicitação">
+                </form>
+            </div>
         </main>
         <script src="../../js/script.js"></script>
     </body>

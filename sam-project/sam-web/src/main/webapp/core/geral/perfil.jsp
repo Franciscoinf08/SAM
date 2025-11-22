@@ -50,7 +50,7 @@
                     </label>
                 </form>
                 <%if (ControleAutorizacao.checkPermissao("solicitar-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("solicitar-gestor", usuario.getCPF())){%>
-                <a href="/sam/core/cliente/dashboard.jsp" id="solicitar-gestor">Solicitar conta de gestor</a>
+                <a href="/sam/core/cliente/solicitar-gestor.jsp" id="solicitar-gestor" class="button-a">Solicitar conta de gestor</a>
                 <%}%>
             </div>
             <div class="formulario">

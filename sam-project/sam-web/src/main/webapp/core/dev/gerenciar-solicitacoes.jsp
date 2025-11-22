@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sam.model.dao.UsuarioDAO"%>
+<%@page import="java.util.List"%>
 
 <% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();%>
 
@@ -34,29 +35,41 @@
                     <th>Nome</th>
                     <th>E-mail</th>
                     <th>Forma de Pagamento</th>
+                    <th>Status</th>
                     <th>Ações</th><!-- Inicial: Solicitar pagamento / Final: Aprovar e Recusar -->
                 </tr>
                 
-                <!-- ADICIONAR LISTA DE SOLICITAÇÕES -->
-                <% long cont = 1;
-                    while (true) {
-                        Usuario cliente = usuarioDAO.pesquisar(cont);
-                        if (cliente != null) {%>
-                <tr>
-                    <td><%=cliente.getNome()%></td>
-                    <td><%=cliente.getTipo()%></td>
-                    <td>
-                        <button>Relatórios</button>
-                        <button><a href="ver-permissoes.jsp?id=<%=cont%>">Permissões</a></button>
-                    </td>
-                </tr>
-                <%} else {
-                            break;
-                        }
-                        cont++;
-                    }
-
-                %>
+                <%  GestaoSolicitacoes gestao = new GestaoSolicitacoesService();
+                    List<Solicitacao> solicitacoes = gestao.lista(usuario.getEmail());
+                    for(Solicitacao sol : solicitacoes){
+                    %>
+                    <tr>
+                        <td><%=sol.getNome()%></td>
+                        <td><%=sol.getEmail()%></td>
+                        <td><%=sol.getPagamento()%></td>
+                        <td><%=sol.getStatus()%></td>
+                        <%  switch(sol.getStatus()){
+                                case PENDENTE:
+                        %>
+                        <td>
+                            <button><a href="/sam/solicitarGestor?acao=Pagamento&id=<%=sol.getId%>">Solicitar Pagamento</a></button>
+                        </td>
+                        <%      break;
+                                case AGUARDANDO:
+                        %>
+                        <td>
+                            <button><a href="/sam/solicitarGestor?acao=Aprovar&id=<%=sol.getId%>">Aprovar</a></button>
+                            <button><a href="/sam/solicitarGestor?acao=Recusar&id=<%=sol.getId%>">Recusar</a></button>
+                        </td>
+                        <%      break;
+                                default:
+                        %>
+                        <td>
+                            <p>Sem ações disponíveis</p>
+                        </td>
+                        <%      break;}%>
+                    </tr>
+                    <%}%>
             </table>
         </main>
         <script src="../../js/script.js"></script>
