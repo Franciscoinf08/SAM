@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -6,7 +7,7 @@
         <meta charset="UTF-8">
         <title>SAM - Dashboard</title>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+        <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,21 +17,10 @@
     </head>
 
     <body>
-        <header><img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+        <header>
+            <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Dashboard</h1>
-            <nav>
-                <a href="dashboard.jsp" class="active">Dashboard</a>
-                <a href="../transacoes.jsp">Transações</a>
-                <a href="../notificacoes.jsp">Notificações</a>
-                <a href="../suporte.jsp">Suporte</a>
-            </nav>
-
-            <div class="hamburger-menu">
-                <button id="hamburger-btn">&#9776;</button>
-                <div id="hamburger-dropdown" class="dropdown-content">
-                    <a href="../perfil.jsp">Visualizar Perfil</a>
-                </div>
-            </div>
+            <%@include file="/core/header.jsp" %>
         </header>
 
 
@@ -52,7 +42,8 @@
                 <p>2 programas próximos da expiração.</p>
             </section>
         </main>
-        <script src="../../js/script.js"></script>
+        
+        <script src="/sam/js/script.js"></script>
     </body>
 
 </html>

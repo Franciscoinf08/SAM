@@ -1,5 +1,5 @@
 # Sistema de Administração de Milhas
-Descrição do projeto.
+Esse software tem a missão de automatizar e facilitar a análise de transações e gestão das milhas dos clientes, ou seja, visa atender os gestores e analistas no mercado de milhas.
 
 ## Equipe de Desenvolvimento
 | Ordem | Nome               |
@@ -83,11 +83,11 @@ Descrição do projeto.
 | CSU04  | Gestão de transações                       | REQ005, REQ006                                | RN004, RN007, RN011, RN013     |
 | CSU05  | Computar milhas                            | REQ007, REQ010, REQ026                        | RN008, RN011                   |
 | CSU06  | Gestão de notificações                     | REQ008, REQ009, REQ017                        | RN006, RN010                   |
-| CSU07  | Solicitar conta de gestor                  | REQ011                                        | RN001                          |
+| CSU07  | Solicitar conta de gestor                  | REQ011, REQ019                                | RN001                          |
 | CSU08  | Gestão de avaliações                       | REQ013                                        | RN012                          |
 | CSU09  | Gestão de propostas/orçamentos             | REQ014, REQ016, REQ020, REQ027                | RN003, RN008, RN014            |
 | CSU10  | Gestão de objetivos                        | REQ015                                        | RN014                          |
-| CSU11  | Gestão de usuários                         | REQ018, REQ019                                | RN001                          |
+| CSU11  | Gestão de usuários                         | REQ018                                        | RN001                          |
 | CSU12  | Recuperação de dados                       | REQ022                                        | RN015                          |
 | CSU13  | Visualizar relatórios de perfil            | REQ021                                        | —                              |
 | CSU14  | Configuração de planos                     | REQ023                                        | —                              |
@@ -97,23 +97,23 @@ Descrição do projeto.
 | CSU18  | Central de ajuda e suporte                 | REQ029, REQ030                                | RN016                          |
 
 ## Planejamento
-| Sprint | Caso de Uso | Desenvolvedor  |
-|:-------|:------------|:---------------|
-| 1      | CSU10       | 1              |
-| 1      | CSU14       | 2              |
-| 1      | CSU02       | 3              |
-| 1      | CSU01       | 4              |
-| 1      | CSU05       | 5              |
-| 1      | CSU11       | 6              |
-| 2      | CSU09       | 1              |
-| 2      | CSU03       | 2              |
-| 2      | CSU06       | 3              |
-| 2      | CSU04       | 4              |
-| 2      | CSU08       | 5              |
-| 2      | CSU07       | 6              |
-| 3      | CSU17       | 1              |
-| 3      | CSU12       | 2              |
-| 3      | CSU15       | 3              |
-| 3      | CSU16       | 4              |
-| 3      | CSU13       | 5              |
-| 3      | CSU18       | 6              |
+| Sprint | Caso de Uso | Desenvolvedor          |
+|:-------|:------------|:-----------------------|
+| 1      | CSU10       | 1 - Fransisco          |
+| 1      | CSU14       | 2 - Gabriel Marrocos   |
+| 1      | CSU02       | 3 - Mateus Tertuliano  |
+| 1      | CSU01       | 4 - Mateus Vasconcelos |
+| 1      | CSU05       | 5 - Thiérs             |
+| 1      | CSU11       | 6 - Verônica           |
+| 2      | CSU09       | 1 - Fransisco          |
+| 2      | CSU03       | 2 - Gabriel Marrocos   |
+| 2      | CSU06       | 3 - Mateus Tertuliano  |
+| 2      | CSU04       | 4 - Mateus Vasconcelos |
+| 2      | CSU08       | 5 - Thiérs             |
+| 2      | CSU07       | 6 - Verônica           |
+| 3      | CSU17       | 1 - Fransisco          |
+| 3      | CSU12       | 2 - Gabriel Marrocos   |
+| 3      | CSU15       | 3 - Mateus Tertuliano  |
+| 3      | CSU16       | 4 - Mateus Vasconcelos |
+| 3      | CSU13       | 5 - Thiérs             |
+| 3      | CSU18       | 6 - Verônica           |

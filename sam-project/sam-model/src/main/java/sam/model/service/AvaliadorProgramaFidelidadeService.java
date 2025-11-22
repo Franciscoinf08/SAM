@@ -10,22 +10,21 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class AvaliadorProgramaFidelidadeService {
-    private final Connection conexao;
+
     private final EmpresaDAO empresaDAO;
     private final ProgramaFidelidadeDAO pfDAO;
 
-    public AvaliadorProgramaFidelidadeService() {
-        this.conexao = Conexao.getConnection();
-        this.empresaDAO = new EmpresaDAO();
-        this.pfDAO = new ProgramaFidelidadeDAO();
+    public AvaliadorProgramaFidelidadeService(EmpresaDAO empresaDAO, ProgramaFidelidadeDAO programaFidelidadeDAO) {
+        this.empresaDAO = empresaDAO;
+        this.pfDAO = programaFidelidadeDAO;
     }
     
 
 
-    public void avaliarPrograma(int idPrograma) throws Exception{
+    public void avaliarPrograma(ProgramaFidelidade programa) throws Exception{
 
-        Empresa empresa = empresaDAO.buscarPorId(idPrograma);
-        ProgramaFidelidade programa = pfDAO.buscarPorId(idPrograma);
+
+        Empresa empresa = empresaDAO.buscarPorId(programa.getIdEmpresa());
 
         double preco = programa.getPrecoMensal();
         double milhasMes = programa.getQtdeMilhasMes();
@@ -41,11 +40,11 @@ public class AvaliadorProgramaFidelidadeService {
         String avaliacao = CalculoHelper.classificaValorMilheiro(diferenca);
 
         programa.setAvaliacao(avaliacao);
-        registraAvaliacaoDAO(programa, pfDAO);    
+        registraAvaliacaoDAO(programa,pfDAO);
     }
 
     private void registraAvaliacaoDAO(ProgramaFidelidade programaAvaliado, ProgramaFidelidadeDAO pfDAO) throws SQLException{
-        pfDAO.salvar(programaAvaliado);
+        pfDAO.atualizarProgramaFidelidade(programaAvaliado);
 
     }
 }

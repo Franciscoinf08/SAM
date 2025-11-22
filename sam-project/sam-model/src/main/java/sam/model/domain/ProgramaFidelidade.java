@@ -1,35 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sam.model.domain;
-
-
 public class ProgramaFidelidade {
-    
-  private int idProgramaFidelidade;
+
+    private int idProgramaFidelidade;
     private String nome;
     private double bonusMilhas;
     private int qtdeMilhasMes;
     private int duracao;
     private double precoMensal;
+    private int idEmpresa;
     private String avaliacao;
 
-    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao, double precoMensal, String avaliacao) {
+    public ProgramaFidelidade() {}
+
+    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao, double precoMensal, int idEmpresa) {
         this.nome = nome;
         this.bonusMilhas = bonusMilhas;
         this.qtdeMilhasMes = qtdeMilhasMes;
         this.duracao = duracao;
         this.precoMensal = precoMensal;
-        this.avaliacao = avaliacao;
-    }
-    public ProgramaFidelidade(){}
-    public void setIdProgramaFidelidade(int idProgramaFidelidade) {
-        this.idProgramaFidelidade = idProgramaFidelidade;
+        this.idEmpresa = idEmpresa;
+
     }
 
     public int getIdProgramaFidelidade() {
         return idProgramaFidelidade;
+    }
+
+    public void setIdProgramaFidelidade(int idProgramaFidelidade) {
+        this.idProgramaFidelidade = idProgramaFidelidade;
     }
 
     public String getNome() {
@@ -56,7 +54,6 @@ public class ProgramaFidelidade {
         this.qtdeMilhasMes = qtdeMilhasMes;
     }
 
-  
     public int getDuracao() {
         return duracao;
     }
@@ -81,8 +78,15 @@ public class ProgramaFidelidade {
         this.avaliacao = avaliacao;
     }
 
+    public int getIdEmpresa() {
+        return idEmpresa;
+    }
 
+    public void setIdEmpresa(int idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
 
-
-    
+    public String getAvaliaco() {
+        return avaliacao;
+    }
 }

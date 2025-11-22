@@ -20,32 +20,95 @@ public class EmpresaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) action = "listar";
+
         try {
-            List<Empresa> listaEmpresas = empresaDAO.listarTodas();
-            request.setAttribute("empresas", listaEmpresas);
+            switch (action) {
+                case "novo":
+                    mostrarFormulario(request, response);
+                    break;
+                case "editar":
+                    mostrarFormularioEdicao(request, response);
+                    break;
+                case "excluir":
+                    excluirEmpresa(request, response);
+                    break;
+                default:
+                    listarEmpresas(request, response);
+                    break;
+            }
         } catch (Exception e) {
-            request.setAttribute("erro", "Erro ao carregar empresas: " + e.getMessage());
             e.printStackTrace();
+            request.setAttribute("erro", e.getMessage());
+            request.getRequestDispatcher("/core/gestor/empresas.jsp").forward(request, response);
         }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/empresas.jsp");
-        dispatcher.forward(request, response);
-
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            String nome = request.getParameter("nomeEmpresa");
-            String cnpj = request.getParameter("cnpj");
-            double milheiroSeguranca = Double.parseDouble(request.getParameter("milheiroSeguranca"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        String action = request.getParameter("action");
 
-            Empresa empresa = new Empresa(nome, cnpj, milheiroSeguranca);
-            empresaDAO.salvar(empresa);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        try {
+            if ("atualizar".equals(action)) {
+                atualizarEmpresa(request, response);
+            } else {
+                inserirEmpresa(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        doGet(request, response);
+    }
+
+    private void listarEmpresas(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Empresa> lista = empresaDAO.listarTodas();
+        request.setAttribute("empresas", lista);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/empresas.jsp");
+        dispatcher.forward(request, response);
+    }
+
+
+    private void inserirEmpresa(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, SQLException {
+        Empresa empresa = new Empresa(
+                request.getParameter("nomeEmpresa"),
+                request.getParameter("cnpj"),
+                Double.parseDouble(request.getParameter("milheiroSeguranca"))
+        );
+        empresaDAO.salvar(empresa);
+        response.sendRedirect(request.getContextPath() + "/empresa");
+    }
+
+    private void excluirEmpresa(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, SQLException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        empresaDAO.excluirEmpresa(id);
+        response.sendRedirect(request.getContextPath() + "/empresa");
+    }
+
+    private void mostrarFormulario(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/formularioEmpresas.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void mostrarFormularioEdicao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Empresa empresa = empresaDAO.buscarPorId(id);
+        request.setAttribute("empresa", empresa);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/formularioEmpresas.jsp");
+
+        dispatcher.forward(request, response);
+    }
+
+    private void atualizarEmpresa(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, SQLException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Empresa empresa = new Empresa(request.getParameter("nomeEmpresa"), request.getParameter("cnpj"), Double.parseDouble(request.getParameter("milheiroSeguranca")));
+        empresa.setIdEmpresa(id);
+        empresaDAO.atualizarEmpresa(empresa);
+        response.sendRedirect(request.getContextPath() + "/empresa");
     }
 }

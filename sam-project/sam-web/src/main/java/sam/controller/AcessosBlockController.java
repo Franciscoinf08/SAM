@@ -1,5 +1,6 @@
 package sam.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -7,33 +8,54 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import sam.model.service.AcessosBlockService;
 
-@WebServlet(name = "InitialController", urlPatterns = {"/InitialController"})
-public class InitialController extends HttpServlet {
+@WebServlet(name = "AcessosBlockController", urlPatterns = {"/AcessosBlockController"})
+public class AcessosBlockController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private static AcessosBlockService bloqueios;
+    private String jsp = "";
+
+    static {
+        bloqueios = new AcessosBlockService();
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InitialController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InitialController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String acao = request.getParameter("acao");
+
+        String id = request.getParameter("id");
+
+        switch (acao) {
+            case "Ativar":
+                this.ativar(request);
+                break;
+            case "Bloquear":
+                this.bloquear(request);
+                break;
+        }
+
+        response.sendRedirect(request.getContextPath() + "/core/dev/ver-permissoes.jsp?id=" + id);
+    }
+
+    public void ativar(HttpServletRequest request) {
+        try {
+            String usuario = (String) request.getParameter("usuario");
+            String recurso = (String) request.getParameter("recurso");
+            bloqueios.ativar(recurso, usuario);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void bloquear(HttpServletRequest request) {
+        try {
+            String usuario = (String) request.getParameter("usuario");
+            String recurso = (String) request.getParameter("recurso");
+            bloqueios.bloquear(recurso, usuario);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -50,8 +72,6 @@ public class InitialController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
-
     }
 
     /**
