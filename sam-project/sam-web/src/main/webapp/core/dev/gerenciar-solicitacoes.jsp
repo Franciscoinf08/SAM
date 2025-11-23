@@ -1,8 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sam.model.dao.UsuarioDAO"%>
+<%@page import="sam.model.service.GestaoSolicitacoesService"%>
+<%@page import="sam.model.domain.Solicitacao"%>
 <%@page import="java.util.List"%>
-
-<% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();%>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -39,8 +38,8 @@
                     <th>Ações</th><!-- Inicial: Solicitar pagamento / Final: Aprovar e Recusar -->
                 </tr>
                 
-                <%  GestaoSolicitacoes gestao = new GestaoSolicitacoesService();
-                    List<Solicitacao> solicitacoes = gestao.lista(usuario.getEmail());
+                <%  GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
+                    List<Solicitacao> solicitacoes = gestao.listarEmail(usuario.getEmail());
                     for(Solicitacao sol : solicitacoes){
                     %>
                     <tr>

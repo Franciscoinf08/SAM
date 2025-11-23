@@ -51,7 +51,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
             String pagamento = (String) request.getParameter("forma-pagamento");
             Solicitacao sol = new Solicitacao(nome, email, pagamento);
             gestao.adicionarPedido(sol); // RECEBE SOLICITACAO
-            jsp = "/core/cliente/menu.jsp";        
+            jsp = "/core/cliente/lista-solicitacoes.jsp";        
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
@@ -60,43 +60,59 @@ public class SolicitacoesContaGestorController extends HttpServlet {
     }
 
     public String cancelar(HttpServletRequest request) {
+        String jsp;
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
             gestao.cancelarPedido(id); // RECEBE STRING E CONVERTE PARA INT
+            jsp = "/core/cliente/lista-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
+            jsp = "";
         }
+        return jsp;
     }
     
     public String aprovar(HttpServletRequest request) {
+        String jsp;
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
             gestao.aprovarPedido(id); // RECEBE STRING E CONVERTE PARA INT
+            jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
+            jsp = "";
         }
+        return jsp;
     }
     
     public String recusar(HttpServletRequest request) {
+        String jsp;
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
             gestao.recusarPedido(id); // RECEBE STRING E CONVERTE PARA INT
+            jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
+            jsp = "";
         }
+        return jsp;
     }
     
     public String pagamento(HttpServletRequest request) {
+        String jsp;
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
             gestao.solicitarPagamento(id); // RECEBE STRING E CONVERTE PARA INT
+            jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
+            jsp = "";
         }
+        return jsp;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

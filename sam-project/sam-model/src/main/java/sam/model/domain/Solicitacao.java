@@ -9,6 +9,9 @@ public class Solicitacao {
     private String formaPagamento;
     private Status status;
     
+    public Solicitacao(){
+    }
+    
     public Solicitacao(String nome, String email, String fomaPagamento) {
         this.nome = nome;
         this.email = email;

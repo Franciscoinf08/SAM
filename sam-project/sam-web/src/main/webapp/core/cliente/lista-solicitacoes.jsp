@@ -43,9 +43,20 @@
                     <tr>
                         <td><%=sol.getPagamento()%></td>
                         <td><%=sol.getStatus()%></td>
+                        <%  switch(sol.getStatus()){
+                                case PENDENTE:
+                                case AGUARDANDO:
+                        %>
                         <td>
                             <button><a href="/sam/solicitarGestor?acao=Cancelar&id=<%=sol.getId%>">Cancelar</a></button>
                         </td>
+                        <%      break;
+                                default:
+                        %>
+                        <td>
+                            <p>Sem ações disponíveis</p>
+                        </td>
+                        <%      break;}%>
                     </tr>
                     <%} else { break; }}%>
                 </table>
