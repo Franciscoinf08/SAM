@@ -1,7 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.domain.util.UsuarioTipo" %>
 <%@ page import="sam.model.service.GestaoUsuariosService" %>
+<%@ page import="sam.model.service.ProgramaFidelidadeService" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.sql.Date" %>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -29,10 +32,12 @@
             <h2>Registrar Transação</h2>
             <div class="formulario">
                 <form name="formCadastroTransacao" onsubmit="return validarCamposCadastroTransacao(document.formCadastroTransacao)" action="/sam/CadastroTransacaoController" method="POST">
-                    <% if (usuario.getTipo() == UsuarioTipo.GESTOR) { %>
+                    <%
+                        GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
+                        if (usuario.getTipo() == UsuarioTipo.GESTOR) {
+                    %>
                     <label for="cliente">Cliente:
-                        <% GestaoUsuariosService manterUsuario = new GestaoUsuariosService(); %>
-                        <select name="cliente">
+                        <select name="cliente" id="cliente">
                             <% for (Usuario cliente : manterUsuario.getListaClientes(usuario)) {%>
                             <option value="<%= cliente.getId() %>"><%= cliente.getNome() %></option>
                             <%}%>
@@ -40,12 +45,12 @@
                     </label>
                     <%} else {%>
                     <label>
-                        <input name="cliente" type="hidden" value="<%= usuario.getId() %>">
+                        <input name="cliente" id="cliente" type="hidden" value="<%= usuario.getId() %>">
                     </label>
                     <%}%>
 
-                    <label for="programa-fidelidade">Programa de Fidelidade:
-                        <select name="programa-fidelidade">
+                    <label for="programa">Programa de Fidelidade:
+                        <select name="programa" id="programa">
                             <option></option>
                         </select>
                     </label>
@@ -79,7 +84,11 @@
         </main>
 
         <%@include file="/core/mensagens-erro.jsp"%>
-
+        <script src="/sam/js/ajax.js"></script>
+        <script>
+            ajaxProgramaFidelidade();
+            document.querySelector("#cliente").addEventListener("change", () => { console.log("a"); ajaxProgramaFidelidade(); });
+        </script>
         <script src="/sam/js/toggle-bonus.js"></script>
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/script.js"></script>

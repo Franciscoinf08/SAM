@@ -37,8 +37,8 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
         String sql = "INSERT INTO transacoes(id_programa, id_cliente, data, quantidade, tipo, valor, bonus, status) VALUES (?, ?, ?, ?, ?, ?, ?, \"ATIVA\")";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setLong(1, transacao.getIdCliente());
-            preparedStatement.setLong(2, transacao.getIdProgramaFidelidade());
+            preparedStatement.setLong(1, transacao.getIdProgramaFidelidade());
+            preparedStatement.setLong(2, transacao.getIdCliente());
             preparedStatement.setDate(3, transacao.getData());
             preparedStatement.setLong(4, transacao.getQuantidade());
             preparedStatement.setString(5, transacao.getTipo().toString());
@@ -98,7 +98,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                Long idProgramaFidelidade = rs.getLong("id_fidelidade");
+                Long idProgramaFidelidade = rs.getLong("id_programa");
                 Long idCliente = rs.getLong("id_cliente");
                 Date data = rs.getDate("data");
                 int quantidade = rs.getInt("quantidade");

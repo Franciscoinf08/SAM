@@ -31,7 +31,7 @@ public class CadastroTransacaoController extends HttpServlet {
         int bonus;
 
         try {
-            idProgramaFidelidade = Long.parseLong(request.getParameter("programa-fidelidade"));
+            idProgramaFidelidade = Long.parseLong(request.getParameter("programa"));
             idCliente = Long.parseLong(request.getParameter("cliente"));
             data = Date.valueOf(request.getParameter("data"));
             tipo = TransacaoTipo.strTo(request.getParameter("tipo"));

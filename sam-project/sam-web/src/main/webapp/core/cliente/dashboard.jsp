@@ -59,7 +59,7 @@
                              milha<% if (milhasTotal != 1){ %>s<%}%>
                         </li>
                         <li>
-                            <% if (!valorTotal.equals(valorTotal.abs())) { %>-<%}%>R$ <%= valorTotal.abs() %>
+                            <% if (valorTotal.signum() == -1) { %>-<%}%>R$ <%= valorTotal.abs() %>
                         </li>
                     </ul>
                 </article>
@@ -84,16 +84,17 @@
             <section class="tabela-container">
                 <table>
                     <tr>
-                        <th>Data</th><th>Tipo</th><th>Quantidade</th><th>Valor (R$)</th><th>Bônus</th><th>Total</th><th>Ação</th>
+                        <th>Data</th><th>Programa de Fidelidade</th><th>Tipo</th><th>Quantidade</th><th>Valor (R$)</th><th>Bônus</th><th>Total</th><th>Ação</th>
                     </tr>
                     <%if (listaTransacoes.isEmpty()) {%>
                     <tr>
-                        <td colspan="7">Ainda não há transações</td>
+                        <td colspan="8">Ainda não há transações</td>
                     </tr>
                     <%} else { %>
                     <% for (Transacao transacao : listaTransacoes) { %>
                     <tr>
                         <td><%= DataHelper.dataFormat1(transacao.getData().toString()) %></td>
+                        <td><%= transacao.getIdProgramaFidelidade() %></td>
                         <td><%= transacao.getTipo().toString() %></td>
                         <td><%= transacao.getQuantidade() %></td>
                         <td><%= transacao.getValor() %></td>
@@ -114,6 +115,7 @@
                     <%}%>
                     <tr>
                         <td>Saldo Total</td>
+                        <td>-</td>
                         <td>-</td>
                         <td><%= quantidadeTotal %></td>
                         <td><%= valorTotal %></td>
