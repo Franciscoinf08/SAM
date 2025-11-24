@@ -1,6 +1,6 @@
 package sam.model.helper;
 
-import sam.model.dao.TransacaoDAO;
+import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.dao.UsuarioDAO;
 import sam.model.domain.Transacao;
 import sam.model.domain.util.TransacaoTipo;
@@ -12,15 +12,19 @@ import java.sql.SQLException;
 public class TransacaoHelper {
 
     private static final UsuarioDAO usuarioDAO;
+    private static final ProgramaFidelidadeDAO programaFidelidadeDAO;
 
     static {
         usuarioDAO = UsuarioDAO.getInstance();
+        programaFidelidadeDAO = new ProgramaFidelidadeDAO();
     }
 
     public static String validarCadastroTransacao(Transacao transacao) throws SQLException {
         String erro = "";
         if (!validarCliente(transacao.getIdCliente()))
             erro += "Cliente inválido ";
+        if (!validarPrograma(transacao.getIdProgramaFidelidade()))
+            erro += "Programa de Fidelidade inválido";
         if (!validarData(transacao.getData()))
             erro += "Data inválida ";
         if (!validarQuantidade(transacao.getQuantidade()))
@@ -34,6 +38,10 @@ public class TransacaoHelper {
 
     private static boolean validarCliente(Long idCliente) throws SQLException {
         return !(idCliente == null || usuarioDAO.pesquisar(idCliente) == null);
+    }
+
+    private static boolean validarPrograma(Long idPrograma) {
+        return !(idPrograma == null || programaFidelidadeDAO.buscarPorId(idPrograma.intValue()) == null);
     }
 
     private static boolean validarData(Date data) {

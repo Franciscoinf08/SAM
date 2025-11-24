@@ -25,6 +25,7 @@ public class CadastroTransacaoController extends HttpServlet {
         Long idProgramaFidelidade;
         Long idCliente;
         Date data;
+        Date dataExpiracao;
         TransacaoTipo tipo;
         int quantidade;
         BigDecimal valor;
@@ -34,6 +35,7 @@ public class CadastroTransacaoController extends HttpServlet {
             idProgramaFidelidade = Long.parseLong(request.getParameter("programa"));
             idCliente = Long.parseLong(request.getParameter("cliente"));
             data = Date.valueOf(request.getParameter("data"));
+            dataExpiracao = Date.valueOf(request.getParameter("dataExpiracao"));
             tipo = TransacaoTipo.strTo(request.getParameter("tipo"));
             quantidade = Integer.parseInt(request.getParameter("quantidade"));
             valor = new BigDecimal(request.getParameter("valor"));
@@ -55,7 +57,7 @@ public class CadastroTransacaoController extends HttpServlet {
         GestaoTransacoesService manterTransacao = new GestaoTransacoesService();
 
         try {
-            Transacao transacao = new Transacao(idProgramaFidelidade, idCliente, data, quantidade, tipo, valor, bonus);
+            Transacao transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, tipo, valor, bonus);
 
             manterTransacao.cadastrar(transacao);
         } catch (PersistenciaException e) {

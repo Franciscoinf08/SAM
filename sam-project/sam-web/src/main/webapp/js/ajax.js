@@ -9,8 +9,6 @@ function ajaxProgramaFidelidade() {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(xhr.responseText);
-            console.log(data);
-            console.log(xhr.responseText);
             let select = document.formCadastroTransacao.programa;
 
             select.innerHTML = "";
@@ -20,9 +18,13 @@ function ajaxProgramaFidelidade() {
                 opcao.textContent = programa.nome;
                 select.appendChild(opcao);
             });
+            if (data.length === 0) {
+                let opcao = document.createElement("option");
+                opcao.value = "";
+                opcao.textContent = "Nenhum Programa Disponível";
+                select.appendChild(opcao);
+            }
         }
-        console.log(this.readyState);
-        console.log(this.status);
     };
 
     let parameters = "idCliente=" + encodeURIComponent(idCliente);

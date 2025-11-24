@@ -35,11 +35,14 @@
                     <%
                         GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
                         if (usuario.getTipo() == UsuarioTipo.GESTOR) {
+                            List<Usuario> listaClientes = manterUsuario.getListaClientes(usuario);
                     %>
                     <label for="cliente">Cliente:
                         <select name="cliente" id="cliente">
-                            <% for (Usuario cliente : manterUsuario.getListaClientes(usuario)) {%>
+                            <% for (Usuario cliente : listaClientes) {%>
                             <option value="<%= cliente.getId() %>"><%= cliente.getNome() %></option>
+                            <%} if (listaClientes.isEmpty()) {%>
+                            <option value="">Nenhum Cliente Disponível</option>
                             <%}%>
                         </select>
                     </label>
@@ -51,7 +54,6 @@
 
                     <label for="programa">Programa de Fidelidade:
                         <select name="programa" id="programa">
-                            <option></option>
                         </select>
                     </label>
 

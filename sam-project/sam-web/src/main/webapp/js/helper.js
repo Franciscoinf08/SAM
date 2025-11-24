@@ -110,7 +110,7 @@ function validarCamposAlteracaoPerfil(form) {
         form.senhaConfirmar.value = "";
         form.senhaConfirmar.focus();
     }
-    else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)){
+    else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)) {
         form.action = "/sam/AlteracaoPerfilController";
         form.submit();
         resultado = true;
@@ -120,10 +120,13 @@ function validarCamposAlteracaoPerfil(form) {
 }
 
 function validarCamposCadastroTransacao(form) {
+    let cliente = form.cliente.value;
+    let programa = form.programa.value;
     let quantidade = form.quantidade.value;
     let valor = form.valor.value;
     let bonus = form.bonus.value;
     let strConfirmacao = `Confirmar valores?\n Quantidade: ${quantidade}\n Valor: ${valor}`;
+
 
     if (bonus === "") {
         form.bonus.value = "0";
@@ -131,7 +134,15 @@ function validarCamposCadastroTransacao(form) {
     } else if (bonus !== "0")
         strConfirmacao += `\n Bônus: ${bonus}`;
 
-    return window.confirm(strConfirmacao);
+    if (cliente === "") {
+        gerarMensagemErro("É necessário selecionar um cliente");
+        return false;
+    } else if (programa === "") {
+        gerarMensagemErro("É necessário selecionar um programa");
+        return false;
+    }
+    else
+        return window.confirm(strConfirmacao);
 }
 
 /*

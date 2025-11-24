@@ -30,7 +30,7 @@ public class PesquisarProgramasAjax extends HttpServlet {
             for (int i = 0; i < listaProgramas.size(); i++) {
                 ProgramaFidelidade programa = listaProgramas.get(i);
                 json.append("{\"id\":").append(programa.getIdProgramaFidelidade())
-                        .append(",\"nome\":\"").append(programa.getNome()).append("\"}");
+                    .append(",\"nome\":\"").append(programa.getNome()).append("\"}");
                 if (i < listaProgramas.size() - 1) json.append(",");
             }
             json.append("]");
