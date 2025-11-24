@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UsuarioProgramaDAO implements GenericDAO<UsuarioPrograma, Integer> {
+public class UsuarioProgramaDAO{
     private Connection conexao = null;
 
-    UsuarioProgramaDAO() {
+    public UsuarioProgramaDAO() {
         this.conexao = Conexao.getConnection();
     }
-    @Override
-    public void inserir(UsuarioPrograma entidade){
+
+    public void associar(UsuarioPrograma entidade){
         String sql = "insert into usuario_programa(usuario_id, programa_id, saldo_milhas) values(?, ?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             stmt.setInt(1, entidade.getIdUsuario());
@@ -36,8 +36,6 @@ public class UsuarioProgramaDAO implements GenericDAO<UsuarioPrograma, Integer> 
             ex.getMessage();
         }
     }
-
-    @Override
     public void atualizar(UsuarioPrograma entidade){
         String sql = "update usuario_programa set programa_id = ?, usuario_id = ?, saldo_milhas = ? where id = ?";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
@@ -51,7 +49,6 @@ public class UsuarioProgramaDAO implements GenericDAO<UsuarioPrograma, Integer> 
         }
     }
 
-    @Override
     public UsuarioPrograma pesquisar(Integer chave) {
         String sql = "select * from usuario_programa where id = ?";
         UsuarioPrograma up = null;
@@ -71,7 +68,7 @@ public class UsuarioProgramaDAO implements GenericDAO<UsuarioPrograma, Integer> 
         return up;
     }
 
-    public void excluir(Integer id) {
+    public void desassociar(Integer id) {
         String sql = "delete from usuario_programa where id = ?";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);

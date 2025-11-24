@@ -41,7 +41,7 @@
         <%} if (ControleAutorizacao.checkPermissao("mensagens-avisos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("mensagens-avisos", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/mensagens.jsp">Mensagens e avisos</a>
         <%} if (ControleAutorizacao.checkPermissao("acesso-clientes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("acesso-clientes", usuario.getCPF())) {%>
-        <a href="/sam/core/gestor/meus-clientes.jsp">Meus clientes</a>
+        <a href="${pageContext.request.contextPath}/usuarioPrograma?action=listar">Meus clientes</a>
         <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
         <a href="/sam/core/geral/relatorios.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>

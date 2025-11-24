@@ -1,3 +1,7 @@
+
+<%@ page import="java.util.List" %>
+<%@ page import="sam.model.domain.util.UsuarioTipo" %>
+<%@ page import="sam.model.domain.Usuario" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -5,7 +9,7 @@
         <meta charset="UTF-8">
         <title>SAM - Clientes</title>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,32 +19,48 @@
     </head>
     <body>
         <header>
-            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="<%=request.getContextPath()%>>/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Clientes</h1>
             <%@include file="/core/header.jsp" %>
         </header>
 
         <main class="content">
             <h2>Meus clientes</h2>
+            <%
+                List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+
+            %>
             <table>
                 <tr>
                     <th>Nome</th>
-                    <th>Plano de acesso</th>
-                    <th>Programa</th>
+                    <th>CPF </th>
+                    <th>E-mail </th>
                     <th>Ações</th>
                 </tr>
+                <%
+                    for (Usuario c : clientes){
+                %>
                 <tr>
-                    <td>Jorge</td>
-                    <td>Premiun</td>
-                    <td>Latam Pass</td>
-                    <td><button>Editar</button></td>
+                    <td><%=c.getNome()%></td>
+                    <td><%=c.getCPF()%></td>
+                    <td><%=c.getEmail()%></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn-associar" onclick="toggleDropdown(this)">Associar</button>
+
+                            <div class="dropdown-content">
+                                <a href="#" onclick="associarPrograma(10, 'Programa A')">Programa Smiles</a>
+                                <a href="#" onclick="associarPrograma(10, 'Programa B')">Programa Multiplus</a>
+                                <a href="#" onclick="associarPrograma(10, 'Programa C')">Programa Latam Pass</a>
+                            </div>
+                        </div>
+                    </td>
+
                 </tr>
-                <tr>
-                    <td>Ana</td>
-                    <td>Basic</td>
-                    <td>Azul Fidelidade</td>
-                    <td><button>Editar</button></td>
-                </tr>
+                <%
+                    }
+                %>
+
             </table>
         </main>
         <script src="../../js/script.js"></script>

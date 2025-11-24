@@ -62,8 +62,8 @@ public class ProgramaFidelidadeService {
     private boolean validarProgramaFidelidade(ProgramaFidelidade p){
         if(p == null || p.getNome() == null) return true;
 
-        if(p.getIdProgramaFidelidade() == 0 || p.getPrecoMensal() <= 0) return true;
+        if(p.getPrecoMensal() <= 0) return true;
 
-        return p.getDuracao() == 0 || p.getQtdeMilhasMes() == 0 || p.getIdEmpresa() <= 0;
+        return p.getDuracao() == 0 || p.getQtdeMilhasMes() == 0;
     }
 }

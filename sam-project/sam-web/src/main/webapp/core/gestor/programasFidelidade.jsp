@@ -49,9 +49,6 @@
                 <td><%= p.getPrecoMensal() %></td>
                 <td><%= p.getAvaliaco() %></td>
                 <td>
-                    <a href="<%= request.getContextPath() %>/usuarioPrograma&id=<%= p.getIdProgramaFidelidade()%>&idEmpresa=<%=request.getAttribute("idEmpresa")%>">
-                        <button>Associar</button>
-                    </a>
                     <a href="<%= request.getContextPath() %>/programaFidelidade?action=editar&id=<%= p.getIdProgramaFidelidade()%>&idEmpresa=<%=request.getAttribute("idEmpresa")%>">
                         <button>Editar</button>
                     </a>
