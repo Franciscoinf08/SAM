@@ -3,6 +3,7 @@
 <%@ page import="sam.model.service.GestaoUsuariosService" %>
 <%@ page import="sam.model.service.ProgramaFidelidadeService" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page import="java.sql.Date" %>
 
 <!DOCTYPE html>
@@ -78,6 +79,10 @@
 
                     <label for="data">Data:
                         <input name="data" type="date" value="<%= new Date(System.currentTimeMillis()).toString() %>" required>
+                    </label>
+
+                    <label for="data">Data de Expiração:
+                        <input name="dataExpiracao" type="date" value="<%= LocalDate.now().plusDays(1).toString() %>" required>
                     </label>
 
                     <button>Registrar</button>

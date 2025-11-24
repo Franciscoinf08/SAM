@@ -11,16 +11,18 @@ public class Transacao {
     private long idProgramaFidelidade;
     private Long idCliente;
     private Date data;
+    private Date dataExpiracao;
     private int quantidade;
     private TransacaoTipo tipo;
     private BigDecimal valor;
     private int bonus;
     private TransacaoStatus status;
 
-    public Transacao(Long idProgramaFidelidade, Long idCliente, Date data, int quantidade, TransacaoTipo tipo, BigDecimal valor, int bonus) {
+    public Transacao(Long idProgramaFidelidade, Long idCliente, Date data, Date dataExpiracao, int quantidade, TransacaoTipo tipo, BigDecimal valor, int bonus) {
         this.idProgramaFidelidade = idProgramaFidelidade;
         this.idCliente = idCliente;
         this.data = data;
+        this.dataExpiracao = dataExpiracao;
         this.quantidade = quantidade;
         this.tipo = tipo;
         this.valor = valor;
@@ -38,6 +40,10 @@ public class Transacao {
 
     public Date getData() {
         return data;
+    }
+
+    public Date getDataExpiracao() {
+        return dataExpiracao;
     }
 
     public int getQuantidade() {
