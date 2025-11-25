@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `samproject` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `samproject`;
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
 -- Host: localhost    Database: samproject
@@ -14,34 +16,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `empresa`
---
-
-DROP TABLE IF EXISTS `empresa`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `empresa` (
-  `idEmpresa` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `cnpj` char(14) NOT NULL,
-  `milheiroSeguranca` double DEFAULT NULL,
-  PRIMARY KEY (`idEmpresa`),
-  UNIQUE KEY `cnpj` (`cnpj`),
-  CONSTRAINT `empresa_chk_1` CHECK (regexp_like(`cnpj`,_utf8mb4'^[0-9]{14}$'))
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `empresa`
---
-
-LOCK TABLES `empresa` WRITE;
-/*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-INSERT INTO `empresa` VALUES (22,'mateus','12345678901234',2),(24,'guilherme molestado','09897867564556',999);
-/*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `programa_fidelidade`
@@ -83,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-07  9:35:42
+-- Dump completed on 2025-11-10 15:34:06
