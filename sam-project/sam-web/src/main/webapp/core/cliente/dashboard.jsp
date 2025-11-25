@@ -3,6 +3,7 @@
 <%@ page import="sam.model.domain.Transacao" %>
 <%@ page import="sam.model.helper.DataHelper" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.sql.SQLException" %>
@@ -69,17 +70,41 @@
                     Ainda não há transações
                     <%} else { %>
                     <ul>
-                        <%
-                            int k = Math.min(listaTransacoes.size(), 3);
-                        %>
-                        <% for (Transacao transacao : listaTransacoes.subList(0, k)) { %>
+                        <% int numTransacoes = Math.min(listaTransacoes.size(), 3); %>
+                        <% for (Transacao transacao : listaTransacoes.subList(0, numTransacoes)) { %>
                         <li>
-                            <%= transacao.getTipo().toString() %> - <%= transacao.getQuantidade() + transacao.getBonus() %> milha<% if (milhasTotal != 1){ %>s<%}%>
+                            <%=
+                                transacao.getTipo().toString()
+                            %> - <%= transacao.getQuantidade() + transacao.getBonus()
+                            %> milha<% if (milhasTotal != 1){ %>s<%}%>
                         </li>
                         <%}%>
                     </ul>
                     <%}%>
                 </article>
+                <arcticle class="card">
+                    <h2>Transações Expirando</h2>
+                    <%
+                        List<Transacao> listaExpirando = manterTransacao.listarQuaseExpirandoPorCliente(usuario);
+                        if (listaExpirando.isEmpty()) {
+                    %>
+                        Nenhuma transação expirando
+                        <%} else { %>
+                        <ul>
+                            <% int numTransacoes = Math.min(listaExpirando.size(), 3); %>
+                            <% for (Transacao transacao : listaExpirando.subList(0, numTransacoes)) { %>
+                            <li>
+                                <%=
+                                    transacao.getQuantidade() + transacao.getBonus()
+                                %> milha
+                                <% if (transacao.getQuantidade() + transacao.getBonus() != 1){ %>s<%}%> expira
+                                <% if (transacao.getQuantidade() + transacao.getBonus() != 1){ %>m<%}%> em
+                                <%= DataHelper.dataFormat1(transacao.getDataExpiracao().toString()) %>
+                            </li>
+                            <%}%>
+                        </ul>
+                        <%}%>
+                </arcticle>
             </section>
             <section class="tabela-container">
                 <table>
@@ -102,7 +127,15 @@
                     <% for (Transacao transacao : listaTransacoes) { %>
                     <tr>
                         <td><%= DataHelper.dataFormat1(transacao.getData().toString()) %></td>
-                        <td><%= DataHelper.dataFormat1(transacao.getDataExpiracao().toString()) %></td>
+                        <td>
+                        <%
+                            LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
+                            boolean expirando = DataHelper.verificarProximidadeAgora(dataExpiracao, 1);
+                            if (expirando) {
+                        %><span style="color:red;font-weight:bold;"><%}%>
+                        <%= DataHelper.dataFormat1(transacao.getDataExpiracao().toString()) %>
+                        <% if (expirando) {%></span><%}%>
+                        </td>
                         <td><%= transacao.getIdProgramaFidelidade() %></td>
                         <td><%= transacao.getTipo().toString() %></td>
                         <td><%= transacao.getQuantidade() %></td>

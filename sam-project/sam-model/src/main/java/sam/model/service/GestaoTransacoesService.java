@@ -4,12 +4,16 @@ import sam.model.common.exception.PersistenciaException;
 import sam.model.dao.TransacaoDAO;
 import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
+import sam.model.domain.util.OrdenarTransacaoPorDataExpiracao;
 import sam.model.domain.util.TransacaoTipo;
 import sam.model.domain.util.UsuarioTipo;
+import sam.model.helper.DataHelper;
 import sam.model.helper.TransacaoHelper;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GestaoTransacoesService {
@@ -36,6 +40,18 @@ public class GestaoTransacoesService {
             throw new RuntimeException("Acesso negado");
 
         return transacaoDAO.pesquisarPorCliente(cliente);
+    }
+
+    public List<Transacao> listarQuaseExpirandoPorCliente(Usuario cliente) throws SQLException {
+        List<Transacao> listaTransacoes = listarPorCliente(cliente);
+        List<Transacao> listaExpirando = new LinkedList<>();
+        for (Transacao transacao : listaTransacoes) {
+            LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
+            if (DataHelper.verificarProximidadeAgora(dataExpiracao, 1))
+                listaExpirando.add(transacao);
+        }
+        listaExpirando.sort(new OrdenarTransacaoPorDataExpiracao());
+        return listaExpirando;
     }
 
     public List<Transacao> listarPorGestor(Usuario Gestor) throws SQLException {

@@ -70,9 +70,8 @@ public class ProgramaFidelidadeService {
 
     public List<ProgramaFidelidade> listarPorCliente(Long idCliente) throws PersistenciaException, SQLException {
         GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
-        if(manterUsuario.pesquisar(idCliente) == null){
+        if(manterUsuario.pesquisar(idCliente) == null)
             throw new PersistenciaException("Cliente nao encontrado");
-        }
         return programaFidelidadeDAO.listarPorCliente(idCliente);
     }
 }
