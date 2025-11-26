@@ -87,10 +87,22 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
         }
     }
 
+    public void expirar(Long id) throws SQLException {
+        String sql = "UPDATE transacoes SET status = \"EXPIRADA\" WHERE id = ? AND status = \"ATIVA\"";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+            preparedStatement.setLong(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao expirar transação", e);
+        }
+    }
+
     @Override
     public Transacao pesquisar(Long id) throws SQLException {
         Transacao transacao = null;
-        String sql = "SELECT * FROM transacoes WHERE id = ? AND status = \"ATIVA\"";
+        String sql = "SELECT * FROM transacoes WHERE id = ?";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
@@ -106,6 +118,9 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
                 int bonus = rs.getInt("bonus");
+
+                if (dataExpiracao.before(new Date(System.currentTimeMillis())))
+                    expirar(id);
 
                 transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
                 transacao.setId(id);
@@ -134,6 +149,11 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
                 int bonus = rs.getInt("bonus");
+
+                if (dataExpiracao.before(new Date(System.currentTimeMillis()))) {
+                    expirar(id);
+                    continue;
+                }
 
                 Transacao transacao = new Transacao(idProgramaFidelidade, cliente.getId(), data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
                 transacao.setId(id);
@@ -166,6 +186,11 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
                 int bonus = rs.getInt("bonus");
+
+                if (dataExpiracao.before(new Date(System.currentTimeMillis()))) {
+                    expirar(id);
+                    continue;
+                }
 
                 Transacao transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
                 transacao.setId(id);

@@ -49,7 +49,7 @@
             }
         %>
 
-        <main class="dashboard">
+        <main>
             <section class="card formulario">
                 <h2>Filtros</h2>
                 <form method="POST">
@@ -71,10 +71,10 @@
             </section>
 
             <section class="tabela-container">
-                <h2>Resumo de Resultados</h2>
+                <h2>Resultados</h2>
                 <table>
                     <% if (listaClientes.isEmpty()) { %>
-                    <td colspan="7">Ainda não há clientes</td>
+                    <th colspan="7">Ainda não há clientes</th>
 
                     <% } else if (idCliente == null) { %>
                     <tr>
@@ -84,7 +84,7 @@
                         <th>Milhas Vendidas</th>
                         <th>Bônus</th>
                         <th>Saldo de Milhas</th>
-                        <th>Saldo de Dinheiro</th>
+                        <th>Saldo de Dinheiro (R$)</th>
                     </tr>
                     <% for (Usuario cliente : listaClientes) { %>
                     <tr>
