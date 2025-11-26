@@ -2,6 +2,7 @@
 <%@ page import="sam.model.service.GestaoTransacoesService" %>
 <%@ page import="sam.model.domain.Transacao" %>
 <%@ page import="sam.model.helper.DataHelper" %>
+<%@ page import="sam.model.helper.SaldoHelper" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.math.BigDecimal" %>
@@ -42,10 +43,10 @@
                 int milhasTotal = 0;
                 BigDecimal valorTotal = BigDecimal.ZERO;
                 try {
-                    quantidadeTotal = manterTransacao.getQuantidadeTotalCliente(usuario);
-                    bonusTotal = manterTransacao.getBonusTotalCliente(usuario);
+                    quantidadeTotal = SaldoHelper.getSaldoQuantidadeCliente(usuario);
+                    bonusTotal = SaldoHelper.getBonusCliente(usuario);
                     milhasTotal = quantidadeTotal + bonusTotal;
-                    valorTotal = manterTransacao.getValorTotalCliente(usuario);
+                    valorTotal = SaldoHelper.getSaldoDinheiroCliente(usuario);
                 } catch (SQLException e) {
                     e.printStackTrace();
                     request.setAttribute("erro", "Não foi possível acessar os dados do cliente");
@@ -106,6 +107,7 @@
                         <%}%>
                 </arcticle>
             </section>
+
             <section class="tabela-container">
                 <table>
                     <tr>
@@ -128,13 +130,13 @@
                     <tr>
                         <td><%= DataHelper.dataFormat1(transacao.getData().toString()) %></td>
                         <td>
-                        <%
-                            LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
-                            boolean expirando = DataHelper.verificarProximidadeAgora(dataExpiracao, 1);
-                            if (expirando) {
-                        %><span style="color:red;font-weight:bold;"><%}%>
-                        <%= DataHelper.dataFormat1(transacao.getDataExpiracao().toString()) %>
-                        <% if (expirando) {%></span><%}%>
+                            <%
+                                LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
+                                boolean expirando = DataHelper.verificarProximidadeAgora(dataExpiracao, 1);
+                                if (expirando) {
+                            %><span style="color:red;font-weight:bold;"><%}%>
+                            <%= DataHelper.dataFormat1(transacao.getDataExpiracao().toString()) %>
+                            <% if (expirando) {%></span><%}%>
                         </td>
                         <td><%= transacao.getIdProgramaFidelidade() %></td>
                         <td><%= transacao.getTipo().toString() %></td>

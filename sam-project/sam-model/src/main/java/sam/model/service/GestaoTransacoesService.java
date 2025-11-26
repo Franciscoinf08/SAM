@@ -5,12 +5,10 @@ import sam.model.dao.TransacaoDAO;
 import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.OrdenarTransacaoPorDataExpiracao;
-import sam.model.domain.util.TransacaoTipo;
 import sam.model.domain.util.UsuarioTipo;
 import sam.model.helper.DataHelper;
 import sam.model.helper.TransacaoHelper;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -70,39 +68,5 @@ public class GestaoTransacoesService {
         } catch (SQLException e) {
             throw new SQLException(e);
         }
-    }
-
-    public BigDecimal getValorTotalCliente(Usuario cliente) throws SQLException {
-        BigDecimal valor = BigDecimal.ZERO;
-
-        for (Transacao transacao : listarPorCliente(cliente))
-            if (transacao.getTipo() == TransacaoTipo.COMPRA)
-                valor = valor.subtract(transacao.getValor());
-            else
-                valor = valor.add(transacao.getValor());
-
-        return valor;
-    }
-
-    public int getQuantidadeTotalCliente(Usuario cliente) throws SQLException {
-        int quantidade = 0;
-
-        for (Transacao transacao : listarPorCliente(cliente)) {
-            if (transacao.getTipo() == TransacaoTipo.COMPRA)
-                quantidade += transacao.getQuantidade();
-            else
-                quantidade -= transacao.getQuantidade();
-        }
-
-        return quantidade;
-    }
-
-    public int getBonusTotalCliente(Usuario cliente) throws SQLException {
-        int bonus = 0;
-
-        for (Transacao transacao : listarPorCliente(cliente))
-            bonus += transacao.getBonus();
-
-        return bonus;
     }
 }

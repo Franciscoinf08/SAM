@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sam.model.common.exception.PersistenciaException;
+import sam.model.domain.Usuario;
+import sam.model.domain.util.UsuarioTipo;
 import sam.model.service.GestaoTransacoesService;
 
 import java.io.IOException;
@@ -16,6 +18,17 @@ public class RemocaoTransacaoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = null;
+        try {
+            if (((Usuario) request.getSession().getAttribute("usuario")).getTipo() == UsuarioTipo.CLIENTE)
+                path = "/core/cliente/dashboard.jsp";
+            else
+                path = "/core/gestor/apuracao.jsp";
+        } catch (NullPointerException e) {
+            RequestDispatcher rd = request.getRequestDispatcher("");
+            rd.forward(request, response);
+        }
+
         Long id;
 
         try {
@@ -23,10 +36,9 @@ public class RemocaoTransacaoController extends HttpServlet {
         } catch (RuntimeException e) {
             e.printStackTrace();
 
-            String erro = "Dados inválidos";
-            request.setAttribute("erro", erro);
+            request.setAttribute("erro", "Dados inválidos");
 
-            RequestDispatcher rd = request.getRequestDispatcher("/core/geral/transacoes.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher(path);
             rd.forward(request, response);
             return;
         }
@@ -42,7 +54,8 @@ public class RemocaoTransacaoController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        RequestDispatcher rd = request.getRequestDispatcher("/core/cliente/dashboard.jsp");
+
+        RequestDispatcher rd = request.getRequestDispatcher(path);
         rd.forward(request, response);
     }
 }
