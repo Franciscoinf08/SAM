@@ -3,6 +3,7 @@
 <head>
     <title>Sucesso</title>
     <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="icon" href="/sam/imgs/favicon.ico">
 </head>
 <body id="body-sucesso">
     <header>

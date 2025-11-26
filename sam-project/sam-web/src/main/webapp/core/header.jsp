@@ -31,7 +31,7 @@
         <%} if (ControleAutorizacao.checkPermissao("computar-milhas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("computar-milhas", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/computar-milhas.jsp">Computar Milhas</a>
         <%} if (ControleAutorizacao.checkPermissao("dashboard-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("dashboard-gestor", usuario.getCPF())) {%>
-        <a href="/sam/core/gestor/apuracao.jsp">Apuração(Dashboard Gestor)</a>
+        <a href="/sam/core/gestor/apuracao.jsp">Apuração</a>
         <%} if (ControleAutorizacao.checkPermissao("associacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("associacoes", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/associacoes.jsp">Associações</a>
         <%} if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>
@@ -39,9 +39,9 @@
         <%} if (ControleAutorizacao.checkPermissao("planos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("planos", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/planos.jsp">Planos</a>
         <%} if (ControleAutorizacao.checkPermissao("mensagens-avisos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("mensagens-avisos", usuario.getCPF())) {%>
-        <a href="/sam/core/gestor/mensagens.jsp">Mensagens e avisos</a>
+        <a href="/sam/core/gestor/mensagens.jsp">Mensagens e Avisos</a>
         <%} if (ControleAutorizacao.checkPermissao("acesso-clientes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("acesso-clientes", usuario.getCPF())) {%>
-        <a href="/sam/core/gestor/meus-clientes.jsp">Meus clientes</a>
+        <a href="/sam/core/gestor/meus-clientes.jsp">Meus Clientes</a>
         <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
         <a href="/sam/core/geral/relatorios.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>

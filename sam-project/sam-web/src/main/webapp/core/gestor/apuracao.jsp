@@ -19,6 +19,7 @@
         <title>SAM - Apuração de Resultados</title>
 
         <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="icon" href="/sam/imgs/favicon.ico">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
