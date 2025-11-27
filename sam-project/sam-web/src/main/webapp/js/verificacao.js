@@ -30,8 +30,3 @@ function handleSubmit(e) {
     }
     return false;
 }
-
-document.getElementById("enviar-codigo").addEventListener("click", function () {
-    this.style.display = "none";
-    document.getElementById("input-codigo").style.display = "block";
-});
