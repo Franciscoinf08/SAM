@@ -24,7 +24,7 @@ public class EnviarEmailController {
 
         String toEmail = email;
         String fromEmail = "equipesam.cefetmg@gmail.com";
-        String password = "Equipesam2025@";
+        String password = "lrkfxgarmwqktkmu";
 
         try{
             Properties pr = new Properties();

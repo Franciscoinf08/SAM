@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-@WebServlet("/sam/UserVerifyController")
+@WebServlet("/UserVerifyController")
 public class UserVerifyController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -31,7 +31,7 @@ public class UserVerifyController extends HttpServlet {
 
             if (test) {
                 request.setAttribute("mensagem", "Código enviado! Confira seu e-mail.");
-                request.getRequestDispatcher("verificar.jsp").forward(request, response);
+                request.getRequestDispatcher("core/geral/verificar.jsp").forward(request, response);
             }
         }
     }
