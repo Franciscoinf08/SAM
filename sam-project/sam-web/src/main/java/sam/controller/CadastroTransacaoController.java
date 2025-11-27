@@ -25,7 +25,7 @@ public class CadastroTransacaoController extends HttpServlet {
         Long idProgramaFidelidade;
         Long idCliente;
         Date data;
-        Date dataExpiracao;
+        Date dataExpiracao = null;
         TransacaoTipo tipo;
         int quantidade;
         BigDecimal valor;
@@ -35,7 +35,8 @@ public class CadastroTransacaoController extends HttpServlet {
             idProgramaFidelidade = Long.parseLong(request.getParameter("programa"));
             idCliente = Long.parseLong(request.getParameter("cliente"));
             data = Date.valueOf(request.getParameter("data"));
-            dataExpiracao = Date.valueOf(request.getParameter("dataExpiracao"));
+            if (request.getParameter("dataExpiracao") != null)
+                dataExpiracao = Date.valueOf(request.getParameter("dataExpiracao"));
             tipo = TransacaoTipo.strTo(request.getParameter("tipo"));
             quantidade = Integer.parseInt(request.getParameter("quantidade"));
             valor = new BigDecimal(request.getParameter("valor"));

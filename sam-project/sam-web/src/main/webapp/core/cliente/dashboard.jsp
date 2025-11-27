@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.service.GestaoTransacoesService" %>
 <%@ page import="sam.model.domain.Transacao" %>
+<%@ page import="sam.model.domain.util.TransacaoTipo" %>
 <%@ page import="sam.model.helper.DataHelper" %>
 <%@ page import="sam.model.helper.SaldoHelper" %>
 <%@ page import="java.util.List" %>
@@ -78,7 +79,7 @@
                             <%=
                                 transacao.getTipo().toString()
                             %> - <%= transacao.getQuantidade() + transacao.getBonus()
-                            %> milha<% if (milhasTotal != 1){ %>s<%}%>
+                            %> milha<% if (transacao.getQuantidade() + transacao.getBonus() != 1){ %>s<%}%>
                         </li>
                         <%}%>
                     </ul>
@@ -131,13 +132,16 @@
                     <tr>
                         <td><%= DataHelper.dataFormat1(transacao.getData().toString()) %></td>
                         <td>
+                            <% if (transacao.getTipo() == TransacaoTipo.VENDA) { %>
+                            -
                             <%
-                                LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
-                                boolean expirando = DataHelper.verificarProximidadeAgora(dataExpiracao, 1);
-                                if (expirando) {
+                                } else {
+                                    LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
+                                    boolean expirando = DataHelper.verificarProximidadeAgora(dataExpiracao, 1);
+                                    if (expirando) {
                             %><span style="color:red;font-weight:bold;"><%}%>
                             <%= DataHelper.dataFormat1(transacao.getDataExpiracao().toString()) %>
-                            <% if (expirando) {%></span><%}%>
+                            <% if (expirando) {%></span><%}}%>
                         </td>
                         <td><%= transacao.getIdProgramaFidelidade() %></td>
                         <td><%= transacao.getTipo().toString() %></td>

@@ -6,6 +6,7 @@ import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.OrdenarTransacaoPorDataExpiracao;
 import sam.model.domain.util.TransacaoStatus;
+import sam.model.domain.util.TransacaoTipo;
 import sam.model.domain.util.UsuarioTipo;
 import sam.model.helper.DataHelper;
 import sam.model.helper.TransacaoHelper;
@@ -57,6 +58,8 @@ public class GestaoTransacoesService {
         List<Transacao> listaTransacoes = listarAtivasPorCliente(cliente);
         List<Transacao> listaExpirando = new LinkedList<>();
         for (Transacao transacao : listaTransacoes) {
+            if (transacao.getTipo() == TransacaoTipo.VENDA)
+                continue;
             LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
             if (DataHelper.verificarProximidadeAgora(dataExpiracao, 1))
                 listaExpirando.add(transacao);

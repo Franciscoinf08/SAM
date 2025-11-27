@@ -74,7 +74,7 @@
                         <input name="valor" type="number" step="0.01" min="0.01" value="0.01" placeholder="0.01" required>
                     </label>
 
-                    <label for="bonus" class="bonus-input">Bônus:
+                    <label for="bonus" class="bonus">Bônus:
                         <input name="bonus" type="number" min="0" value="0" placeholder="0">
                     </label>
 
@@ -82,7 +82,7 @@
                         <input name="data" type="date" value="<%= new Date(System.currentTimeMillis()).toString() %>" required>
                     </label>
 
-                    <label for="data">Data de Expiração:
+                    <label for="data-expiracao" class="data-expiracao">Data de Expiração:
                         <input name="dataExpiracao" type="date" value="<%= LocalDate.now().plusDays(1).toString() %>" required>
                     </label>
 
@@ -97,7 +97,7 @@
             ajaxProgramaFidelidade();
             document.querySelector("#cliente").addEventListener("change", () => { console.log("a"); ajaxProgramaFidelidade(); });
         </script>
-        <script src="/sam/js/toggle-bonus.js"></script>
+        <script src="/sam/js/toggle-compra-venda.js"></script>
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/script.js"></script>
     </body>

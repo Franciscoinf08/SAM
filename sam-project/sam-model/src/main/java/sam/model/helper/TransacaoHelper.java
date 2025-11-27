@@ -27,7 +27,7 @@ public class TransacaoHelper {
             erro += "Programa de Fidelidade inválido";
         if (!validarData(transacao.getData()))
             erro += "Data inválida ";
-        else if (!validarDataExpiracao(transacao.getData(), transacao.getDataExpiracao()))
+        else if (!validarDataExpiracao(transacao.getDataExpiracao(), transacao.getData(), transacao.getTipo()))
             erro += "Data de Expiração inválida";
         if (!validarQuantidade(transacao.getQuantidade()))
             erro += "Quantidade inválida ";
@@ -50,8 +50,8 @@ public class TransacaoHelper {
         return data != null;
     }
 
-    private static boolean validarDataExpiracao(Date data, Date dataExpiracao) {
-        return dataExpiracao != null && dataExpiracao.after(data) && !dataExpiracao.equals(data);
+    private static boolean validarDataExpiracao(Date dataExpiracao, Date data, TransacaoTipo tipo) {
+        return (dataExpiracao == null && tipo == TransacaoTipo.VENDA) || (dataExpiracao != null && data.before(dataExpiracao) && !data.equals(dataExpiracao));
     }
 
     private static boolean validarQuantidade(int quantidade) {

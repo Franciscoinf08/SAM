@@ -152,7 +152,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 int bonus = rs.getInt("bonus");
                 TransacaoStatus status = TransacaoStatus.strTo(rs.getString("status"));
 
-                if (dataExpiracao.before(new Date(System.currentTimeMillis()))) {
+                if (dataExpiracao != null && dataExpiracao.before(new Date(System.currentTimeMillis()))) {
                     expirar(id);
                     continue;
                 }

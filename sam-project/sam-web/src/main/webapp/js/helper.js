@@ -126,8 +126,12 @@ function validarCamposCadastroTransacao(form) {
     let valor = form.valor.value;
     let bonus = form.bonus.value;
     let data = form.data.value;
-    let dataExpiracao = form.dataExpiracao.value;
-    let strConfirmacao = `Confirmar valores?\n Quantidade: ${quantidade}\n Valor: ${valor}\n Data: ${data}\n Data de Expiração: ${dataExpiracao}`;
+    let dataExpiracao = "";
+    let strConfirmacao = `Confirmar valores?\n Quantidade: ${quantidade}\n Valor: ${valor}\n Data: ${data}`;
+    if (form.dataExpiracao) {
+        dataExpiracao = form.dataExpiracao.value;
+        strConfirmacao += `\n Data de Expiração: ${dataExpiracao}`;
+    }
 
     let dataObj = new Date(data);
     let dataExpiracaoObj = new Date(dataExpiracao);
@@ -144,11 +148,10 @@ function validarCamposCadastroTransacao(form) {
     } else if (programa === "") {
         gerarMensagemErro("É necessário selecionar um programa");
         return false;
-    } else if (dataObj.getTime() > dataExpiracaoObj.getTime()) {
+    } else if (dataExpiracao !== "" && dataObj.getTime() > dataExpiracaoObj.getTime()) {
         gerarMensagemErro("A data de expiração deve ser posterior à data da transação");
         return false;
-    }
-    else
+    } else
         return window.confirm(strConfirmacao);
 }
 
