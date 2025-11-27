@@ -15,12 +15,22 @@
 </head>
 <body>
 <main class="card" role="main">
+
+    <%
+        String mensagem = (String) request.getAttribute("mensagem");
+        if (mensagem != null) {
+    %>
+    <script>
+        alert("<%= mensagem %>");
+    </script>
+    <%
+        }
+    %>
+
     <h1>Verificação de conta</h1>
-    <button id="enviar-codigo" type="submit">Enviar codigo</button>
-    <section id="input-codigo">
         <p class="small">Insira o código de 6 dígitos enviado para o seu e-mail ou celular.</p>
 
-        <form id="verifyForm" autocomplete="off" action="sam/UserVerify">
+        <form id="verifyForm" autocomplete="off" action="/sam/UserVerifyController">
             <div class="code-input">
                 <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
                 <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
