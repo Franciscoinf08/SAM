@@ -30,7 +30,7 @@ public class SaldoHelper {
     public static int getMilhasCompradasCliente(Usuario cliente) throws SQLException {
         int milhas = 0;
 
-        for (Transacao transacao : manterTransacao.listarPorCliente(cliente)) {
+        for (Transacao transacao : manterTransacao.listarAtivasPorCliente(cliente)) {
             if (transacao.getTipo() == TransacaoTipo.COMPRA)
                 milhas += transacao.getQuantidade();
         }
@@ -41,7 +41,7 @@ public class SaldoHelper {
     public static int getMilhasVendidasCliente(Usuario cliente) throws SQLException {
         int milhas = 0;
 
-        for (Transacao transacao : manterTransacao.listarPorCliente(cliente)) {
+        for (Transacao transacao : manterTransacao.listarAtivasPorCliente(cliente)) {
             if (transacao.getTipo() == TransacaoTipo.VENDA)
                 milhas += transacao.getQuantidade();
         }
@@ -52,7 +52,7 @@ public class SaldoHelper {
     public static int getSaldoQuantidadeCliente(Usuario cliente) throws SQLException {
         int saldo = 0;
 
-        for (Transacao transacao : manterTransacao.listarPorCliente(cliente)) {
+        for (Transacao transacao : manterTransacao.listarAtivasPorCliente(cliente)) {
             if (transacao.getTipo() == TransacaoTipo.COMPRA)
                 saldo += transacao.getQuantidade();
             else
@@ -65,7 +65,7 @@ public class SaldoHelper {
     public static int getBonusCliente(Usuario cliente) throws SQLException {
         int bonus = 0;
 
-        for (Transacao transacao : manterTransacao.listarPorCliente(cliente))
+        for (Transacao transacao : manterTransacao.listarAtivasPorCliente(cliente))
             bonus += transacao.getBonus();
 
         return bonus;
@@ -74,7 +74,7 @@ public class SaldoHelper {
     public static int getSaldoMilhasCliente(Usuario cliente) throws SQLException {
         int saldo = 0;
 
-        for (Transacao transacao : manterTransacao.listarPorCliente(cliente)) {
+        for (Transacao transacao : manterTransacao.listarAtivasPorCliente(cliente)) {
             if (transacao.getTipo() == TransacaoTipo.COMPRA)
                 saldo += transacao.getQuantidade();
             else

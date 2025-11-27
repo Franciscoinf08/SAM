@@ -5,6 +5,7 @@ import sam.model.dao.TransacaoDAO;
 import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.OrdenarTransacaoPorDataExpiracao;
+import sam.model.domain.util.TransacaoStatus;
 import sam.model.domain.util.UsuarioTipo;
 import sam.model.helper.DataHelper;
 import sam.model.helper.TransacaoHelper;
@@ -33,6 +34,18 @@ public class GestaoTransacoesService {
         }
     }
 
+    public List<Transacao> listarAtivasPorCliente(Usuario cliente) throws SQLException {
+        List<Transacao> listaTransacoes = listarPorCliente(cliente);
+        List<Transacao> listaTransacoesAtivas = new LinkedList<>();
+
+        for (Transacao transacao : listaTransacoes) {
+            if (transacao.getStatus() == TransacaoStatus.ATIVA)
+                listaTransacoesAtivas.add(transacao);
+        }
+
+        return listaTransacoesAtivas;
+    }
+
     public List<Transacao> listarPorCliente(Usuario cliente) throws SQLException {
         if (cliente.getTipo() != UsuarioTipo.CLIENTE)
             throw new RuntimeException("Acesso negado");
@@ -41,7 +54,7 @@ public class GestaoTransacoesService {
     }
 
     public List<Transacao> listarQuaseExpirandoPorCliente(Usuario cliente) throws SQLException {
-        List<Transacao> listaTransacoes = listarPorCliente(cliente);
+        List<Transacao> listaTransacoes = listarAtivasPorCliente(cliente);
         List<Transacao> listaExpirando = new LinkedList<>();
         for (Transacao transacao : listaTransacoes) {
             LocalDate dataExpiracao = LocalDate.parse(transacao.getDataExpiracao().toString());
@@ -50,13 +63,6 @@ public class GestaoTransacoesService {
         }
         listaExpirando.sort(new OrdenarTransacaoPorDataExpiracao());
         return listaExpirando;
-    }
-
-    public List<Transacao> listarPorGestor(Usuario Gestor) throws SQLException {
-        if (Gestor.getTipo() != UsuarioTipo.CLIENTE)
-            throw new RuntimeException("Acesso negado");
-
-        return transacaoDAO.pesquisarPorGestor(Gestor);
     }
 
     public void remover(Long id) throws SQLException, PersistenciaException {

@@ -37,7 +37,7 @@
         <main>
             <%
                 GestaoTransacoesService manterTransacao = new GestaoTransacoesService();
-                List<Transacao> listaTransacoes = manterTransacao.listarPorCliente(usuario);
+                List<Transacao> listaTransacoes = manterTransacao.listarAtivasPorCliente(usuario);
 
                 int quantidadeTotal = 0;
                 int bonusTotal = 0;

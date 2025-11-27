@@ -118,11 +118,12 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
                 int bonus = rs.getInt("bonus");
+                TransacaoStatus status = TransacaoStatus.strTo(rs.getString("status"));
 
                 if (dataExpiracao.before(new Date(System.currentTimeMillis())))
                     expirar(id);
 
-                transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
+                transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus, status);
                 transacao.setId(id);
             }
         } catch (SQLException e) {
@@ -134,7 +135,7 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
     public List<Transacao> pesquisarPorCliente(Usuario cliente) throws SQLException {
         List<Transacao> listaTransacoes = new ArrayList<>();
         Long idCliente = cliente.getId();
-        String sql = "SELECT * FROM transacoes WHERE id_cliente = ? AND status = \"ATIVA\" ORDER BY data DESC";
+        String sql = "SELECT * FROM transacoes WHERE id_cliente = ? AND (status = \"ATIVA\" OR status = \"EXPIRADA\") ORDER BY data DESC";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idCliente);
@@ -149,50 +150,14 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 String tipo = rs.getString("tipo");
                 BigDecimal valor = rs.getBigDecimal("valor");
                 int bonus = rs.getInt("bonus");
+                TransacaoStatus status = TransacaoStatus.strTo(rs.getString("status"));
 
                 if (dataExpiracao.before(new Date(System.currentTimeMillis()))) {
                     expirar(id);
                     continue;
                 }
 
-                Transacao transacao = new Transacao(idProgramaFidelidade, cliente.getId(), data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
-                transacao.setId(id);
-
-                listaTransacoes.add(transacao);
-            }
-        } catch (SQLException e) {
-            throw new SQLException("Erro ao listar transações", e);
-        }
-        return listaTransacoes;
-    }
-
-    public List<Transacao> pesquisarPorGestor(Usuario gestor) throws SQLException {
-        List<Transacao> listaTransacoes = new ArrayList<>();
-        Long idGestor = gestor.getId();
-        String sql = "SELECT t.* FROM transacoes t JOIN usuarios u ON u.id = t.id_cliente WHERE u.id_gestor = ? AND t.status = \"ATIVA\" ORDER BY data DESC";
-
-        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-            preparedStatement.setLong(1, idGestor);
-            preparedStatement.setString(2, TransacaoStatus.ATIVA.toString());
-            ResultSet rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-                Long id = rs.getLong("id");
-                Long idProgramaFidelidade = rs.getLong("id_cliente");
-                Long idCliente = rs.getLong("id_cliente");
-                Date data = rs.getDate("data");
-                Date dataExpiracao = rs.getDate("data_expiracao");
-                int quantidade = rs.getInt("quantidade");
-                String tipo = rs.getString("tipo");
-                BigDecimal valor = rs.getBigDecimal("valor");
-                int bonus = rs.getInt("bonus");
-
-                if (dataExpiracao.before(new Date(System.currentTimeMillis()))) {
-                    expirar(id);
-                    continue;
-                }
-
-                Transacao transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus);
+                Transacao transacao = new Transacao(idProgramaFidelidade, cliente.getId(), data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus, status);
                 transacao.setId(id);
 
                 listaTransacoes.add(transacao);

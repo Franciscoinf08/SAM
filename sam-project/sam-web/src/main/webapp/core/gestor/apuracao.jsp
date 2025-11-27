@@ -109,7 +109,7 @@
                             BigDecimal valorTotal = BigDecimal.ZERO;
                             try {
                                 cliente = manterUsuario.pesquisar(idCliente);
-                                listaTransacoes = manterTransacao.listarPorCliente(cliente);
+                                listaTransacoes = manterTransacao.listarAtivasPorCliente(cliente);
 
                                 quantidadeTotal = SaldoHelper.getSaldoQuantidadeCliente(cliente);
                                 bonusTotal = SaldoHelper.getBonusCliente(cliente);

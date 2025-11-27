@@ -30,6 +30,18 @@ public class Transacao {
         this.status = TransacaoStatus.ATIVA;
     }
 
+    public Transacao(Long idProgramaFidelidade, Long idCliente, Date data, Date dataExpiracao, int quantidade, TransacaoTipo tipo, BigDecimal valor, int bonus, TransacaoStatus status) {
+        this.idProgramaFidelidade = idProgramaFidelidade;
+        this.idCliente = idCliente;
+        this.data = data;
+        this.dataExpiracao = dataExpiracao;
+        this.quantidade = quantidade;
+        this.tipo = tipo;
+        this.valor = valor;
+        this.bonus = bonus;
+        this.status = status;
+    }
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
