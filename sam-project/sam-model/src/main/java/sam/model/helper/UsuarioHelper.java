@@ -1,18 +1,14 @@
 package sam.model.helper;
 
+import sam.model.dao.Conexao;
 import sam.model.dao.UsuarioDAO;
 import sam.model.domain.Usuario;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class UsuarioHelper {
-
-    private static final UsuarioDAO usuarioDAO;
-
-    static {
-        usuarioDAO = UsuarioDAO.getInstance();
-    }
 
     public static String validarAtualizacaoUsuario(Usuario usuario) throws SQLException {
         String erro = "";
@@ -37,15 +33,51 @@ public class UsuarioHelper {
     }
 
     private static boolean validarAtualizacaoEmail(Usuario usuario) throws SQLException {
-        return validarCadastroEmail(usuario) || usuario.equals(usuarioDAO.pesquisarPorEmail(usuario.getEmail()));
+        Connection conexao = null;
+        try {
+            conexao = Conexao.getConnection();
+            UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+            return validarCadastroEmail(usuario) || usuario.equals(usuarioDAO.pesquisarPorEmail(usuario.getEmail()));
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+            return false;
+        }
     }
 
     private static boolean validarCadastroEmail(Usuario usuario) throws SQLException {
-        return usuarioDAO.pesquisarPorEmail(usuario.getEmail()) == null;
+        Connection conexao = null;
+        try{
+            conexao = Conexao.getConnection();
+            UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+            return usuarioDAO.pesquisarPorEmail(usuario.getEmail()) == null;
+        } finally {
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
     }
 
     private static boolean validarCadastroCPF(Usuario usuario) throws SQLException {
-       return usuarioDAO.pesquisarPorCPF(usuario.getCPF()) == null;
+        Connection conexao = null;
+        try{
+            conexao = Conexao.getConnection();
+            UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
+            return usuarioDAO.pesquisarPorCPF(usuario.getCPF()) == null;
+        } finally {
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
     }
 
     public static boolean validarCPF(String cpf) {

@@ -70,12 +70,32 @@ h2 {
     flex-wrap: wrap;
 }
 
+.indicadores {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1vw;
+    text-align: center;
+}
+
+.indicadores h2 {
+    font-size: larger;
+    font-weight: normal;
+}
+
+.indicadores li {
+    font-size: xx-large;
+    font-weight: 500;
+    margin: 0.5em 0;
+}
+
 .card {
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 280px;
+    min-width: 15vw;
+    min-height: 7.5vw;
 }
 
 #card-selecao {
@@ -154,8 +174,17 @@ table {
 table th,
 table td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #eee;
+}
+
+.tabela-container {
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 10px;
+    max-width: 60vw;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .notificacoes li {
@@ -283,37 +312,4 @@ table td {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-}
-.dropdown {
-    position: relative; /* Essencial para que o menu flutue corretamente em relação ao botão */
-    display: inline-block;
-}
-
-/* O conteúdo do menu - Começa oculto */
-.dropdown-content {
-    display: none; /* Oculta o menu por padrão */
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1; /* Garante que fique acima de outros elementos */
-    right: 0; /* Alinha o menu à direita do botão */
-}
-
-/* Estilo dos itens do menu */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-/* Efeito hover nos itens */
-.dropdown-content a:hover {
-    background-color: #f1f1f1
-}
-
-/* Classe para mostrar o menu - Adicionada via JavaScript */
-.show {
-    display: block;
 }

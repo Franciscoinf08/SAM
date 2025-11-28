@@ -9,14 +9,14 @@ import java.util.List;
 public class ProgramaFidelidadeDAO {
     private final Connection conexao;
 
-    public ProgramaFidelidadeDAO() {
-        this.conexao = Conexao.getConnection();
+    public ProgramaFidelidadeDAO(Connection conexao) {
+        this.conexao = conexao;
     }
 
 
     public ProgramaFidelidade salvar(ProgramaFidelidade programa) {
         String sql = "INSERT INTO programa_fidelidade (nome, bonusMilhas, qtdeMilhasMes, duracao, empresa_id, precoMes, avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, programa.getNome());
             stmt.setDouble(2, programa.getBonusMilhas());
             stmt.setInt(3, programa.getQtdeMilhasMes());
@@ -40,7 +40,7 @@ public class ProgramaFidelidadeDAO {
     public ProgramaFidelidade buscarPorId(int id) {
         ProgramaFidelidade programaFidelidade = null;
         String sql = "SELECT * FROM programa_fidelidade WHERE idProgramaFidelidade = ?";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -61,7 +61,7 @@ public class ProgramaFidelidadeDAO {
 
     public void atualizarProgramaFidelidade(ProgramaFidelidade programaFidelidade) throws SQLException {
         String sql = "UPDATE programa_fidelidade SET nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ?, precoMes = ?, avaliacao = ? WHERE idProgramaFidelidade = ?";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
             stmt.setString(1, programaFidelidade.getNome());
             stmt.setDouble(2, programaFidelidade.getBonusMilhas());
             stmt.setInt(3, programaFidelidade.getQtdeMilhasMes());
@@ -78,7 +78,7 @@ public class ProgramaFidelidadeDAO {
 
     public void excluirProgramaFidelidade(int id) throws SQLException {
         String sql = "DELETE FROM programa_fidelidade WHERE idProgramaFidelidade = ?";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -89,7 +89,7 @@ public class ProgramaFidelidadeDAO {
     public List<ProgramaFidelidade> listarPorEmpresa(int idEmpresa) {
         List<ProgramaFidelidade> lista = new ArrayList<>();
         String sql = "SELECT * FROM programa_fidelidade WHERE empresa_id = ? ORDER BY idProgramaFidelidade";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
             stmt.setInt(1, idEmpresa);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -106,6 +106,29 @@ public class ProgramaFidelidadeDAO {
                 }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<ProgramaFidelidade> listarTodos() {
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+        String sql = "SELECT * FROM programa_fidelidade ORDER BY idProgramaFidelidade";
+        try (PreparedStatement stmt = this.conexao.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProgramaFidelidade programaFidelidade = new ProgramaFidelidade();
+                    programaFidelidade.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                    programaFidelidade.setNome(rs.getString("nome"));
+                    programaFidelidade.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                    programaFidelidade.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                    programaFidelidade.setDuracao(rs.getInt("duracao"));
+                    programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
+                    programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
+                    programaFidelidade.setAvaliacao(rs.getString("avaliacao"));
+                    lista.add(programaFidelidade);
+                }
+            } catch (SQLException e) {
             e.printStackTrace();
         }
         return lista;

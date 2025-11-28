@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="sam.model.domain.util.UsuarioTipo" %>
 <%@ page import="sam.model.domain.Usuario" %>
+<%@ page import="sam.model.domain.ProgramaFidelidade" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,17 +45,7 @@
                     <td><%=c.getNome()%></td>
                     <td><%=c.getCPF()%></td>
                     <td><%=c.getEmail()%></td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn-associar" onclick="toggleDropdown(this)">Associar</button>
-
-                            <div class="dropdown-content">
-                                <a href="#" onclick="associarPrograma(10, 'Programa A')">Programa Smiles</a>
-                                <a href="#" onclick="associarPrograma(10, 'Programa B')">Programa Multiplus</a>
-                                <a href="#" onclick="associarPrograma(10, 'Programa C')">Programa Latam Pass</a>
-                            </div>
-                        </div>
-                    </td>
+                    <td><a href="<%=request.getContextPath()%>/usuarioPrograma?action=programas&idUsuario=<%=c.getId()%>"><button class="btn-associar">Associar</button></a></td>
 
                 </tr>
                 <%
@@ -63,7 +54,7 @@
 
             </table>
         </main>
-        <script src="../../js/script.js"></script>
+        <script src="<%=request.getContextPath()%>/js/script.js"></script>
 
     </body>
 </html>
