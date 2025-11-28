@@ -81,30 +81,7 @@ public class NotificacaoDAO {
         }
     }
 
-    public List<Notificacao> listarPorUsuario(long idUsuario) throws PersistenciaException {
-        List<Notificacao> lista = new ArrayList<>();
-        String sql = "SELECT * FROM notificacao WHERE destinatario_id = ? ORDER BY data_do_envio DESC";
 
-        try (PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setLong(1, idUsuario);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
-
-                while (rs.next()) {
-                    Notificacao n = mapResultSet(rs);
-                    n.setDestinatario(usuarioDAO.pesquisar(idUsuario));
-                    lista.add(n);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new PersistenciaException("Erro ao listar notificações: " + e.getMessage());
-        }
-
-        return lista;
-    }
 
     public List<Notificacao> listarTodas() throws PersistenciaException {
         List<Notificacao> lista = new ArrayList<>();

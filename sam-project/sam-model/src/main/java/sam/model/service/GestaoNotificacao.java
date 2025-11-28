@@ -13,12 +13,11 @@ public class GestaoNotificacao {
 
     private final NotificacaoService notificacaoService;
     private final EmailService email;
-    private final UsuarioDAO usuarioDAO;
 
     public GestaoNotificacao() {
         this.notificacaoService = new NotificacaoService();
         this.email = new EmailService();
-        this.usuarioDAO = UsuarioDAO.getInstance();
+
     }
 
     public void selecionaAlcance(Notificacao notificacao, AlcanceNotificacao alcance) throws PersistenciaException {
@@ -31,20 +30,7 @@ public class GestaoNotificacao {
                 notificacaoService.enviar(notificacao);
             }
 
-            case GERAL -> {
-                List<Usuario> usuarios = usuarioDAO.listarUsuariosNaoAdm();
-                enviarParaUsuarios(notificacao, usuarios);
-            }
 
-            case ALUNOS -> {
-                List<Usuario> alunos = usuarioDAO.listarAlunos();
-                enviarParaUsuarios(notificacao, alunos);
-            }
-
-            case PROFESSORES -> {
-                List<Usuario> professores = usuarioDAO.listarProfessores();
-                enviarParaUsuarios(notificacao, professores);
-            }
         }
     }
 

@@ -1,11 +1,10 @@
 package sam.model.domain.util;
 
 public enum TipoNotificacao {
-    OLIMPIADA_ABERTA("Uma nova olimpiada acaba de ser aberta!"),
-    REUNIAO_AGENDADA("Uma nova reunião acaba de ser agendada"),
+    EXPIRACAO_PROGRAMA("Um programa de fidelidade esta acabando!!"),
+    OFERTA_PROGRAMA("Temos uma proposta vantajosa para voce!!"),
     REUNIAO_CHEGANDO("Sua reunião está chegando!!"),
-    DESAFIO_SEMANAL("Um novo material acabou de ser lançado"),
-    CORRECAO_DE_EXERCICIO("Uma nova correção de exercicico acaba de ser lançada"),
+    NOTIFICACAO_GESTOR("Seu gestor tem um novo aviso para você"),
     OUTROS("");
     private final String descricao;
 

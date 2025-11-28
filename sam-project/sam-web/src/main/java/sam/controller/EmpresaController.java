@@ -10,7 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import sam.model.dao.EmpresaDAO;
 import sam.model.domain.Empresa;
 import sam.model.service.EmpresaService;
 

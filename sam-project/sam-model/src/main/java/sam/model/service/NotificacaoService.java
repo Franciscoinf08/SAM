@@ -19,7 +19,7 @@ public class NotificacaoService {
     }
 
     public List<Notificacao> listarPorUsuario(long idUsuario) throws PersistenciaException {
-        return notificacaoDAO.listarPorUsuario(idUsuario);
+        return notificacaoDAO.listarTodas();
     }
 
     public List<Notificacao> listarTodas() throws PersistenciaException {

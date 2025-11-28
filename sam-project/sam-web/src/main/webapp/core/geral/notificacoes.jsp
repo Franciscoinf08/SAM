@@ -25,7 +25,7 @@
         <main>
             <h2>Últimas notificações</h2>
             <ul class="notificacoes">
-                <li>Milhas da conta Azul expiram em 7 dias.</li>
+                <li></li>
                 <li>Nova campanha promocional disponível.</li>
             </ul>
             <h2>Propostas e orçamentos</h2>
@@ -67,7 +67,7 @@
                 </tbody>
             </table>
         </main>
-        <script src="/sam/js/script.js"></script>
+        <script src="${pageContext.request.contextPath}/js/script.js"></script>
     </body>
 
 </html>
