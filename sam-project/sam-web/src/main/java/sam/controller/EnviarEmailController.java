@@ -22,12 +22,9 @@ public class EnviarEmailController {
     public boolean enviarEmail(String email, String codigo){
         boolean test = false;
 
-        String toEmail = email; 
-        String fromEmail = "obgsoprodrive@gmail.com";
-        String password = "ownadewuhtzftrdx";
-        
-        /*String fromEmail = "equipesam.cefetmg@gmail.com";
-        String password = "lrkfxgarmwqktkmu";*/
+        String toEmail = email;
+        String fromEmail = "equipesam.cefetmg@gmail.com";
+        String password = "lrkfxgarmwqktkmu";
 
         try{
             Properties pr = new Properties();
