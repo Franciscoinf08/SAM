@@ -7,88 +7,78 @@ import sam.model.domain.Solicitacao;
 import sam.model.dao.SolicitacoesDAO;
 
 public class GestaoSolicitacoesService {
+
     private final SolicitacoesDAO solicitacoesDAO;
-    
-    public GestaoSolicitacoesService(){
-        this.solicitacoesDAO = new SolicitacoesDAO();
+
+    public GestaoSolicitacoesService() {
+        this.solicitacoesDAO = SolicitacoesDAO.getInstance();
     }
-    
-    public List<Solicitacao> listarEmail(String email) throws PersistenciaException, SQLException{
+
+    public List<Solicitacao> listarEmail(String email) throws SQLException {
         try {
             return solicitacoesDAO.listarEmail(email);
-        } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-    
-    public List<Solicitacao> listarTodos() throws PersistenciaException, SQLException{
+
+    public List<Solicitacao> listarTodos() throws SQLException {
         try {
             return solicitacoesDAO.listarTodos();
-        } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-    
-    public void adicionarPedido(Solicitacao sol) throws PersistenciaException, SQLException{
+
+    public void adicionarPedido(Solicitacao sol) throws SQLException {
         try {
+            if (sol.getPagamento() == null || sol.getPagamento().trim().isEmpty()) {
+                throw new SQLException("Forma de pagamento inválida");
+            }
             solicitacoesDAO.adicionarPedido(sol);
-        } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-    
-    public void cancelarPedido(String id) throws PersistenciaException, SQLException{
+
+    public void cancelarPedido(String id) throws SQLException {
         try {
             long longId = Long.parseLong(id);
             solicitacoesDAO.cancelarPedido(longId);
-        } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-    
-    public void aprovarPedido(String id) throws PersistenciaException, SQLException{
+
+    public void aprovarPedido(String id) throws SQLException {
         try {
             long longId = Long.parseLong(id);
             solicitacoesDAO.aprovarPedido(longId);
-        } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-    
-    public void recusarPedido(String id) throws PersistenciaException, SQLException{
+
+    public void recusarPedido(String id) throws SQLException {
         try {
             long longId = Long.parseLong(id);
             solicitacoesDAO.recusarPedido(longId);
-        } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-    
-    public void solicitarPagamento(String id) throws PersistenciaException, SQLException{
+
+    public void solicitarPagamento(String id) throws SQLException {
         try {
             /* PEGA O EMAIL DO USUÁRIO
             ENVIA EMAIL SOLICITANDO O PAGAMENTO (ENVIANDO AS INFORMAÇÕES NECESSÁRIAS)
             QUANDO O EMAIL FOR ENVIADO, MUDA O STATUS DA SOLICITAÇÃO PARA "AGUARDANDO"*/
             long longId = Long.parseLong(id);
             solicitacoesDAO.aguardarPagamento(longId);
-            String email = solicitacoesDAO.pesquisaId(longId);
-        } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
+            String email = solicitacoesDAO.pesquisarEmail(longId);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-    
+
 }

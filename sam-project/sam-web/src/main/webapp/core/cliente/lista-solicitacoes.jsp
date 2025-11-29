@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="sam.model.service.GestaoSolicitacoes"%>
+<%@page import="sam.model.service.GestaoSolicitacoesService"%>
 <%@page import="sam.model.domain.Solicitacao"%>
+<%@page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -9,7 +10,7 @@
         <meta charset="UTF-8">
         <title>SAM - Lista de Solicitações</title>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +22,7 @@
     <body>
 
         <header>
-            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Lista de Solicitações</h1>
             <%@include file="/core/header.jsp" %>
         </header>
@@ -35,8 +36,8 @@
                         <th>Status</th>
                         <th>Ações</th>
                     </tr>
-                    <%  GestaoSolicitacoes gestao = new GestaoSolicitacoesService();
-                        List<Solicitacao> solicitacoes = gestao.lista(usuario.getEmail());
+                    <%  GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
+                        List<Solicitacao> solicitacoes = gestao.listarEmail(usuario.getEmail());
                         for(Solicitacao sol : solicitacoes){
                             if(sol != null){
                         %>
@@ -48,7 +49,7 @@
                                 case AGUARDANDO:
                         %>
                         <td>
-                            <button><a href="/sam/solicitarGestor?acao=Cancelar&id=<%=sol.getId%>">Cancelar</a></button>
+                            <a href="/sam/solicitarGestor?acao=Cancelar&id=<%=String.valueOf(sol.getId())%>"><button>Cancelar</button></a>
                         </td>
                         <%      break;
                                 default:

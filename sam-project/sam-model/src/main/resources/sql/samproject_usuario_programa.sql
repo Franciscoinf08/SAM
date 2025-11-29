@@ -16,34 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `usuario_programa`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `usuario_programa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
+CREATE TABLE `usuario_programa` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `cpf` char(11) DEFAULT NULL,
-  `senha` varchar(50) DEFAULT NULL,
-  `tipo` varchar(15) DEFAULT NULL,
-  `id_gestor` int DEFAULT NULL,
+  `usuario_id` int NOT NULL,
+  `programa_id` int NOT NULL,
+  `saldo_milhas` double DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `fk_gestor` (`id_gestor`),
-  CONSTRAINT `fk_gestor` FOREIGN KEY (`id_gestor`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `usuario_id` (`usuario_id`),
+  KEY `programa_id` (`programa_id`),
+  CONSTRAINT `usuario_programa_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `usuario_programa_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `programa_fidelidade` (`idProgramaFidelidade`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `usuario_programa`
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (5,'j','aaa@gmail.com','32078592080','c4ca4238a0b923820dcc509a6f75849b','GESTOR',NULL),(6,'SAM','equipesam.cefetmg@gmail.com','38436286022','c4ca4238a0b923820dcc509a6f75849b','DESENVOLVEDOR',NULL),(8,'Ana','gpt@gmail.com','98065346030','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',NULL),(9,'aaaa','anas@gmail.com','44804850074','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',NULL);
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+LOCK TABLES `usuario_programa` WRITE;
+/*!40000 ALTER TABLE `usuario_programa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuario_programa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

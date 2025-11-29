@@ -52,6 +52,8 @@
         <a href="/sam/core/gestor/planos.jsp">Campanhas</a>
         <%} if (ControleAutorizacao.checkPermissao("ver-usuarios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-usuarios", usuario.getCPF())) {%>
         <a href="/sam/core/dev/visualizar-usuarios.jsp">Ver Usuários</a>
+        <%} if (ControleAutorizacao.checkPermissao("ver-solicitacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-solicitacoes", usuario.getCPF())) {%>
+        <a href="/sam/core/dev/gerenciar-solicitacoes.jsp">Solicitações para Conta Gestor</a>
         <%}%>
     </div>
 </div>

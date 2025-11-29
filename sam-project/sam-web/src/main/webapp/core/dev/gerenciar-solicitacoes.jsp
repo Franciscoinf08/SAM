@@ -10,7 +10,7 @@
         <meta charset="UTF-8">
         <title>SAM - Gerenciar Solicitações </title>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
     <body>
 
         <header>
-            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Gerenciar Solicitações</h1>
             <%@include file="/core/header.jsp" %>
         </header>
@@ -35,11 +35,11 @@
                     <th>E-mail</th>
                     <th>Forma de Pagamento</th>
                     <th>Status</th>
-                    <th>Ações</th><!-- Inicial: Solicitar pagamento / Final: Aprovar e Recusar -->
+                    <th>Ações</th>
                 </tr>
                 
                 <%  GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
-                    List<Solicitacao> solicitacoes = gestao.listarEmail(usuario.getEmail());
+                    List<Solicitacao> solicitacoes = gestao.listarTodos();
                     for(Solicitacao sol : solicitacoes){
                     %>
                     <tr>
@@ -51,14 +51,14 @@
                                 case PENDENTE:
                         %>
                         <td>
-                            <button><a href="/sam/solicitarGestor?acao=Pagamento&id=<%=sol.getId%>">Solicitar Pagamento</a></button>
+                            <a href="/sam/solicitarGestor?acao=Pagamento&id=<%=String.valueOf(sol.getId())%>"><button>Solicitar Pagamento</button></a>
                         </td>
                         <%      break;
                                 case AGUARDANDO:
                         %>
                         <td>
-                            <button><a href="/sam/solicitarGestor?acao=Aprovar&id=<%=sol.getId%>">Aprovar</a></button>
-                            <button><a href="/sam/solicitarGestor?acao=Recusar&id=<%=sol.getId%>">Recusar</a></button>
+                            <a href="/sam/solicitarGestor?acao=Aprovar&id=<%=String.valueOf(sol.getId())%>"><button>Aprovar</button></a>
+                            <a href="/sam/solicitarGestor?acao=Recusar&id=<%=String.valueOf(sol.getId())%>"><button>Recusar</button></a>
                         </td>
                         <%      break;
                                 default:

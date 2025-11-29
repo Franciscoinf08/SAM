@@ -50,7 +50,25 @@
                     </label>
                 </form>
                 <%if (ControleAutorizacao.checkPermissao("solicitar-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("solicitar-gestor", usuario.getCPF())){%>
-                <a href="/sam/core/cliente/solicitar-gestor.jsp" id="solicitar-gestor" class="button-a">Solicitar conta de gestor</a>
+                <h1>Solicitar conta gestor</h1>
+                <h2>Realizar nova solicitação</h2>
+                <a href="/sam/core/cliente/lista-solicitacoes.jsp"><button>Listar solicitação</button></a>
+                <form action="/sam/solicitarGestor" method="POST" id="formSolicitarGestor">
+
+                    <input type="hidden" name="acao" value="Pedir">
+                    <input type="hidden" name="nome" value="<%=usuario.getNome()%>">
+                    <input type="hidden" name="email" value="<%=usuario.getEmail()%>">
+                    <input type="hidden" name="idUsuario" value="<%=String.valueOf(usuario.getId())%>">
+
+                    <select name="formaPagamento" required >
+                        <option value="">Selecione...</option>
+                        <option value="boleto">Boleto</option>
+                        <option value="cartao">Cartão</option>
+                        <option value="pix">Pix</option>
+                    </select>
+
+                    <input type="submit" value="Confirmar solicitação">
+                </form>
                 <%}%>
             </div>
             <div class="formulario">

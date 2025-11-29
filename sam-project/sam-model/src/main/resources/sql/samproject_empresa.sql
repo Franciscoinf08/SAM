@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `samproject` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `samproject`;
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
 -- Host: localhost    Database: samproject
@@ -30,9 +28,8 @@ CREATE TABLE `empresa` (
   `cnpj` char(14) NOT NULL,
   `milheiroSeguranca` double DEFAULT NULL,
   PRIMARY KEY (`idEmpresa`),
-  UNIQUE KEY `cnpj` (`cnpj`),
-  CONSTRAINT `empresa_chk_1` CHECK (regexp_like(`cnpj`,_utf8mb4'^[0-9]{14}$'))
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `cnpj` (`cnpj`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-10 15:34:05
+-- Dump completed on 2025-11-29 20:03:05

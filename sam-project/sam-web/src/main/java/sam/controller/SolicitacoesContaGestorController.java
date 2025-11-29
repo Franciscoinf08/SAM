@@ -10,15 +10,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
 import sam.model.service.GestaoSolicitacoesService;
 import sam.model.domain.Solicitacao;
+import sam.model.domain.util.Status;
 
 @WebServlet(name = "SolicitacoesContaGestorController", urlPatterns = {"/solicitarGestor"})
 public class SolicitacoesContaGestorController extends HttpServlet {
-    private String jsp = "";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String acao = request.getParameter("acao");
+        String jsp = "";
 
         switch (acao) {
             case "Pedir":
@@ -37,7 +38,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
                 jsp = this.pagamento(request);
                 break;
         }
-        
+
         RequestDispatcher rd = request.getRequestDispatcher(jsp);
         rd.forward(request, response);
     }
@@ -46,12 +47,23 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         String jsp;
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
-            String nome = (String) request.getParameter("nome");
-            String email = (String) request.getParameter("email");
-            String pagamento = (String) request.getParameter("forma-pagamento");
-            Solicitacao sol = new Solicitacao(nome, email, pagamento);
+            String nome = request.getParameter("nome");
+            String email = request.getParameter("email");
+            String pagamento = request.getParameter("formaPagamento");
+            Long idUsuario = Long.valueOf(request.getParameter("idUsuario"));
+            
+            if (pagamento == null || pagamento.trim().isEmpty()) {
+                throw new RuntimeException("Pagamento recebido nulo/vazio");
+            }
+            
+            Solicitacao sol = new Solicitacao();
+            sol.setNome(nome);
+            sol.setEmail(email);
+            sol.setPagamento(pagamento);
+            sol.setStatus(Status.PENDENTE);
+            sol.setIdUsuario(idUsuario);
             gestao.adicionarPedido(sol); // RECEBE SOLICITACAO
-            jsp = "/core/cliente/lista-solicitacoes.jsp";        
+            jsp = "/core/cliente/lista-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
@@ -72,7 +84,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         }
         return jsp;
     }
-    
+
     public String aprovar(HttpServletRequest request) {
         String jsp;
         try {
@@ -86,7 +98,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         }
         return jsp;
     }
-    
+
     public String recusar(HttpServletRequest request) {
         String jsp;
         try {
@@ -100,7 +112,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         }
         return jsp;
     }
-    
+
     public String pagamento(HttpServletRequest request) {
         String jsp;
         try {
