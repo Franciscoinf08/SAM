@@ -28,12 +28,11 @@ public class EnviarEmailController {
 
         try{
             Properties pr = new Properties();
-            pr.setProperty("mail.smtp.host", "smtp.gmail.com");
-            pr.setProperty("mail.smtp.port", "587");
-            pr.setProperty("mail.smtp.auth", "true");
-            pr.setProperty("mail.smtp.starttls.enable", "true");
-            pr.put("mail.smtp.socketFactory.port", "587");
-            pr.put("mail.smtp.socketFactory.class", "jakarta.net.ssl.SSLSocketFactory");
+            pr.put("mail.smtp.host", "smtp.gmail.com");
+            pr.put("mail.smtp.port", "587");
+            pr.put("mail.smtp.auth", "true");
+            pr.put("mail.smtp.starttls.enable", "true");
+            pr.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
             Session session = Session.getInstance(pr, new Authenticator() {
                 @Override
