@@ -70,15 +70,19 @@ public class GestaoSolicitacoesService {
 
     public void solicitarPagamento(String id) throws SQLException {
         try {
-            /* PEGA O EMAIL DO USUÁRIO
-            ENVIA EMAIL SOLICITANDO O PAGAMENTO (ENVIANDO AS INFORMAÇÕES NECESSÁRIAS)
-            QUANDO O EMAIL FOR ENVIADO, MUDA O STATUS DA SOLICITAÇÃO PARA "AGUARDANDO"*/
             long longId = Long.parseLong(id);
             solicitacoesDAO.aguardarPagamento(longId);
-            String email = solicitacoesDAO.pesquisarEmail(longId);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
-
+    
+    public Solicitacao pesquisar(String id) throws SQLException {
+        try {
+            long longId = Long.parseLong(id);
+            return solicitacoesDAO.pesquisar(longId);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
 }

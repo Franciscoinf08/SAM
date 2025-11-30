@@ -11,6 +11,7 @@ import jakarta.servlet.RequestDispatcher;
 import sam.model.service.GestaoSolicitacoesService;
 import sam.model.domain.Solicitacao;
 import sam.model.domain.util.Status;
+import sam.model.domain.util.Status;
 
 @WebServlet(name = "SolicitacoesContaGestorController", urlPatterns = {"/solicitarGestor"})
 public class SolicitacoesContaGestorController extends HttpServlet {
@@ -37,6 +38,9 @@ public class SolicitacoesContaGestorController extends HttpServlet {
             case "Pagamento":
                 jsp = this.pagamento(request);
                 break;
+            case "EmailSolicitar":
+                jsp = this.email(request);
+                break;
         }
 
         RequestDispatcher rd = request.getRequestDispatcher(jsp);
@@ -51,18 +55,18 @@ public class SolicitacoesContaGestorController extends HttpServlet {
             String email = request.getParameter("email");
             String pagamento = request.getParameter("formaPagamento");
             Long idUsuario = Long.valueOf(request.getParameter("idUsuario"));
-            
+
             if (pagamento == null || pagamento.trim().isEmpty()) {
                 throw new RuntimeException("Pagamento recebido nulo/vazio");
             }
-            
+
             Solicitacao sol = new Solicitacao();
             sol.setNome(nome);
             sol.setEmail(email);
             sol.setPagamento(pagamento);
             sol.setStatus(Status.PENDENTE);
             sol.setIdUsuario(idUsuario);
-            gestao.adicionarPedido(sol); // RECEBE SOLICITACAO
+            gestao.adicionarPedido(sol);
             jsp = "/core/cliente/lista-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +80,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
-            gestao.cancelarPedido(id); // RECEBE STRING E CONVERTE PARA INT
+            gestao.cancelarPedido(id);
             jsp = "/core/cliente/lista-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,7 +94,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
-            gestao.aprovarPedido(id); // RECEBE STRING E CONVERTE PARA INT
+            gestao.aprovarPedido(id);
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,7 +108,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
-            gestao.recusarPedido(id); // RECEBE STRING E CONVERTE PARA INT
+            gestao.recusarPedido(id);
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,8 +122,30 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
-            gestao.solicitarPagamento(id); // RECEBE STRING E CONVERTE PARA INT
+            gestao.solicitarPagamento(id);
+
+            String nome = request.getParameter("nome");
+            String email = request.getParameter("email");
+            String formaPagamento = request.getParameter("formaPagamento");
+            String arquivo = request.getParameter("arquivo"); // Mudar pegar o arquivo em si
+            
+            EnviarEmailController sm =  new EnviarEmailController();
+            sm.enviarEmailSolicitacaoGestor(nome, email, formaPagamento, arquivo);
+
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsp = "";
+        }
+        return jsp;
+    }
+
+    public String email(HttpServletRequest request) {
+        String jsp;
+        try {
+            String id = request.getParameter("id");
+            request.setAttribute("id", id);
+            jsp = "/core/dev/email-solicitacao.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";

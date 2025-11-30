@@ -68,7 +68,7 @@ public class SolicitacoesDAO {
                 sol.setEmail(rs.getString("email"));
                 sol.setPagamento(rs.getString("formaPagamento"));
                 sol.setStatus(Status.valueOf(rs.getString("status")));
-                    sol.setIdUsuario((long) rs.getInt("idUsuario"));
+                sol.setIdUsuario((long) rs.getInt("idUsuario"));
                 lista.add(sol);
             }
 
@@ -112,7 +112,8 @@ public class SolicitacoesDAO {
 
     public void aprovarPedido(Long id) throws SQLException {
         UsuarioDAO dao = UsuarioDAO.getInstance();
-        Usuario usuario = dao.pesquisar(this.pesquisarIdUsuario(id));
+        Solicitacao sol = this.pesquisar(id);
+        Usuario usuario = dao.pesquisar(sol.getIdUsuario());
         String sql = "UPDATE solicitacoes_gestor SET status = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, "APROVADO");
@@ -151,35 +152,25 @@ public class SolicitacoesDAO {
         }
     }
 
-    public String pesquisarEmail(Long id) throws SQLException {
+    public Solicitacao pesquisar(Long id) throws SQLException {
         String email = "";
+        Solicitacao sol = new Solicitacao();
         String sql = "SELECT * FROM solicitacoes_gestor WHERE id = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                email = rs.getString("email");
+                sol.setId(rs.getLong("id"));
+                sol.setNome(rs.getString("nome"));
+                sol.setEmail(rs.getString("email"));
+                sol.setPagamento(rs.getString("formaPagamento"));
+                sol.setIdUsuario((long) rs.getInt("idUsuario"));
+                sol.setStatus(Status.valueOf(rs.getString("status")));
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao solicitar o pagamento", e);
         }
-        return email;
-    }
-    
-    public Long pesquisarIdUsuario(Long id) throws SQLException {
-        Long idUsuario = 0L;
-        String sql = "SELECT * FROM solicitacoes_gestor WHERE id = ?";
-        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-            preparedStatement.setLong(1, id);
-
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                idUsuario = (long) rs.getInt("idUsuario");
-            }
-        } catch (SQLException e) {
-            throw new SQLException("Erro ao solicitar o pagamento", e);
-        }
-        return idUsuario;
+        return sol;
     }
 }

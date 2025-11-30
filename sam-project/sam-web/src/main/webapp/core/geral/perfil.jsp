@@ -63,7 +63,6 @@
                     <select name="formaPagamento" required >
                         <option value="">Selecione...</option>
                         <option value="boleto">Boleto</option>
-                        <option value="cartao">Cartão</option>
                         <option value="pix">Pix</option>
                     </select>
 

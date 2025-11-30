@@ -51,7 +51,7 @@
                                 case PENDENTE:
                         %>
                         <td>
-                            <a href="/sam/solicitarGestor?acao=Pagamento&id=<%=String.valueOf(sol.getId())%>"><button>Solicitar Pagamento</button></a>
+                            <a href="/sam/solicitarGestor?acao=EmailSolicitar&id=<%=String.valueOf(sol.getId())%>"><button>Solicitar Pagamento</button></a>
                         </td>
                         <%      break;
                                 case AGUARDANDO:
