@@ -1,18 +1,24 @@
 package sam.controller;
 
+import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import sam.model.service.GestaoSolicitacoesService;
 import sam.model.domain.Solicitacao;
 import sam.model.domain.util.Status;
-import sam.model.domain.util.Status;
 
+@MultipartConfig
 @WebServlet(name = "SolicitacoesContaGestorController", urlPatterns = {"/solicitarGestor"})
 public class SolicitacoesContaGestorController extends HttpServlet {
 
@@ -130,11 +136,39 @@ public class SolicitacoesContaGestorController extends HttpServlet {
             String nome = request.getParameter("nome");
             String email = request.getParameter("email");
             String formaPagamento = request.getParameter("formaPagamento");
-            String arquivo = request.getParameter("arquivo"); // Mudar pegar o arquivo em si
-            
-            EnviarEmailController sm =  new EnviarEmailController();
-            boolean sucesso = sm.enviarEmailSolicitacaoGestor(nome, email, formaPagamento, arquivo);
-            
+
+            Part arquivoPart = (Part) request.getPart("arquivo");
+
+            String contentDisposition = arquivoPart.getHeader("content-disposition");
+            String nomeArquivo = null;
+            if (contentDisposition != null) {
+                for (String cd : contentDisposition.split(";")) {
+                    cd = cd.trim();
+                    if (cd.startsWith("filename")) {
+                        nomeArquivo = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+                        break;
+                    }
+                }
+            }
+            if (nomeArquivo == null || nomeArquivo.isEmpty()) {
+                nomeArquivo = "anexo-" + System.currentTimeMillis();
+            }
+
+            String caminho = getServletContext().getRealPath("/uploads");
+            File uploads = new File(caminho);
+            if (!uploads.exists()) {
+                uploads.mkdirs();
+            }
+
+            File arquivoSalvo = new File(uploads, nomeArquivo);
+
+            try (InputStream is = arquivoPart.getInputStream()) {
+                Files.copy(is, arquivoSalvo.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            EnviarEmailController sm = new EnviarEmailController();
+            boolean sucesso = sm.enviarEmailSolicitacaoGestor(nome, email, formaPagamento, arquivoSalvo.getAbsolutePath());
+
             request.setAttribute("sucesso", String.valueOf(sucesso));
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
@@ -156,14 +190,14 @@ public class SolicitacoesContaGestorController extends HttpServlet {
         }
         return jsp;
     }
-    
+
     public String tornarCliente(HttpServletRequest request) {
         String jsp;
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
             gestao.tornarCliente(id);
-            
+
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();

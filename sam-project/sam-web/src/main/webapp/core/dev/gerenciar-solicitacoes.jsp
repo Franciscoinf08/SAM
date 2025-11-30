@@ -10,7 +10,7 @@
         <meta charset="UTF-8">
         <title>SAM - Gerenciar Solicitações </title>
 
-        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/css/style.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
     <body>
 
         <header>
-            <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="<%= request.getContextPath()%>/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Gerenciar Solicitações</h1>
             <%@include file="/core/header.jsp" %>
         </header>
@@ -37,45 +37,45 @@
                     <th>Status</th>
                     <th>Ações</th>
                 </tr>
-                
+
                 <%  GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
                     List<Solicitacao> solicitacoes = gestao.listarTodos();
-                    for(Solicitacao sol : solicitacoes){
+                    for (Solicitacao sol : solicitacoes) {
+                %>
+                <tr>
+                    <td><%=sol.getNome()%></td>
+                    <td><%=sol.getEmail()%></td>
+                    <td><%=sol.getPagamento()%></td>
+                    <td><%=sol.getStatus()%></td>
+                    <%  switch (sol.getStatus()) {
+                            case PENDENTE:
                     %>
-                    <tr>
-                        <td><%=sol.getNome()%></td>
-                        <td><%=sol.getEmail()%></td>
-                        <td><%=sol.getPagamento()%></td>
-                        <td><%=sol.getStatus()%></td>
-                        <%  switch(sol.getStatus()){
-                                case PENDENTE:
-                        %>
-                        <td>
-                            <a href="/sam/solicitarGestor?acao=EmailSolicitar&id=<%=String.valueOf(sol.getId())%>"><button>Solicitar Pagamento</button></a>
-                        </td>
-                        <%      break;
-                                case AGUARDANDO:
-                        %>
-                        <td>
-                            <a href="/sam/solicitarGestor?acao=Aprovar&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Aprovar</button></a>
-                            <a href="/sam/solicitarGestor?acao=Recusar&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Recusar</button></a>
-                        </td>
-                        <%      break;
-                                case APROVADO:
-                        %>
-                        <td>
-                            <a href="/sam/solicitarGestor?acao=TornarCliente&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Tornar Cliente</button></a>
-                        </td>
-                        <%      break;
-                                default:
-                        %>
-                        <td>
-                            <p>Sem ações disponíveis</p>
-                        </td>
-                        <%      break;}%>
-                    </tr>
-                    <%} boolean sucesso = (boolean) request.getAttribute("sucesso");%>
-                    <script>emailEnviado(<%= sucesso%>);</script>
+                    <td>
+                        <a href="/sam/solicitarGestor?acao=EmailSolicitar&id=<%=String.valueOf(sol.getId())%>"><button>Solicitar Pagamento</button></a>
+                    </td>
+                    <%      break;
+                        case AGUARDANDO:
+                    %>
+                    <td>
+                        <a href="/sam/solicitarGestor?acao=Aprovar&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Aprovar</button></a>
+                        <a href="/sam/solicitarGestor?acao=Recusar&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Recusar</button></a>
+                    </td>
+                    <%      break;
+                        case APROVADO:
+                    %>
+                    <td>
+                        <a href="/sam/solicitarGestor?acao=TornarCliente&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Tornar Cliente</button></a>
+                    </td>
+                    <%      break;
+                        default:
+                    %>
+                    <td>
+                        <p>Sem ações disponíveis</p>
+                    </td>
+                    <%      break;
+                            }%>
+                </tr>
+                <%}%>
             </table>
         </main>
         <script src="/sam/js/script.js"></script>
