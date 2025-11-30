@@ -32,7 +32,7 @@
                 <%String id = (String) request.getAttribute("id");
                     GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
                     Solicitacao sol = gestao.pesquisar(id);%>
-                <form action="/sam/solicitarGestor" method="POST" enctype="multipart/form-data">
+                <form name="formSolicitarPagamento" action="/sam/solicitarGestor" method="POST" enctype="multipart/form-data" onsubmit="return validarSolicitarPagamento(document.formSolicitarPagamento)">
                     <input type="hidden" name="acao" value="Pagamento">
                     <input type="hidden" name="id" value="<%=id%>">
 
@@ -53,6 +53,7 @@
             </div>
         </main>
         <script src="/sam/js/script.js"></script>
+        <script src="/sam/js/helper.js"></script>
     </body>
 
 </html>
