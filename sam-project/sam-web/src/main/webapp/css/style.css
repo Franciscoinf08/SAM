@@ -284,3 +284,7 @@ table td {
     display: flex;
     flex-direction: column;
 }
+
+.email {
+    min-width: 35vw;
+}

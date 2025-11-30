@@ -27,7 +27,7 @@
         </header>
 
         <main class="content">
-            <div class="email">
+            <div class="formulario email">
                 <h2>Solicitação de pagamento</h2>
                 <%String id = (String) request.getAttribute("id");
                 GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
@@ -46,7 +46,7 @@
                         <input type="text" value="<%=sol.getPagamento()%>" name="formaPagamento" readonly>
                     </label>
                     <label for="arquivo">Arquivo a anexar:
-                        <input type="text" name="arquivo" placeholder="Cole o caminho do arquivo com as informações para o pagamento">
+                        <input type="text" name="arquivo" placeholder="Cole o caminho do arquivo com as informações">
                     </label>
                     <input type="submit" value="Confirmar solicitação de pagamento">
                 </form>
