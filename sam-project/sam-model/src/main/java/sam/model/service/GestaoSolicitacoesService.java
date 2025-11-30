@@ -85,4 +85,13 @@ public class GestaoSolicitacoesService {
             throw new SQLException(e);
         }
     }
+    
+    public void tornarCliente(String id) throws SQLException {
+        try {
+            long longId = Long.parseLong(id);
+            solicitacoesDAO.tornarCliente(longId);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
 }

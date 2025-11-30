@@ -57,8 +57,14 @@
                                 case AGUARDANDO:
                         %>
                         <td>
-                            <a href="/sam/solicitarGestor?acao=Aprovar&id=<%=String.valueOf(sol.getId())%>"><button>Aprovar</button></a>
-                            <a href="/sam/solicitarGestor?acao=Recusar&id=<%=String.valueOf(sol.getId())%>"><button>Recusar</button></a>
+                            <a href="/sam/solicitarGestor?acao=Aprovar&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Aprovar</button></a>
+                            <a href="/sam/solicitarGestor?acao=Recusar&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Recusar</button></a>
+                        </td>
+                        <%      break;
+                                case APROVADO:
+                        %>
+                        <td>
+                            <a href="/sam/solicitarGestor?acao=TornarCliente&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Tornar Cliente</button></a>
                         </td>
                         <%      break;
                                 default:
@@ -68,10 +74,12 @@
                         </td>
                         <%      break;}%>
                     </tr>
-                    <%}%>
+                    <%} boolean sucesso = (boolean) request.getAttribute("sucesso");%>
+                    <script>emailEnviado(<%= sucesso%>);</script>
             </table>
         </main>
-        <script src="../../js/script.js"></script>
+        <script src="/sam/js/script.js"></script>
+        <script src="/sam/js/alertas.js"></script>
     </body>
 
 </html>

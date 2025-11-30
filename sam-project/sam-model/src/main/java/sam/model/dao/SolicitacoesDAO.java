@@ -139,6 +139,24 @@ public class SolicitacoesDAO {
             throw new SQLException("Erro ao recusar pedido para conta gestor", e);
         }
     }
+    
+    public void tornarCliente(Long id) throws SQLException {
+        UsuarioDAO dao = UsuarioDAO.getInstance();
+        Solicitacao sol = this.pesquisar(id);
+        Usuario usuario = dao.pesquisar(sol.getIdUsuario());
+        String sql = "UPDATE solicitacoes_gestor SET status = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, "RECUSADO");
+            preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+
+            usuario.setTipo(UsuarioTipo.CLIENTE);
+            dao.atualizar(usuario);
+
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao aprovar pedido para conta gestor", e);
+        }
+    }
 
     public void aguardarPagamento(Long id) throws SQLException {
         String sql = "UPDATE solicitacoes_gestor SET status = ? WHERE id = ?";

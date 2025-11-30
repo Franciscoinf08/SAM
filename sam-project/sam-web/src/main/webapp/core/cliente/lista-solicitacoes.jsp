@@ -49,7 +49,7 @@
                                 case AGUARDANDO:
                         %>
                         <td>
-                            <a href="/sam/solicitarGestor?acao=Cancelar&id=<%=String.valueOf(sol.getId())%>"><button>Cancelar</button></a>
+                            <a href="/sam/solicitarGestor?acao=Cancelar&id=<%=String.valueOf(sol.getId())%>" class="precisaConfirmacao"><button>Cancelar</button></a>
                         </td>
                         <%      break;
                                 default:
@@ -63,7 +63,8 @@
                 </table>
             </div>
         </main>
-        <script src="../../js/script.js"></script>
+        <script src="/sam/js/script.js"></script>
+        <script src="/sam/js/alertas.js"></script>
     </body>
 
 </html>

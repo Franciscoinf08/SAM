@@ -41,6 +41,9 @@ public class SolicitacoesContaGestorController extends HttpServlet {
             case "EmailSolicitar":
                 jsp = this.email(request);
                 break;
+            case "TornarCliente":
+                jsp = this.tornarCliente(request);
+                break;
         }
 
         RequestDispatcher rd = request.getRequestDispatcher(jsp);
@@ -130,8 +133,9 @@ public class SolicitacoesContaGestorController extends HttpServlet {
             String arquivo = request.getParameter("arquivo"); // Mudar pegar o arquivo em si
             
             EnviarEmailController sm =  new EnviarEmailController();
-            sm.enviarEmailSolicitacaoGestor(nome, email, formaPagamento, arquivo);
-
+            boolean sucesso = sm.enviarEmailSolicitacaoGestor(nome, email, formaPagamento, arquivo);
+            
+            request.setAttribute("sucesso", String.valueOf(sucesso));
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,6 +150,21 @@ public class SolicitacoesContaGestorController extends HttpServlet {
             String id = request.getParameter("id");
             request.setAttribute("id", id);
             jsp = "/core/dev/email-solicitacao.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsp = "";
+        }
+        return jsp;
+    }
+    
+    public String tornarCliente(HttpServletRequest request) {
+        String jsp;
+        try {
+            GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
+            String id = request.getParameter("id");
+            gestao.tornarCliente(id);
+            
+            jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
