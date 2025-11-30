@@ -17,15 +17,26 @@ import java.util.Objects;
 public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
     private final Connection conexao;
-    public UsuarioDAO(Connection conexao) {
-        this.conexao = conexao;
+    private static UsuarioDAO usuarioDAO;
+
+    static {
+        UsuarioDAO.usuarioDAO = null;
     }
 
+    private UsuarioDAO() {
+        this.conexao = Conexao.getConnection();
+    }
+    public static UsuarioDAO getInstance() {
+        if (usuarioDAO == null)
+            usuarioDAO = new UsuarioDAO();
+
+        return usuarioDAO;
+    }
 
     @Override
     public void inserir(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuarios(nome, email, cpf, senha, tipo) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = this.conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             String senha = PasswordDigest.passwordDigestMD5(usuario.getSenha());
             usuario.setSenha(senha);
 
@@ -48,7 +59,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     @Override
     public void atualizar(Usuario usuario) throws SQLException {
         String sql = "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, senha = ?, tipo = ? WHERE id = ?";
-        try (PreparedStatement preparedStatement = this.conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             if (!Objects.equals(pesquisar(usuario.getId()).getSenha(), usuario.getSenha())) {
                 String senhaCriptografada = PasswordDigest.passwordDigestMD5(usuario.getSenha());
                 usuario.setSenha(senhaCriptografada);
@@ -71,7 +82,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     public Usuario pesquisar(Long id) throws SQLException {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE id = ?";
-        try (PreparedStatement preparedStatement = this.conexao.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -94,7 +105,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     public Usuario pesquisarPorEmail(String email) throws SQLException {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE email = ?";
-        try (PreparedStatement preparedStatement = this.conexao.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setString(1, email);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -116,7 +127,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
     public Usuario pesquisarPorCPF(String cpf) throws SQLException {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE cpf = ?";
-        try (PreparedStatement preparedStatement = this.conexao.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setString(1, cpf);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -152,7 +163,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
         List<Usuario> listaClientes = new ArrayList<>();
         String sql = "SELECT * FROM usuarios WHERE id_gestor = ?";
 
-        try (PreparedStatement preparedStatement = this.conexao.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, usuario.getId());
             ResultSet rs = preparedStatement.executeQuery();
 

@@ -11,17 +11,17 @@ import sam.model.domain.Empresa;
 public class EmpresaDAO {
     private  Connection conexao;
 
-    public EmpresaDAO(Connection conexao) {
-        this.conexao = conexao;
+    public EmpresaDAO() {
+        this.conexao = Conexao.getConnection();
     }
     public Empresa salvar(Empresa empresa) throws SQLException{
-            String sql = "insert into empresa(nome, cnpj, milheiroSeguranca) values(?, ?, ?)";
-        try(PreparedStatement stmt = this.conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+        String sql = "insert into empresa(nome, cnpj, milheiroSeguranca) values(?, ?, ?)";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCNPJ());
             stmt.setDouble(3, empresa.getMilheiroSeguranca());
             stmt.executeUpdate();
-            
+
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
 
@@ -36,7 +36,7 @@ public class EmpresaDAO {
     public Empresa buscarPorId(int id) {
         Empresa empresa = null;
         String sql = "SELECT * FROM empresa WHERE idEmpresa = ?";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -45,7 +45,7 @@ public class EmpresaDAO {
                 empresa.setNome(rs.getString("nome"));
                 empresa.setCNPJ(rs.getString("cnpj"));
                 empresa.setMilheiroSeguranca(rs.getDouble("milheiroSeguranca"));
-                
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class EmpresaDAO {
     }
     public void atualizarEmpresa(Empresa empresa) throws SQLException {
         String sql = "UPDATE empresa SET nome = ?, CNPJ = ?, milheiroSeguranca = ? WHERE idEmpresa = ?";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCNPJ());
             stmt.setDouble(3, empresa.getMilheiroSeguranca());
@@ -66,7 +66,7 @@ public class EmpresaDAO {
     }
     public void excluirEmpresa(int id) throws SQLException {
         String sql = "DELETE FROM empresa WHERE idEmpresa = ?";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -76,7 +76,7 @@ public class EmpresaDAO {
     public List<Empresa> listarTodas() {
         List<Empresa> lista = new ArrayList<>();
         String sql = "SELECT * FROM empresa";
-        try (PreparedStatement stmt = this.conexao.prepareStatement(sql);
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {

@@ -25,14 +25,16 @@
 </header>
 
 <main class="content">
-    <h2>Meus clientes</h2>
-    ID do usuário (parameter): <%= request.getParameter("idUsuario") %><br>
-    ID do usuário (attribute): <%= request.getAttribute("idUsuario") %><br>
+
+    <h2>Programas Disponiveis</h2>
+
     <%
-
-        List<ProgramaFidelidade> programas = (List<ProgramaFidelidade>) request.getAttribute("lista");
-
+        EmpresaService empresaService = new EmpresaService();
+        String idUsuario = (String) request.getAttribute("idUsuario");
+        List<ProgramaFidelidade> programas = (List<ProgramaFidelidade>) request.getAttribute("listaDisponiveis");
+        if(!programas.isEmpty()){
     %>
+
     <table>
         <tr>
             <th>Empresa</th>
@@ -44,8 +46,7 @@
             <th>Ações</th>
         </tr>
         <%
-            EmpresaService empresaService = new EmpresaService();
-            String idUsuario = (String) request.getAttribute("idUsuario");
+
             for (ProgramaFidelidade pf : programas){
                 int idEmpresa = pf.getIdEmpresa();
                 String nomeEmpresa = empresaService.buscarEmpresa(idEmpresa).getNome();
@@ -69,8 +70,60 @@
             </td>
         </tr>
         <%
-            }
+                }
+        } else {
         %>
+        <p>Nao há programas disponiveis</p>
+        <%}%>
+
+    </table>
+
+    <h2>Programas Associados</h2>
+    <%
+
+
+        programas = (List<ProgramaFidelidade>) request.getAttribute("listaAssociados");
+        if(!programas.isEmpty()){
+    %>
+    <table>
+        <tr>
+            <th>Empresa</th>
+            <th>Nome</th>
+            <th>Milhas p/ Mês</th>
+            <th>Duracao</th>
+            <th>Bonus de Milhas</th>
+            <th>Preco</th>
+            <th>Ações</th>
+        </tr>
+        <%
+            for (ProgramaFidelidade pf : programas){
+                int idEmpresa = pf.getIdEmpresa();
+                String nomeEmpresa = empresaService.buscarEmpresa(idEmpresa).getNome();
+        %>
+        <tr>
+            <td><%=nomeEmpresa%></td>
+            <td><%=pf.getNome()%></td>
+            <td><%=pf.getQtdeMilhasMes()%></td>
+            <td><%=pf.getDuracao()%></td>
+            <td><%=pf.getBonusMilhas()%></td>
+            <td><%=pf.getPrecoMensal()%></td>
+
+
+            <td>
+                <form action="<%=request.getContextPath()%>/usuarioPrograma" method="post">
+                    <input type="hidden" name="action" value="excluir">
+                    <input type="hidden" name="idPrograma" value="<%= pf.getIdProgramaFidelidade() %>">
+                    <input type="hidden" name="idUsuario" value="<%= idUsuario %>">
+                    <button type="submit" class="btn-associar">Desassociar</button>
+                </form>
+            </td>
+        </tr>
+        <%
+            }
+            } else {
+        %>
+        <p>Esse cliente nao esta associado a nenhum programa de fidelidade</p>
+        <%}%>
 
     </table>
 </main>

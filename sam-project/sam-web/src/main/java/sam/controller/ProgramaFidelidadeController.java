@@ -112,7 +112,7 @@ public class ProgramaFidelidadeController extends HttpServlet {
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         double preco = Double.parseDouble(request.getParameter("preco"));
 
-        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService();
+        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), new ProgramaFidelidadeDAO());
 
         ProgramaFidelidade programa = new ProgramaFidelidade(
                 nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa
@@ -139,7 +139,7 @@ public class ProgramaFidelidadeController extends HttpServlet {
         programa.setIdProgramaFidelidade(id);
 
         pfs.atualizarProgramaFidelidade(programa);
-        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService();
+        AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), new ProgramaFidelidadeDAO());
         avaliador.avaliarPrograma(programa);
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
     }

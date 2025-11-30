@@ -1,40 +1,52 @@
 package sam.model.dao;
+
+import sam.model.domain.Empresa;
+import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.UsuarioPrograma;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UsuarioProgramaDAO{
     private Connection conexao = null;
 
-    public UsuarioProgramaDAO(Connection conexao) {
-        this.conexao = conexao;
+    public UsuarioProgramaDAO() {
+        this.conexao = Conexao.getConnection();
     }
 
+    public void inserir(UsuarioPrograma entidade){
+        String sql = "insert into usuario_programa(usuario_id, programa_id, saldo_milhas) values(?, ?, ?)";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+            stmt.setInt(1, entidade.getIdUsuario());
+            stmt.setInt(2, entidade.getIdPrograma());
+            stmt.setDouble(3, entidade.getSaldoMilhas());
+            stmt.executeUpdate();
 
-    public void associar(UsuarioPrograma entidade) throws SQLException {
-        String sql = "insert into usuario_programa (id_usuario, id_programa) values (?, ?)";
-        try(PreparedStatement stmt = this.conexao.prepareStatement(sql)){
-            System.out.println(entidade.getIdUsuario()+" " +  entidade.getIdPrograma() + " " + entidade.getSaldoMilhas());
-            stmt.setInt(1,entidade.getIdUsuario());
-            stmt.setInt(2,entidade.getIdPrograma());
-            stmt.execute();
-        } catch (SQLException e){
-            throw new SQLException(e.getMessage());
+            try (ResultSet rs = stmt.getGeneratedKeys()){
+                if (rs.next()) {
+                    entidade.setIdUsuarioPrograma(rs.getInt(1));
+                }
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        } catch (SQLException ex) {
+            ex.getMessage();
         }
-
     }
 
-
-    public void desassociar(Integer id) {
-        String sql = "delete from usuario_programa where id = ?";
+    public void excluir(Integer idUsuario,  Integer idPrograma) {
+        String sql = "delete from usuario_programa where usuario_id = ? and programa_id = ?";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idPrograma);
             stmt.executeUpdate();
         } catch (Exception e) {
             e.getMessage();
         }
     }
+
 
 }

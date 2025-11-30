@@ -9,132 +9,51 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class EmpresaService {
-
-    public EmpresaService(){}
+    private final Connection conexao;
+    private final EmpresaDAO empresaDAO = new EmpresaDAO();
+    public EmpresaService() {
+        this.conexao = Conexao.getConnection();
+    }
 
     public void cadastrarEmpresa(Empresa empresa){
-
         if(validarEmpresa(empresa)){
             throw new RuntimeException("a empresa que voce quer cadastrar nao existe ou o cnpj é invalido");
         }
-        Connection conexao = null;
-
         try {
-            conexao = Conexao.getConnection();
-            conexao.setAutoCommit(false);
-
-            EmpresaDAO empresaDAO = new EmpresaDAO(conexao);
-
             empresa.setCNPJ(empresa.getCNPJ().replaceAll("\\D","").replaceAll("\\.",""));
             empresaDAO.salvar(empresa);
-            conexao.commit();
-        } catch (SQLException e) {
-            if (conexao != null) {
-                try {
-                    conexao.rollback();
-                } catch (SQLException ex) {}
-            }
-            throw new RuntimeException(e.getMessage());
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (SQLException closeEx) {
-                    // Logar erro ao fechar
-                }
-            }
+        } catch (Exception e) {
+            e.getMessage();
         }
 
     }
 
     public List<Empresa> listarEmpresas(){
-        Connection conexao = null;
-        try{
-            conexao = Conexao.getConnection();
-            EmpresaDAO empresaDAO = new EmpresaDAO(conexao);
-            return empresaDAO.listarTodas();
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (SQLException ignored) {
-                }
-            }
-        }
-
+        return empresaDAO.listarTodas();
     }
     public void excluir(int id){
-        Connection conexao = null;
         try {
-            conexao = Conexao.getConnection();
-            EmpresaDAO empresaDAO = new EmpresaDAO(conexao);
             empresaDAO.excluirEmpresa(id);
         } catch (SQLException e) {
-            if (conexao != null) {
-                try {
-                    conexao.rollback();
-                } catch (SQLException ex) {
-
-                }
-            }
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (SQLException closeEx) {
-
-                }
-            }
+            throw new RuntimeException(e);
         }
     }
     public Empresa buscarEmpresa(int id){
-        Connection conexao = null;
-        try{
-            conexao = Conexao.getConnection();
-            EmpresaDAO empresaDAO = new EmpresaDAO(conexao);
-            Empresa empresa = empresaDAO.buscarPorId(id);
-            if (validarEmpresa(empresa)) {
-                throw new RuntimeException();
-            }
-            return empresa;
-
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (SQLException closeEx) {}
-            }
+        Empresa empresa = empresaDAO.buscarPorId(id);
+        if (validarEmpresa(empresa)) {
+            throw new RuntimeException();
         }
-
-
+        return empresa;
     }
 
     public void atualizarEmpresa(Empresa empresa){
         if (validarEmpresa(empresa)) {
             throw new RuntimeException();
         }
-        Connection conexao = null;
         try {
-            conexao = Conexao.getConnection();
-            EmpresaDAO empresaDAO = new EmpresaDAO(conexao);
-            conexao.setAutoCommit(false);
             empresaDAO.atualizarEmpresa(empresa);
-            conexao.commit();
-
         } catch (SQLException e) {
-            if (conexao != null) {
-                try {
-                    conexao.rollback();
-                } catch (SQLException ex) {}
-            }
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (SQLException closeEx) {}
-            }
+            e.getMessage();
         }
     }
 

@@ -24,11 +24,7 @@ public class GestaoNotificacao {
         selecionaNome(notificacao);
         switch (alcance) {
 
-            case INDIVIDUAL -> {
-                if (notificacao.getDestinatario() == null)
-                    throw new PersistenciaException("Destinatário deve ser informado no alcance INDIVIDUAL.");
-                notificacaoService.enviar(notificacao);
-            }
+
 
 
         }

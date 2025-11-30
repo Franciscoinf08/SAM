@@ -6,9 +6,9 @@ public class UsuarioPrograma {
     int idUsuario;
     double saldoMilhas;
 
-    public UsuarioPrograma(int idPrograma, int idUsuario) {
-        this.idPrograma = idPrograma;
+    public UsuarioPrograma(int idUsuario, int idPrograma) {
         this.idUsuario = idUsuario;
+        this.idPrograma = idPrograma;
         this.saldoMilhas = 0;
     }
 

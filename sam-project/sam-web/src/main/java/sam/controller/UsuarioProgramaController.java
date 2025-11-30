@@ -15,41 +15,44 @@ import sam.model.domain.Usuario;
 import sam.model.domain.UsuarioPrograma;
 import sam.model.service.GestaoUsuariosService;
 import sam.model.service.ProgramaFidelidadeService;
+import sam.model.service.UsuarioProgramaService;
 
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name="UsuarioProgramaController", urlPatterns = {"/usuarioPrograma"})
 public class UsuarioProgramaController extends HttpServlet {
     GestaoUsuariosService usuariosService = new GestaoUsuariosService();
     ProgramaFidelidadeService programaFidelidadeService = new ProgramaFidelidadeService();
+    UsuarioProgramaService usuarioProgramaService = new UsuarioProgramaService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        switch (action) {
-            case "programas":
+        if (action.equals("programas")) {
+            try {
                 listarProgramas(request, response);
-                break;
-            case "excluir":
-                excluir(request, response);
-                break;
-            default:
-                listarClientesAssociados(request,response);
-                break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            listarClientes(request, response);
         }
 
     }
 
-    private void listarProgramas(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void listarProgramas(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
 
-        List<ProgramaFidelidade> lista = programaFidelidadeService.listarTodosProgramaFidelidade();
-        request.setAttribute("lista", lista);
         String idUsuario = request.getParameter("idUsuario");
+        List<ProgramaFidelidade> lista = usuarioProgramaService.listarNaoAssociados(Integer.parseInt(idUsuario));
+        request.setAttribute("listaDisponiveis", lista);
         request.setAttribute("idUsuario", idUsuario);
+        lista = usuarioProgramaService.listarAssociados(Integer.parseInt(idUsuario));
+        request.setAttribute("listaAssociados", lista);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/core/gestor/selecaoProgramas.jsp");
         try {
@@ -63,42 +66,35 @@ public class UsuarioProgramaController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action.equals("associar")) {
             associar(request, response);
-
-
+        }else {
+            excluir(request, response);
+        }
     }
 
     private void associar(HttpServletRequest request, HttpServletResponse response) {
         String idUsuario = request.getParameter("idUsuario");
         String idPrograma = request.getParameter("idPrograma");
-
-        System.out.println(">>> idUsuario recebido: " + idUsuario);
-        System.out.println(">>> idPrograma recebido: " + idPrograma);
-
         UsuarioPrograma usuarioPrograma = new UsuarioPrograma(
                 Integer.parseInt(idUsuario),
                 Integer.parseInt(idPrograma)
         );
-        Connection conexao = null;
-        conexao = Conexao.getConnection();
-        UsuarioProgramaDAO dao = new UsuarioProgramaDAO(conexao);
         try {
-            dao.associar(usuarioPrograma);
-
-            System.out.println(usuarioPrograma.getIdUsuario()+" " +  usuarioPrograma.getIdPrograma() + " " + usuarioPrograma.getSaldoMilhas());
-            response.sendRedirect(request.getContextPath() + "/usuarioPrograma");
-        } catch (SQLException | IOException e) {
+            usuarioProgramaService.associar(usuarioPrograma);
+            response.sendRedirect(request.getContextPath() + "/usuarioPrograma?action=programas&idUsuario=" + idUsuario);
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    private void listarClientesAssociados(HttpServletRequest request, HttpServletResponse response) {
+    private void listarClientes(HttpServletRequest request, HttpServletResponse response) {
         HttpSession sessao = request.getSession();
         Usuario usuario = (Usuario) sessao.getAttribute("usuario");
 
-        List<Usuario> lista = null;
+        List<Usuario> lista;
         try {
             lista = usuariosService.getListaClientes(usuario);
             request.setAttribute("clientes", lista);
@@ -110,6 +106,17 @@ public class UsuarioProgramaController extends HttpServlet {
     }
 
     private void excluir(HttpServletRequest request, HttpServletResponse response) {
+        String idUsuario = request.getParameter("idUsuario");
+        String idPrograma = request.getParameter("idPrograma");
+
+        UsuarioPrograma usuarioPrograma = new UsuarioPrograma(Integer.parseInt(idUsuario), Integer.parseInt(idPrograma));
+
+        try {
+            usuarioProgramaService.desassociar(usuarioPrograma);
+            response.sendRedirect(request.getContextPath() + "/usuarioPrograma?action=programas&idUsuario=" + idUsuario);
+        } catch (IOException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -1,14 +1,18 @@
 package sam.model.helper;
 
-import sam.model.dao.Conexao;
 import sam.model.dao.UsuarioDAO;
 import sam.model.domain.Usuario;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class UsuarioHelper {
+
+    private static final UsuarioDAO usuarioDAO;
+
+    static {
+        usuarioDAO = UsuarioDAO.getInstance();
+    }
 
     public static String validarAtualizacaoUsuario(Usuario usuario) throws SQLException {
         String erro = "";
@@ -33,51 +37,15 @@ public class UsuarioHelper {
     }
 
     private static boolean validarAtualizacaoEmail(Usuario usuario) throws SQLException {
-        Connection conexao = null;
-        try {
-            conexao = Conexao.getConnection();
-            UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
-            return validarCadastroEmail(usuario) || usuario.equals(usuarioDAO.pesquisarPorEmail(usuario.getEmail()));
-        } catch (SQLException erro) {
-            erro.printStackTrace();
-            return false;
-        }
+        return validarCadastroEmail(usuario) || usuario.equals(usuarioDAO.pesquisarPorEmail(usuario.getEmail()));
     }
 
     private static boolean validarCadastroEmail(Usuario usuario) throws SQLException {
-        Connection conexao = null;
-        try{
-            conexao = Conexao.getConnection();
-            UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
-            return usuarioDAO.pesquisarPorEmail(usuario.getEmail()) == null;
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
+        return usuarioDAO.pesquisarPorEmail(usuario.getEmail()) == null;
     }
 
     private static boolean validarCadastroCPF(Usuario usuario) throws SQLException {
-        Connection conexao = null;
-        try{
-            conexao = Conexao.getConnection();
-            UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
-            return usuarioDAO.pesquisarPorCPF(usuario.getCPF()) == null;
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
+        return usuarioDAO.pesquisarPorCPF(usuario.getCPF()) == null;
     }
 
     public static boolean validarCPF(String cpf) {
@@ -120,12 +88,12 @@ public class UsuarioHelper {
         }
 
         return !usuario.isEmpty() &&
-               !dominio.isEmpty() &&
-               !usuario.contains("@") &&
-               !dominio.contains("@") &&
-               !usuario.contains(" ") &&
-               !dominio.contains(" ") &&
-               dominio.indexOf(".") >= 1 &&
-               dominio.lastIndexOf(".") < dominio.length() - 1;
+                !dominio.isEmpty() &&
+                !usuario.contains("@") &&
+                !dominio.contains("@") &&
+                !usuario.contains(" ") &&
+                !dominio.contains(" ") &&
+                dominio.indexOf(".") >= 1 &&
+                dominio.lastIndexOf(".") < dominio.length() - 1;
     }
 }
