@@ -236,6 +236,3 @@ public class ProgramaFidelidadeDAO {
     }
 
 }
-
-
-

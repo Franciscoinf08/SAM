@@ -7,8 +7,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import sam.model.common.Conexao;
 
+import sam.model.common.Conexao;
+import sam.model.dao.ProgramaFidelidadeDAO;
+import sam.model.dao.UsuarioProgramaDAO;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.Usuario;
 import sam.model.domain.UsuarioPrograma;
