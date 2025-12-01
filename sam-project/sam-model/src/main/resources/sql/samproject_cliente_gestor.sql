@@ -16,35 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `programa_fidelidade`
+-- Table structure for table `cliente_gestor`
 --
 
-DROP TABLE IF EXISTS `programa_fidelidade`;
+DROP TABLE IF EXISTS `cliente_gestor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `programa_fidelidade` (
-  `idProgramaFidelidade` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `bonusMilhas` double DEFAULT NULL,
-  `qtdeMilhasMes` int DEFAULT NULL,
-  `duracao` int DEFAULT NULL,
-  `empresa_id` int DEFAULT NULL,
-  `precoMes` double DEFAULT NULL,
-  `avaliacao` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`idProgramaFidelidade`),
-  KEY `empresa_id` (`empresa_id`),
-  CONSTRAINT `programa_fidelidade_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empresa` (`idEmpresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `cliente_gestor` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cliente_id` int DEFAULT NULL,
+  `gestor_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cliente_id` (`cliente_id`),
+  KEY `gestor_id` (`gestor_id`),
+  CONSTRAINT `cliente_gestor_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `cliente_gestor_ibfk_2` FOREIGN KEY (`gestor_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `programa_fidelidade`
+-- Dumping data for table `cliente_gestor`
 --
 
-LOCK TABLES `programa_fidelidade` WRITE;
-/*!40000 ALTER TABLE `programa_fidelidade` DISABLE KEYS */;
-INSERT INTO `programa_fidelidade` VALUES (1,'a',1,1,1,25,1,'Desvantajoso'),(2,'b',1,1,1,27,1,'Desvantajoso');
-/*!40000 ALTER TABLE `programa_fidelidade` ENABLE KEYS */;
+LOCK TABLES `cliente_gestor` WRITE;
+/*!40000 ALTER TABLE `cliente_gestor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cliente_gestor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-29 20:03:07
+-- Dump completed on 2025-11-29 20:03:05

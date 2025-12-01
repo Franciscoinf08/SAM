@@ -60,7 +60,8 @@
                     {"avaliacoes", "Avaliações"},
                     {"relatorios", "Relatórios"},
                     {"transacoes-gestor", "Transações Gestor"},
-                    {"campanhas", "Campanhas"}
+                    {"campanhas", "Campanhas"},
+                    {"solicitar-gestor", "Solicitar Conta Gestor"}
                 };
 
                 for (String[] p : permissoes) {
