@@ -1,5 +1,6 @@
 package sam.model.dao;
 
+import sam.model.common.Conexao;
 import sam.model.common.exception.PersistenciaException;
 import sam.model.common.seguranca.PasswordDigest;
 import sam.model.domain.Usuario;

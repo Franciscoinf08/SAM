@@ -4,6 +4,7 @@ import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.TransacaoStatus;
 import sam.model.domain.util.TransacaoTipo;
+import sam.model.common.Conexao;
 
 import java.sql.*;
 import java.math.BigDecimal;
