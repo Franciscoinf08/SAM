@@ -76,9 +76,18 @@ button {
     font-size: 1em;
 }
 
+#botao-excluir {
+    background-color: #c40000;
+}
+
 button:hover {
     background-color: #0056b3;
 }
+
+#botao-excluir:hover {
+    background-color: #860000;
+}
+
 
 .data-atualizacao {
     text-align: right;

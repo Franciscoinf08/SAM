@@ -1,15 +1,12 @@
 package sam.model.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 import sam.model.domain.FormObjetivos;
+import sam.model.common.ConexaoDB;
 import sam.model.domain.Usuario;
-import sam.model.common.Conexao;
 
 public class FormObjetivosDao {
 
@@ -20,7 +17,7 @@ public class FormObjetivosDao {
                 + "nivel_detalhamento, req_especificos) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = Conexao.getConnection();
+        try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, form.getId_usuario());
@@ -63,7 +60,7 @@ public class FormObjetivosDao {
         String sql = "SELECT id, titulo_formulario, data_ultima_atualizacao FROM form_objetivos WHERE id_usuario = ? ORDER BY id DESC ";
         List<FormObjetivos> listaFormularios = new LinkedList<>();
 
-        try (Connection conn = Conexao.getConnection()) {
+        try (Connection conn = ConexaoDB.getConnection()) {
              PreparedStatement stmt = conn.prepareStatement(sql);
              stmt.setLong(1, usuario.getId());
              ResultSet rs = stmt.executeQuery();
@@ -93,7 +90,7 @@ public class FormObjetivosDao {
         String sql = "SELECT * FROM form_objetivos WHERE id = ?";
         FormObjetivos form = null;
 
-        try (Connection conn = Conexao.getConnection();
+        try (Connection conn = ConexaoDB.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idFormulario);
 
@@ -127,69 +124,72 @@ public class FormObjetivosDao {
     }
 
     public static boolean atualizar(FormObjetivos form) {
-        String sql = "UPDATE `form_objetivos` SET "
-                + "titulo_formulario = ?, objetivos_gerais = ?, objetivos_especificos = ?, "
-                + "destino_principal = ?, num_pessoas = ?, pref_companhia = ?, "
-                + "orcamento_total = ?, nivel_detalhamento = ?, req_especificos = ?, "
-                + "data_ultima_atualizacao = ? "
-                + "WHERE id = ? AND id_usuario = ?";
 
-        try (Connection conn = Conexao.getConnection();
+        String sql = """
+        UPDATE form_objetivos SET 
+            titulo_formulario = ?, 
+            objetivos_gerais = ?, 
+            objetivos_especificos = ?, 
+            destino_principal = ?, 
+            num_pessoas = ?, 
+            pref_companhia = ?, 
+            orcamento_total = ?, 
+            nivel_detalhamento = ?, 
+            req_especificos = ?, 
+            data_ultima_atualizacao = ?
+        WHERE id = ? AND id_usuario = ?
+    """;
+
+        try (Connection conn = ConexaoDB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            int i = 1; // Contador para os parâmetros
+            stmt.setString(1, form.getTitulo());
+            stmt.setString(2, form.getObjetivosGerais());
+            stmt.setString(3, form.getObjetivosEspecificos());
+            stmt.setString(4, form.getDestPrincipal());
 
-            stmt.setString(i++, form.getTitulo());
-            stmt.setString(i++, form.getObjetivosGerais());
-            stmt.setString(i++, form.getObjetivosEspecificos());
-            stmt.setString(i++, form.getDestPrincipal());
+            // NULL OU VALOR → AUTOMÁTICO
+            stmt.setObject(5, form.getNumPessoas());
 
-            // Tratamento de NULL para INT
-            if (form.getNumPessoas() != null) {
-                stmt.setInt(i++, form.getNumPessoas());
-            } else {
-                stmt.setNull(i++, java.sql.Types.INTEGER);
-            }
+            stmt.setString(6, form.getPrefCompanhia());
 
-            stmt.setString(i++, form.getPrefCompanhia());
+            // NULL OU VALOR → AUTOMÁTICO
+            stmt.setObject(7, form.getOrcTotal());
 
-            // Tratamento de NULL para FLOAT
-            if (form.getOrcTotal() != null) {
-                stmt.setFloat(i++, form.getOrcTotal());
-            } else {
-                stmt.setNull(i++, java.sql.Types.FLOAT);
-            }
+            stmt.setString(8, form.getNivelDetalhamento());
+            stmt.setString(9, form.getReqEspecificos());
+            stmt.setObject(10, form.getData());
 
-            stmt.setString(i++, form.getNivelDetalhamento());
-            stmt.setString(i++, form.getReqEspecificos());
+            // WHERE
+            stmt.setInt(11, form.getId());
+            stmt.setLong(12, form.getId_usuario());
 
-            // 2. Data de Atualização (Deve ser o último campo antes do WHERE)
-            stmt.setObject(i++, form.getData());
+            int linhas = stmt.executeUpdate();
+            return linhas > 0;
 
-            // 3. Cláusula WHERE (Identificação do Registro)
-            stmt.setInt(i++, form.getId()); // O ID do formulário
-            stmt.setLong(i++, form.getId_usuario()); // O ID do usuário logado
-
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar dados no banco de dados: " + e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
 
 
 
+    public static boolean excluir(int id, long idUsuario) {
+        String sql = "DELETE FROM form_objetivos WHERE id = ? AND id_usuario = ?";
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.setLong(2, idUsuario);
+
+            int linhas = stmt.executeUpdate();
+            return linhas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-        public static void excluir(int id) {
-            String sql = "DELETE FROM `form_objetivos` WHERE id = ?";
-            try (Connection conn = Conexao.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+    }
 }

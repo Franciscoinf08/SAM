@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-@WebServlet("/UserVerifyController")
-public class UserVerifyController extends HttpServlet {
+@WebServlet("/RecuperarSenhaController")
+public class RecuperarSenhaController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -25,22 +25,20 @@ public class UserVerifyController extends HttpServlet {
 
             HttpSession session = request.getSession();
 
-            session.setAttribute("nome", request.getParameter("nome"));
-            session.setAttribute("email", request.getParameter("email"));
-            session.setAttribute("cpf", request.getParameter("cpf"));
-            session.setAttribute("senha", request.getParameter("senha"));
+            session.setAttribute("emailRecuperacao", email);
 
             String codigo = sm.getRandom();
             session.setAttribute("codigoVerificacao", codigo);
 
-            String assunto = "Verificacao de email de usuário";
-            String mensagem = "Registro realizado com sucesso. Por favor verifique sua conta usando o codigo: ";
+            String assunto = "Recuperação de Senha";
+            String mensagem = "Para recuperar sua senha por favor utilize o seguinte codigo: ";
 
-            boolean test = sm.enviarEmail(email, codigo, assunto, mensagem);
+            boolean test = sm.enviarEmail(email, codigo, mensagem, assunto);
 
             if (test) {
                 request.setAttribute("mensagem", "Código enviado! Confira seu e-mail.");
-                request.getRequestDispatcher("core/geral/verificar.jsp").forward(request, response);
+                request.setAttribute("emailEnviado", true);
+                request.getRequestDispatcher("core/geral/esqueceu-senha.jsp").forward(request, response);
             }
         }
     }
