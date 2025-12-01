@@ -27,6 +27,7 @@
 <html lang="pt-BR">
 <head>
     <link rel="stylesheet" type="text/css" href="<%= contextPath %>/css/objetivos.css">
+    <link rel="icon" href="/sam/imgs/favicon.ico">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

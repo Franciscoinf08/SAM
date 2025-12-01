@@ -5,6 +5,8 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
+    <link rel="icon" href="/sam/imgs/favicon.ico">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -51,7 +53,8 @@
             <a href="<%=request.getContextPath()%>/empresa">Cancelar</a>
         </form>
     </div>
-
+    <script src="<%= request.getContextPath() %>/js/script.js"></script>
+    <script src="<%= request.getContextPath() %>/js/erroCadastroEmpresa.js"></script>
 </main>
 </body>
 </html>

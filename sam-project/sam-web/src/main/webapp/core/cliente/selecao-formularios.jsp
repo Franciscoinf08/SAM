@@ -20,6 +20,7 @@
     <meta charset="UTF-8">
     <title>Gerenciar Formulários</title>
     <link rel="stylesheet" type="text/css" href="<%= contextPath %>/css/style.css">
+    <link rel="icon" href="/sam/imgs/favicon.ico">
 </head>
 <body>
 

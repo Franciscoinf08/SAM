@@ -5,6 +5,8 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
+    <link rel="icon" href="/sam/imgs/favicon.ico">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -49,9 +51,6 @@
                 <td><%= p.getPrecoMensal() %></td>
                 <td><%= p.getAvaliaco() %></td>
                 <td>
-                    <a href="<%= request.getContextPath() %>/usuarioPrograma&id=<%= p.getIdProgramaFidelidade()%>&idEmpresa=<%=request.getAttribute("idEmpresa")%>">
-                        <button>Associar</button>
-                    </a>
                     <a href="<%= request.getContextPath() %>/programaFidelidade?action=editar&id=<%= p.getIdProgramaFidelidade()%>&idEmpresa=<%=request.getAttribute("idEmpresa")%>">
                         <button>Editar</button>
                     </a>
