@@ -7,13 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioProgramaDAO implements GenericDAO<UsuarioPrograma, Integer> {
+public class UsuarioProgramaDAO{
     private Connection conexao = null;
 
-    UsuarioProgramaDAO() {
+    public UsuarioProgramaDAO() {
         this.conexao = Conexao.getConnection();
     }
-    @Override
+
     public void inserir(UsuarioPrograma entidade){
         String sql = "insert into usuario_programa(usuario_id, programa_id, saldo_milhas) values(?, ?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -34,67 +34,16 @@ public class UsuarioProgramaDAO implements GenericDAO<UsuarioPrograma, Integer> 
         }
     }
 
-    @Override
-    public void atualizar(UsuarioPrograma entidade){
-        String sql = "update usuario_programa set programa_id = ?, usuario_id = ?, saldo_milhas = ? where id = ?";
-        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
-            stmt.setInt(1, entidade.getIdPrograma());
-            stmt.setInt(2, entidade.getIdUsuario());
-            stmt.setDouble(3, entidade.getSaldoMilhas());
-            stmt.setDouble(4, entidade.getIdUsuarioPrograma());
-
-        } catch (SQLException ex) {
-            ex.getMessage();
-        }
-    }
-
-    @Override
-    public UsuarioPrograma pesquisar(Integer chave) {
-        String sql = "select * from usuario_programa where id = ?";
-        UsuarioPrograma up = null;
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, chave);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                up = new UsuarioPrograma();
-                up.setIdUsuarioPrograma(rs.getInt("id"));
-                up.setIdUsuario(rs.getInt("usuario_id"));
-                up.setSaldoMilhas(rs.getDouble("saldo_milhas"));
-                up.setIdPrograma(rs.getInt("programa_id"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return up;
-    }
-
-    public void excluir(Integer id) {
-        String sql = "delete from usuario_programa where id = ?";
+    public void excluir(Integer idUsuario,  Integer idPrograma) {
+        String sql = "delete from usuario_programa where usuario_id = ? and programa_id = ?";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idPrograma);
             stmt.executeUpdate();
         } catch (Exception e) {
             e.getMessage();
         }
     }
-    public List<UsuarioPrograma> listarTodos() {
-        List<UsuarioPrograma> lista = new ArrayList<>();
-        UsuarioPrograma up;
-        String sql = "SELECT * FROM usuario_programa";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()){
-                up = new UsuarioPrograma();
-                up.setIdUsuarioPrograma(rs.getInt(1));
-                up.setIdUsuario(rs.getInt(2));
-                up.setSaldoMilhas(rs.getDouble(3));
-                up.setIdPrograma(rs.getInt(4));
-                lista.add(up);
-            }
 
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-        return lista;
-    }
+
 }
