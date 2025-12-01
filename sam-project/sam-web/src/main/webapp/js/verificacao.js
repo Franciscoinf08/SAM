@@ -30,3 +30,12 @@ function handleSubmit(e) {
     }
     return false;
 }
+
+
+document.getElementById("verifyForm").addEventListener("submit", function (e) {
+    let inputs = document.querySelectorAll(".code-input input");
+    let codigo = "";
+
+    inputs.forEach(i => codigo += i.value);
+        document.getElementById("codigoFinal").value = codigo;
+});

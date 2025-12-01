@@ -14,6 +14,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
+<%
+    String codigoDigitado = request.getParameter("codigoFinal");
+    String codigoSessao = (String) session.getAttribute("codigoVerificacao");
+
+    boolean codigoCorreto = false;
+
+    if (codigoDigitado != null) {
+        if (codigoDigitado.equals(codigoSessao)) {
+            codigoCorreto = true;
+        } else {
+            request.setAttribute("erro", "Código incorreto. Tente novamente.");
+        }
+    }
+    if (codigoCorreto) {
+%>
+<form id="cadastroForm" action="/sam/CadastroController" method="post">
+    <input type="hidden" name="nome" value="<%= session.getAttribute("nome") %>">
+    <input type="hidden" name="email" value="<%= session.getAttribute("email") %>">
+    <input type="hidden" name="cpf" value="<%= session.getAttribute("cpf") %>">
+    <input type="hidden" name="senha" value="<%= session.getAttribute("senha") %>">
+</form>
+<script>
+    document.getElementById("cadastroForm").submit();
+</script>
+<%
+    }
+%>
+
+
 <main class="card" role="main">
 
     <%
@@ -28,20 +58,21 @@
     %>
 
     <h1>Verificação de conta</h1>
-        <p class="small">Insira o código de 6 dígitos enviado para o seu e-mail ou celular.</p>
+        <p class="small">Insira o código de 6 dígitos enviado para o seu e-mail.</p>
 
-        <form id="verifyForm" autocomplete="off" action="/sam/UserVerifyController">
-            <div class="code-input">
-                <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-            </div>
+    <form id="verifyForm" action="/sam/core/geral/verificar.jsp" method="post" autocomplete="off">
+        <div class="code-input">
+            <input name="d1" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+            <input name="d2" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+            <input name="d3" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+            <input name="d4" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+            <input name="d5" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+            <input name="d6" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+        </div>
 
-            <button class="verify" type="submit">Verificar</button>
-        </form>
+        <input type="hidden" id="codigoFinal" name="codigoFinal">
+        <button class="verify" type="submit">Verificar</button>
+    </form>
 
         <div class="info">
             Não recebeu o código? Verifique a caixa de spam ou solicite um novo código após 60 segundos.

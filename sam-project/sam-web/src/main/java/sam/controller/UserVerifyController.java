@@ -22,12 +22,21 @@ public class UserVerifyController extends HttpServlet {
             String email = request.getParameter("email");
 
             EnviarEmailController sm =  new EnviarEmailController();
-            String codigo = sm.getRandom();
 
             HttpSession session = request.getSession();
+
+            session.setAttribute("nome", request.getParameter("nome"));
+            session.setAttribute("email", request.getParameter("email"));
+            session.setAttribute("cpf", request.getParameter("cpf"));
+            session.setAttribute("senha", request.getParameter("senha"));
+
+            String codigo = sm.getRandom();
             session.setAttribute("codigoVerificacao", codigo);
 
-            boolean test = sm.enviarEmail(email, codigo);
+            String assunto = "Verificacao de email de usuário";
+            String mensagem = "Registro realizado com sucesso. Por favor verifique sua conta usando o codigo: ";
+
+            boolean test = sm.enviarEmail(email, codigo, assunto, mensagem);
 
             if (test) {
                 request.setAttribute("mensagem", "Código enviado! Confira seu e-mail.");

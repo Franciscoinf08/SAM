@@ -10,20 +10,20 @@ import jakarta.mail.internet.MimeMessage;
 
 public class EnviarEmailController {
 
-    public String getRandom(){
+    public String getRandom() {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
         return String.format("%06d", number);
     }
 
-    public boolean enviarEmail(String email, String codigo){
+    public boolean enviarEmail(String email, String codigo, String mensagem, String assunto) {
         boolean test = false;
 
         String toEmail = email;
         String fromEmail = "equipesam.cefetmg@gmail.com";
         String password = "lrkfxgarmwqktkmu";
 
-        try{
+        try {
             Properties pr = new Properties();
             pr.setProperty("mail.smtp.host", "smtp.gmail.com");
             pr.setProperty("mail.smtp.port", "587");
@@ -36,7 +36,9 @@ public class EnviarEmailController {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(fromEmail, password);
-                };
+                }
+
+                ;
             });
 
             Message mess = new MimeMessage(session);
@@ -44,19 +46,17 @@ public class EnviarEmailController {
             mess.setFrom(new InternetAddress(fromEmail));
             mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
-            mess.setSubject("Verificacao de email de usuário");
-            mess.setText("Registro realizado com sucesso. Por favor verifique sua cona usando o codigo: "+codigo);
+            mess.setSubject(assunto);
+            mess.setText(mensagem + codigo);
 
             Transport.send(mess);
 
             test = true;
 
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        return  test;
+        return test;
     }
 }

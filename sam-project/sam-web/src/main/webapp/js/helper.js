@@ -75,6 +75,9 @@ function validarCamposCadastro(form) {
         resultado = true;
     }
 
+
+
+
     return resultado;
 }
 
