@@ -16,13 +16,13 @@ public class EmpresaDAO {
         this.conexao = Conexao.getConnection();
     }
     public Empresa salvar(Empresa empresa) throws SQLException{
-            String sql = "insert into empresa(nome, cnpj, milheiroSeguranca) values(?, ?, ?)";
+        String sql = "insert into empresa(nome, cnpj, milheiroSeguranca) values(?, ?, ?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             stmt.setString(1, empresa.getNome());
             stmt.setString(2, empresa.getCNPJ());
             stmt.setDouble(3, empresa.getMilheiroSeguranca());
             stmt.executeUpdate();
-            
+
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
 
@@ -46,7 +46,7 @@ public class EmpresaDAO {
                 empresa.setNome(rs.getString("nome"));
                 empresa.setCNPJ(rs.getString("cnpj"));
                 empresa.setMilheiroSeguranca(rs.getDouble("milheiroSeguranca"));
-                
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

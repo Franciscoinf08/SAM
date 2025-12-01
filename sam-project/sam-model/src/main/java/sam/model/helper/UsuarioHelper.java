@@ -45,7 +45,7 @@ public class UsuarioHelper {
     }
 
     private static boolean validarCadastroCPF(Usuario usuario) throws SQLException {
-       return usuarioDAO.pesquisarPorCPF(usuario.getCPF()) == null;
+        return usuarioDAO.pesquisarPorCPF(usuario.getCPF()) == null;
     }
 
     public static boolean validarCPF(String cpf) {
@@ -88,12 +88,12 @@ public class UsuarioHelper {
         }
 
         return !usuario.isEmpty() &&
-               !dominio.isEmpty() &&
-               !usuario.contains("@") &&
-               !dominio.contains("@") &&
-               !usuario.contains(" ") &&
-               !dominio.contains(" ") &&
-               dominio.indexOf(".") >= 1 &&
-               dominio.lastIndexOf(".") < dominio.length() - 1;
+                !dominio.isEmpty() &&
+                !usuario.contains("@") &&
+                !dominio.contains("@") &&
+                !usuario.contains(" ") &&
+                !dominio.contains(" ") &&
+                dominio.indexOf(".") >= 1 &&
+                dominio.lastIndexOf(".") < dominio.length() - 1;
     }
 }

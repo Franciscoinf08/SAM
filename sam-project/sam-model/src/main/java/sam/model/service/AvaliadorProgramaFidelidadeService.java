@@ -17,7 +17,7 @@ public class AvaliadorProgramaFidelidadeService {
         this.empresaDAO = empresaDAO;
         this.pfDAO = programaFidelidadeDAO;
     }
-    
+
 
 
     public void avaliarPrograma(ProgramaFidelidade programa) throws Exception{
@@ -31,7 +31,7 @@ public class AvaliadorProgramaFidelidadeService {
         double bonus = programa.getBonusMilhas();
         double milheiroSeguranca = empresa.getMilheiroSeguranca();
 
-        
+
         double milhasTotais = CalculoHelper.calcularMilhasTotais(milhasMes, meses, bonus);
         double valorMilheiro = CalculoHelper.calcularValorMilheiro(preco, milhasTotais);
 
@@ -47,4 +47,3 @@ public class AvaliadorProgramaFidelidadeService {
 
     }
 }
-
