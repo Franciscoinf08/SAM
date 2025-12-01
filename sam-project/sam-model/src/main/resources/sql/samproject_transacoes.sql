@@ -10,36 +10,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `form_objetivos`
+-- Table structure for table `transacoes`
 --
 
-DROP TABLE IF EXISTS `form_objetivos`;
+DROP TABLE IF EXISTS `transacoes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `form_objetivos` (
+CREATE TABLE `transacoes` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` int DEFAULT NULL,
-  `titulo_formulario` text,
-  `data_ultima_atualizacao` date DEFAULT NULL,
-  `objetivos_gerais` text,
-  `objetivos_especificos` text,
-  `destino_principal` varchar(100) DEFAULT NULL,
-  `num_pessoas` int DEFAULT NULL,
-  `pref_companhia` varchar(100) DEFAULT NULL,
-  `orcamento_total` float DEFAULT NULL,
-  `nivel_detalhamento` varchar(50) DEFAULT NULL,
-  `req_especificos` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_programa` int DEFAULT NULL,
+  `id_cliente` int DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `data_expiracao` date DEFAULT NULL,
+  `quantidade` int DEFAULT NULL,
+  `tipo` varchar(10) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  `bonus` decimal(10,2) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_programa` (`id_programa`),
+  KEY `id_cliente` (`id_cliente`),
+  CONSTRAINT `transacoes_ibfk_1` FOREIGN KEY (`id_programa`) REFERENCES `programa_fidelidade` (`idProgramaFidelidade`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `transacoes_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `form_objetivos`
+-- Dumping data for table `transacoes`
 --
 
-LOCK TABLES `form_objetivos` WRITE;
-/*!40000 ALTER TABLE `form_objetivos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `form_objetivos` ENABLE KEYS */;
+LOCK TABLES `transacoes` WRITE;
+/*!40000 ALTER TABLE `transacoes` DISABLE KEYS */;
+INSERT INTO `transacoes` VALUES (1,1,4,'2025-11-26',NULL,1,'VENDA',0.01,0.00,'ATIVA');
+/*!40000 ALTER TABLE `transacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

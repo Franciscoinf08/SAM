@@ -8,6 +8,7 @@
         <title>SAM - Perfil</title>
 
         <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="icon" href="/sam/imgs/favicon.ico">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,16 +61,7 @@
             </div>
         </main>
 
-        <%
-            String erro = (String) request.getAttribute("erro");
-            if (erro != null) {%>
-        <div class="mensagem-card"><%=erro%></div>
-        <script>
-            let mensagemEl = document.querySelector(".mensagem-card");
-            setTimeout(() => { mensagemEl.style.top = "4em"; }, 1);
-            setTimeout(() => { mensagemEl.style.display = "none"; }, 4000);
-        </script>
-        <%}%>
+        <%@include file="/core/mensagens-erro.jsp"%>
 
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/script.js"></script>

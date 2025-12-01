@@ -10,36 +10,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `form_objetivos`
+-- Table structure for table `usuario_programa`
 --
 
-DROP TABLE IF EXISTS `form_objetivos`;
+DROP TABLE IF EXISTS `usuario_programa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `form_objetivos` (
+CREATE TABLE `usuario_programa` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` int DEFAULT NULL,
-  `titulo_formulario` text,
-  `data_ultima_atualizacao` date DEFAULT NULL,
-  `objetivos_gerais` text,
-  `objetivos_especificos` text,
-  `destino_principal` varchar(100) DEFAULT NULL,
-  `num_pessoas` int DEFAULT NULL,
-  `pref_companhia` varchar(100) DEFAULT NULL,
-  `orcamento_total` float DEFAULT NULL,
-  `nivel_detalhamento` varchar(50) DEFAULT NULL,
-  `req_especificos` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `usuario_id` int NOT NULL,
+  `programa_id` int NOT NULL,
+  `saldo_milhas` double DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `usuario_id` (`usuario_id`),
+  KEY `programa_id` (`programa_id`),
+  CONSTRAINT `usuario_programa_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `usuario_programa_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `programa_fidelidade` (`idProgramaFidelidade`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `form_objetivos`
+-- Dumping data for table `usuario_programa`
 --
 
-LOCK TABLES `form_objetivos` WRITE;
-/*!40000 ALTER TABLE `form_objetivos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `form_objetivos` ENABLE KEYS */;
+LOCK TABLES `usuario_programa` WRITE;
+/*!40000 ALTER TABLE `usuario_programa` DISABLE KEYS */;
+INSERT INTO `usuario_programa` VALUES (1,4,1,0),(2,1,1,0),(3,4,2,0);
+/*!40000 ALTER TABLE `usuario_programa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
