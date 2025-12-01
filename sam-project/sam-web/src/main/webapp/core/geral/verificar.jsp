@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Verificação de conta</title>
 
-    <link rel="stylesheet" type="text/css" href="/sam/css/verificacao.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/verificacao.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">

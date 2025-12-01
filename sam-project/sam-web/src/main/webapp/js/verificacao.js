@@ -31,6 +31,7 @@ function handleSubmit(e) {
     return false;
 }
 
+//Desaparecer input recuperaçao de dados
 
 document.getElementById("verifyForm").addEventListener("submit", function (e) {
     let inputs = document.querySelectorAll(".code-input input");
@@ -38,4 +39,28 @@ document.getElementById("verifyForm").addEventListener("submit", function (e) {
 
     inputs.forEach(i => codigo += i.value);
         document.getElementById("codigoFinal").value = codigo;
+});
+
+const formEmail = document.getElementById("formEmail");
+const formCodigo = document.getElementById("formCodigo");
+
+formEmail.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = formEmail.querySelector("input[name='email']").value;
+    if (email.trim() === "") {
+        alert("Digite um e-mail válido.");
+        return;
+    }
+
+    formEmail.style.display = "none";
+
+    formCodigo.style.display = "block";
+
+    const codeInputs = document.querySelectorAll(".code-input-recuperar input");
+    if (codeInputs.length > 0) {
+        codeInputs[0].focus();
+    }
+
+    formEmail.submit();
 });
