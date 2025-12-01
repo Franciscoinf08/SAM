@@ -1,12 +1,9 @@
 package sam.model.dao;
 
 
-import sam.model.domain.Empresa;
 import sam.model.common.Conexao;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.Usuario;
-import sam.model.domain.UsuarioPrograma;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -211,7 +208,6 @@ public class ProgramaFidelidadeDAO {
         return lista;
     }
 
-}
     public List<ProgramaFidelidade> listarPorCliente(Long idCliente) {
         List<ProgramaFidelidade> lista = new ArrayList<>();
         String sql = "SELECT p.* " +
@@ -238,5 +234,8 @@ public class ProgramaFidelidadeDAO {
         }
         return lista;
     }
+
 }
+
+
 

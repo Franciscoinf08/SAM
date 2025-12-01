@@ -1,7 +1,7 @@
 package sam.model.service;
 
-import sam.model.dao.Conexao;
-
+import sam.model.common.Conexao;
+import sam.model.common.exception.PersistenciaException;
 import sam.model.dao.EmpresaDAO;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.domain.ProgramaFidelidade;
@@ -72,5 +72,12 @@ public class ProgramaFidelidadeService {
 
         return programaFidelidadeDAO.listarTodos();
 
+    }
+
+    public List<ProgramaFidelidade> listarPorCliente(Long idCliente) throws PersistenciaException, SQLException {
+        GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
+        if(manterUsuario.pesquisar(idCliente) == null)
+            throw new PersistenciaException("Cliente nao encontrado");
+        return programaFidelidadeDAO.listarPorCliente(idCliente);
     }
 }

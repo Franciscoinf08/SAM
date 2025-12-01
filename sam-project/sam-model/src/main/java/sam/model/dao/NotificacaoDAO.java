@@ -1,8 +1,8 @@
 package sam.model.dao;
 
+import sam.model.common.Conexao;
 import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Notificacao;
-import sam.model.domain.Usuario;
 import sam.model.domain.util.AlcanceNotificacao;
 import sam.model.domain.util.TipoNotificacao;
 

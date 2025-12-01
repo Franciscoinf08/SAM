@@ -1,6 +1,6 @@
 package sam.model.service;
 
-import sam.model.dao.Conexao;
+import sam.model.common.Conexao;
 import sam.model.dao.EmpresaDAO;
 import sam.model.domain.Empresa;
 
@@ -40,9 +40,6 @@ public class EmpresaService {
     }
     public Empresa buscarEmpresa(int id){
         Empresa empresa = empresaDAO.buscarPorId(id);
-        if (validarEmpresa(empresa)) {
-            throw new RuntimeException();
-        }
         return empresa;
     }
 
