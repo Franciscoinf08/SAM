@@ -6,7 +6,7 @@
     <title>Esqueci minha senha</title>
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/verificacao.css">
+    <link rel="stylesheet" type="text/css" href="../../css/verificacao.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,30 @@
 </head>
 
 <body>
+
+<%
+    String codigoDigitado = request.getParameter("codigoFinal");
+    String codigoSessao = (String) session.getAttribute("codigoVerificacao");
+
+    if (codigoDigitado != null) {
+        if (codigoDigitado.equals(codigoSessao)) {
+            response.sendRedirect("alterar-senha.jsp");
+        } else {
+            request.setAttribute("erro", "Código incorreto. Tente novamente.");
+        }
+    }
+%>
+
+<%
+    String mensagem = (String) request.getAttribute("mensagem");
+    if (mensagem != null) {
+%>
+<script>
+    alert("<%= mensagem %>");
+</script>
+<%
+    }
+%>
 
 <header>
     <img id="logotipo" alt="Logo do Sistema" src="${pageContext.request.contextPath}/imgs/logotipo.png">
@@ -84,7 +108,6 @@
         formEmail.style.display = "none";
         formCodigo.style.display = "block";
 
-        // Foco no primeiro input do código
         const inputs = document.querySelectorAll(".code-input input");
         if (inputs.length > 0) inputs[0].focus();
         <% } %>

@@ -31,8 +31,6 @@ function handleSubmit(e) {
     return false;
 }
 
-//Desaparecer input recuperaçao de dados
-
 document.getElementById("verifyForm").addEventListener("submit", function (e) {
     let inputs = document.querySelectorAll(".code-input input");
     let codigo = "";
@@ -40,6 +38,8 @@ document.getElementById("verifyForm").addEventListener("submit", function (e) {
     inputs.forEach(i => codigo += i.value);
         document.getElementById("codigoFinal").value = codigo;
 });
+
+//Desaparecer input recuperaçao de dados
 
 const formEmail = document.getElementById("formEmail");
 const formCodigo = document.getElementById("formCodigo");
@@ -63,4 +63,18 @@ formEmail.addEventListener("submit", function (e) {
     }
 
     formEmail.submit();
+});
+
+
+document.getElementById("formAlterar").addEventListener("submit", function(e) {
+    const s1 = document.getElementById("senha1").value;
+    const s2 = document.getElementById("senha2").value;
+    const erro = document.getElementById("erroSenha");
+
+    if (s1 !== s2) {
+        e.preventDefault();
+        erro.style.display = "block";
+    } else {
+        erro.style.display = "none";
+    }
 });

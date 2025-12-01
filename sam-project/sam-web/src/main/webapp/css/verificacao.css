@@ -84,3 +84,7 @@
 .active{
     display: flex;
 }
+
+button{
+    color: mistyrose;
+}

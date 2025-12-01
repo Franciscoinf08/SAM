@@ -25,6 +25,8 @@ public class RecuperarSenhaController extends HttpServlet {
 
             HttpSession session = request.getSession();
 
+            session.setAttribute("emailRecuperacao", email);
+
             String codigo = sm.getRandom();
             session.setAttribute("codigoVerificacao", codigo);
 

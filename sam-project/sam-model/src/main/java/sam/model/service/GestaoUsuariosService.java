@@ -46,4 +46,12 @@ public class GestaoUsuariosService {
             throw new SQLException(e);
         }
     }
+
+    public Usuario buscarPorEmail(String email) throws SQLException {
+        try {
+            return usuarioDAO.pesquisarPorEmail(email);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
 }
