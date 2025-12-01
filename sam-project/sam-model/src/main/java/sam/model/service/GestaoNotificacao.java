@@ -5,43 +5,24 @@ import sam.model.dao.UsuarioDAO;
 import sam.model.domain.Notificacao;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.AlcanceNotificacao;
-import sam.model.domain.util.TipoNotificacao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class GestaoNotificacao {
 
-    private final NotificacaoService notificacaoService;
-    private final EmailService email;
+    private final NotificacaoService servico = new NotificacaoService();
+    private final UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
 
-    public GestaoNotificacao() {
-        this.notificacaoService = new NotificacaoService();
-        this.email = new EmailService();
+    public void enviarPorAlcance(Notificacao original, AlcanceNotificacao alcance)
+            throws PersistenciaException, SQLException {
 
-    }
+        List<Usuario> usuarios = usuarioDAO.listarPorTipo(alcance.name().toLowerCase());
 
-    public void selecionaAlcance(Notificacao notificacao, AlcanceNotificacao alcance) throws PersistenciaException {
-        selecionaNome(notificacao);
-        switch (alcance) {
-
-
-
-
-        }
-    }
-
-    private void enviarParaUsuarios(Notificacao original, List<Usuario> usuarios) throws PersistenciaException {
         for (Usuario u : usuarios) {
             Notificacao copia = new Notificacao(original);
             copia.setDestinatario(u);
-
-            notificacaoService.enviar(copia);
-        }
-    }
-    private void selecionaNome(Notificacao notificacao){
-        if(notificacao.getTipo() != TipoNotificacao.OUTROS){
-            String tituloFinal = notificacao.getTipo().getDescricao();
-            notificacao.setTitulo(tituloFinal);
+            servico.enviar(copia);
         }
     }
 }

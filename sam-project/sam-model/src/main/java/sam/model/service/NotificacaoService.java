@@ -8,29 +8,17 @@ import java.util.List;
 
 public class NotificacaoService {
 
-    private final NotificacaoDAO notificacaoDAO;
+    private final NotificacaoDAO dao = NotificacaoDAO.getInstance();
 
-    public NotificacaoService() {
-        this.notificacaoDAO = NotificacaoDAO.getInstance();
-    }
-
-    public void enviar(Notificacao notificacao) throws PersistenciaException {
-        notificacaoDAO.inserir(notificacao);
+    public void enviar(Notificacao n) throws PersistenciaException {
+        dao.inserir(n);
     }
 
     public List<Notificacao> listarPorUsuario(long idUsuario) throws PersistenciaException {
-        return notificacaoDAO.listarTodas();
+        return dao.listarPorUsuario(idUsuario);
     }
 
-    public List<Notificacao> listarTodas() throws PersistenciaException {
-        return notificacaoDAO.listarTodas();
-    }
-
-    public boolean marcarComoLida(long idNotificacao, long idUsuario) throws PersistenciaException {
-        return notificacaoDAO.marcarComoLida(idNotificacao, idUsuario);
-    }
-
-    public void excluir(long idNotificacao, long idUsuario) throws PersistenciaException {
-        notificacaoDAO.deletar(idNotificacao, idUsuario);
+    public boolean marcarComoLida(long idNotif, long idUsuario) throws PersistenciaException {
+        return dao.marcarComoLida(idNotif, idUsuario);
     }
 }
