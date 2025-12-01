@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Esqueci minha senha</title>
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../../css/verificacao.css">
+    <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/sam/css/verificacao.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

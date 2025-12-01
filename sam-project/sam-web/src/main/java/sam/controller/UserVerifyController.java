@@ -36,7 +36,7 @@ public class UserVerifyController extends HttpServlet {
             String assunto = "Verificacao de email de usuário";
             String mensagem = "Registro realizado com sucesso. Por favor verifique sua conta usando o codigo: ";
 
-            boolean test = sm.enviarEmail(email, codigo, assunto, mensagem);
+            boolean test = sm.enviarEmail(email, codigo, mensagem, assunto);
 
             if (test) {
                 request.setAttribute("mensagem", "Código enviado! Confira seu e-mail.");

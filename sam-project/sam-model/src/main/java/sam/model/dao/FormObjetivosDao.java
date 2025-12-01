@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import sam.model.domain.FormObjetivos;
-import sam.model.common.ConexaoDB;
+import sam.model.common.Conexao;
 import sam.model.domain.Usuario;
 
 public class FormObjetivosDao {
@@ -17,7 +17,7 @@ public class FormObjetivosDao {
                 + "nivel_detalhamento, req_especificos) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConexaoDB.getConnection();
+        try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, form.getId_usuario());
@@ -60,7 +60,7 @@ public class FormObjetivosDao {
         String sql = "SELECT id, titulo_formulario, data_ultima_atualizacao FROM form_objetivos WHERE id_usuario = ? ORDER BY id DESC ";
         List<FormObjetivos> listaFormularios = new LinkedList<>();
 
-        try (Connection conn = ConexaoDB.getConnection()) {
+        try (Connection conn = Conexao.getConnection()) {
              PreparedStatement stmt = conn.prepareStatement(sql);
              stmt.setLong(1, usuario.getId());
              ResultSet rs = stmt.executeQuery();
@@ -90,7 +90,7 @@ public class FormObjetivosDao {
         String sql = "SELECT * FROM form_objetivos WHERE id = ?";
         FormObjetivos form = null;
 
-        try (Connection conn = ConexaoDB.getConnection();
+        try (Connection conn = Conexao.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idFormulario);
 
@@ -140,7 +140,7 @@ public class FormObjetivosDao {
         WHERE id = ? AND id_usuario = ?
     """;
 
-        try (Connection conn = ConexaoDB.getConnection();
+        try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, form.getTitulo());
@@ -178,7 +178,7 @@ public class FormObjetivosDao {
     public static boolean excluir(int id, long idUsuario) {
         String sql = "DELETE FROM form_objetivos WHERE id = ? AND id_usuario = ?";
 
-        try (Connection conn = ConexaoDB.getConnection();
+        try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
