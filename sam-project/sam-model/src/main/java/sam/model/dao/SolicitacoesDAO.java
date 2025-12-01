@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import sam.model.common.Conexao;
 import sam.model.domain.Solicitacao;
 import sam.model.domain.Usuario;

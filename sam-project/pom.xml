@@ -12,7 +12,8 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
-    
+
+
   <modules>
     <module>sam-model</module>
     <module>sam-web</module>
