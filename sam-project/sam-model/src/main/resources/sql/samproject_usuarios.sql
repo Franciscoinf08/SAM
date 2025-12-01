@@ -31,9 +31,9 @@ CREATE TABLE `usuarios` (
   `tipo` varchar(15) DEFAULT NULL,
   `id_gestor` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_gestor` (`id_gestor`),
-  CONSTRAINT `fk_gestor` FOREIGN KEY (`id_gestor`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_gestor` (`id_gestor`),
+  CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_gestor`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (5,'j','aaa@gmail.com','32078592080','c4ca4238a0b923820dcc509a6f75849b','GESTOR',NULL),(6,'SAM','equipesam.cefetmg@gmail.com','38436286022','c4ca4238a0b923820dcc509a6f75849b','DESENVOLVEDOR',NULL),(8,'Ana','gpt@gmail.com','98065346030','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',NULL),(9,'aaaa','anas@gmail.com','44804850074','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',NULL);
+INSERT INTO `usuarios` VALUES (1,'Franciscoinf08','francisco@email.com','44436547043','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',2),(2,'Carlos','carlos@gmail.com','17996278610','c4ca4238a0b923820dcc509a6f75849b','GESTOR',NULL),(3,'thiersrusso13','thiers@email.com','23903080071','c20ad4d76fe97759aa27a0c99bff6710','DESENVOLVEDOR',NULL),(4,'Mateus0Vasconcelos','mateus17vasc@gmail.com','74451224004','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',2),(5,'Cliente3','cliente@cliente.com','15718088098','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

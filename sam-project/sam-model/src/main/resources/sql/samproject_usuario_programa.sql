@@ -32,7 +32,7 @@ CREATE TABLE `usuario_programa` (
   KEY `programa_id` (`programa_id`),
   CONSTRAINT `usuario_programa_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `usuario_programa_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `programa_fidelidade` (`idProgramaFidelidade`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `usuario_programa` (
 
 LOCK TABLES `usuario_programa` WRITE;
 /*!40000 ALTER TABLE `usuario_programa` DISABLE KEYS */;
+INSERT INTO `usuario_programa` VALUES (1,4,1,0),(2,1,1,0),(3,4,2,0);
 /*!40000 ALTER TABLE `usuario_programa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -28,8 +28,9 @@ CREATE TABLE `empresa` (
   `cnpj` char(14) NOT NULL,
   `milheiroSeguranca` double DEFAULT NULL,
   PRIMARY KEY (`idEmpresa`),
-  UNIQUE KEY `cnpj` (`cnpj`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `cnpj` (`cnpj`),
+  CONSTRAINT `empresa_chk_1` CHECK (regexp_like(`cnpj`,_utf8mb4'^[0-9]{14}$'))
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +39,7 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
+INSERT INTO `empresa` VALUES (25,'a','11111111111111',1),(27,'b','11111111111112',1);
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

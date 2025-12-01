@@ -1,5 +1,7 @@
 package sam.model.dao;
 
+import sam.model.common.Conexao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

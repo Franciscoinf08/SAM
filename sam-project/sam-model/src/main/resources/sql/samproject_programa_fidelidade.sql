@@ -34,7 +34,7 @@ CREATE TABLE `programa_fidelidade` (
   PRIMARY KEY (`idProgramaFidelidade`),
   KEY `empresa_id` (`empresa_id`),
   CONSTRAINT `programa_fidelidade_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empresa` (`idEmpresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `programa_fidelidade` (
 
 LOCK TABLES `programa_fidelidade` WRITE;
 /*!40000 ALTER TABLE `programa_fidelidade` DISABLE KEYS */;
+INSERT INTO `programa_fidelidade` VALUES (1,'a',1,1,1,25,1,'Desvantajoso'),(2,'b',1,1,1,27,1,'Desvantajoso');
 /*!40000 ALTER TABLE `programa_fidelidade` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
