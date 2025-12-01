@@ -191,6 +191,8 @@
             </section>
         </main>
 
+        <%@include file="/core/mensagens-erro.jsp"%>
+
         <script src="/sam/js/script.js"></script>
     </body>
 

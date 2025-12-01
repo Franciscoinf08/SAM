@@ -121,8 +121,10 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
                 int bonus = rs.getInt("bonus");
                 TransacaoStatus status = TransacaoStatus.strTo(rs.getString("status"));
 
-                if (dataExpiracao.before(new Date(System.currentTimeMillis())))
-                    expirar(id);
+                try {
+                    if (dataExpiracao.before(new Date(System.currentTimeMillis())))
+                        expirar(id);
+                } catch (NullPointerException ignored) {}
 
                 transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, TransacaoTipo.strTo(tipo), valor, bonus, status);
                 transacao.setId(id);
