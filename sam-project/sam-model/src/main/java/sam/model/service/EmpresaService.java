@@ -40,9 +40,6 @@ public class EmpresaService {
     }
     public Empresa buscarEmpresa(int id){
         Empresa empresa = empresaDAO.buscarPorId(id);
-        if (validarEmpresa(empresa)) {
-            throw new RuntimeException();
-        }
         return empresa;
     }
 

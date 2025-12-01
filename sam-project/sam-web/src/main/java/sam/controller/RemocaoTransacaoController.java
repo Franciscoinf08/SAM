@@ -6,18 +6,33 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.UsuarioTipo;
 import sam.model.service.GestaoTransacoesService;
 
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(name = "RemocaoTransacaoController", urlPatterns = {"/RemocaoTransacaoController"})
 public class RemocaoTransacaoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<String, String[]> params = request.getParameterMap();
+        System.out.println("Parameters received:");
+        System.out.println();
+        for (Map.Entry<String, String[]> e : params.entrySet()) {
+            System.out.print("  " + e.getKey() + " = ");
+            String[] vals = e.getValue();
+            for (int i = 0; i < vals.length; i++) {
+                System.out.print(vals[i] + (i < vals.length-1 ? ", " : ""));
+            }
+            System.out.println();
+        }
+        System.out.println();
+
         String path = null;
         try {
             if (((Usuario) request.getSession().getAttribute("usuario")).getTipo() == UsuarioTipo.CLIENTE)
@@ -35,8 +50,6 @@ public class RemocaoTransacaoController extends HttpServlet {
             id = Long.parseLong(request.getParameter("remover"));
         } catch (RuntimeException e) {
             e.printStackTrace();
-
-            request.setAttribute("erro", "Dados inválidos");
 
             RequestDispatcher rd = request.getRequestDispatcher(path);
             rd.forward(request, response);

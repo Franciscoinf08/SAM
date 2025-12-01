@@ -10,7 +10,6 @@
     String contextPath = request.getContextPath();
     String idFormulario = (form != null && form.getId() != null) ? String.valueOf(form.getId()) : "";
 
-    // 2. Variáveis de Texto e Textarea (Tratamento de NULL)
     String titulo = (form != null && form.getTitulo() != null) ? form.getTitulo() : "";
     String objetivosGerais = (form != null && form.getObjetivosGerais() != null) ? form.getObjetivosGerais() : "";
     String objetivosEspecificos = (form != null && form.getObjetivosEspecificos() != null) ? form.getObjetivosEspecificos() : "";
@@ -41,6 +40,8 @@
     <p>Preencha e atualize este formulário para um planejamento de objetivos e viagens eficaz.</p>
 
     <form action="/sam/processarObjetivos" method="POST" id="formObjetivos">
+
+        <input type="hidden" name="id" value="<%= idFormulario %>">
 
         <fieldset>
             <legend>Título do Formulário</legend>

@@ -73,10 +73,14 @@ function validarCamposCadastro(form) {
         form.senhaConfirmar.focus();
     }
     else {
-        form.action ="/sam/CadastroController";
+        form.action ="/sam/UserVerifyController";
+        form.method = "POST"
         form.submit();
         resultado = true;
     }
+
+
+
 
     return resultado;
 }

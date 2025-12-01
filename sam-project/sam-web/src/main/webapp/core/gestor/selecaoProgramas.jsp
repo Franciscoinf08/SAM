@@ -19,7 +19,7 @@
 </head>
 <body>
 <header>
-    <img id="logotipo" src="<%=request.getContextPath()%>>/imgs/logotipo.png" alt="Logotipo SAM">
+    <img id="logotipo" src="<%=request.getContextPath()%>/imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Selecionar programa</h1>
     <%@include file="/core/header.jsp" %>
 </header>
@@ -49,6 +49,8 @@
 
             for (ProgramaFidelidade pf : programas){
                 int idEmpresa = pf.getIdEmpresa();
+
+
                 String nomeEmpresa = empresaService.buscarEmpresa(idEmpresa).getNome();
         %>
         <tr>

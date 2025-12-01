@@ -20,12 +20,13 @@
     </head>
     <body>
         <header>
-            <img id="logotipo" src="<%=request.getContextPath()%>>/imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="<%=request.getContextPath()%>/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Clientes</h1>
             <%@include file="/core/header.jsp" %>
         </header>
 
         <main class="content">
+
             <h2>Meus clientes</h2>
             <%
                 List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
