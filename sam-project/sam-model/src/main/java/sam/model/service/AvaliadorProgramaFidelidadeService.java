@@ -1,12 +1,11 @@
 package sam.model.service;
 
-import sam.model.dao.Conexao;
 import sam.model.dao.EmpresaDAO;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.domain.Empresa;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.helper.CalculoHelper;
-import java.sql.Connection;
+
 import java.sql.SQLException;
 
 public class AvaliadorProgramaFidelidadeService {

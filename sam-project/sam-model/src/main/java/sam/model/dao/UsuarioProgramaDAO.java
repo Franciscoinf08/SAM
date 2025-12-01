@@ -1,14 +1,11 @@
 package sam.model.dao;
 
-import sam.model.domain.Empresa;
-import sam.model.domain.ProgramaFidelidade;
+import sam.model.common.Conexao;
 import sam.model.domain.UsuarioPrograma;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UsuarioProgramaDAO{
     private Connection conexao = null;

@@ -1,3 +1,7 @@
+/*
+* VALIDAÇÕES DE PREENCHIMENTO DE CAMPOS
+*/
+
 function validarCamposLogin(form) {
     let cpf = form.cpf.value;
     let senha = form.senha.value;
@@ -106,7 +110,7 @@ function validarCamposAlteracaoPerfil(form) {
         form.senhaConfirmar.value = "";
         form.senhaConfirmar.focus();
     }
-    else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)){
+    else if (window.confirm(`Confirmar alterações?\n Itens alterados: ${strConfirmacao}`)) {
         form.action = "/sam/AlteracaoPerfilController";
         form.submit();
         resultado = true;
@@ -114,6 +118,46 @@ function validarCamposAlteracaoPerfil(form) {
 
     return resultado;
 }
+
+function validarCamposCadastroTransacao(form) {
+    let cliente = form.cliente.value;
+    let programa = form.programa.value;
+    let quantidade = form.quantidade.value;
+    let valor = form.valor.value;
+    let bonus = form.bonus.value;
+    let data = form.data.value;
+    let dataExpiracao = "";
+    let strConfirmacao = `Confirmar valores?\n Quantidade: ${quantidade}\n Valor: ${valor}\n Data: ${data}`;
+    if (form.dataExpiracao) {
+        dataExpiracao = form.dataExpiracao.value;
+        strConfirmacao += `\n Data de Expiração: ${dataExpiracao}`;
+    }
+
+    let dataObj = new Date(data);
+    let dataExpiracaoObj = new Date(dataExpiracao);
+
+    if (bonus === "") {
+        form.bonus.value = "0";
+        bonus = form.bonus.value;
+    } else if (bonus !== "0")
+        strConfirmacao += `\n Bônus: ${bonus}`;
+
+    if (cliente === "") {
+        gerarMensagemErro("É necessário selecionar um cliente");
+        return false;
+    } else if (programa === "") {
+        gerarMensagemErro("É necessário selecionar um programa");
+        return false;
+    } else if (dataExpiracao !== "" && dataObj.getTime() > dataExpiracaoObj.getTime()) {
+        gerarMensagemErro("A data de expiração deve ser posterior à data da transação");
+        return false;
+    } else
+        return window.confirm(strConfirmacao);
+}
+
+/*
+* VALIDAÇÕES AUXILIARES
+*/
 
 function validarCPF(cpf) {
     if (cpf === "00000000000" || cpf.length !== 11 || isNaN(cpf))
@@ -152,6 +196,10 @@ function validarEmail(email) {
         dominio.indexOf(".") >= 1 &&
         dominio.lastIndexOf(".") < dominio.length - 1;
 }
+
+/*
+* GERADOR DAS MENSAGENS DE ERRO
+*/
 
 function gerarMensagemErro(erro) {
     let body = document.body;

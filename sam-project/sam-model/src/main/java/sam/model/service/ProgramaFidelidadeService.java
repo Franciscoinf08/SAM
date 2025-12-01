@@ -1,6 +1,7 @@
 package sam.model.service;
 
 import sam.model.dao.Conexao;
+
 import sam.model.dao.EmpresaDAO;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.domain.ProgramaFidelidade;

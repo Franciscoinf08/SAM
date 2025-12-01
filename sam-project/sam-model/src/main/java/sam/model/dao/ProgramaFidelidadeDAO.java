@@ -1,6 +1,8 @@
 package sam.model.dao;
 
+
 import sam.model.domain.Empresa;
+import sam.model.common.Conexao;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.Usuario;
 import sam.model.domain.UsuarioPrograma;
@@ -146,6 +148,7 @@ public class ProgramaFidelidadeDAO {
         return lista;
     }
 
+
     public List<ProgramaFidelidade> listarTodos() {
         List<ProgramaFidelidade> lista = new ArrayList<>();
         String sql = "SELECT * FROM programa_fidelidade";
@@ -209,3 +212,31 @@ public class ProgramaFidelidadeDAO {
     }
 
 }
+    public List<ProgramaFidelidade> listarPorCliente(Long idCliente) {
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+        String sql = "SELECT p.* " +
+                "FROM programa_fidelidade p " +
+                "JOIN usuario_programa up ON up.programa_id = p.idProgramaFidelidade " +
+                "WHERE up.usuario_id = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setLong(1, idCliente);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                ProgramaFidelidade programa = new ProgramaFidelidade();
+                programa.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                programa.setNome(rs.getString("nome"));
+                programa.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                programa.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                programa.setDuracao(rs.getInt("duracao"));
+                programa.setPrecoMensal(rs.getDouble("precoMes"));
+                programa.setIdEmpresa(rs.getInt("empresa_id"));
+                programa.setAvaliacao(rs.getString("avaliacao"));
+                lista.add(programa);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+}
+

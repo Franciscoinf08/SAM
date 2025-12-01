@@ -9,6 +9,7 @@ import java.util.List;
 
 import sam.model.domain.FormObjetivos;
 import sam.model.domain.Usuario;
+import sam.model.common.Conexao;
 
 public class FormObjetivosDao {
 

@@ -17,11 +17,19 @@ public class GestaoUsuariosService {
         usuarioDAO = UsuarioDAO.getInstance();
     }
 
+    public Usuario pesquisar(Long id) throws SQLException {
+        try {
+            return usuarioDAO.pesquisar(id);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
     public Usuario pesquisarConta(String cpf, String senha) throws PersistenciaException, SQLException {
         try {
             return usuarioDAO.pesquisarPorCPFSenha(cpf, senha);
         } catch (PersistenciaException e) {
-            throw new PersistenciaException(e.getLocalizedMessage());
+            throw new PersistenciaException(e);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -30,7 +38,6 @@ public class GestaoUsuariosService {
     public void cadastrar(Usuario usuario) throws PersistenciaException, SQLException {
         if (!"".equals(UsuarioHelper.validarCadastroUsuario(usuario)))
             throw new PersistenciaException(UsuarioHelper.validarCadastroUsuario(usuario));
-
         try {
             usuarioDAO.inserir(usuario);
         } catch (SQLException e) {
@@ -54,7 +61,7 @@ public class GestaoUsuariosService {
 
         return usuarioDAO.getListaClientes(usuario);
     }
-
-
+ 
 
 }
+
