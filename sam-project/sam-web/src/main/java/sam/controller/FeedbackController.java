@@ -7,7 +7,7 @@ import sam.model.service.*;
 
 import java.io.IOException;
 
-@WebServlet("/feedback")
+@WebServlet(name="feedback", urlPatterns = {"/feedback"})
 public class FeedbackController extends HttpServlet {
 
     private FeedbackService service;
@@ -22,8 +22,8 @@ public class FeedbackController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            Integer autorId = Integer.parseInt(request.getParameter("autorId"));
-            Integer avaliadoId = Integer.parseInt(request.getParameter("avaliadoId"));
+            long autorId = Long.parseLong(request.getParameter("autorId"));
+            long avaliadoId = Long.parseLong(request.getParameter("avaliadoId"));
             Integer nota = Integer.parseInt(request.getParameter("nota"));
             String comentario = request.getParameter("comentario");
 

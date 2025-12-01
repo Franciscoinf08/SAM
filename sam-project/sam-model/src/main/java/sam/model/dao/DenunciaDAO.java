@@ -3,6 +3,7 @@ package sam.model.dao;
 import sam.model.domain.Denuncia;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.UsuarioTipo;
+import sam.model.common.Conexao;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,15 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.dao.UsuarioDAO" %>
-<%@ page import="sam.model.dao.Conexao" %>
+<%@ page import="sam.model.common.Conexao" %>
 <%@ page import="sam.model.domain.Usuario" %>
 <%@ page import="java.util.List" %>
 
 <%
-    UsuarioDAO udao = new UsuarioDAO(Conexao.getConexao());
+    UsuarioDAO udao = UsuarioDAO.getInstance();
     List<Usuario> usuarios = udao.listarTodos();
-
-    // pega o usuário logado
-    Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
 %>
 
 <!DOCTYPE html>
@@ -35,10 +32,10 @@
     <section class="card" style="flex:1 1 100%;">
         <h2>Adicionar Avaliação</h2>
 
-        <form class="formulario" id="formAvaliacao" action="/feedback" method="POST">
+        <form class="formulario" id="formAvaliacao" action="/sam/feedback?action=" method="POST">
 
             <!-- autor (usuario logado) -->
-            <input type="hidden" name="idAutor" value="<%=usuarioLogado.getId()%>">
+            <input type="hidden" name="idAutor" value="<%=usuario.getId()%>">
 
             <!-- usuario avaliado -->
             <label>Usuário avaliado:
@@ -72,10 +69,10 @@
     <section class="card" style="flex:1 1 100%;">
         <h2>Denunciar Usuário</h2>
 
-        <form class="formulario" action="/denuncia" method="POST">
+        <form class="formulario" action="/sam/feedback?action=denuncia" method="POST">
 
             <!-- denunciante (us logado) -->
-            <input type="hidden" name="idDenunciante" value="<%=usuarioLogado.getId()%>">
+            <input type="hidden" name="idDenunciante" value="<%=usuario.getId()%>">
 
             <label>Usuário denunciado:
                 <select name="idDenunciado" required>

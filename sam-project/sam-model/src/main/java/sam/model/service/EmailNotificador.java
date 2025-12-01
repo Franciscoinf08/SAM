@@ -1,10 +1,11 @@
 package sam.model.service;
 
+import jakarta.mail.*;
 import sam.model.domain.Denuncia;
 
-import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.Session;
 
 import java.util.Properties;
 
@@ -15,7 +16,7 @@ public class EmailNotificador {
     private final String usuario = "seu_email@provedor.com"; // email que vai enviar
     private final String senha = "sua_senha"; // senha ou app password
 
-    public void notificarDenuncia(Denuncia denuncia) throws MessagingException {
+    public void notificarDenuncia(Denuncia denuncia) throws MessagingException, MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");

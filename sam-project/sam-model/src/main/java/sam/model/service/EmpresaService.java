@@ -1,6 +1,6 @@
 package sam.model.service;
 
-import sam.model.dao.Conexao;
+import sam.model.common.Conexao;
 import sam.model.dao.EmpresaDAO;
 import sam.model.domain.Empresa;
 

@@ -1,6 +1,6 @@
 package sam.model.service;
 
-import sam.model.dao.Conexao;
+import sam.model.common.Conexao;
 import sam.model.dao.UsuarioDAO;
 import sam.model.dao.FeedbackDAO;
 import sam.model.domain.Usuario;
@@ -28,7 +28,7 @@ public class FeedbackService {
 
         try (Connection conexao = Conexao.getConnection()) {
 
-            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            FeedbackDAO feedbackDAO = new FeedbackDAO(conexao);
 
             Feedback feedback = new Feedback(
                     0,
