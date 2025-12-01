@@ -64,10 +64,12 @@
                     </form>
                 </div>
             </div>
+
         </main>
 
         <footer>
             <p id="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>
+            <a href="/sam/core/geral/esqueceu-senha.jsp" id="esqueceu-senha">Esquecei minha senha</a>
         </footer>
 
         <%
