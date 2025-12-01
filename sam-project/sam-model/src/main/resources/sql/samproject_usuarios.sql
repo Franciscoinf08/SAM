@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `samproject` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `samproject`;
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
 -- Host: localhost    Database: samproject
@@ -31,8 +29,11 @@ CREATE TABLE `usuarios` (
   `cpf` char(11) DEFAULT NULL,
   `senha` varchar(50) DEFAULT NULL,
   `tipo` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_gestor` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_gestor` (`id_gestor`),
+  CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_gestor`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Franciscoinf08','francisco@email.com','44436547043','c4ca4238a0b923820dcc509a6f75849b','CLIENTE'),(2,'Carlos','carlos@gmail.com','17996278610','c4ca4238a0b923820dcc509a6f75849b','GESTOR'),(3,'thiersrusso13','thiers@email.com','23903080071','c20ad4d76fe97759aa27a0c99bff6710','DESENVOLVEDOR'),(4,'Mateus0Vasconcelos','mateus17vasc@gmail.com','74451224004','c4ca4238a0b923820dcc509a6f75849b','CLIENTE');
+INSERT INTO `usuarios` VALUES (1,'Franciscoinf08','francisco@email.com','44436547043','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',2),(2,'Carlos','carlos@gmail.com','17996278610','c4ca4238a0b923820dcc509a6f75849b','GESTOR',NULL),(3,'thiersrusso13','thiers@email.com','23903080071','c20ad4d76fe97759aa27a0c99bff6710','DESENVOLVEDOR',NULL),(4,'Mateus0Vasconcelos','mateus17vasc@gmail.com','74451224004','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',2),(5,'Cliente3','cliente@cliente.com','15718088098','c4ca4238a0b923820dcc509a6f75849b','CLIENTE',NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-10 15:34:06
+-- Dump completed on 2025-11-29 20:03:06

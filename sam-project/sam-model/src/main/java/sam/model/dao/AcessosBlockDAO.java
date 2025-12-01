@@ -1,22 +1,29 @@
 package sam.model.dao;
 
+import sam.model.common.Conexao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AcessosBlockDAO {
-
     private final Connection conexao;
+    private static AcessosBlockDAO acessosBlockDAO;
 
-    public AcessosBlockDAO() {
+    static {
+        AcessosBlockDAO.acessosBlockDAO = null;
+    }
+
+    private AcessosBlockDAO() {
         this.conexao = Conexao.getConnection();
-        
-        try {
-            conexao.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    }
+    
+    public static AcessosBlockDAO getInstance() {
+        if (acessosBlockDAO == null)
+            acessosBlockDAO = new AcessosBlockDAO();
+
+        return acessosBlockDAO;
     }
 
     public void bloquear(String recurso, String usuario) throws SQLException {

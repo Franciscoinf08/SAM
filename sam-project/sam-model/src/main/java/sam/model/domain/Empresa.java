@@ -8,7 +8,6 @@ public class Empresa {
     private String nome;
     private String CNPJ;
     private double milheiroSeguranca;
-    private List<ProgramaFidelidade> listaProgramasFidelidade;
     
     public Empresa(String nome, String CNPJ, double milheiroSeguranca){
         this.nome = nome;
@@ -33,15 +32,6 @@ public class Empresa {
         return CNPJ;
     }
 
-    public List<ProgramaFidelidade> getListaProgramasFidelidade() {
-        return listaProgramasFidelidade;
-    }
-
-    public void setListaProgramasFidelidade(List<ProgramaFidelidade> listaProgramasFidelidade) {
-        this.listaProgramasFidelidade = listaProgramasFidelidade;
-    }public void vincularProgramasFidelidade(ProgramaFidelidade p){
-        listaProgramasFidelidade.add(p);
-    }
     public int getId(){
         return getIdEmpresa();
     }

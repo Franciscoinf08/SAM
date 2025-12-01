@@ -13,10 +13,9 @@
     <meta charset="UTF-8">
     <title>SAM - Empresas</title>
 
-
-
-
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
+    <link rel="icon" href="/sam/imgs/favicon.ico">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -58,13 +57,13 @@
         </tr>
 
         <tr>
-            <td><%= empresa.getIdEmpresa() %></td>
-            <td><%= empresa.getNome() %></td>
-            <td><%= empresa.getCNPJ() %></td>
-            <td><%= empresa.getMilheiroSeguranca() %></td>
-            <td><a href="<%=request.getContextPath()%>/empresa?action=editar&id=<%= empresa.getIdEmpresa()%>"><button>Editar</button></a></td>
-            <td><a href="<%= request.getContextPath() %>/programaFidelidade?action=listar&idEmpresa=<%=empresa.getIdEmpresa()%>"><button>Programas de Fidelidade</button></a></td>
-            <td><a href="<%=request.getContextPath()%>/empresa?action=excluir&id=<%=empresa.getIdEmpresa()%>"><button>Excluir</button></a></td>
+            <td id="id"><%= empresa.getIdEmpresa() %></td>
+            <td id="nome"><%= empresa.getNome() %></td>
+            <td id="cnpj"><%= empresa.getCNPJ() %></td>
+            <td id="milheiroSeguranca"><%= empresa.getMilheiroSeguranca() %></td>
+            <td id="editarBtn"><a href="<%=request.getContextPath()%>/empresa?action=editar&id=<%= empresa.getIdEmpresa()%>"><button>Editar</button></a></td>
+            <td id="programaFidelidade"><a href="<%= request.getContextPath() %>/programaFidelidade?action=listar&idEmpresa=<%=empresa.getIdEmpresa()%>"><button>Programas de Fidelidade</button></a></td>
+            <td id="excluirBtn"><a href="<%=request.getContextPath()%>/empresa?action=excluir&id=<%=empresa.getIdEmpresa()%>"><button>Excluir</button></a></td>
 
         </tr>
         <%

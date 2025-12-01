@@ -1,6 +1,12 @@
 package sam.model.dao;
 
+
+import sam.model.domain.Empresa;
+import sam.model.common.Conexao;
 import sam.model.domain.ProgramaFidelidade;
+import sam.model.domain.Usuario;
+import sam.model.domain.UsuarioPrograma;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +41,39 @@ public class ProgramaFidelidadeDAO {
         }
         return programa;
     }
+    public List<ProgramaFidelidade> listarNaoAssociados(Usuario usuario){
+        ProgramaFidelidadeDAO dao = new ProgramaFidelidadeDAO();
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+        String sql = "SELECT p.*\n" +
+                "FROM programa_fidelidade p\n" +
+                "WHERE NOT EXISTS (\n" +
+                "    SELECT 1\n" +
+                "    FROM usuario_programa up\n" +
+                "    WHERE up.programa_id = p.idProgramaFidelidade\n" +
+                "      AND up.usuario_id = ?\n" +
+                ");";
 
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, Math.toIntExact(usuario.getId()));
+            try(ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProgramaFidelidade p = new ProgramaFidelidade();
+                    p.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                    p.setPrecoMensal(rs.getDouble("precoMes"));
+                    p.setAvaliacao(rs.getString("avaliacao"));
+                    p.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                    p.setDuracao(rs.getInt("duracao"));
+                    p.setIdEmpresa(rs.getInt("empresa_id"));
+                    p.setNome(rs.getString("nome"));
+                    p.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                    lista.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
     public ProgramaFidelidade buscarPorId(int id) {
         ProgramaFidelidade programaFidelidade = null;
         String sql = "SELECT * FROM programa_fidelidade WHERE idProgramaFidelidade = ?";
@@ -109,4 +147,96 @@ public class ProgramaFidelidadeDAO {
         }
         return lista;
     }
+
+
+    public List<ProgramaFidelidade> listarTodos() {
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+        String sql = "SELECT * FROM programa_fidelidade";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()){
+            while (rs.next()) {
+                ProgramaFidelidade programaFidelidade = new ProgramaFidelidade();
+                programaFidelidade.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                programaFidelidade.setNome(rs.getString("nome"));
+                programaFidelidade.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                programaFidelidade.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                programaFidelidade.setDuracao(rs.getInt("duracao"));
+                programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
+                programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
+                programaFidelidade.setAvaliacao(rs.getString("avaliacao"));
+                lista.add(programaFidelidade);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+
+    public List<ProgramaFidelidade> listarAssociados(Usuario usuario) {
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+
+        String sql = """
+        SELECT p.*
+        FROM usuario_programa up
+        INNER JOIN programa_fidelidade p 
+                ON p.idProgramaFidelidade = up.programa_id
+        WHERE up.usuario_id = ?
+        """;
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setLong(1, usuario.getId()); // Não precisa converter
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProgramaFidelidade p = new ProgramaFidelidade();
+
+                    p.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                    p.setPrecoMensal(rs.getDouble("precoMes"));
+                    p.setAvaliacao(rs.getString("avaliacao"));
+                    p.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                    p.setDuracao(rs.getInt("duracao"));
+                    p.setIdEmpresa(rs.getInt("empresa_id"));
+                    p.setNome(rs.getString("nome"));
+                    p.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+
+                    lista.add(p);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar programas associados", e);
+        }
+
+        return lista;
+    }
+
 }
+    public List<ProgramaFidelidade> listarPorCliente(Long idCliente) {
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+        String sql = "SELECT p.* " +
+                "FROM programa_fidelidade p " +
+                "JOIN usuario_programa up ON up.programa_id = p.idProgramaFidelidade " +
+                "WHERE up.usuario_id = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setLong(1, idCliente);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                ProgramaFidelidade programa = new ProgramaFidelidade();
+                programa.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                programa.setNome(rs.getString("nome"));
+                programa.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                programa.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                programa.setDuracao(rs.getInt("duracao"));
+                programa.setPrecoMensal(rs.getDouble("precoMes"));
+                programa.setIdEmpresa(rs.getInt("empresa_id"));
+                programa.setAvaliacao(rs.getString("avaliacao"));
+                lista.add(programa);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+}
+

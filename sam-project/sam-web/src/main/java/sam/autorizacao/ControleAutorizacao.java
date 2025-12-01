@@ -68,13 +68,9 @@ public class ControleAutorizacao {
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
         
-        permissao = new Permissao("transacoes-gestor");
-        permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
-        permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
-        permissoes.put(permissao.getRecurso(), permissao);
-        
-        permissao = new Permissao("transacoes-clientes");
+        permissao = new Permissao("transacoes");
         permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
+        permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
         
@@ -113,7 +109,16 @@ public class ControleAutorizacao {
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
         
+        permissao = new Permissao("solicitar-gestor");
+        permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
+        permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
+        permissoes.put(permissao.getRecurso(), permissao);
+        
         permissao = new Permissao("ver-usuarios");
+        permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
+        permissoes.put(permissao.getRecurso(), permissao);
+        
+        permissao = new Permissao("ver-solicitacoes");
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
     }

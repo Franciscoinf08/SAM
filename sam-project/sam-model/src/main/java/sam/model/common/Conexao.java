@@ -1,5 +1,5 @@
 
-package sam.model.dao;
+package sam.model.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

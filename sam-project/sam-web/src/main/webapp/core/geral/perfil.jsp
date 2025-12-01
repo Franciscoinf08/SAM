@@ -8,6 +8,7 @@
         <title>SAM - Perfil</title>
 
         <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="icon" href="/sam/imgs/favicon.ico">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,8 +50,26 @@
                         <button type="button" onclick="validarCamposAlteracaoPerfil(document.formAlteracao)">Salvar Alterações</button>
                     </label>
                 </form>
+                <%if (ControleAutorizacao.checkPermissao("solicitar-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("solicitar-gestor", usuario.getCPF())){%>
+                <h1>Solicitar conta gestor</h1>
+                <h2>Realizar nova solicitação</h2>
+                <a href="/sam/core/cliente/lista-solicitacoes.jsp"><button>Listar solicitação</button></a>
+                <form action="/sam/solicitarGestor" method="POST" id="formSolicitarGestor">
 
-                <button id="solicitar-gestor">Solicitar conta de gestor</button>
+                    <input type="hidden" name="acao" value="Pedir">
+                    <input type="hidden" name="nome" value="<%=usuario.getNome()%>">
+                    <input type="hidden" name="email" value="<%=usuario.getEmail()%>">
+                    <input type="hidden" name="idUsuario" value="<%=String.valueOf(usuario.getId())%>">
+
+                    <select name="formaPagamento" required >
+                        <option value="">Selecione...</option>
+                        <option value="boleto">Boleto</option>
+                        <option value="pix">Pix</option>
+                    </select>
+
+                    <input type="submit" value="Confirmar solicitação">
+                </form>
+                <%}%>
             </div>
             <div class="formulario">
                 <form action="/sam/core/cliente/selecao-formularios.jsp">
@@ -60,16 +79,7 @@
             </div>
         </main>
 
-        <%
-            String erro = (String) request.getAttribute("erro");
-            if (erro != null) {%>
-        <div class="mensagem-card"><%=erro%></div>
-        <script>
-            let mensagemEl = document.querySelector(".mensagem-card");
-            setTimeout(() => { mensagemEl.style.top = "4em"; }, 1);
-            setTimeout(() => { mensagemEl.style.display = "none"; }, 4000);
-        </script>
-        <%}%>
+        <%@include file="/core/mensagens-erro.jsp"%>
 
         <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/script.js"></script>

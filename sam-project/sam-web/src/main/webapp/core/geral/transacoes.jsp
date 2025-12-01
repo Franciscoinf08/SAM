@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="sam.model.domain.util.UsuarioTipo" %>
+<%@ page import="sam.model.service.GestaoUsuariosService" %>
+<%@ page import="sam.model.service.ProgramaFidelidadeService" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.sql.Date" %>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -6,7 +13,8 @@
         <meta charset="UTF-8">
         <title>SAM - Transações</title>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+        <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
+        <link rel="icon" href="/sam/imgs/favicon.ico">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,30 +25,80 @@
 
     <body>
         <header>
-            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Transações</h1>
             <%@include file="/core/header.jsp" %>
         </header>
 
         <main class="content">
             <h2>Registrar Transação</h2>
-            <form class="formulario">
-                <label>Tipo:</label>
-                <select>
-                    <option>Compra</option>
-                    <option>Venda</option>
-                    <option>Bônus</option>
-                </select>
+            <div class="formulario">
+                <form name="formCadastroTransacao" onsubmit="return validarCamposCadastroTransacao(document.formCadastroTransacao)" action="/sam/CadastroTransacaoController" method="POST">
+                    <%
+                        GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
+                        if (usuario.getTipo() == UsuarioTipo.GESTOR) {
+                            List<Usuario> listaClientes = manterUsuario.getListaClientes(usuario);
+                    %>
+                    <label for="cliente">Cliente:
+                        <select name="cliente" id="cliente">
+                            <% for (Usuario cliente : listaClientes) {%>
+                            <option value="<%= cliente.getId() %>"><%= cliente.getNome() %></option>
+                            <%} if (listaClientes.isEmpty()) {%>
+                            <option value="">Nenhum Cliente Disponível</option>
+                            <%}%>
+                        </select>
+                    </label>
+                    <%} else {%>
+                    <label>
+                        <input name="cliente" id="cliente" type="hidden" value="<%= usuario.getId() %>">
+                    </label>
+                    <%}%>
 
-                <label>Quantidade:</label>
-                <input type="number" placeholder="Digite a quantidade">
+                    <label for="programa">Programa de Fidelidade:
+                        <select name="programa" id="programa">
+                        </select>
+                    </label>
 
-                <label>Valor (R$):</label>
-                <input type="text" placeholder="0,00">
+                    <label for="tipo">Tipo:
+                        <select name="tipo" class="tipo-input">
+                            <option value="COMPRA">Compra</option>
+                            <option value="VENDA">Venda</option>
+                        </select>
+                    </label>
 
-                <button>Registrar</button>
-            </form>
+                    <label for="quantidade">Quantidade:
+                        <input name="quantidade" type="number" min="1" value="1" placeholder="1" required>
+                    </label>
+
+                    <label for="valor">Valor (R$):
+                        <input name="valor" type="number" step="0.01" min="0.01" value="0.01" placeholder="0.01" required>
+                    </label>
+
+                    <label for="bonus" class="bonus">Bônus:
+                        <input name="bonus" type="number" min="0" value="0" placeholder="0">
+                    </label>
+
+                    <label for="data">Data:
+                        <input name="data" type="date" value="<%= new Date(System.currentTimeMillis()).toString() %>" required>
+                    </label>
+
+                    <label for="data-expiracao" class="data-expiracao">Data de Expiração:
+                        <input name="dataExpiracao" type="date" value="<%= LocalDate.now().plusDays(1).toString() %>" required>
+                    </label>
+
+                    <button>Registrar</button>
+                </form>
+            </div>
         </main>
+
+        <%@include file="/core/mensagens-erro.jsp"%>
+        <script src="/sam/js/ajax.js"></script>
+        <script>
+            ajaxProgramaFidelidade();
+            document.querySelector("#cliente").addEventListener("change", () => { console.log("a"); ajaxProgramaFidelidade(); });
+        </script>
+        <script src="/sam/js/toggle-compra-venda.js"></script>
+        <script src="/sam/js/helper.js"></script>
         <script src="/sam/js/script.js"></script>
     </body>
 
