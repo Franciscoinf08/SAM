@@ -1,24 +1,33 @@
 package sam.model.service;
 
-import sam.model.common.exception.PersistenciaException;
+
 import sam.model.dao.NotificacaoDAO;
+import sam.model.dao.UsuarioDAO;
 import sam.model.domain.Notificacao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class NotificacaoService {
+    private NotificacaoDAO notificacaoDAO;
 
-    private final NotificacaoDAO dao = NotificacaoDAO.getInstance();
-
-    public void enviar(Notificacao n) throws PersistenciaException {
-        dao.inserir(n);
+    public NotificacaoService() {
+        this.notificacaoDAO = new NotificacaoDAO();
     }
 
-    public List<Notificacao> listarPorUsuario(long idUsuario) throws PersistenciaException {
-        return dao.listarPorUsuario(idUsuario);
+    public List<Notificacao> lista(int idUsuario) throws SQLException {
+        return notificacaoDAO.listarPorUsuario(idUsuario);
     }
 
-    public boolean marcarComoLida(long idNotif, long idUsuario) throws PersistenciaException {
-        return dao.marcarComoLida(idNotif, idUsuario);
+    public void marcarComoLida(int idNotificacao) {
+        try {
+            notificacaoDAO.marcarComoLida(idNotificacao);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void enviarNotificacaoAutomatica(int idNotificacao, int idUsuario) {
+
+
     }
 }

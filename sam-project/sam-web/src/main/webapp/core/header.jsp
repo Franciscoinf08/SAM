@@ -17,7 +17,7 @@
     <%} if (ControleAutorizacao.checkPermissao("empresas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("empresas", usuario.getCPF())) {%>
     <a href="/sam/core/gestor/empresas.jsp">Empresas</a>
     <%} if (ControleAutorizacao.checkPermissao("notificacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("notificacoes", usuario.getCPF())) {%>
-    <a href="/sam/notificacoes">Notificações</a>
+    <a href="/sam/notificacoes?action=listar">Notificações</a>
     <%} if (ControleAutorizacao.checkPermissao("suporte", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("suporte", usuario.getCPF())) {%>
     <a href="/sam/core/geral/suporte.jsp">Suporte</a>
 </nav>

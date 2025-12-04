@@ -1,28 +1,33 @@
 package sam.model.service;
 
-import sam.model.common.exception.PersistenciaException;
-import sam.model.dao.UsuarioDAO;
-import sam.model.domain.Notificacao;
-import sam.model.domain.Usuario;
-import sam.model.domain.util.AlcanceNotificacao;
 
-import java.sql.SQLException;
-import java.util.List;
+import sam.model.dao.NotificacaoDAO;
 
-public class GestaoNotificacao {
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-    private final NotificacaoService servico = new NotificacaoService();
-    private final UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+public class GestaoNotificacao{
+    private ScheduledExecutorService executor;
 
-    public void enviarPorAlcance(Notificacao original, AlcanceNotificacao alcance)
-            throws PersistenciaException, SQLException {
+    public void iniciar(){
+        executor = Executors.newScheduledThreadPool(1);
 
-        List<Usuario> usuarios = usuarioDAO.listarPorTipo(alcance.name().toLowerCase());
+        NotificacaoDAO dao = new NotificacaoDAO();
+        NotificacaoService service = new NotificacaoService();
 
-        for (Usuario u : usuarios) {
-            Notificacao copia = new Notificacao(original);
-            copia.setDestinatario(u);
-            servico.enviar(copia);
+        Runnable tarefa = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+        executor.scheduleAtFixedRate(tarefa, 0, 1, TimeUnit.HOURS);
+    }
+    public void finalizar(){
+        if(executor != null){
+            executor.shutdown();
         }
     }
+
 }
