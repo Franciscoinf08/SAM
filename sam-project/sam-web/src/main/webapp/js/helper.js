@@ -73,10 +73,14 @@ function validarCamposCadastro(form) {
         form.senhaConfirmar.focus();
     }
     else {
-        form.action ="/sam/CadastroController";
+        form.action ="/sam/UserVerifyController";
+        form.method = "POST"
         form.submit();
         resultado = true;
     }
+
+
+
 
     return resultado;
 }
@@ -212,4 +216,21 @@ function gerarMensagemErro(erro) {
 
     setTimeout(() => { mensagemErroEl.style.top = "4em"; }, 1);
     setTimeout(() => { mensagemErroEl.style.display = "none"; }, 4000);
+}
+
+function validarSolicitarPagamento(form) {
+    let arquivo = form.arquivo.value;
+    let resultado = false;
+
+    if (arquivo === "") {
+        gerarMensagemErro("Adiciona um arquivo");
+        form.cpf.focus();
+    }
+    else {
+        form.action ="/sam/LoginController";
+        form.submit();
+        resultado = true;
+    }
+
+    return resultado
 }

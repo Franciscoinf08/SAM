@@ -1,89 +1,107 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="sam.model.dao.UsuarioDAO" %>
+<%@ page import="sam.model.common.Conexao" %>
+<%@ page import="sam.model.domain.Usuario" %>
+<%@ page import="java.util.List" %>
+
+<%
+    UsuarioDAO udao = UsuarioDAO.getInstance();
+    List<Usuario> usuarios = udao.listarTodos();
+%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>SAM - Avaliações</title>
+<head>
+    <meta charset="UTF-8">
+    <title>SAM - Avaliações</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
-        <link rel="icon" href="/sam/imgs/favicon.ico">
+<body>
+<header>
+    <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+    <h1>Avaliações</h1>
+    <%@include file="/core/header.jsp" %>
+</header>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<main class="dashboard">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+    <!-- ============================ FEEDBACK =============================== -->
+    <section class="card" style="flex:1 1 100%;">
+        <h2>Adicionar Avaliação</h2>
 
-    <body>
-        <header>
-            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Avaliações</h1>
-            <%@include file="/core/header.jsp" %>
-        </header>
+        <form class="formulario" id="formAvaliacao" action="/sam/feedback?action=" method="POST">
 
-        <main class="dashboard">
+            <!-- autor (usuario logado) -->
+            <input type="hidden" name="idAutor" value="<%=usuario.getId()%>">
 
-            <section class="card" style="flex:1 1 100%;">
-                <h2>Adicionar Avaliação</h2>
-                <form class="formulario" id="formAvaliacao">
-                    <label for="usuario">Usuário avaliado:
-                        <input type="text" placeholder="Nome do usuário">
-                    </label>
+            <!-- usuario avaliado -->
+            <label>Usuário avaliado:
+                <select name="idAvaliado" required>
+                    <option value="">Selecione...</option>
+                    <% for (Usuario u : usuarios) { %>
+                        <option value="<%=u.getId()%>"><%=u.getNome()%></option>
+                    <% } %>
+                </select>
+            </label>
 
-                    <label for="nota">Nota:
-                        <select>
-                            <option value="5">⭐️⭐️⭐️⭐️⭐️ - Excelente</option>
-                            <option value="4">⭐️⭐️⭐️⭐️ - Bom</option>
-                            <option value="3">⭐️⭐️⭐️ - Regular</option>
-                            <option value="2">⭐️⭐️ - Ruim</option>
-                            <option value="1">⭐️ - Péssimo</option>
-                        </select>
-                    </label>
+            <label>Nota:
+                <select name="nota" required>
+                    <option value="5">5 - Excelente</option>
+                    <option value="4">4 - Bom</option>
+                    <option value="3">3 - Regular</option>
+                    <option value="2">2 - Ruim</option>
+                    <option value="1">1 - Péssimo</option>
+                </select>
+            </label>
 
-                    <label for="comentario">Comentário:
-                        <textarea rows="3" placeholder="Escreva seu comentário..."></textarea>
-                    </label>
+            <label>Comentário:
+                <textarea name="comentario" rows="3" required></textarea>
+            </label>
 
-                    <button type="button" onclick="adicionarAvaliacao()">Enviar Avaliação</button>
-                </form>
-            </section>
+            <button type="submit">Enviar Avaliação</button>
+        </form>
+    </section>
 
-            <section class="card" style="flex:1 1 100%;">
-                <h2>Avaliações Recentes</h2>
-                <ul class="notificacoes">
-                    <li><strong>Maria S.</strong> — ⭐️⭐️⭐️⭐️⭐️<br>Excelente atendimento e suporte rápido.</li>
-                    <li><strong>João P.</strong> — ⭐️⭐️⭐️<br>Poderia responder mensagens com mais agilidade.</li>
-                </ul>
-            </section>
+    <!-- ============================ DENÚNCIA =============================== -->
+    <section class="card" style="flex:1 1 100%;">
+        <h2>Denunciar Usuário</h2>
 
-            <section class="card" style="flex:1 1 100%;">
-                <h2>Denunciar Usuário</h2>
-                <form class="formulario">
-                    <label for="denunciado">Usuário denunciado:
-                        <input type="text" placeholder="Nome do usuário">
-                    </label>
+        <form class="formulario" action="/sam/feedback?action=denuncia" method="POST">
 
-                    <label for="motivo">Motivo:
-                        <select>
-                            <option>Comportamento inadequado</option>
-                            <option>Fraude ou má conduta</option>
-                            <option>Spam ou propaganda</option>
-                            <option>Outro</option>
-                        </select>
-                    </label>
+            <!-- denunciante (us logado) -->
+            <input type="hidden" name="idDenunciante" value="<%=usuario.getId()%>">
 
-                    <label for="detalhes">Detalhes:
-                        <textarea rows="3" placeholder="Descreva o ocorrido..."></textarea>
-                    </label>
+            <label>Usuário denunciado:
+                <select name="idDenunciado" required>
+                    <option value="">Selecione...</option>
+                    <% for (Usuario u : usuarios) { %>
+                        <option value="<%=u.getId()%>"><%=u.getNome()%></option>
+                    <% } %>
+                </select>
+            </label>
 
-                    <button type="button" onclick="enviarDenuncia()">Enviar Denúncia</button>
-                </form>
-            </section>
+            <label>Motivo:
+                <select name="motivo" required>
+                    <option value="Comportamento inadequado">Comportamento inadequado</option>
+                    <option value="Fraude ou má conduta">Fraude ou má conduta</option>
+                    <option value="Spam ou propaganda">Spam ou propaganda</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </label>
 
-        </main>
-        <script src="/sam/js/script.js"></script>
-    </body>
+            <label>Detalhes:
+                <textarea name="detalhes" rows="3" required></textarea>
+            </label>
 
+            <button type="submit">Enviar Denúncia</button>
+        </form>
+
+    </section>
+
+</main>
+
+</body>
 </html>

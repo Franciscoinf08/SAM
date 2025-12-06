@@ -17,7 +17,7 @@
     <%} if (ControleAutorizacao.checkPermissao("empresas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("empresas", usuario.getCPF())) {%>
     <a href="/sam/core/gestor/empresas.jsp">Empresas</a>
     <%} if (ControleAutorizacao.checkPermissao("notificacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("notificacoes", usuario.getCPF())) {%>
-    <a href="/sam/core/geral/notificacoes.jsp">Notificações</a>
+    <a href="/sam/notificacoes">Notificações</a>
     <%} if (ControleAutorizacao.checkPermissao("suporte", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("suporte", usuario.getCPF())) {%>
     <a href="/sam/core/geral/suporte.jsp">Suporte</a>
 </nav>
@@ -41,7 +41,7 @@
         <%} if (ControleAutorizacao.checkPermissao("mensagens-avisos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("mensagens-avisos", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/mensagens.jsp">Mensagens e Avisos</a>
         <%} if (ControleAutorizacao.checkPermissao("acesso-clientes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("acesso-clientes", usuario.getCPF())) {%>
-        <a href="/sam/core/gestor/meus-clientes.jsp">Meus Clientes</a>
+        <a href="<%=request.getContextPath()%>/usuarioPrograma?action=listar">Meus clientes</a>
         <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
         <a href="/sam/core/geral/relatorios.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>
@@ -50,6 +50,8 @@
         <a href="/sam/core/gestor/planos.jsp">Campanhas</a>
         <%} if (ControleAutorizacao.checkPermissao("ver-usuarios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-usuarios", usuario.getCPF())) {%>
         <a href="/sam/core/dev/visualizar-usuarios.jsp">Ver Usuários</a>
+        <%} if (ControleAutorizacao.checkPermissao("ver-solicitacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-solicitacoes", usuario.getCPF())) {%>
+        <a href="/sam/core/dev/gerenciar-solicitacoes.jsp">Solicitações para Conta Gestor</a>
         <%}%>
     </div>
 </div>

@@ -1,0 +1,90 @@
+.verificacao * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+.verificacao :root {
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --accen :#3b82f6;
+    --muted:#6b7280;
+    --box-size:56px;
+    --gap:10px;
+}
+
+.verificacao .card {
+    background:var(--card);
+    border-radius:12px;
+    padding:28px;
+    box-shadow:0 8px 24px rgba(16,24,40,0.06);
+    width:100%;
+    max-width:420px;
+    text-align:center;
+}
+
+.verificacao .small {
+    color:var(--muted);
+    font-size:13px;
+    margin:0 0 20px;
+}
+
+.verificacao .code-input {
+    display:flex;
+    justify-content:center;
+    gap:var(--gap);
+    margin-bottom:18px;
+}
+
+.verificacao .code-input input {
+    width:var(--box-size);
+    height:var(--box-size);
+    border-radius:10px;
+    border:1px solid #e6e9ee;
+    font-size:22px;
+    text-align:center;
+    outline:none;
+    background:transparent;
+    caret-color:transparent;
+    transition:box-shadow .12s, border-color .12s, transform .08s;
+}
+
+.verificacao .code-input input:focus {
+    border-color:var(--accent);
+    box-shadow:0 4px 10px rgba(59,130,246,0.12);
+    transform:translateY(-2px);
+}
+
+.verificacao button.verify {
+    width: 100%;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.verificacao button.verify:active {
+    transform:translateY(1px);
+}
+
+.verificacao .info {
+    margin-top:12px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+#input-codigo{
+    display: none;
+}
+
+.active{
+    display: flex;
+}
+
+button{
+    color: mistyrose;
+}

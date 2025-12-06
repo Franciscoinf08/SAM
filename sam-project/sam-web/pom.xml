@@ -11,12 +11,18 @@
     <packaging>war</packaging>
     <name>sam-web</name>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
+
+        <!-- SAM model -->
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sam-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Tomcat -->
+
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat</artifactId>
@@ -25,11 +31,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>sam-model</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!-- Jakarta Servlet -->
 
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -38,12 +40,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-
+        <!-- MySQL -->
 
         <dependency>
             <groupId>com.mysql</groupId>
@@ -51,95 +48,71 @@
             <version>8.4.0</version>
         </dependency>
 
-
     </dependencies>
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.9.0</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.4.0</version>
                 <configuration>
-                    <!--<attachClasses>true</attachClasses>-->
-                    <!--<webXml>target/web.xml</webXml>-->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>tomcat-run</id>
-                        <goals>
-                            <!--<goal>exec-war-only</goal>-->
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>jakarta.servlet</groupId>
-                                    <artifactId>jakarta.servlet-api</artifactId>
-                                    <version>5.0.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                            <warRunDependencies>
-                                <warRunDependency>
-                                    <dependency>
-                                        <groupId>a groupId</groupId>
-                                        <artifactId>and artifactId</artifactId>
-                                        <version>version</version>
-                                        <type>war</type>
-                                    </dependency>
-                                    <contextPath>/</contextPath>
-                                </warRunDependency>
-                            </warRunDependencies>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven3-plugin</artifactId>
+                <version>1.10.11</version>
+
+                <configuration>
+                    <container>
+                        <tainype>installed</tainype>
+                        <containerId>tomcat11x</containerId>
+                        <home>C:\apache-tomcat-11.0.13</home>
+                    </container>
+
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/sam</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                        </properties>
+                    </configuration>
+
+                </configuration>
             </plugin>
 
-
-
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
-                    <port>8080</port>
-                    <path>/sam</path>
+                    <failOnViolation>false</failOnViolation>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>config/sun_checks.xml</configLocation>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
 
 </project>

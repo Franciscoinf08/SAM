@@ -8,7 +8,7 @@ public class AcessosBlockService {
     private AcessosBlockDAO bloqueios;
 
     public AcessosBlockService() {
-        this.bloqueios = new AcessosBlockDAO();
+        this.bloqueios = AcessosBlockDAO.getInstance();
     }
 
     public void bloquear(String recurso, String usuario) throws SQLException {

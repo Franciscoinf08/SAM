@@ -1,5 +1,6 @@
 package sam.model.dao;
 
+import sam.model.common.Conexao;
 import sam.model.common.exception.PersistenciaException;
 import sam.model.common.seguranca.PasswordDigest;
 import sam.model.domain.Usuario;
@@ -10,6 +11,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -172,6 +174,62 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, usuario.getId());
             ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                String cpf = rs.getString("cpf");
+                String senha = rs.getString("senha");
+                String tipo = rs.getString("tipo");
+                Long id = rs.getLong("id");
+                Usuario cliente = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipo));
+                cliente.setId(id);
+
+                listaClientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao listar clientes", e);
+        }
+
+        return listaClientes;
+    }
+
+    public List<Usuario> listarPorTipo(String tipo) throws SQLException {
+        List<Usuario> lista = new ArrayList<>();
+        String sql = "SELECT * FROM usuarios WHERE tipo = ?";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+            preparedStatement.setString(1, tipo);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+
+                Long id = rs.getLong("id");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                String cpf = rs.getString("cpf");
+                String senha = rs.getString("senha");
+                String tipoUser = rs.getString("tipo");
+
+                Usuario usuario = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipoUser));
+                usuario.setId(id);
+
+                lista.add(usuario);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao listar usuários por tipo", e);
+        }
+
+        return lista;
+    }
+
+    public List<Usuario> listarTodos() throws SQLException {
+        List<Usuario> listaClientes = new ArrayList<>();
+        String sql = "SELECT * FROM usuarios";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+
+            ResultSet rs = preparedStatement.executeQuery()){
 
             while (rs.next()) {
                 String nome = rs.getString("nome");

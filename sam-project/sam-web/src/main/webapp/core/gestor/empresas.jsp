@@ -57,13 +57,13 @@
         </tr>
 
         <tr>
-            <td><%= empresa.getIdEmpresa() %></td>
-            <td><%= empresa.getNome() %></td>
-            <td><%= empresa.getCNPJ() %></td>
-            <td><%= empresa.getMilheiroSeguranca() %></td>
-            <td><a href="<%=request.getContextPath()%>/empresa?action=editar&id=<%= empresa.getIdEmpresa()%>"><button>Editar</button></a></td>
-            <td><a href="<%= request.getContextPath() %>/programaFidelidade?action=listar&idEmpresa=<%=empresa.getIdEmpresa()%>"><button>Programas de Fidelidade</button></a></td>
-            <td><a href="<%=request.getContextPath()%>/empresa?action=excluir&id=<%=empresa.getIdEmpresa()%>"><button>Excluir</button></a></td>
+            <td id="id"><%= empresa.getIdEmpresa() %></td>
+            <td id="nome"><%= empresa.getNome() %></td>
+            <td id="cnpj"><%= empresa.getCNPJ() %></td>
+            <td id="milheiroSeguranca"><%= empresa.getMilheiroSeguranca() %></td>
+            <td id="editarBtn"><a href="<%=request.getContextPath()%>/empresa?action=editar&id=<%= empresa.getIdEmpresa()%>"><button>Editar</button></a></td>
+            <td id="programaFidelidade"><a href="<%= request.getContextPath() %>/programaFidelidade?action=listar&idEmpresa=<%=empresa.getIdEmpresa()%>"><button>Programas de Fidelidade</button></a></td>
+            <td id="excluirBtn"><a href="<%=request.getContextPath()%>/empresa?action=excluir&id=<%=empresa.getIdEmpresa()%>"><button>Excluir</button></a></td>
 
         </tr>
         <%

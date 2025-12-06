@@ -62,4 +62,10 @@ public class GestaoUsuariosService {
 
         return usuarioDAO.getListaClientes(usuario);
     }
+
+
+    public Usuario buscarPorEmail(String email) throws SQLException {
+        return usuarioDAO.pesquisarPorEmail(email);
+    }
 }
+
