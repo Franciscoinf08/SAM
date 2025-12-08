@@ -66,7 +66,7 @@ public class EmpresaDAO {
         }
     }
     public void excluirEmpresa(int id) throws SQLException {
-        String sql = "DELETE FROM empresa WHERE idEmpresa = ?";
+        String sql = "DELETE FROM empresa WHERE empresa_id = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();

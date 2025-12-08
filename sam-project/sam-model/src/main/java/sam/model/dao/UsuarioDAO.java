@@ -222,4 +222,31 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
         return lista;
     }
+
+    public List<Usuario> listarTodos() throws SQLException {
+        List<Usuario> listaClientes = new ArrayList<>();
+        String sql = "SELECT * FROM usuarios";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+
+            ResultSet rs = preparedStatement.executeQuery()){
+
+            while (rs.next()) {
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                String cpf = rs.getString("cpf");
+                String senha = rs.getString("senha");
+                String tipo = rs.getString("tipo");
+                Long id = rs.getLong("id");
+                Usuario cliente = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipo));
+                cliente.setId(id);
+
+                listaClientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao listar clientes", e);
+        }
+
+        return listaClientes;
+    }
 }

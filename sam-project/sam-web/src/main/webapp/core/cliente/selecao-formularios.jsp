@@ -77,9 +77,9 @@
 
                     <input type="hidden" name="id" value="<%= form.getId() %>"/>
 
-                    <a href="<%=request.getContextPath()%>/processarObjetivos?action=excluir&id=<%=form.getId()%>"><button>
-                        Excluir
-                    </button></a>
+                    <a href="<%=request.getContextPath()%>/processarObjetivos?action=excluir&id=<%=form.getId()%>">
+                        <button id="botao-excluir">Excluir</button>
+                    </a>
             </td>
         </tr>
         <%

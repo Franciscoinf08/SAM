@@ -22,6 +22,7 @@ public class processarObjetivos extends HttpServlet {
         String action = request.getParameter("action");
         if("excluir".equals(action)) {
             excluir(request, response);
+            return;
         }
         if (idStr != null && !idStr.isEmpty()) {
             try {
@@ -117,7 +118,9 @@ public class processarObjetivos extends HttpServlet {
 
     private void excluir(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        FormObjetivosDao.excluir(id);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+        Long idUsuario = usuario.getId();
+        FormObjetivosDao.excluir(id, idUsuario);
         response.sendRedirect(request.getContextPath()+ "/core/cliente/selecao-formularios.jsp");
 
     }
