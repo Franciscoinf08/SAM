@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import sam.model.domain.Notificacao;
 import sam.model.domain.Usuario;
+import sam.model.domain.util.UsuarioTipo;
 import sam.model.service.GestaoUsuariosService;
 import sam.model.service.NotificacaoService;
 
@@ -54,13 +55,20 @@ public class NotificacaoController extends HttpServlet {
 
     }
 
-    private void listarNotificacoes(HttpServletRequest request, HttpServletResponse response) {
+    private void listarNotificacoes(HttpServletRequest request, HttpServletResponse response){
         HttpSession sessao = request.getSession();
         Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+
+        GestaoUsuariosService gestaoUsuariosService = new GestaoUsuariosService();
         int idUsuario = Math.toIntExact(usuario.getId());
 
         List<Notificacao> lista;
         try {
+            if (usuario.getTipo() == UsuarioTipo.GESTOR){
+                List<Usuario> clientes;
+                clientes =  gestaoUsuariosService.getListaClientes(usuario);
+                request.setAttribute("clientes", clientes);
+            }
             lista = notificacaoService.lista(idUsuario);
             request.setAttribute("listaNotificacoes", lista);
             RequestDispatcher dispatcher = request.getRequestDispatcher("core/geral/notificacoes.jsp");
@@ -73,8 +81,24 @@ public class NotificacaoController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, java.io.IOException {
+            enviarNotificacao(request, response);
+
+    }
+
+    private void enviarNotificacao(HttpServletRequest request, HttpServletResponse response) {
+        String titulo = request.getParameter("titulo");
+        String mensagem = request.getParameter("mensagem");
+        int destinatario = Integer.parseInt(request.getParameter("cliente"));
+        Notificacao notificacao = new Notificacao(titulo, mensagem, destinatario);
+
+        try {
+            notificacaoService.enviar(notificacao);
+            response.sendRedirect(request.getContextPath() + "/notificacoes?action=listar");
+        } catch (SQLException | IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
     }
 

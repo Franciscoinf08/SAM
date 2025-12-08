@@ -44,7 +44,7 @@ public class NotificacaoDAO {
      }
 
      public void salvar(Notificacao notificacao) throws SQLException {
-        String sql = "insert into notificacao(titulo, mensagem, dataEnvio, destinatario, lida) values(?,?,?,?,?)";
+        String sql = "insert into notificacoes (titulo, mensagem, dataEnvio, destinatario, lida) values(?,?,?,?,?)";
         try(PreparedStatement stmt = conexao.prepareStatement(sql)){
             stmt.setString(1, notificacao.getTitulo());
             stmt.setString(2, notificacao.getDescricao());
@@ -53,7 +53,7 @@ public class NotificacaoDAO {
             stmt.setBoolean(5, notificacao.isLida());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Erro ao salvar notificacao");
+            throw new SQLException("Erro ao salvar notificacao" + e.getMessage(), e);
         }
      }
      public void marcarComoLida(int idNotificacao) throws SQLException {

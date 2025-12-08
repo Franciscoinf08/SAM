@@ -30,4 +30,13 @@ public class NotificacaoService {
 
 
     }
+    public void enviar(Notificacao notificacao) throws SQLException {
+        try{
+            notificacaoDAO.salvar(notificacao);
+
+        } catch (SQLException e) {
+            throw new RuntimeException("erroi ao enviar notificacao" + e );
+        }
+
+    }
 }
