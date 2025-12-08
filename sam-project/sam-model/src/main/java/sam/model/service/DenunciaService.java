@@ -5,6 +5,7 @@ import sam.model.dao.UsuarioDAO;
 import sam.model.dao.DenunciaDAO;
 import sam.model.domain.Denuncia;
 import sam.model.domain.Usuario;
+import sam.model.helper.EnviarEmailHelper;
 
 import java.sql.Connection;
 

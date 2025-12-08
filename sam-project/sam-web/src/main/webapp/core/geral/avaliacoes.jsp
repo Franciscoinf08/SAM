@@ -71,7 +71,6 @@
 
         <form class="formulario" action="/sam/feedback?action=denuncia" method="POST">
 
-            <!-- denunciante (us logado) -->
             <input type="hidden" name="idDenunciante" value="<%=usuario.getId()%>">
 
             <label>Usuário denunciado:

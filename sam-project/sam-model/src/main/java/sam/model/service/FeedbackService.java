@@ -10,15 +10,15 @@ import java.sql.Connection;
 
 public class FeedbackService {
 
-    public void registrarFeedback(Long autorId,
-                                  Long avaliadoId,
+    public void registrarFeedback(Long idAutor,
+                                  Long idAvaliado,
                                   Integer nota,
                                   String comentario) throws Exception {
 
         UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
 
-        Usuario autor = usuarioDAO.pesquisar(autorId);
-        Usuario avaliado = usuarioDAO.pesquisar(avaliadoId);
+        Usuario autor = usuarioDAO.pesquisar(idAutor);
+        Usuario avaliado = usuarioDAO.pesquisar(idAvaliado);
 
         if (autor == null)
             throw new Exception("Autor não encontrado.");

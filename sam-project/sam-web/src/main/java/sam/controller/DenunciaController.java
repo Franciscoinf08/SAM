@@ -1,38 +1,34 @@
 package sam.controller;
 
-import sam.model.service.DenunciaService;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+import sam.model.service.*;
 
-public class DenunciaController {
+import java.io.IOException;
 
-    private final DenunciaService denunciaService;
+@WebServlet(name="denuncia", urlPatterns = {"/denuncia"})
+public class DenunciaController extends HttpServlet {
 
-    public DenunciaController() {
-        this.denunciaService = new DenunciaService();
-    }
+    private final DenunciaService denunciaService =  new DenunciaService();
 
-
-    public void registrarDenuncia(Integer denuncianteIdInt,
-                                  Integer denunciadoIdInt,
-                                  String motivo,
-                                  String detalhes) {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         try {
-            if (denuncianteIdInt == null || denunciadoIdInt == null) {
-                System.out.println("IDs de usuário inválidos.");
-                return;
-            }
+            Long idDenunciante = Long.parseLong(request.getParameter("idDenunciante"));
+            Long idDenunciado = Long.parseLong(request.getParameter("idDenunciante"));
+            String motivo = request.getParameter("motivo");
+            String detalhes = request.getParameter("detalhes");
 
-          
-            Long denuncianteId = denuncianteIdInt.longValue();
-            Long denunciadoId = denunciadoIdInt.longValue();
+            denunciaService.registrarDenuncia(idDenunciante, idDenunciante, motivo, detalhes);
 
-            denunciaService.registrarDenuncia(denuncianteId, denunciadoId, motivo, detalhes);
-
-            System.out.println("Denúncia registrada com sucesso!");
+            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?sucesso=1");
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Erro ao registrar denúncia: " + e.getMessage());
+            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?erro=1");
         }
     }
 }

@@ -1,4 +1,4 @@
-package sam.controller;
+package sam.model.helper;
 
 import java.util.Properties;
 import java.util.Random;
@@ -12,7 +12,7 @@ import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMultipart;
 import java.io.File;
 
-public class EnviarEmailController {
+public class EnviarEmailHelper {
 
     public String getRandom() {
         Random rnd = new Random();
