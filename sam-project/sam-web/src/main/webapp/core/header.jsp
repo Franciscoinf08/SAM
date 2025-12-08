@@ -19,7 +19,9 @@
     <%} if (ControleAutorizacao.checkPermissao("notificacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("notificacoes", usuario.getCPF())) {%>
     <a href="/sam/notificacoes">Notificações</a>
     <%} if (ControleAutorizacao.checkPermissao("suporte", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("suporte", usuario.getCPF())) {%>
-    <a href="/sam/core/geral/suporte.jsp">Suporte</a>
+    <a href="/sam/core/geral/tickets.jsp">Suporte</a>
+    <%} if (ControleAutorizacao.checkPermissao("faq", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("faq", usuario.getCPF())) {%>
+    <a href="/sam/core/geral/faq.jsp">FAQ</a>
 </nav>
 
 <div class="hamburger-menu">
