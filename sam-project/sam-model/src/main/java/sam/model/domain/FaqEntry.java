@@ -6,6 +6,12 @@ public class FaqEntry {
     private String pergunta;
     private String resposta;
 
+    public FaqEntry(String titulo, String pergunta, String resposta) {
+        this.titulo = titulo;
+        this.pergunta = pergunta;
+        this.resposta = resposta;
+    }
+
     public FaqEntry(Long id, String titulo, String pergunta, String resposta) {
         this.id = id;
         this.titulo = titulo;

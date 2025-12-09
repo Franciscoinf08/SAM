@@ -1,0 +1,29 @@
+.faq {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2.5vw;
+}
+
+.faq-entry {
+    background: white;
+    border-radius: 10px;
+    padding: 1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 47.5%;
+}
+
+.faq-entry p {
+    margin: 1em 0;
+}
+
+#voltar {
+    margin-bottom: 1em;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+#voltar:hover {
+    cursor: pointer;
+}

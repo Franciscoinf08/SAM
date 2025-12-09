@@ -69,7 +69,15 @@
         </main>
 
         <footer>
-            <p id="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>
+            <div class="links">
+                <p class="alterna">Ainda não é cliente? <span id="link-alterna">Cadastre-se</span></p>
+                <p class="link">
+                    Algum problema?
+                    <span onclick="window.location.href = '/sam/core/geral/faq.jsp'" id="link-faq">
+                        Acesse o FAQ
+                    </span>
+                </p>
+            </div>
             <a href="/sam/core/geral/esqueceu-senha.jsp" id="esqueceu-senha">Esquecei minha senha</a>
         </footer>
 
