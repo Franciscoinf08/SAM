@@ -3,7 +3,7 @@
 */
 
 function removerFaq(id) {
-    if (document.querySelectorAll(".popup") !== 0)
+    if (document.querySelectorAll(".popup").length !== 0)
         return;
     if (!window.confirm("Deseja mesmo remover essa entrada do FAQ?"))
         return;
