@@ -31,11 +31,22 @@ public class GestaoFaqService {
         List<FaqEntry> listaFaq;
 
         try {
-            listaFaq = faqDAO.pesquisarTodos();
+            listaFaq = faqDAO.pesquisarAtivos();
         } catch (SQLException e) {
             throw new SQLException(e);
         }
 
         return listaFaq;
+    }
+
+    public void remover(Long id) throws SQLException, PersistenciaException {
+        if (faqDAO.pesquisar(id) == null)
+            throw new PersistenciaException("A entrada do FAQ não existe");
+
+        try {
+            faqDAO.remover(id);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
     }
 }

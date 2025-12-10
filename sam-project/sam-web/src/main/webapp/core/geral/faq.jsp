@@ -47,7 +47,7 @@
                 </label>
 
                 <label for="pergunta">
-                    <textarea name="pergunta" placeholder="Descreva a pergunta" value=""></textarea>
+                    <textarea name="pergunta" placeholder="Detalhe a pergunta" value=""></textarea>
                 </label>
 
                 <label for="resposta">
@@ -68,7 +68,17 @@
                 for (FaqEntry faq : listaFaq) {
             %>
             <details class="faq-entry">
-                <summary><h1><%= faq.getTitulo() %></h1></summary>
+                <summary>
+                    <% if (logado && user.getTipo() == UsuarioTipo.DESENVOLVEDOR) { %>
+                    <div class="acoes">
+                        <button onclick="removerFaq(<%= faq.getId() %>)"><img src="/sam/imgs/remover.png"></button>
+                        <button onclick="abrirPopupEditarFaq(<%= faq.getId() %>, '<%= faq.getTitulo() %>', '<%= faq.getPergunta() %>', '<%= faq.getResposta() %>')">
+                            <img src="/sam/imgs/editar.png">
+                        </button>
+                    </div>
+                    <%}%>
+                    <h1><%= faq.getTitulo() %></h1>
+                </summary>
                 <p><%= faq.getPergunta() %></p>
                 <h2>Solução:</h2>
                 <p><%= faq.getResposta() %></p>
@@ -76,5 +86,11 @@
             <%}%>
         </section>
     </main>
+
+    <%@include file="/core/mensagens-erro.jsp"%>
+
+    <script src="/sam/js/popup.js"></script>
+    <script src="/sam/js/send-form.js"></script>
+    <script src="/sam/js/script.js"></script>
 </body>
 </html>
