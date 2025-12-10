@@ -27,6 +27,17 @@ public class GestaoFaqService {
         }
     }
 
+    public void atualizar(FaqEntry faq) throws SQLException, PersistenciaException {
+        if (!"".equals(FaqHelper.validarFaq(faq)))
+            throw new  PersistenciaException(FaqHelper.validarFaq(faq));
+
+        try {
+            faqDAO.atualizar(faq);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
     public List<FaqEntry> listarFaq() throws SQLException {
         List<FaqEntry> listaFaq;
 
