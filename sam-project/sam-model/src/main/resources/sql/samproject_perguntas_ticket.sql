@@ -21,6 +21,7 @@ CREATE TABLE `perguntas_ticket` (
   `id_usuario` int DEFAULT NULL,
   `titulo` varchar(100) DEFAULT NULL,
   `descricao` text,
+  `status` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   CONSTRAINT `perguntas_ticket_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

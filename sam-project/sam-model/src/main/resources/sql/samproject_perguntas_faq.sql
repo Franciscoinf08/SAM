@@ -21,6 +21,7 @@ CREATE TABLE `perguntas_faq` (
   `titulo` varchar(200) DEFAULT NULL,
   `pergunta` text,
   `resposta` text,
+  `status` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;

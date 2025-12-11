@@ -21,6 +21,7 @@ CREATE TABLE `respostas_ticket` (
   `id_usuario` int DEFAULT NULL,
   `id_pergunta` int DEFAULT NULL,
   `descricao` text,
+  `status` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_pergunta` (`id_pergunta`),
