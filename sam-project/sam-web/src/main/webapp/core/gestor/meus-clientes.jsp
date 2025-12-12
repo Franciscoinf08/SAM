@@ -26,6 +26,9 @@
         </header>
 
         <main class="content">
+            
+            <!-- MODIFICAR PARA MOSTRAR APENAS OS CLIENTES ASSOCIADOS
+                 BUTTON PARA ADICIONAR CLIENTE QUE LISTA OS CLIENTES DO BANCO E OFERECE A OPÇÃO DE ASSOCIAR-->
 
             <h2>Meus clientes</h2>
             <%

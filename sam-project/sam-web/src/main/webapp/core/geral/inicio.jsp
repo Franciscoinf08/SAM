@@ -1,4 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sam.model.service.GestaoUsuariosService"%>
+<%@page import="sam.model.domain.util.UsuarioTipo"%>
+<%@page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -26,17 +29,26 @@
         </header>
 
         <main class="main-inicio">
-            <div id="imagem-inicial">
-
-            </div>
+            
+            <!-- SE CLIENTE, APARECE TODAS AS SOLICITAÇÕES DE ASSOCIAÇÃO PARA APROVAÇÃO
+            
+                 QUANDO APROVADO OU RECUSADO, SOME A SOLICITAÇÃO (SOME TODAS SE APROVADO) -->
+            
             <div id="corpo-inicio">
                 <input type="text" id="searchInput" placeholder="Pesquisar...">
                 <ul id="itemsList">
-                    <li>Maçã</li>
-                    <li>Banana</li>
-                    <li>Laranja</li>
-                    <li>Abacate</li>
-                    <li>Uva</li>
+                    <% GestaoUsuariosService gestao = new GestaoUsuariosService();
+                    Usuario visitado;
+                    Long cont = 1L;
+                    while(true){
+                    visitado = gestao.pesquisar(cont);
+                    if(visitado != null){
+                        if(!visitado.equals(usuario) && visitado.getTipo() != UsuarioTipo.DESENVOLVEDOR){%>
+                    <li><a href="perfil-visitado.jsp?id=<%=cont%>"><%=visitado.getNome()%></a></li>
+                    <%} 
+                        cont++;
+                      } else{
+                            break;}}%>
                 </ul>
             </div>
 

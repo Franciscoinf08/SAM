@@ -1,0 +1,29 @@
+#visitado{
+    width: 100%;
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#visitado h2,
+#visitado p{
+    color: black;
+}
+
+#user-icon{
+    width: 150px;
+    height: auto;
+}
+
+button a{
+    color: white !important;
+    text-decoration: none;
+}
+
+#acoes-visitado{
+    display: flex;
+    gap: 10px;
+}
