@@ -10,7 +10,7 @@
     <title>SAM - FAQ</title>
 
     <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/sam/css/faq.css">
+    <link rel="stylesheet" type="text/css" href="/sam/css/suporte.css">
     <link rel="icon" href="/sam/imgs/favicon.ico">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,16 +58,16 @@
             </form>
         </section>
         <%} else if (!logado) {%>
-        <h1 onclick="window.location.href = '/sam'" id="voltar">Voltar ao Login e Cadastro</h1>
+        <h1 onclick="window.location.href = '/sam'" class="voltar">Voltar ao Login e Cadastro</h1>
         <%}%>
 
-        <section class="faq">
+        <section class="perguntas">
             <%
                 GestaoFaqService manterFaq = new GestaoFaqService();
                 List<FaqEntry> listaFaq = manterFaq.listarFaq();
                 for (FaqEntry faq : listaFaq) {
             %>
-            <details class="faq-entry">
+            <details class="pergunta-entry">
                 <summary>
                     <% if (logado && user.getTipo() == UsuarioTipo.DESENVOLVEDOR) { %>
                     <div class="acoes">

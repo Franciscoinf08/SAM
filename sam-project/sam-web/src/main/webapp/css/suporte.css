@@ -1,4 +1,4 @@
-.faq {
+.perguntas {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -6,7 +6,7 @@
     gap: 2.5vw;
 }
 
-.faq-entry {
+.pergunta-entry {
     background: white;
     border-radius: 10px;
     padding: 1em;
@@ -14,16 +14,29 @@
     width: 47.5%;
 }
 
-.faq-entry p {
+.pergunta-entry p {
     margin: 1em 0;
 }
 
-#voltar {
+.pergunta-card {
+    margin-bottom: 4em !important;
+}
+
+.respostas article {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 25%;
+    margin-bottom: 2em;
+}
+
+.voltar {
     margin-bottom: 1em;
     font-style: italic;
     text-decoration: underline;
 }
 
-#voltar:hover {
+.voltar:hover, .titulo-ticket:hover {
     cursor: pointer;
 }

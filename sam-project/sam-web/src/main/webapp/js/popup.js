@@ -3,6 +3,7 @@
 */
 
 function abrirPopupEditarFaq(id, titulo, pergunta, resposta) {
+
     if (document.querySelectorAll(".popup").length === 1)
         return;
     let popup = document.createElement("div");
@@ -68,6 +69,109 @@ function abrirPopupEditarFaq(id, titulo, pergunta, resposta) {
     popup.appendChild(botaoFechar);
     popup.appendChild(form);
     document.body.appendChild(popup);
+}
+
+function abrirPopupEditarPerguntaTicket(id, titulo, descricao) {
+
+    if (document.querySelectorAll(".popup").length === 1)
+        return;
+    let popup = document.createElement("div");
+    popup.classList.add("popup");
+
+    let botaoFechar = document.createElement("button");
+    botaoFechar.innerHTML = "&#10006"
+    botaoFechar.addEventListener("click", () => fecharPopup(popup));
+
+    let form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/sam/EdicaoPerguntaTicketController";
+
+    let inputId = document.createElement("input");
+    inputId.type = "hidden";
+    inputId.name = "id";
+    inputId.value = id;
+
+    let labelId = document.createElement("label");
+    labelId.appendChild(inputId);
+
+    let inputTitulo = document.createElement("input");
+    inputTitulo.type = "text";
+    inputTitulo.name = "titulo";
+    inputTitulo.placeholder = titulo;
+    inputTitulo.value = titulo;
+    inputTitulo.required = true;
+
+    let labelTitulo = document.createElement("label");
+    labelTitulo.innerHTML = "Título:"
+    labelTitulo.appendChild(inputTitulo);
+
+    let inputDescricao = document.createElement("textarea");
+    inputDescricao.type = "text";
+    inputDescricao.name = "descricao";
+    inputDescricao.placeholder = descricao;
+    inputDescricao.value = descricao;
+
+    let labelDescricao = document.createElement("label");
+    labelDescricao.innerHTML = "Detalhamento da Descricao:"
+    labelDescricao.appendChild(inputDescricao);
+
+    let submit = document.createElement("button");
+    submit.innerHTML = "Enviar";
+    submit.type = "submit";
+
+    form.appendChild(labelId);
+    form.appendChild(labelTitulo);
+    form.appendChild(labelDescricao);
+    form.appendChild(submit);
+    popup.appendChild(botaoFechar);
+    popup.appendChild(form);
+    document.body.appendChild(popup);
+}
+
+function abrirPopupEditarRespostaTicket(id, descricao) {
+
+    if (document.querySelectorAll(".popup").length === 1)
+        return;
+    let popup = document.createElement("div");
+    popup.classList.add("popup");
+
+    let botaoFechar = document.createElement("button");
+    botaoFechar.innerHTML = "&#10006"
+    botaoFechar.addEventListener("click", () => fecharPopup(popup));
+
+    let form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/sam/EdicaoRespostaTicketController";
+
+    let inputId = document.createElement("input");
+    inputId.type = "hidden";
+    inputId.name = "id";
+    inputId.value = id;
+
+    let labelId = document.createElement("label");
+    labelId.appendChild(inputId);
+
+    let inputDescricao = document.createElement("textarea");
+    inputDescricao.type = "text";
+    inputDescricao.name = "descricao";
+    inputDescricao.placeholder = descricao;
+    inputDescricao.value = descricao;
+
+    let labelDescricao = document.createElement("label");
+    labelDescricao.innerHTML = "Detalhamento da Descricao:"
+    labelDescricao.appendChild(inputDescricao);
+
+    let submit = document.createElement("button");
+    submit.innerHTML = "Enviar";
+    submit.type = "submit";
+
+    form.appendChild(labelId);
+    form.appendChild(labelDescricao);
+    form.appendChild(submit);
+    popup.appendChild(botaoFechar);
+    popup.appendChild(form);
+    document.body.appendChild(popup);
+
 }
 
 /*

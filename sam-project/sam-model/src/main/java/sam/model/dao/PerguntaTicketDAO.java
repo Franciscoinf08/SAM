@@ -2,8 +2,12 @@ package sam.model.dao;
 
 import sam.model.common.Conexao;
 import sam.model.domain.PerguntaTicket;
+import sam.model.domain.Usuario;
+import sam.model.domain.util.PerguntaTicketStatus;
 
 import java.sql.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
 
@@ -27,12 +31,13 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
 
     @Override
     public void inserir(PerguntaTicket pergunta) throws SQLException {
-        String sql = "INSERT INTO perguntas_ticket(id_usuario, titulo, descricao) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO perguntas_ticket(id_usuario, titulo, descricao, status) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, pergunta.getIdUsuario());
             preparedStatement.setString(2, pergunta.getTitulo());
             preparedStatement.setString(3, pergunta.getDescricao());
+            preparedStatement.setString(4, pergunta.getStatus().toString());
 
             preparedStatement.executeUpdate();
 
@@ -46,13 +51,14 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
 
     @Override
     public void atualizar(PerguntaTicket pergunta) throws SQLException {
-        String sql = "UPDATE perguntas_ticket SET id_usuario = ?, titulo = ?, descricao = ? WHERE id = ?";
+        String sql = "UPDATE perguntas_ticket SET id_usuario = ?, titulo = ?, descricao = ?, status = ? WHERE id = ?";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, pergunta.getIdUsuario());
             preparedStatement.setString(2, pergunta.getTitulo());
             preparedStatement.setString(3, pergunta.getDescricao());
-            preparedStatement.setLong(4, pergunta.getId());
+            preparedStatement.setString(4, pergunta.getStatus().toString());
+            preparedStatement.setLong(5, pergunta.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -75,12 +81,51 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
                 Long idUsuario = rs.getLong("id_usuario");
                 String titulo = rs.getString("titulo");
                 String descricao = rs.getString("descricao");
+                PerguntaTicketStatus status = PerguntaTicketStatus.strTo(rs.getString("status"));
 
-                pergunta = new PerguntaTicket(id, idUsuario, titulo, descricao);
+                pergunta = new PerguntaTicket(id, idUsuario, titulo, descricao, status);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar pergunta", e);
         }
         return pergunta;
+    }
+
+    public List<PerguntaTicket> pesquisarPorUsuario(Usuario usuario) throws SQLException {
+
+        List<PerguntaTicket> listaPerguntas = new LinkedList<>();
+        String sql = "SELECT * FROM perguntas_ticket WHERE id_usuario = ?";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+            preparedStatement.setLong(1, usuario.getId());
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String titulo = rs.getString("titulo");
+                String descricao = rs.getString("descricao");
+                PerguntaTicketStatus status = PerguntaTicketStatus.strTo(rs.getString("status"));
+
+                PerguntaTicket pergunta = new PerguntaTicket(id, usuario.getId(), titulo, descricao, status);
+                listaPerguntas.add(pergunta);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao listar perguntas", e);
+        }
+        return listaPerguntas;
+    }
+
+    public void remover(Long id) throws SQLException {
+
+        String sql = "UPDATE respostas_ticket SET status = \"REMOVIDA\" WHERE id = ? AND status = \"ATIVA\"";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+            preparedStatement.setLong(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao remover ticket", e);
+        }
     }
 }
