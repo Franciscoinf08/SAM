@@ -81,6 +81,8 @@ public class AssociacoesClientesDAO {
             preparedStatement.executeUpdate();
             
             this.deletaTodos(idCliente);
+            UsuarioProgramaDAO userPDAO = new UsuarioProgramaDAO();
+            userPDAO.excluirTodos(idCliente.intValue());
         } catch (SQLException e) {
             throw new SQLException("Erro ao aprovar desassociação", e);
         }

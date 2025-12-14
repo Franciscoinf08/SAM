@@ -44,6 +44,15 @@ public class UsuarioProgramaDAO{
             e.getMessage();
         }
     }
-
+    
+    public void excluirTodos(Integer idUsuario) {
+        String sql = "delete from usuario_programa where usuario_id = ?";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
 
 }
