@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sam.model.dao.UsuarioDAO"%>
-<%@page import="sam.controller.AssociacoesClientesController"%>
 <%@page import="sam.model.domain.util.UsuarioTipo"%>
+<%@page import="sam.model.service.UsuariosBlockService"%>
 
 <% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance(); %>
 
@@ -31,32 +31,61 @@
         </header>
 
         <main class="content">
-            <% String idParam = request.getParameter("id");
-               long id = Long.parseLong(idParam);
-               Usuario visitado = usuarioDAO.pesquisar(id); %>
-            
-            <!-- SE "bloqueado" MOSTRA APENAS NOME E UM "Usuário bloqueado" 
-            SE "desbloqueado" MOSTRA TUDO -->
-            
-            <div id="visitado">
-                <img id="user-icon" src="/sam/imgs/user-icon.png" alt="Icone perfil">
-                <div id="visitado-texto">
-                    <h2><%=visitado.getNome()%></h2>
-                    <p><%=visitado.getTipo()%></p>
-                    <p><%=visitado.getEmail()%></p>
+            <%  String idParam = request.getParameter("id");
+                Long id = Long.parseLong(idParam);
+                Usuario visitado = usuarioDAO.pesquisar(id); 
+
+                UsuariosBlockService gestaoBlock = new UsuariosBlockService();
+                // TRUE SE O USUARIO ATUAL BLOQUEOU ESSE PERFIL
+                if(gestaoBlock.check(usuario.getId(), visitado.getId())){
+            %>
+                <div id="visitado">
+                    <img class="user-icon" src="/sam/imgs/user-block.png" alt="Icone perfil bloqueado">
+                    <div class="direita">
+                        <div class="visitado-texto">
+                            <h2><%=visitado.getNome()%></h2>
+                            <p>Você bloqueou esse perfil</p>
+                        </div>
+                        <div class="acoes-visitado">
+                            <button><a href="/sam/userBlock?acao=Desbloquear&idVisitado=<%=visitado.getId()%>&idUsuario=<%=usuario.getId()%>">Desbloquear</a></button>
+                        </div>
+                    </div>
                 </div>
-                <div id="acoes-visitado">
-                    <button>Avaliações</button>
-                    <button>Relatórios</button>
-                    <!-- SE "bloqueado" ACAO "desbloquear" 
-                         SE "desbloqueado" ACAO "bloquear"-->
-                    <button><a href="/sam/userBlock?acao=Bloquear&id=<%=visitado.getId()%>">Bloquear</a></button>
-                    <% if(usuario.getTipo() == UsuarioTipo.GESTOR && visitado.getTipo() == UsuarioTipo.CLIENTE){%>
-                    <button><a href="/sam/associacoes?acao=Adicionar&idCliente=<%=visitado.getId()%>&idGestor=<%=usuario.getId()%>">Adicionar cliente</a></button>
-                    <%}%>
+            <%} 
+                // TRUE SE O PERFIL ATUAL BLOQUEOU ESSE USUARIO
+                if(gestaoBlock.check(visitado.getId(), usuario.getId())){%>
+                <div id="visitado">
+                    <img class="user-icon" src="/sam/imgs/user-block.png" alt="Icone perfil bloqueado">
+                    <div class="direita">
+                        <div class="visitado-texto">
+                            <h2><%=visitado.getNome()%></h2>
+                            <p>Você foi bloqueado por esse perfil</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
+            <%} else {%>
+                <div id="visitado">
+                    <img class="user-icon" src="/sam/imgs/user-icon.png" alt="Icone perfil">
+                    <div class="direita">
+                        <div class="visitado-texto">
+                            <h2><%=visitado.getNome()%></h2>
+                            <p><%=visitado.getTipo()%></p>
+                            <p><%=visitado.getEmail()%></p>
+                        </div>
+                        <div class="acoes-visitado">
+                            <button>Avaliações</button>
+                            <button>Relatórios</button>
+
+                            <!-- SE "bloqueado" ACAO "desbloquear" 
+                                 SE "desbloqueado" ACAO "bloquear"-->
+                            <button><a href="/sam/userBlock?acao=Bloquear&idVisitado=<%=visitado.getId()%>&idUsuario=<%=usuario.getId()%>">Bloquear</a></button>
+                            <% if(usuario.getTipo() == UsuarioTipo.GESTOR && visitado.getTipo() == UsuarioTipo.CLIENTE){%>
+                            <button><a href="/sam/associacoes?acao=Adicionar&idCliente=<%=visitado.getId()%>&idGestor=<%=usuario.getId()%>">Adicionar cliente</a></button>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            <%}%>
         </main>
         <script src="/sam/js/script.js"></script>
     </body>

@@ -1,16 +1,20 @@
 #visitado {
-    width: 100%;
+    /*width: 50%;*/
     margin-top: 20px;
     background-color: white;
     border-radius: 16px;
     padding: 30px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 30px;
 }
 
+.direita{
+    flex-direction: column;
+}
+
 /* Ícone do usuário (círculo cinza) */
-#user-icon {
+.user-icon {
     width: 180px;
     height: 180px;
     border-radius: 50%;
@@ -24,32 +28,32 @@
 }
 
 /* Agrupa nome + infos + ações */
-#visitado > h2,
-#visitado > p,
-#acoes-visitado {
+.visitado-texto h2,
+.visitado-texto p,
+.acoes-visitado {
     margin-left: 0;
 }
 
 /* Wrapper visual (simula layout da imagem) */
 
-#visitado-texto{
+.visitado-texto{
     display: flex;
     flex-direction: column;
 }
 
-#acoes-visitado{
+.acoes-visitado{
     display: flex;
     flex-direction: row;
 }
 
 /* Botões */
-#acoes-visitado {
+.acoes-visitado {
     display: flex;
     gap: 15px;
     margin-top: 20px;
 }
 
-#acoes-visitado button {
+.acoes-visitado button {
     border-radius: 10px;
     padding: 10px 22px;
     font-size: 14px;
@@ -57,7 +61,7 @@
     transition: background-color 0.2s ease;
 }
 
-#acoes-visitado button a{
+.acoes-visitado button a{
     color: white !important;
     text-decoration: none;
 }

@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import sam.model.service.UsuariosBlockService;
 
 @WebServlet(name = "UsuariosBlockController", urlPatterns = {"/userBlock"})
 public class UsuariosBlockController extends HttpServlet {
@@ -35,8 +36,14 @@ public class UsuariosBlockController extends HttpServlet {
     public String bloquear(HttpServletRequest request) {
         String jsp;
         try {
-            String id = request.getParameter("id");
-            jsp = "/core/gestor/meus-clientes.jsp";
+            Long idVisitado = Long.valueOf(request.getParameter("idVisitado")); //ID A SER BLOQUEADO
+            Long idUsuario = Long.valueOf(request.getParameter("idUsuario")); // ID A BLOQUEAR
+            
+            UsuariosBlockService gestao = new UsuariosBlockService();
+            gestao.bloquear(idUsuario, idVisitado);
+            
+            request.setAttribute("idVisitado", idVisitado);
+            jsp = "/core/geral/perfil-visitados.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
@@ -47,8 +54,14 @@ public class UsuariosBlockController extends HttpServlet {
     public String desbloquear(HttpServletRequest request) {
         String jsp;
         try {
-            String id = request.getParameter("id");
-            jsp = "/core/gestor/meus-clientes.jsp";
+            Long idVisitado = Long.valueOf(request.getParameter("idVisitado")); //ID A SER BLOQUEADO
+            Long idUsuario = Long.valueOf(request.getParameter("idUsuario")); // ID A BLOQUEAR
+            
+            UsuariosBlockService gestao = new UsuariosBlockService();
+            gestao.desbloquear(idUsuario, idVisitado);
+            
+            request.setAttribute("idVisitado", idVisitado);
+            jsp = "/core/geral/perfil-visitados.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
