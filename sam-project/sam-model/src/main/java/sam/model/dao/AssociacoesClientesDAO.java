@@ -48,11 +48,11 @@ public class AssociacoesClientesDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException("Erro ao adicionar pedido para conta gestor", e);
+            throw new SQLException("Erro ao adicionar pedido para cliente", e);
         }
     }
     
-    // OPERA A APROVAÇÃO DO CLIENTE
+    // OPERA A APROVAÇÃO DO CLIENTE PARA ASSOCIAÇÃO
     public void aprovarAssociacao(Long idCliente, Long idGestor) throws SQLException {
         String sql = "UPDATE usuarios SET id_gestor = ? WHERE id = ?";
 
@@ -65,10 +65,11 @@ public class AssociacoesClientesDAO {
             
             this.deletaTodos(idCliente);
         } catch (SQLException e) {
-            throw new SQLException("Erro ao atualizar usuário", e);
+            throw new SQLException("Erro ao aprovar associação", e);
         }
     }
     
+    // OPERA A APROVAÇÃO DO CLIENTE PARA DESASSOCIAÇÃO E A DESASSOCIAÇÃO APÓS O BLOQUEIO 
     public void aprovarDesassociacao(Long idCliente) throws SQLException {
         String sql = "UPDATE usuarios SET id_gestor = ? WHERE id = ?";
 
@@ -81,7 +82,7 @@ public class AssociacoesClientesDAO {
             
             this.deletaTodos(idCliente);
         } catch (SQLException e) {
-            throw new SQLException("Erro ao atualizar usuário", e);
+            throw new SQLException("Erro ao aprovar desassociação", e);
         }
     }
     
@@ -93,7 +94,7 @@ public class AssociacoesClientesDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Erro ao cancelar pedido para conta gestor", e);
+            throw new SQLException("Erro ao deletar todos pedidos", e);
         }
     }
     
@@ -105,7 +106,7 @@ public class AssociacoesClientesDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Erro ao cancelar pedido para conta gestor", e);
+            throw new SQLException("Erro ao deletar pedido", e);
         }
     }
     
