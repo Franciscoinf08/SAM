@@ -1,6 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sam.model.service.GestaoAssociacoesClientesService"%>
 <%@page import="sam.model.service.GestaoUsuariosService"%>
 <%@page import="sam.model.domain.util.UsuarioTipo"%>
+<%@page import="sam.model.domain.util.AssociacaoClienteTipo"%>
+<%@page import="sam.model.domain.AssociacaoCliente"%>
 <%@page import="java.util.List"%>
 
 <!DOCTYPE html>
@@ -37,19 +40,47 @@
             <div id="corpo-inicio">
                 <input type="text" id="searchInput" placeholder="Pesquisar...">
                 <ul id="itemsList">
-                    <% GestaoUsuariosService gestao = new GestaoUsuariosService();
-                    Usuario visitado;
-                    Long cont = 1L;
-                    while(true){
-                    visitado = gestao.pesquisar(cont);
-                    if(visitado != null){
-                        if(!visitado.equals(usuario) && visitado.getTipo() != UsuarioTipo.DESENVOLVEDOR){%>
-                    <li><a href="perfil-visitado.jsp?id=<%=cont%>"><%=visitado.getNome()%></a></li>
-                    <%} 
-                        cont++;
-                      } else{
-                            break;}}%>
+                    <%  GestaoUsuariosService gestao = new GestaoUsuariosService();
+                        List<Usuario> visitados = gestao.listarTodos();
+                        for(Usuario v : visitados){
+                        if(!v.equals(usuario) && v.getTipo() != UsuarioTipo.DESENVOLVEDOR){%>
+                    <li><a href="perfil-visitado.jsp?id=<%=v.getId()%>"><%=v.getNome()%></a></li>
+                    <%}}%>
                 </ul>
+            </div>
+                
+            <div id="pedidos-gestao">
+                <h2>Pedidos de Gerencia</h2>
+                
+                <% if(usuario.getTipo() == UsuarioTipo.CLIENTE){%>
+                <table>
+                    <tr>
+                        <th>Gestor</th>
+                        <th>Tipo</th>
+                        <th>Ações</th>
+                    </tr>
+                <%  GestaoAssociacoesClientesService gestaoAsso = new GestaoAssociacoesClientesService();
+                    List<AssociacaoCliente> pedidos = gestaoAsso.listarCliente(usuario.getId());
+                    for(AssociacaoCliente p : pedidos){
+                    Usuario gerente = gestao.pesquisar(p.getIdGestor()); %>
+                    <tr>
+                        <td><%=gerente.getNome()%></td>
+                        <td><%=p.getTipo()%></td>
+                        <td>
+                            <% if(p.getTipo() == AssociacaoClienteTipo.ASSOCIAR){%>
+                            <button><a href="<%=request.getContextPath()%>/associacoes?acao=Aprovar&idCliente=<%=usuario.getId()%>&idGestor=<%=gerente.getId()%>&tipo=ASSOCIAR">Aprovar</a></button>
+                            <%} else {%>
+                            <button><a href="<%=request.getContextPath()%>/associacoes?acao=Aprovar&idCliente=<%=usuario.getId()%>&idGestor=<%=gerente.getId()%>&tipo=DESASSOCIAR">Aprovar</a></button>
+                            <%}%>
+                            <button><a href="<%=request.getContextPath()%>/associacoes?acao=Recusar&idPedido=<%=p.getId()%>">Recusar</a></button>
+                        </td>
+                    </tr>
+                <%}%>
+                </table>
+                <%} else {%>
+                <p>Você não tem pedidos para gerencia</p>
+                <%}%>
+                
             </div>
 
         </main>

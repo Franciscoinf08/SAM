@@ -41,6 +41,7 @@ public class Usuario {
         cpf = usuario.getCPF();
         senha = usuario.getSenha();
         tipo = usuario.getTipo();
+        idGestor = usuario.getIdGestor();
     }
 
     @Override

@@ -8,9 +8,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import sam.model.service.GestaoAssociacoesClientesService;
+import sam.model.domain.AssociacaoCliente;
+import sam.model.domain.util.AssociacaoClienteTipo;
 
 @WebServlet(name = "AssociacoesController", urlPatterns = {"/associacoes"})
-public class AssociacoesController extends HttpServlet {
+public class AssociacoesClientesController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -19,17 +22,20 @@ public class AssociacoesController extends HttpServlet {
         String jsp = "";
 
         switch (acao) {
-            case "Adicionar":
+            case "Adicionar": // GESTOR QUER ADICIONAR UM CLIENTE COMO SEU 
                 jsp = this.adicionar(request);
                 break;
-            case "Remover":
+            case "Remover": // GESTOR QUER PARAR DE GERENCIAR UM CLIENTE
                 jsp = this.remover(request);
                 break;
-            case "Aprovar":
+            case "Aprovar": // CLIENTE QUER APROVAR UM PEDIDO PARA SER GERENCIADO
                 jsp = this.aprovar(request);
                 break;
-            case "Recusar":
+            case "Recusar": // CLIENTE QUER RECUSAR UM PEDIDO PARA SER GERENCIADO
                 jsp = this.recusar(request);
+                break;
+            case "ListarDisponiveis": // GESTOR QUER VER CLIENTES QUE AINDA ESTÃO DISPONÍVEIS PARA ASSOCIAÇÃO
+                jsp = this.listar(request);
                 break;
         }
 
@@ -40,8 +46,14 @@ public class AssociacoesController extends HttpServlet {
     public String adicionar(HttpServletRequest request) {
         String jsp;
         try {
-            /*REQUER APROVAÇÃO DO CLIENTE*/
-            String id = request.getParameter("id");
+            Long idCliente = Long.valueOf(request.getParameter("idCliente"));
+            Long idGestor = Long.valueOf(request.getParameter("idGestor"));
+            
+            AssociacaoCliente associacao = new AssociacaoCliente(idCliente, idGestor, AssociacaoClienteTipo.ASSOCIAR);
+            
+            GestaoAssociacoesClientesService gestao = new GestaoAssociacoesClientesService();
+            gestao.adicionarPedido(associacao);
+            
             jsp = "/core/gestor/meus-clientes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +65,14 @@ public class AssociacoesController extends HttpServlet {
     public String remover(HttpServletRequest request) {
         String jsp;
         try {
-            String id = request.getParameter("id");
+            Long idCliente = Long.valueOf(request.getParameter("idCliente"));
+            Long idGestor = Long.valueOf(request.getParameter("idGestor"));
+            
+            AssociacaoCliente associacao = new AssociacaoCliente(idCliente, idGestor, AssociacaoClienteTipo.DESASSOCIAR);
+            
+            GestaoAssociacoesClientesService gestao = new GestaoAssociacoesClientesService();
+            gestao.adicionarPedido(associacao);
+            
             jsp = "/core/gestor/meus-clientes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,8 +84,14 @@ public class AssociacoesController extends HttpServlet {
     public String aprovar(HttpServletRequest request) {
         String jsp;
         try {
-            String id = request.getParameter("id");
-            jsp = "/core/geral/inicial.jsp";
+            Long idCliente = Long.valueOf(request.getParameter("idCliente"));
+            Long idGestor = Long.valueOf(request.getParameter("idGestor"));
+            String tipo = request.getParameter("tipo");
+            
+            GestaoAssociacoesClientesService gestao = new GestaoAssociacoesClientesService();
+            gestao.aprovar(idCliente, idGestor, tipo);
+            
+            jsp = "/core/geral/inicio.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
@@ -77,8 +102,21 @@ public class AssociacoesController extends HttpServlet {
     public String recusar(HttpServletRequest request) {
         String jsp;
         try {
-            String id = request.getParameter("id");
-            jsp = "/core/geral/inicial.jsp";
+            Long idPedido = Long.valueOf(request.getParameter("idPedido"));
+            GestaoAssociacoesClientesService gestao = new GestaoAssociacoesClientesService();
+            gestao.recusar(idPedido);
+            jsp = "/core/geral/inicio.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsp = "";
+        }
+        return jsp;
+    }
+    
+    public String listar(HttpServletRequest request) {
+        String jsp;
+        try {
+            jsp = "/core/gestor/listaClientesDisponiveis.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";

@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sam.model.dao.UsuarioDAO"%>
-<%@page import="sam.controller.AssociacoesController"%>
+<%@page import="sam.controller.AssociacoesClientesController"%>
 <%@page import="sam.model.domain.util.UsuarioTipo"%>
 
 <% UsuarioDAO usuarioDAO = UsuarioDAO.getInstance(); %>
@@ -40,9 +40,11 @@
             
             <div id="visitado">
                 <img id="user-icon" src="/sam/imgs/user-icon.png" alt="Icone perfil">
-                <h2><%=visitado.getNome()%></h2>
-                <p><%=visitado.getTipo()%></p>
-                <p><%=visitado.getEmail()%></p>
+                <div id="visitado-texto">
+                    <h2><%=visitado.getNome()%></h2>
+                    <p><%=visitado.getTipo()%></p>
+                    <p><%=visitado.getEmail()%></p>
+                </div>
                 <div id="acoes-visitado">
                     <button>Avaliações</button>
                     <button>Relatórios</button>
@@ -50,7 +52,7 @@
                          SE "desbloqueado" ACAO "bloquear"-->
                     <button><a href="/sam/userBlock?acao=Bloquear&id=<%=visitado.getId()%>">Bloquear</a></button>
                     <% if(usuario.getTipo() == UsuarioTipo.GESTOR && visitado.getTipo() == UsuarioTipo.CLIENTE){%>
-                    <button><a href="/sam/associacoes?acao=Adicionar&id=<%=visitado.getId()%>">Adicionar cliente</a></button>
+                    <button><a href="/sam/associacoes?acao=Adicionar&idCliente=<%=visitado.getId()%>&idGestor=<%=usuario.getId()%>">Adicionar cliente</a></button>
                     <%}%>
                 </div>
             </div>

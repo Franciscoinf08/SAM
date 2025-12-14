@@ -1,29 +1,65 @@
-#visitado{
+#visitado {
     width: 100%;
-    margin-top: 15px;
+    margin-top: 20px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 16px;
+    padding: 30px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 }
 
+/* Ícone do usuário (círculo cinza) */
+#user-icon {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Container de texto */
 #visitado h2,
-#visitado p{
+#visitado p {
     color: black;
 }
 
-#user-icon{
-    width: 150px;
-    height: auto;
+/* Agrupa nome + infos + ações */
+#visitado > h2,
+#visitado > p,
+#acoes-visitado {
+    margin-left: 0;
 }
 
-button a{
-    color: white !important;
-    text-decoration: none;
+/* Wrapper visual (simula layout da imagem) */
+
+#visitado-texto{
+    display: flex;
+    flex-direction: column;
 }
 
 #acoes-visitado{
     display: flex;
-    gap: 10px;
+    flex-direction: row;
 }
+
+/* Botões */
+#acoes-visitado {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#acoes-visitado button {
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#acoes-visitado button a{
+    color: white !important;
+    text-decoration: none;
+}
+
+

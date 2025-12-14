@@ -317,3 +317,8 @@ table td {
     display: flex;
     flex-direction: column;
 }
+
+button a{
+    color: white !important;
+    text-decoration: none;
+}

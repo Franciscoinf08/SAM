@@ -67,5 +67,13 @@ public class GestaoUsuariosService {
     public Usuario buscarPorEmail(String email) throws SQLException {
         return usuarioDAO.pesquisarPorEmail(email);
     }
+    
+    public List<Usuario> listarTodos() throws SQLException {
+        return usuarioDAO.listarTodos();
+    }
+    
+    public List<Usuario> listarPorTipo(String tipo) throws SQLException {
+        return usuarioDAO.listarPorTipo(tipo);
+    }
 }
 
