@@ -10,6 +10,8 @@ import jakarta.mail.internet.MimeMessage;
 
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMultipart;
+import sam.model.domain.Denuncia;
+
 import java.io.File;
 
 public class EnviarEmailHelper {
@@ -116,4 +118,66 @@ public class EnviarEmailHelper {
 
         return  test;
     }
+    public boolean enviarEmailDenuncia(Denuncia denuncia) {
+        boolean test = false;
+
+        String toEmail = "equipesam.cefetmg@gmail.com";
+        String fromEmail = "equipesam.cefetmg@gmail.com";
+        String password = "lrkfxgarmwqktkmu";
+
+        try {
+            Properties pr = new Properties();
+            pr.put("mail.smtp.host", "smtp.gmail.com");
+            pr.put("mail.smtp.port", "587");
+            pr.put("mail.smtp.auth", "true");
+            pr.put("mail.smtp.starttls.enable", "true");
+            pr.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+            Session session = Session.getInstance(pr, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromEmail, password);
+                }
+            });
+
+            Message mess = new MimeMessage(session);
+
+            mess.setFrom(new InternetAddress(fromEmail));
+            mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+
+            mess.setSubject("Nova denúncia registrada - ID " + denuncia.getId());
+
+            StringBuilder corpo = new StringBuilder();
+            corpo.append("Uma nova denúncia foi registrada no sistema.\n\n");
+            corpo.append("ID da denúncia: ").append(denuncia.getId()).append("\n");
+            corpo.append("Status: ").append(denuncia.getStatus()).append("\n\n");
+
+            corpo.append("Denunciante: ")
+                    .append(denuncia.getDenunciante().getNome())
+                    .append(" (")
+                    .append(denuncia.getDenunciante().getEmail())
+                    .append(")\n");
+
+            corpo.append("Denunciado: ")
+                    .append(denuncia.getDenunciado().getNome())
+                    .append(" (")
+                    .append(denuncia.getDenunciado().getEmail())
+                    .append(")\n\n");
+
+            corpo.append("Motivo: ").append(denuncia.getMotivo()).append("\n\n");
+            corpo.append("Detalhes:\n").append(denuncia.getDetalhes());
+
+            mess.setText(corpo.toString());
+
+            Transport.send(mess);
+
+            test = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return test;
+    }
+
 }

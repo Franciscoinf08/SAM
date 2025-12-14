@@ -11,7 +11,7 @@ import java.sql.Connection;
 
 public class DenunciaService {
 
-    private final EmailNotificador emailNotificador = new EmailNotificador();
+    private EnviarEmailHelper emailHelper =  new EnviarEmailHelper();
 
     public void registrarDenuncia(Long denuncianteId,
                                   Long denunciadoId,
@@ -42,7 +42,7 @@ public class DenunciaService {
 
 
             denunciaDAO.inserir(denuncia);
-            emailNotificador.notificarDenuncia(denuncia);
+            emailHelper.enviarEmailDenuncia(denuncia);
         }
     }
 }
