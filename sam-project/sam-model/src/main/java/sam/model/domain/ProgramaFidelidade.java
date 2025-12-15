@@ -1,4 +1,7 @@
 package sam.model.domain;
+
+import java.util.Date;
+
 public class ProgramaFidelidade {
 
     private int idProgramaFidelidade;
@@ -9,17 +12,18 @@ public class ProgramaFidelidade {
     private double precoMensal;
     private int idEmpresa;
     private String avaliacao;
+    private Date dataExpiracaoMilhas;
 
     public ProgramaFidelidade() {}
 
-    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao, double precoMensal, int idEmpresa) {
+    public ProgramaFidelidade(String nome, double bonusMilhas, int qtdeMilhasMes, int duracao, double precoMensal, int idEmpresa, Date dataExpiracaoMilhas) {
         this.nome = nome;
         this.bonusMilhas = bonusMilhas;
         this.qtdeMilhasMes = qtdeMilhasMes;
         this.duracao = duracao;
         this.precoMensal = precoMensal;
         this.idEmpresa = idEmpresa;
-
+        this.dataExpiracaoMilhas = dataExpiracaoMilhas;
     }
 
     public int getIdProgramaFidelidade() {
@@ -89,4 +93,8 @@ public class ProgramaFidelidade {
     public String getAvaliaco() {
         return avaliacao;
     }
+
+    public Date getDataExpiracaoMilhas() { return dataExpiracaoMilhas; }
+
+    public void setDataExpiracaoMilhas(Date dataExpiracaoMilhas) { this.dataExpiracaoMilhas = dataExpiracaoMilhas; }
 }

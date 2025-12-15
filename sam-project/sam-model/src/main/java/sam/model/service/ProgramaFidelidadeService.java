@@ -66,7 +66,7 @@ public class ProgramaFidelidadeService {
 
         if(p.getPrecoMensal() <= 0) return true;
 
-        return p.getDuracao() == 0 || p.getQtdeMilhasMes() == 0 || p.getIdEmpresa() <= 0;
+        return p.getDuracao() == 0 || p.getQtdeMilhasMes() == 0 || p.getIdEmpresa() <= 0 || p.getDataExpiracaoMilhas() == null;
     }
 
     public List<ProgramaFidelidade> listarTodosProgramaFidelidade() {

@@ -14,6 +14,7 @@ import sam.model.service.ProgramaFidelidadeService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "ProgramaFidelidadeController", urlPatterns = {"/programaFidelidade"})
@@ -111,11 +112,13 @@ public class ProgramaFidelidadeController extends HttpServlet {
         int duracao = Integer.parseInt(request.getParameter("duracao"));
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         double preco = Double.parseDouble(request.getParameter("preco"));
+        String dataStr = request.getParameter("dataExpiracao");
+        java.sql.Date dataExpiracao = java.sql.Date.valueOf(dataStr);
 
         AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), new ProgramaFidelidadeDAO());
 
         ProgramaFidelidade programa = new ProgramaFidelidade(
-                nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa
+                nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa, dataExpiracao
         );
 
 
@@ -134,8 +137,9 @@ public class ProgramaFidelidadeController extends HttpServlet {
         int duracao = Integer.parseInt(request.getParameter("duracao"));
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         double preco = Double.parseDouble(request.getParameter("preco"));
+        Date dataExpiracao =  (Date) request.getAttribute("dataExpiracao");
 
-        ProgramaFidelidade programa = new ProgramaFidelidade(nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa);
+        ProgramaFidelidade programa = new ProgramaFidelidade(nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa, dataExpiracao);
         programa.setIdProgramaFidelidade(id);
 
         pfs.atualizarProgramaFidelidade(programa);
