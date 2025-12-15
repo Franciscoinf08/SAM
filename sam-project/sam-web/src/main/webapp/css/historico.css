@@ -1,0 +1,15 @@
+#hist-avaliacao td {
+    height: 120px;
+    max-width: 200px;
+    padding: 5px;
+}
+
+#hist-avaliacao td div {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+h2{
+    margin-top: 15px;
+}
