@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <title>Esqueci minha senha</title>
 
-    <link rel="stylesheet" type="text/css" href="/sam/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/sam/css/verificacao.css">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/verificacao.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,17 +39,11 @@
 <%
     }
 %>
-
-<header>
-    <img id="logotipo" alt="Logo do Sistema" src="${pageContext.request.contextPath}/imgs/logotipo.png">
-    <h1>Notificações</h1>
-</header>
-
 <main>
-    <div>
-        <h2>Recuperação de Senha</h2>
+    <section id="formEmail">
         <div class="formulario form-autenticacao">
-            <form id="formEmail" name="formRecuperacao" method="POST" action="/sam/RecuperarSenhaController">
+            <h1>Recuperar Senha</h1>
+            <form id="verifyForm" name="formRecuperacao" method="POST" action="/sam/RecuperarSenhaController">
                 <label>
                     <p>Insira seu email para recuperação</p>
                     <input name="email" type="text" placeholder="seuemail@hotmail.com">
@@ -58,28 +51,33 @@
                 <button class="verify" type="submit">Verificar</button>
             </form>
         </div>
-    </div>
-    <div class="verificacao">
-        <p class="small">Insira o código de 6 dígitos enviado para o seu e-mail.</p>
+    </section>
+    <section id="formCodigo" class="card" role="main">
+        <h1>Recuperar Senha</h1>
+        <section id="input-codigo">
+            <p class="small">Insira o código de 6 dígitos enviado para o seu e-mail ou celular.</p>
 
-        <form id="formCodigo" action="/sam/core/geral/verificar.jsp" method="post" autocomplete="off" style="display:none;">
-            <div class="code-input">
-                <input name="d1" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input name="d2" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input name="d3" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input name="d4" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input name="d5" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                <input name="d6" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+            <form autocomplete="off" action="/sam/RecuperarSenhaController" method="POST">
+                <div class="code-input">
+                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                </div>
+
+                <input type="hidden" name="destinoSucesso" value="AlterarSenhaController">
+                <input type="hidden" name="destinoFalha" value="/core/index.jsp">
+
+                <button class="verify" type="submit">Verificar</button>
+            </form>
+
+            <div class="info">
+                Não recebeu o código? Verifique a caixa de spam ou solicite um novo código após 60 segundos.
             </div>
-
-            <input type="hidden" id="codigoFinal" name="codigoFinal">
-            <button class="verify" type="submit">Verificar</button>
-        </form>
-
-        <div class="info">
-            Não recebeu o código? Verifique a caixa de spam ou solicite um novo código após 60 segundos.
-        </div>
-    </div>
+        </section>
+    </section>
 
 
 </main>
@@ -93,12 +91,12 @@
     setTimeout(() => { mensagemEl.style.top = "4em"; }, 1);
     setTimeout(() => { mensagemEl.style.display = "none"; }, 4000);
 </script>
-<%}%>
 
+<%}%>
+//ALTERNAR ENTRE INPUTS
 <%
     Boolean emailEnviado = (Boolean) request.getAttribute("emailEnviado");
 %>
-
 <script>
     window.addEventListener("DOMContentLoaded", () => {
         const formEmail = document.getElementById("formEmail");
@@ -114,9 +112,9 @@
     });
 </script>
 
-<script src="${pageContext.request.contextPath}/js/helper.js"></script>
-<script src="${pageContext.request.contextPath}/js/verificacao.js"></script>
+//ALTERNAR ENTRE INPUTS
 
+<script src="<%= request.getContextPath() %>/js/verificacao.js"></script>
 
 </body>
 </html>

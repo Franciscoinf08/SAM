@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import sam.model.helper.EnviarEmailHelper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +22,7 @@ public class UserVerifyController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String email = request.getParameter("email");
 
-            EnviarEmailController sm =  new EnviarEmailController();
+            EnviarEmailHelper sm =  new EnviarEmailHelper();
 
             HttpSession session = request.getSession();
 
@@ -40,6 +41,9 @@ public class UserVerifyController extends HttpServlet {
 
             if (test) {
                 request.setAttribute("mensagem", "Código enviado! Confira seu e-mail.");
+                request.getRequestDispatcher("core/geral/verificar.jsp").forward(request, response);
+            } else {
+                request.setAttribute("mensagem", "Não foi possível enviar o e-mail de verificação.");
                 request.getRequestDispatcher("core/geral/verificar.jsp").forward(request, response);
             }
         }

@@ -55,6 +55,7 @@ public class FormObjetivosDao {
         }
     }
 
+
     public static List<FormObjetivos> buscarTodos(Usuario usuario) {
 
         String sql = "SELECT id, titulo_formulario, data_ultima_atualizacao FROM form_objetivos WHERE id_usuario = ? ORDER BY id DESC ";
@@ -81,6 +82,46 @@ public class FormObjetivosDao {
 
         } catch (SQLException e) {
             System.err.println("Erro ao buscar todos os formulários: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return listaFormularios;
+    }
+
+    public static List<FormObjetivos> buscarTodosPorUsuarioId(Long idUsuario) {
+
+        String sql = """
+        SELECT id, titulo_formulario, data_ultima_atualizacao
+        FROM form_objetivos
+        WHERE id_usuario = ?
+        ORDER BY id DESC
+    """;
+
+        List<FormObjetivos> listaFormularios = new LinkedList<>();
+
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, idUsuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    FormObjetivos form = new FormObjetivos();
+
+                    form.setId(rs.getInt("id"));
+                    form.setTitulo(rs.getString("titulo_formulario"));
+
+                    if (rs.getDate("data_ultima_atualizacao") != null) {
+                        form.setData(
+                                rs.getDate("data_ultima_atualizacao").toLocalDate()
+                        );
+                    }
+
+                    listaFormularios.add(form);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar formulários por usuário ID: " + e.getMessage());
             e.printStackTrace();
         }
         return listaFormularios;
@@ -193,3 +234,5 @@ public class FormObjetivosDao {
         }
     }
 }
+
+
