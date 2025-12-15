@@ -18,11 +18,11 @@ public class DenunciaController extends HttpServlet {
 
         try {
             Long idDenunciante = Long.parseLong(request.getParameter("idDenunciante"));
-            Long idDenunciado = Long.parseLong(request.getParameter("idDenunciante"));
+            Long idDenunciado = Long.parseLong(request.getParameter("idDenunciado"));
             String motivo = request.getParameter("motivo");
             String detalhes = request.getParameter("detalhes");
 
-            denunciaService.registrarDenuncia(idDenunciante, idDenunciante, motivo, detalhes);
+            denunciaService.registrarDenuncia(idDenunciante, idDenunciado, motivo, detalhes);
 
             response.sendRedirect("views/avaliacoes/avaliacoes.jsp?sucesso=1");
 

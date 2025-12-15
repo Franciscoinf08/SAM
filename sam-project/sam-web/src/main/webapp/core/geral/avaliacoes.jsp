@@ -15,7 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <title>SAM - Avaliações</title>
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 
@@ -32,7 +32,7 @@
     <section class="card" style="flex:1 1 100%;">
         <h2>Adicionar Avaliação</h2>
 
-        <form class="formulario" id="formAvaliacao" action="/sam/feedback?action=" method="POST">
+        <form class="formulario" id="formAvaliacao" action="<%= request.getContextPath() %>/feedbackdenuncia" method="POST">
 
             <!-- autor (usuario logado) -->
             <input type="hidden" name="idAutor" value="<%=usuario.getId()%>">
