@@ -18,11 +18,7 @@
     margin: 1em 0;
 }
 
-.pergunta-card {
-    margin-bottom: 4em !important;
-}
-
-.respostas article {
+.respostas article, .pergunta-card {
     background: white;
     padding: 20px;
     border-radius: 10px;

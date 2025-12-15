@@ -7,6 +7,7 @@
 <%@ page import="sam.model.common.exception.PersistenciaException" %>
 <%@ page import="sam.model.service.GestaoUsuariosService" %>
 <%@ page import="sam.model.domain.util.UsuarioTipo" %>
+<%@ page import="java.util.Objects" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -67,21 +68,42 @@
             Voltar para o suporte
         </h1>
 
-        <section class="respostas">
-            <article class="pergunta-card">
-                <h1><%= pergunta.getTitulo() %></h1>
-                <p><%= pergunta.getDescricao() %></p>
-            </article>
+        <section class="pergunta-card" <% if (usuario.getTipo() != UsuarioTipo.DESENVOLVEDOR) { %>style="margin-bottom:5vw"<%}%>>
+            <h1><%= pergunta.getTitulo() %></h1>
+            <p style="white-space:pre-line;"><%= pergunta.getDescricao() %></p>
+        </section>
 
+        <% if (usuario.getTipo() == UsuarioTipo.DESENVOLVEDOR) { %>
+        <section class="formulario" style="max-width:none; margin-bottom:5vw">
+            <h2>Responder</h2>
+            <form action="/sam/CadastroRespostaTicketController" method="POST">
+                <label><input type="hidden" name="usuario" value="<%= usuario.getId() %>"></label>
+                <label><input type="hidden" name="pergunta" value="<%= pergunta.getId() %>"></label>
+                <label><textarea placeholder="Insira a resposta" name="descricao"></textarea></label>
+                <button>Enviar</button>
+            </form>
+        </section>
+        <%}%>
+
+        <section class="respostas">
             <% for (RespostaTicket resposta : listaRespostas) { %>
             <article>
-                <h2><%= manterUsuario.pesquisar(resposta.getIdUsuario()).getNome() %>:</h2>
-                <p><%= resposta.getDescricao() %></p>
-
-                <% if (usuario.getTipo() == UsuarioTipo.DESENVOLVEDOR) { %>
+                <h2>
+                    <%= manterUsuario.pesquisar(resposta.getIdUsuario()).getNome() %>:
+                </h2>
+                <p style="white-space:pre-line;">
+                    <%= resposta.getDescricao() %>
+                </p>
+                <% if (Objects.equals(usuario.getId(), resposta.getIdUsuario())) { %>
                 <div class="acoes">
-                    <button onclick="removerResposta(<%= resposta.getId() %>)"><img src="/sam/imgs/remover.png"></button>
-                    <button onclick="abrirPopupEditarRespostaTicket(<%= resposta.getId() %>, '<%= resposta.getDescricao() %>')">
+                    <button onclick="removerResposta(<%= resposta.getId() %>, <%= pergunta.getId() %>)">
+                        <img src="/sam/imgs/remover.png">
+                    </button>
+                    <button class="botao-editar"
+                            data-id="<%= resposta.getId() %>"
+                            data-usuario="<%= usuario.getId() %>"
+                            data-pergunta="<%= pergunta.getId() %>"
+                            data-descricao="<%= resposta.getDescricao() %>">
                         <img src="/sam/imgs/editar.png">
                     </button>
                 </div>
@@ -91,6 +113,7 @@
         </section>
     </main>
 
+    <script src="/sam/js/botao-editar-resposta-ticket.js"></script>
     <script src="/sam/js/mensagens-erro.js"></script>
     <script src="/sam/js/send-form.js"></script>
     <script src="/sam/js/popup.js"></script>

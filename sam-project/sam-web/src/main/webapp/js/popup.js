@@ -71,7 +71,7 @@ function abrirPopupEditarFaq(id, titulo, pergunta, resposta) {
     document.body.appendChild(popup);
 }
 
-function abrirPopupEditarPerguntaTicket(id, titulo, descricao) {
+function abrirPopupEditarPerguntaTicket(id, usuario, titulo, descricao) {
 
     if (document.querySelectorAll(".popup").length === 1)
         return;
@@ -93,6 +93,14 @@ function abrirPopupEditarPerguntaTicket(id, titulo, descricao) {
 
     let labelId = document.createElement("label");
     labelId.appendChild(inputId);
+
+    let inputUsuario = document.createElement("input");
+    inputUsuario.type = "hidden";
+    inputUsuario.name = "usuario";
+    inputUsuario.value = usuario;
+
+    let labelUsuario = document.createElement("label");
+    labelUsuario.appendChild(inputUsuario);
 
     let inputTitulo = document.createElement("input");
     inputTitulo.type = "text";
@@ -120,6 +128,7 @@ function abrirPopupEditarPerguntaTicket(id, titulo, descricao) {
     submit.type = "submit";
 
     form.appendChild(labelId);
+    form.appendChild(labelUsuario);
     form.appendChild(labelTitulo);
     form.appendChild(labelDescricao);
     form.appendChild(submit);
@@ -128,10 +137,11 @@ function abrirPopupEditarPerguntaTicket(id, titulo, descricao) {
     document.body.appendChild(popup);
 }
 
-function abrirPopupEditarRespostaTicket(id, descricao) {
+function abrirPopupEditarRespostaTicket(id, usuario, pergunta, descricao) {
 
     if (document.querySelectorAll(".popup").length === 1)
         return;
+
     let popup = document.createElement("div");
     popup.classList.add("popup");
 
@@ -151,6 +161,22 @@ function abrirPopupEditarRespostaTicket(id, descricao) {
     let labelId = document.createElement("label");
     labelId.appendChild(inputId);
 
+    let inputUsuario = document.createElement("input");
+    inputUsuario.type = "hidden";
+    inputUsuario.name = "usuario";
+    inputUsuario.value = usuario;
+
+    let labelUsuario = document.createElement("label");
+    labelUsuario.appendChild(inputUsuario);
+
+    let inputPergunta = document.createElement("input");
+    inputPergunta.type = "hidden";
+    inputPergunta.name = "pergunta";
+    inputPergunta.value = pergunta;
+
+    let labelPergunta = document.createElement("label");
+    labelPergunta.appendChild(inputPergunta);
+
     let inputDescricao = document.createElement("textarea");
     inputDescricao.type = "text";
     inputDescricao.name = "descricao";
@@ -166,6 +192,8 @@ function abrirPopupEditarRespostaTicket(id, descricao) {
     submit.type = "submit";
 
     form.appendChild(labelId);
+    form.appendChild(labelUsuario);
+    form.appendChild(labelPergunta);
     form.appendChild(labelDescricao);
     form.appendChild(submit);
     popup.appendChild(botaoFechar);

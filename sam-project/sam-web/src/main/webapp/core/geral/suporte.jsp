@@ -56,18 +56,26 @@
 
                     listaPerguntas = manterPergunta.listarPorUsuario(usuario);
 
-                    for (PerguntaTicket pergunta : listaPerguntas) {
+                    if (listaPerguntas.isEmpty()) { %>
+                        Ainda não há tickets
+                    <% } for (PerguntaTicket pergunta : listaPerguntas) {
                 %>
                 <article class="pergunta-entry">
                     <h1 onclick="window.location.href = '/sam/core/geral/tickets.jsp?pergunta=<%= pergunta.getId() %>'" class="titulo-ticket">
                         <%= pergunta.getTitulo() %>
                     </h1>
-                    <p>
+                    <p style="white-space:pre-line;">
                         <%= pergunta.getDescricao() %>
                     </p>
                     <div class="acoes">
-                        <button onclick="removerPergunta(<%= pergunta.getId() %>)"><img src="/sam/imgs/remover.png"></button>
-                        <button onclick="abrirPopupEditarPerguntaTicket(<%= pergunta.getId() %>,'<%= pergunta.getTitulo()%>' , '<%= pergunta.getDescricao() %>')">
+                        <button onclick="removerPergunta(<%= pergunta.getId() %>)">
+                            <img src="/sam/imgs/remover.png">
+                        </button>
+                        <button class="botao-editar"
+                                data-id="<%= pergunta.getId() %>"
+                                data-usuario="<%= usuario.getId() %>"
+                                data-titulo="<%= pergunta.getTitulo() %>"
+                                data-descricao="<%= pergunta.getDescricao() %>">
                             <img src="/sam/imgs/editar.png">
                         </button>
                     </div>
@@ -80,6 +88,7 @@
 
     <%@include file="/core/mensagens-erro.jsp"%>
 
+    <script src="/sam/js/botao-editar-pergunta-ticket.js"></script>
     <script src="/sam/js/send-form.js"></script>
     <script src="/sam/js/popup.js"></script>
     <script src="/sam/js/script.js"></script>
