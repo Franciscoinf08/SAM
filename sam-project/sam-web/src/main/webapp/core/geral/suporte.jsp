@@ -52,34 +52,76 @@
             <div class="perguntas">
                 <%
                     GestaoPerguntasTicketService manterPergunta = new GestaoPerguntasTicketService();
-                    List<PerguntaTicket> listaPerguntas;
-
-                    listaPerguntas = manterPergunta.listarPorUsuario(usuario);
+                    List<PerguntaTicket> listaPerguntas = manterPergunta.listarPorUsuario(usuario);
 
                     if (listaPerguntas.isEmpty()) { %>
                         Ainda não há tickets
                     <% } for (PerguntaTicket pergunta : listaPerguntas) {
                 %>
-                <article class="pergunta-entry">
-                    <h1 onclick="window.location.href = '/sam/core/geral/tickets.jsp?pergunta=<%= pergunta.getId() %>'" class="titulo-ticket">
-                        <%= pergunta.getTitulo() %>
-                    </h1>
+                <details class="pergunta-entry">
+                    <summary>
+                        <div class="acoes">
+                            <button onclick="removerPergunta(<%= pergunta.getId() %>)">
+                                <img src="/sam/imgs/remover.png">
+                            </button>
+                            <button class="botao-editar"
+                                    data-id="<%= pergunta.getId() %>"
+                                    data-usuario="<%= usuario.getId() %>"
+                                    data-titulo="<%= pergunta.getTitulo() %>"
+                                    data-descricao="<%= pergunta.getDescricao() %>">
+                                <img src="/sam/imgs/editar.png">
+                            </button>
+                        </div>
+                        <h1 onclick="window.location.href = '/sam/core/geral/tickets.jsp?pergunta=<%= pergunta.getId() %>'" class="titulo-ticket">
+                            <%= pergunta.getTitulo() %>
+                        </h1>
+                    </summary>
                     <p style="white-space:pre-line;">
                         <%= pergunta.getDescricao() %>
                     </p>
-                    <div class="acoes">
-                        <button onclick="removerPergunta(<%= pergunta.getId() %>)">
-                            <img src="/sam/imgs/remover.png">
-                        </button>
-                        <button class="botao-editar"
-                                data-id="<%= pergunta.getId() %>"
-                                data-usuario="<%= usuario.getId() %>"
-                                data-titulo="<%= pergunta.getTitulo() %>"
-                                data-descricao="<%= pergunta.getDescricao() %>">
-                            <img src="/sam/imgs/editar.png">
-                        </button>
-                    </div>
-                </article>
+                </details>
+                <%}%>
+            </div>
+        </section>
+        <%} else {%>
+        <section>
+            <h2>Tickets sem resposta</h2>
+            <%
+                GestaoPerguntasTicketService manterPergunta = new GestaoPerguntasTicketService();
+                List<PerguntaTicket> listaPerguntasSemResposta = manterPergunta.listarSemResposta();
+                List<PerguntaTicket> listaPerguntasComResposta = manterPergunta.listarComResposta();
+            %>
+            <div class="perguntas">
+                <% if (listaPerguntasSemResposta.isEmpty()) { %>
+                Todas as perguntas foram respondidas
+                <%} for (PerguntaTicket pergunta : listaPerguntasSemResposta) { %>
+                <details class="pergunta-entry">
+                    <summary>
+                        <h1 onclick="window.location.href = '/sam/core/geral/tickets.jsp?pergunta=<%= pergunta.getId() %>'" class="titulo-ticket">
+                            <%= pergunta.getTitulo() %>
+                        </h1>
+                    </summary>
+                    <p style="white-space:pre-line;">
+                        <%= pergunta.getDescricao() %>
+                    </p>
+                </details>
+                <%}%>
+            </div>
+            <h2>Tickets já respondidos</h2>
+            <div class="perguntas">
+                <% if (listaPerguntasComResposta.isEmpty()) { %>
+                Nenhuma pergunta respondida
+                <%} for (PerguntaTicket pergunta : listaPerguntasComResposta) { %>
+                <details class="pergunta-entry">
+                    <summary>
+                        <h1 onclick="window.location.href = '/sam/core/geral/tickets.jsp?pergunta=<%= pergunta.getId() %>'" class="titulo-ticket">
+                            <%= pergunta.getTitulo() %>
+                        </h1>
+                    </summary>
+                    <p style="white-space:pre-line;">
+                        <%= pergunta.getDescricao() %>
+                    </p>
+                </details>
                 <%}%>
             </div>
         </section>

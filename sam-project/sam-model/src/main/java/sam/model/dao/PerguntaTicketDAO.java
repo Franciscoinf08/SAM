@@ -116,6 +116,64 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
         return listaPerguntas;
     }
 
+    public List<PerguntaTicket> pesquisarSemResposta() throws SQLException {
+
+        List<PerguntaTicket> listaPerguntas = new LinkedList<>();
+        String sql = "SELECT * FROM perguntas_ticket p WHERE NOT EXISTS (" +
+                     "SELECT 1 " +
+                     "FROM respostas_ticket r " +
+                     "WHERE r.id_pergunta = p.id AND r.status = \"ATIVA\") " +
+                     "AND status = \"ATIVA\"";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idUsuario = rs.getLong("id_usuario");
+                String titulo = rs.getString("titulo");
+                String descricao = rs.getString("descricao");
+                PerguntaTicketStatus status = PerguntaTicketStatus.strTo(rs.getString("status"));
+
+                PerguntaTicket pergunta = new PerguntaTicket(id, idUsuario, titulo, descricao, status);
+                listaPerguntas.add(pergunta);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao listar perguntas", e);
+        }
+        return listaPerguntas;
+    }
+
+    public List<PerguntaTicket> pesquisarComResposta() throws SQLException {
+
+        List<PerguntaTicket> listaPerguntas = new LinkedList<>();
+        String sql = "SELECT * FROM perguntas_ticket p WHERE EXISTS (" +
+                "SELECT 1 " +
+                "FROM respostas_ticket r " +
+                "WHERE r.id_pergunta = p.id AND r.status = \"ATIVA\") " +
+                "AND status = \"ATIVA\"";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idUsuario = rs.getLong("id_usuario");
+                String titulo = rs.getString("titulo");
+                String descricao = rs.getString("descricao");
+                PerguntaTicketStatus status = PerguntaTicketStatus.strTo(rs.getString("status"));
+
+                PerguntaTicket pergunta = new PerguntaTicket(id, idUsuario, titulo, descricao, status);
+                listaPerguntas.add(pergunta);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao listar perguntas", e);
+        }
+        return listaPerguntas;
+    }
+
     public void remover(Long id) throws SQLException {
 
         String sql = "UPDATE perguntas_ticket SET status = \"REMOVIDA\" WHERE id = ? AND status = \"ATIVA\"";

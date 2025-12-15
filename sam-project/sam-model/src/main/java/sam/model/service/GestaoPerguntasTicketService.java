@@ -64,6 +64,30 @@ public class GestaoPerguntasTicketService {
         return listaPerguntas;
     }
 
+    public List<PerguntaTicket> listarSemResposta() throws SQLException {
+        List<PerguntaTicket> listaPerguntas;
+
+        try {
+            listaPerguntas = perguntaTicketDAO.pesquisarSemResposta();
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+
+        return listaPerguntas;
+    }
+
+    public List<PerguntaTicket> listarComResposta() throws SQLException {
+        List<PerguntaTicket> listaPerguntas;
+
+        try {
+            listaPerguntas = perguntaTicketDAO.pesquisarComResposta();
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+
+        return listaPerguntas;
+    }
+
     public void remover(Long id) throws PersistenciaException, SQLException {
         if (perguntaTicketDAO.pesquisar(id) == null)
             throw new PersistenciaException("A pergunta não existe");

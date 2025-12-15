@@ -4,6 +4,8 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 2.5vw;
+
+    margin-bottom: 5vw;
 }
 
 .pergunta-entry {
@@ -35,4 +37,9 @@
 
 .voltar:hover, .titulo-ticket:hover {
     cursor: pointer;
+    text-decoration: underline;
+}
+
+.titulo-ticket {
+    margin-top: 0.5em;
 }
