@@ -52,7 +52,9 @@ public class RespostaTicketDAO implements GenericDAO<RespostaTicket, Long> {
 
     @Override
     public void atualizar(RespostaTicket resposta) throws SQLException {
-        String sql = "UPDATE respostas_ticket SET id_usuario = ?, id_pergunta = ?, descricao = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE respostas_ticket SET" +
+                     " id_usuario = ?, id_pergunta = ?, descricao = ?, status = ?" +
+                     " WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, resposta.getIdUsuario());
@@ -119,7 +121,7 @@ public class RespostaTicketDAO implements GenericDAO<RespostaTicket, Long> {
 
     public void remover(Long id) throws SQLException {
 
-        String sql = "UPDATE perguntas_ticket SET status = \"REMOVIDA\" WHERE id = ? AND status = \"ATIVA\"";
+        String sql = "UPDATE respostas_ticket SET status = \"REMOVIDA\" WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);

@@ -17,6 +17,13 @@ public class RespostaTicket {
         status = RespostaTicketStatus.ATIVA;
     }
 
+    public RespostaTicket(Long idUsuario, Long idPergunta, String descricao) {
+        this.idUsuario = idUsuario;
+        this.idPergunta = idPergunta;
+        this.descricao = descricao;
+        status = RespostaTicketStatus.ATIVA;
+    }
+
     public RespostaTicket(Long id, Long idUsuario, Long idPergunta, String descricao, RespostaTicketStatus status) {
         this.id = id;
         this.idUsuario = idUsuario;

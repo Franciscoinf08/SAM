@@ -51,7 +51,7 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
 
     @Override
     public void atualizar(PerguntaTicket pergunta) throws SQLException {
-        String sql = "UPDATE perguntas_ticket SET id_usuario = ?, titulo = ?, descricao = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE perguntas_ticket SET id_usuario = ?, titulo = ?, descricao = ?, status = ? WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, pergunta.getIdUsuario());
@@ -70,7 +70,7 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
     public PerguntaTicket pesquisar(Long id) throws SQLException {
 
         PerguntaTicket pergunta = null;
-        String sql = "SELECT * FROM perguntas_ticket WHERE id = ?";
+        String sql = "SELECT * FROM perguntas_ticket WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
@@ -94,7 +94,7 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
     public List<PerguntaTicket> pesquisarPorUsuario(Usuario usuario) throws SQLException {
 
         List<PerguntaTicket> listaPerguntas = new LinkedList<>();
-        String sql = "SELECT * FROM perguntas_ticket WHERE id_usuario = ?";
+        String sql = "SELECT * FROM perguntas_ticket WHERE id_usuario = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, usuario.getId());
@@ -118,7 +118,7 @@ public class PerguntaTicketDAO implements GenericDAO<PerguntaTicket, Long> {
 
     public void remover(Long id) throws SQLException {
 
-        String sql = "UPDATE respostas_ticket SET status = \"REMOVIDA\" WHERE id = ? AND status = \"ATIVA\"";
+        String sql = "UPDATE perguntas_ticket SET status = \"REMOVIDA\" WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
