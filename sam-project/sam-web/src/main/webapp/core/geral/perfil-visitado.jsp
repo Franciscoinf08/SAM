@@ -31,8 +31,11 @@
         </header>
 
         <main class="content">
-            <%  String idParam = request.getParameter("id");
-                Long id = Long.parseLong(idParam);
+            <%  Long id = (Long) request.getAttribute("id");
+
+                if (id == null) {
+                    id = Long.parseLong(request.getParameter("id"));
+                }
                 Usuario visitado = usuarioDAO.pesquisar(id); 
 
                 UsuariosBlockService gestaoBlock = new UsuariosBlockService();
@@ -53,7 +56,7 @@
                 </div>
             <%} 
                 // TRUE SE O PERFIL ATUAL BLOQUEOU ESSE USUARIO
-                if(gestaoBlock.check(visitado.getId(), usuario.getId())){%>
+            else if(gestaoBlock.check(visitado.getId(), usuario.getId())){%>
                 <div id="visitado">
                     <img class="user-icon" src="/sam/imgs/user-block.png" alt="Icone perfil bloqueado">
                     <div class="direita">
@@ -75,11 +78,8 @@
                         <div class="acoes-visitado">
                             <button>Avaliações</button>
                             <button>Relatórios</button>
-
-                            <!-- SE "bloqueado" ACAO "desbloquear" 
-                                 SE "desbloqueado" ACAO "bloquear"-->
                             <button><a href="/sam/userBlock?acao=Bloquear&idVisitado=<%=visitado.getId()%>&idUsuario=<%=usuario.getId()%>">Bloquear</a></button>
-                            <% if(usuario.getTipo() == UsuarioTipo.GESTOR && visitado.getTipo() == UsuarioTipo.CLIENTE){%>
+                            <% if(usuario.getTipo() == UsuarioTipo.GESTOR && visitado.getTipo() == UsuarioTipo.CLIENTE && visitado.getIdGestor() == null){%>
                             <button><a href="/sam/associacoes?acao=Adicionar&idCliente=<%=visitado.getId()%>&idGestor=<%=usuario.getId()%>">Adicionar cliente</a></button>
                             <%}%>
                         </div>

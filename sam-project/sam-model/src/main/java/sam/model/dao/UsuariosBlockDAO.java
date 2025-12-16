@@ -28,7 +28,7 @@ public class UsuariosBlockDAO {
     }
     
     public void bloquear(Long idUsuario, Long idBloqueado) throws SQLException {
-        String sql = "INSERT INTO ususrios_block(idUsuario, idBloqueado) VALUES (?, ?)";
+        String sql = "INSERT INTO usuarios_block(idUsuario, idBloqueado) VALUES (?, ?)";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idUsuario); // USUÁRIO QUE BLOQUEOU
             preparedStatement.setLong(2, idBloqueado); // USUÁRIO QUE FOI BLOQUEADO
@@ -39,7 +39,7 @@ public class UsuariosBlockDAO {
     }
 
     public void desbloquear(Long idUsuario, Long idBloqueado) throws SQLException {
-        String sql = "DELETE FROM ususrios_block WHERE usuario = ? AND recurso = ?";
+        String sql = "DELETE FROM usuarios_block WHERE idUsuario = ? AND idBloqueado = ?";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idUsuario);
             preparedStatement.setLong(2, idBloqueado);
@@ -50,7 +50,7 @@ public class UsuariosBlockDAO {
     }
 
      public boolean check(Long idUsuario, Long idBloqueado) throws SQLException {
-        String sql = "SELECT 1 FROM ususrios_block WHERE usuario = ? AND recurso = ? LIMIT 1";
+        String sql = "SELECT 1 FROM usuarios_block WHERE idUsuario = ? AND idBloqueado = ? LIMIT 1";
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, idUsuario);
             preparedStatement.setLong(2, idBloqueado);

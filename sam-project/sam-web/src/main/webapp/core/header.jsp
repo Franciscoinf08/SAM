@@ -39,6 +39,8 @@
         <a href="/sam/core/gestor/computar-milhas.jsp">Computar Milhas</a>
         <%} if (ControleAutorizacao.checkPermissao("dashboard-gestor", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("dashboard-gestor", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/apuracao.jsp">Apuração</a>
+        <%} if (ControleAutorizacao.checkPermissao("associacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("associacoes", usuario.getCPF())) {%>
+        <a href="/sam/core/gestor/associacoes.jsp">Associações</a>
         <%} if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/orcamentos.jsp">Orçamentos</a>
         <%} if (ControleAutorizacao.checkPermissao("planos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("planos", usuario.getCPF())) {%>

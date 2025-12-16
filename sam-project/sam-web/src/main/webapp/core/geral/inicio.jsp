@@ -49,20 +49,23 @@
                 </ul>
             </div>
                 
+            <%  if(usuario.getTipo() == UsuarioTipo.CLIENTE){%>
+            
             <div id="pedidos-gestao">
                 <h2>Pedidos de Gerencia</h2>
-                
-                <% if(usuario.getTipo() == UsuarioTipo.CLIENTE){%>
+                    <% GestaoAssociacoesClientesService gestaoAsso = new GestaoAssociacoesClientesService();
+                    List<AssociacaoCliente> pedidos = gestaoAsso.listarCliente(usuario.getId());
+                    if(pedidos == null || pedidos.isEmpty()){%>
+                        <p>Você não tem pedidos para gerencia</p>
+                    <%} else {%>
                 <table>
                     <tr>
                         <th>Gestor</th>
                         <th>Tipo</th>
                         <th>Ações</th>
                     </tr>
-                <%  GestaoAssociacoesClientesService gestaoAsso = new GestaoAssociacoesClientesService();
-                    List<AssociacaoCliente> pedidos = gestaoAsso.listarCliente(usuario.getId());
-                    for(AssociacaoCliente p : pedidos){
-                    Usuario gerente = gestao.pesquisar(p.getIdGestor()); %>
+                <%  for(AssociacaoCliente p : pedidos){
+                        Usuario gerente = gestao.pesquisar(p.getIdGestor()); %>
                     <tr>
                         <td><%=gerente.getNome()%></td>
                         <td><%=p.getTipo()%></td>
@@ -76,12 +79,9 @@
                         </td>
                     </tr>
                 <%}%>
-                </table>
-                <%} else {%>
-                <p>Você não tem pedidos para gerencia</p>
-                <%}%>
-                
-            </div>
+            <%}%>
+                </div>   
+            <%}%>
 
         </main>
 

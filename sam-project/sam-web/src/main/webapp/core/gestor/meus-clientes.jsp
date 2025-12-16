@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="sam.model.domain.util.UsuarioTipo" %>
@@ -32,15 +33,25 @@
         <main class="content">
             
             <h2>Meus clientes</h2>
-            <%
+            <%  GestaoUsuariosService gestao = new GestaoUsuariosService();
                 List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+                List<Usuario> meusClientes = new ArrayList<>();
+                
+                if(clientes == null){
+                    meusClientes = gestao.getListaClientes(usuario);
+                }
+                else{
+                    meusClientes = clientes;
+                }
                 
                 if (ControleAutorizacao.checkPermissao("associacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("associacoes", usuario.getCPF())) {
             %>
             <button><a href="/sam/associacoes?acao=ListarDisponiveis">Novo cliente</a></button>
             <%}
-                if(clientes != null){%>
-            <table>
+                if(meusClientes == null || meusClientes.isEmpty()){%>
+                <p>Você ainda não tem clientes</p>
+                <%} else {%>
+                <table>
                 <tr>
                     <th>Nome</th>
                     <th>CPF </th>
@@ -48,7 +59,7 @@
                     <th>Ações</th>
                 </tr>
                 <%
-                    for (Usuario c : clientes){
+                    for (Usuario c : meusClientes){
                 %>
                 <tr>
                     <td><%=c.getNome()%></td>
@@ -64,28 +75,28 @@
                 </tr>
                 <%}%>
                 </table>
-                <%} else {%>
-                <p>Você ainda não tem clientes</p>
                 <%}%>
             <h2>Pedidos pendentes</h2>
+            <%  GestaoAssociacoesClientesService gestaoAsso = new GestaoAssociacoesClientesService();
+                List<AssociacaoCliente> pedidos = gestaoAsso.listarGestor(usuario.getId());
+                if(pedidos == null || pedidos.isEmpty()){%>
+                    <p>Você não tem pedidos para gerencia</p>
+                <%} else {%>
             
             <table>
                 <tr>
                     <th>Cliente</th>
                     <th>Tipo</th>
                 </tr>
-                <%  GestaoUsuariosService gestao = new GestaoUsuariosService();
-                    GestaoAssociacoesClientesService gestaoAsso = new GestaoAssociacoesClientesService();
-                    List<AssociacaoCliente> pedidos = gestaoAsso.listarGestor(usuario.getId());
-                    for(AssociacaoCliente p : pedidos){
-                %>
-                    <% Usuario cliente = gestao.pesquisar(p.getIdCliente()); %>
+                <%  for(AssociacaoCliente p : pedidos){
+                        Usuario cliente = gestao.pesquisar(p.getIdCliente()); %>
                 <tr>
                     <td><%=cliente.getNome()%></td>
                     <td><%=p.getTipo()%></td>
                 </tr>
                 <%}%>
             </table>
+            <%}%>
             
         </main>
         <script src="<%=request.getContextPath()%>/js/script.js"></script>

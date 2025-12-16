@@ -42,8 +42,8 @@ public class UsuariosBlockController extends HttpServlet {
             UsuariosBlockService gestao = new UsuariosBlockService();
             gestao.bloquear(idUsuario, idVisitado);
             
-            request.setAttribute("idVisitado", idVisitado);
-            jsp = "/core/geral/perfil-visitados.jsp";
+            request.setAttribute("id", idVisitado);
+            jsp = "/core/geral/perfil-visitado.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
@@ -60,8 +60,8 @@ public class UsuariosBlockController extends HttpServlet {
             UsuariosBlockService gestao = new UsuariosBlockService();
             gestao.desbloquear(idUsuario, idVisitado);
             
-            request.setAttribute("idVisitado", idVisitado);
-            jsp = "/core/geral/perfil-visitados.jsp";
+            request.setAttribute("id", idVisitado);
+            jsp = "/core/geral/perfil-visitado.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";

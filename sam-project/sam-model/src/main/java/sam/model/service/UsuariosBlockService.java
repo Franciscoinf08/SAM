@@ -1,6 +1,7 @@
 package sam.model.service;
 
 import java.sql.SQLException;
+import java.util.Objects;
 import sam.model.dao.UsuariosBlockDAO;
 import sam.model.dao.UsuarioDAO;
 import sam.model.dao.AssociacoesClientesDAO;
@@ -21,9 +22,17 @@ public class UsuariosBlockService {
         Usuario usuario = usuarios.pesquisar(idUsuario);
         Usuario bloqueado = usuarios.pesquisar(idBloqueado);
         
-        // CHEGA SE ESTÃO ASSOCIADOS PARA DESASSOCIAR
-        if(usuario.getIdGestor() == bloqueado.getId() || bloqueado.getIdGestor() == usuario.getId()){
-            associacoes.aprovarDesassociacao(idUsuario);
+        System.out.println("usuario.getIdGestor(): " + usuario.getIdGestor());
+        System.out.println("bloqueado.getIdGestor(): " + bloqueado.getIdGestor());
+        
+        // SE O BLOQUEADO É CLIENTE DO USUÁRIO
+        if (Objects.equals(bloqueado.getIdGestor(), usuario.getId())) {
+            associacoes.aprovarDesassociacao(bloqueado.getId());
+        }
+
+        // SE O USUÁRIO É CLIENTE DO BLOQUEADO
+        if (Objects.equals(usuario.getIdGestor(), bloqueado.getId())) {
+            associacoes.aprovarDesassociacao(usuario.getId());
         }
         
         bloqueios.bloquear(idUsuario, idBloqueado);
