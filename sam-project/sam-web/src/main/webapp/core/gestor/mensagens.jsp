@@ -1,3 +1,4 @@
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -6,8 +7,8 @@
         <meta charset="UTF-8">
         <title>SAM - Mensagens e Avisos</title>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
-        <link rel="icon" href="/sam/imgs/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style.css">
+        <link rel="icon" href="<%=request.getContextPath()%>/imgs/favicon.ico">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,33 +19,34 @@
 
     <body>
         <header>
-            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+            <img id="logotipo" src="<%=request.getContextPath()%>/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Mensagens e Avisos</h1>
             <%@include file="/core/header.jsp" %>
         </header>
 
-        <main class="dashboard">
-            <section class="content" style="flex:1 1 100%;">
-                <h2>Enviar Mensagem</h2>
-                <form class="formulario">
-                    <label for="destinatario">Destinatário:
-                        <input type="text" placeholder="Nome do usuário ou cliente">
-                    </label>
+        <main>
+            <% List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");%>
+            <form action="notificacoes" method="POST" class="formulario">
+                <label for="titulo">
+                    <input type="text" name="titulo" placeholder="Digite o assunto...">
+                </label>
+                <label for="mensagem">
+                    <textarea name="mensagem" placeholder="mensagem"></textarea>
+                </label>
 
-                    <label for="assunto">Assunto:
-                        <input type="text" placeholder="Assunto da mensagem">
-                    </label>
+                <label for="cliente">
+                    <select name="cliente">
+                        <%for(Usuario c : clientes) { %>
+                        <option value="<%=c.getId()%>"><%=c.getNome()%></option>
+                        <%}%>
+                    </select>
+                </label>
 
-                    <label for="mensagem">Mensagem:
-                        <textarea rows="4" placeholder="Escreva sua mensagem..."></textarea>
-                    </label>
-
-                    <button type="submit">Enviar Mensagem</button>
-                </form>
-            </section>
+                <button type="submit">Enviar</button>
+            </form>
         </main>
 
-        <script src="../../js/script.js"></script>
+        <script src="<%=request.getContextPath()%>/js/script.js"></script>
     </body>
 
 </html>

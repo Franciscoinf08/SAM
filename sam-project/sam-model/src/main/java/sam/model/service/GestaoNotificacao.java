@@ -1,8 +1,6 @@
 package sam.model.service;
 
 
-import sam.model.dao.NotificacaoDAO;
-
 import java.time.LocalDateTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

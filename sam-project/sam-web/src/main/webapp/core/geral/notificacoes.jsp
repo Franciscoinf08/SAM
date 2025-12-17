@@ -1,6 +1,5 @@
 <%@ page import="java.util.List" %>
 <%@ page import="sam.model.domain.Notificacao" %>
-<%@ page import="sam.model.domain.util.UsuarioTipo" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <html>
@@ -19,7 +18,7 @@
 </head>
 <body>
 <header>
-    <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+    <img id="logotipo" src="<%=request.getContextPath()%>/imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Notificações</h1>
     <%@include file="/core/header.jsp" %>
 </header>
@@ -30,27 +29,7 @@
 
     %>
     <h2>Notificações</h2>
-    <%if(usuario.getTipo() == UsuarioTipo.GESTOR){
-        List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");%>
-    <form action="notificacoes" method="POST" class="formulario">
-        <label for="titulo">
-            <input type="text" name="titulo" placeholder="Digite o assunto...">
-        </label>
-        <label for="mensagem">
-            <textarea name="mensagem" placeholder="mensagem"></textarea>
-        </label>
 
-        <label for="cliente">
-            <select name="cliente">
-                <%for(Usuario c : clientes) { %>
-                <option value="<%=c.getId()%>"><%=c.getNome()%></option>
-                <%}%>
-            </select>
-        </label>
-
-        <button type="submit">Enviar</button>
-    </form>
-    <%}%>
     <ul class="notificacoes">
     <%
         if(!notificacoes.isEmpty()){

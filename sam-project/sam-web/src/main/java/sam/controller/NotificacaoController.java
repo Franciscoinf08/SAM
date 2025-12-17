@@ -26,7 +26,6 @@ public class NotificacaoController extends HttpServlet {
         if (action == null) {
             throw  new NullPointerException("action e NULL");
         }
-
         switch (action) {
 
             case "listar":
@@ -37,32 +36,46 @@ public class NotificacaoController extends HttpServlet {
             case "marcarComoLida":
                 marcarComoLida(request, response);
                 break;
-
+            case "formulario":
+                mostrarFormulario(request, response);
+                break;
         }
+    }
+    private void mostrarFormulario(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+        GestaoUsuariosService gestaoUsuariosService = new GestaoUsuariosService();
+        List<Usuario> clientes;
+        try {
+            clientes =  gestaoUsuariosService.getListaClientes(usuario);
+            request.setAttribute("clientes", clientes);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("core/gestor/mensagens.jsp");
+            dispatcher.forward(request, response);
 
-
+        } catch (SQLException e) {
+            throw new RuntimeException("erro ao buscar usuarios" + e.getMessage(), e);
+        } catch (ServletException | IOException  e) {
+            throw new RuntimeException("erro no servlet" + e.getMessage(), e);
+        }
     }
 
     private void marcarComoLida(HttpServletRequest request, HttpServletResponse response) {
         int idNotificacao = Integer.parseInt(request.getParameter("idNotificacao"));
-
         notificacaoService.marcarComoLida(idNotificacao);
         try {
             response.sendRedirect(request.getContextPath() + "/notificacoes?action=listar");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private void listarNotificacoes(HttpServletRequest request, HttpServletResponse response){
         HttpSession sessao = request.getSession();
         Usuario usuario = (Usuario) sessao.getAttribute("usuario");
-
         GestaoUsuariosService gestaoUsuariosService = new GestaoUsuariosService();
         int idUsuario = Math.toIntExact(usuario.getId());
-
         List<Notificacao> lista;
+
         try {
             if (usuario.getTipo() == UsuarioTipo.GESTOR){
                 List<Usuario> clientes;
@@ -99,7 +112,5 @@ public class NotificacaoController extends HttpServlet {
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e.getMessage());
         }
-
     }
-
 }
