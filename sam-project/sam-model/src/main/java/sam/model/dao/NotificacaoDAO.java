@@ -2,6 +2,7 @@ package sam.model.dao;
 
 
 import sam.model.common.Conexao;
+import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Notificacao;
 import sam.model.domain.Usuario;
 
@@ -67,19 +68,34 @@ public class NotificacaoDAO {
         }
      }
 
-     public List<Long> buscarUsuariosProgramaExpirando(){
-        List<Long> usuarios = new ArrayList<>();
-        String  sql = "select usuario_id from usuario_programa where dataExpiracao <= NOW() + interval 3 day";
-        try(PreparedStatement stmt = conexao.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()){
-            while(rs.next()){
-                usuarios.add(rs.getLong("usuario_id"));
-            }
+    public void salvarSeNaoExistir(Notificacao n) throws PersistenciaException {
+        System.out.println("chegou no dao para inserir");
+        String sql = """
+        INSERT INTO notificacoes (mensagem, titulo, destinatario)
+        SELECT ?, ?, ?
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM notificacoes
+            WHERE destinatario = ?
+              AND titulo = ?
+              AND mensagem = ?
+        )
+    """;
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, n.getDescricao());
+            stmt.setString(2, n.getTitulo());
+            stmt.setInt(3, n.getDestinatario());
+
+            stmt.setInt(4, n.getDestinatario());
+            stmt.setString(5, n.getTitulo());
+            stmt.setString(6, n.getDescricao());
+
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PersistenciaException(e);
         }
-        return usuarios;
-     }
+    }
 }
 

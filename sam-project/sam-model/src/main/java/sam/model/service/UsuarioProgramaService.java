@@ -9,7 +9,10 @@ import sam.model.domain.Usuario;
 import sam.model.domain.UsuarioPrograma;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioProgramaService {
@@ -63,5 +66,31 @@ public class UsuarioProgramaService {
         if (usuario == null)
             throw new RuntimeException("usuario nao encontrado");
         return pfDAO.listarAssociados(usuario);
+    }
+
+    public List<Integer> buscarUsuariosComProgramaExpirando(int dias) {
+        List<Integer> usuarios = new ArrayList<>();
+
+        String sql = """
+        SELECT DISTINCT up.usuario_id
+        FROM usuario_programa up
+        JOIN programa_fidelidade pf
+          ON pf.idProgramaFidelidade = up.programa_id
+        WHERE DATE_ADD(up.data_associacao, INTERVAL pf.duracao MONTH)
+              <= NOW() + INTERVAL ? DAY
+    """;
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, dias);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                usuarios.add(rs.getInt("usuario_id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usuarios;
     }
 }
