@@ -64,6 +64,9 @@
                             <h2><%=visitado.getNome()%></h2>
                             <p>Você foi bloqueado por esse perfil</p>
                         </div>
+                            <div class="acoes-visitado">
+                            <button><a href="/sam/userBlock?acao=Bloquear&idVisitado=<%=visitado.getId()%>&idUsuario=<%=usuario.getId()%>">Bloquear</a></button>
+                        </div>
                     </div>
                 </div>
             <%} else {%>
@@ -76,7 +79,7 @@
                             <p><%=visitado.getEmail()%></p>
                         </div>
                         <div class="acoes-visitado">
-                            <button>Avaliações</button>
+                            <button>Avaliações/Denúncia</button>
                             <button>Relatórios</button>
                             <button><a href="/sam/userBlock?acao=Bloquear&idVisitado=<%=visitado.getId()%>&idUsuario=<%=usuario.getId()%>">Bloquear</a></button>
                             <% if(usuario.getTipo() == UsuarioTipo.GESTOR && visitado.getTipo() == UsuarioTipo.CLIENTE && visitado.getIdGestor() == null){%>
