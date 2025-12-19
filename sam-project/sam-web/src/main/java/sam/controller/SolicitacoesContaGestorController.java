@@ -2,7 +2,7 @@ package sam.controller;
 
 import jakarta.servlet.http.Part;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+
+import sam.model.helper.EnviarEmailHelper;
 import sam.model.service.GestaoSolicitacoesService;
 import sam.model.domain.Solicitacao;
 import sam.model.domain.util.Status;
@@ -166,7 +168,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
                 Files.copy(is, arquivoSalvo.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
 
-            EnviarEmailController sm = new EnviarEmailController();
+            EnviarEmailHelper sm = new EnviarEmailHelper();
             boolean sucesso = sm.enviarEmailSolicitacaoGestor(nome, email, formaPagamento, arquivoSalvo.getAbsolutePath());
 
             request.setAttribute("sucesso", String.valueOf(sucesso));

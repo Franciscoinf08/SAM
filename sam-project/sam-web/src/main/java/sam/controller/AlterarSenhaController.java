@@ -27,10 +27,9 @@ public class AlterarSenhaController extends HttpServlet {
         String email = (String) session.getAttribute("emailRecuperacao");
 
         if (email == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
             return;
         }
-
 
         String novaSenha = request.getParameter("senha1");
 
@@ -40,14 +39,14 @@ public class AlterarSenhaController extends HttpServlet {
 
             if (usuario == null) {
                 request.setAttribute("erro", "Usuário não encontrado.");
-                request.getRequestDispatcher("/core/geral/alterar-senha.jsp").forward(request, response);
+                request.getRequestDispatcher("/core/geral/esqueceu-senha.jsp").forward(request, response);
                 return;
             }
 
             usuario.setSenha(novaSenha);
             service.atualizar(usuario);
 
-            response.sendRedirect(request.getContextPath() + "/core/geral/sucesso.jsp");
+            request.getRequestDispatcher("/core/geral/dashboard.jsp");
 
         } catch (PersistenciaException | SQLException e) {
             e.printStackTrace();

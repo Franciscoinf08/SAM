@@ -1,11 +1,11 @@
-.verificacao * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Montserrat", sans-serif;
 }
 
-.verificacao :root {
+:root {
     --bg:#f5f7fb;
     --card:#ffffff;
     --accen :#3b82f6;
@@ -14,7 +14,16 @@
     --gap:10px;
 }
 
-.verificacao .card {
+#formEmail,
+#formCodigo {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card {
     background:var(--card);
     border-radius:12px;
     padding:28px;
@@ -24,20 +33,20 @@
     text-align:center;
 }
 
-.verificacao .small {
+.card .small {
     color:var(--muted);
     font-size:13px;
     margin:0 0 20px;
 }
 
-.verificacao .code-input {
+.card .code-input {
     display:flex;
     justify-content:center;
     gap:var(--gap);
     margin-bottom:18px;
 }
 
-.verificacao .code-input input {
+.card .code-input input {
     width:var(--box-size);
     height:var(--box-size);
     border-radius:10px;
@@ -50,13 +59,13 @@
     transition:box-shadow .12s, border-color .12s, transform .08s;
 }
 
-.verificacao .code-input input:focus {
+.card .code-input input:focus {
     border-color:var(--accent);
     box-shadow:0 4px 10px rgba(59,130,246,0.12);
     transform:translateY(-2px);
 }
 
-.verificacao button.verify {
+.card button.verify {
     width: 100%;
     background-color: #0066cc;
     color: white;
@@ -67,24 +76,66 @@
     cursor: pointer;
 }
 
-.verificacao button.verify:active {
+.card button.verify:active {
     transform:translateY(1px);
 }
 
-.verificacao .info {
+.card .info {
     margin-top:12px;
     color:var(--muted);
     font-size:13px;
 }
 
-#input-codigo{
+.card h1{
+    padding: 10px;
+    font-size: 2em;
+}
+
+#formCodigo{
     display: none;
 }
 
-.active{
-    display: flex;
+
+#formEmail {
+    padding: 28px;
 }
 
-button{
-    color: mistyrose;
+#formEmail button{
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+#formEmail .formulario input,
+#formEmail .formulario select,
+#formEmail .formulario textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+#formEmail .formulario label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+#formEmail .formulario {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 25vw;
+}
+
+#formEmail h1{
+    padding: 10px;
+    text-align: left;
+    font-size: 2em;
 }
