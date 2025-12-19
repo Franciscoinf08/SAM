@@ -19,16 +19,16 @@ public class FeedbackController extends HttpServlet {
         try {
             long idAutor = Long.parseLong(request.getParameter("idAutor"));
             long idAvaliado = Long.parseLong(request.getParameter("idAvaliado"));
-            Integer nota = Integer.parseInt(request.getParameter("nota"));
+            int nota = Integer.parseInt(request.getParameter("nota"));
             String comentario = request.getParameter("comentario");
 
             feedbackService.registrarFeedback(idAutor, idAvaliado, nota, comentario);
 
-            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?sucesso=1");
+            response.sendRedirect(request.getContextPath() + "/core/geral/avaliacoes.jsp?sucesso=1");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?erro=1");
+            response.sendRedirect(request.getContextPath() + "/core/geral/avaliacoes.jsp?erro=1");
         }
     }
 }

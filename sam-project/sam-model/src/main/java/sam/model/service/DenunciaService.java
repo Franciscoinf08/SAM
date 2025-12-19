@@ -8,15 +8,20 @@ import sam.model.domain.Usuario;
 import sam.model.helper.EnviarEmailHelper;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class DenunciaService {
 
-    private EnviarEmailHelper emailHelper =  new EnviarEmailHelper();
+    private final Connection conexao;
+    private final DenunciaDAO denunciaDAO = new DenunciaDAO();
+    private final EnviarEmailHelper emailHelper =  new EnviarEmailHelper();
 
-    public void registrarDenuncia(Long denuncianteId,
-                                  Long denunciadoId,
-                                  String motivo,
-                                  String detalhes) throws Exception {
+    public DenunciaService() {
+        this.conexao = Conexao.getConnection();
+
+    }
+
+    public void registrarDenuncia(Long denuncianteId, Long denunciadoId, String motivo, String detalhes) throws Exception {
 
 
         UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
@@ -27,22 +32,16 @@ public class DenunciaService {
         if (denunciante == null) throw new Exception("Denunciante não encontrado.");
         if (denunciado == null) throw new Exception("Denunciado não encontrado.");
 
-        try (Connection conexao = Conexao.getConnection()) {
-
-            DenunciaDAO denunciaDAO = new DenunciaDAO();
-
-            Denuncia denuncia = new Denuncia(
-                    0,
-                    denunciante,
-                    denunciado,
-                    motivo,
-                    detalhes
-            );
-            denuncia.setStatus("ABERTA");
-
-
+        Denuncia denuncia = new Denuncia(denunciante, denunciado, motivo, detalhes);
+        denuncia.setStatus("ABERTA");
+        try {
             denunciaDAO.inserir(denuncia);
+
+        }catch (SQLException e){
+            throw new RuntimeException("Erro ao inserir denuncia:" + e.getMessage());
+        }finally{
             emailHelper.enviarEmailDenuncia(denuncia);
         }
+
     }
 }

@@ -12,6 +12,7 @@ public class DenunciaController extends HttpServlet {
 
     private final DenunciaService denunciaService =  new DenunciaService();
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,11 +25,12 @@ public class DenunciaController extends HttpServlet {
 
             denunciaService.registrarDenuncia(idDenunciante, idDenunciado, motivo, detalhes);
 
-            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?sucesso=1");
+            response.sendRedirect(request.getContextPath() + "/core/geral/avaliacoes.jsp?sucesso=1");
+
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?erro=1");
+            response.sendRedirect(request.getContextPath() + "/core/geral/avaliacoes.jsp?erro=1");
         }
     }
 }

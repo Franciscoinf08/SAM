@@ -11,13 +11,13 @@ CREATE TABLE `feedback` (
   `idAvaliado` int NOT NULL,
   `comentario` text,
   `nota` int DEFAULT NULL,
-  PRIMARY KEY (`idDenuncia`),
-KEY `fk_denuncia_denunciante` (`idDenunciante`),
-KEY `fk_denuncia_denunciado` (`idDenunciado`),
-CONSTRAINT `fk_denuncia_denunciante`
-  FOREIGN KEY (`idDenunciante`) REFERENCES `usuarios` (`id`),
-CONSTRAINT `fk_denuncia_denunciado`
-  FOREIGN KEY (`idDenunciado`) REFERENCES `usuarios` (`id`)
+  PRIMARY KEY (`idFeedback`),
+KEY `fk_feedback_autor` (`idAutor`),
+KEY `fk_feedback_avaliado` (`idAvaliado`),
+CONSTRAINT `fk_feedback_autor`
+  FOREIGN KEY (`idAutor`) REFERENCES `usuarios` (`id`),
+CONSTRAINT `fk_feedback_avaliado`
+  FOREIGN KEY (`idAvaliado`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
