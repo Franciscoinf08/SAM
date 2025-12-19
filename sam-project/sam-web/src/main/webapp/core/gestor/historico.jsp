@@ -47,8 +47,8 @@
                 <td><%= f.getTitulo() %></td>
                 <td><%= (f.getData() != null) ? f.getData() : "--" %></td>
                 <td>
-                    <a href="#">
-                        <button disabled>Visualizar</button>
+                    <a href="<%= request.getContextPath() %>/VisualizarFormularioController?id=<%= f.getId() %>">
+                        <button>Visualizar</button>
                     </a>
                 </td>
             </tr>

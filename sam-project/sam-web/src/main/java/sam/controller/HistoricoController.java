@@ -44,7 +44,7 @@ public class HistoricoController extends HttpServlet {
             request.setAttribute("formularios", formularios);
             request.setAttribute("feedbacks", feedbacks);
 
-            request.getRequestDispatcher("/jsp/cliente/historico.jsp")
+            request.getRequestDispatcher("/core/gestor/historico.jsp")
                     .forward(request, response);
 
         } catch (Exception e) {
