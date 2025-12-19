@@ -242,5 +242,31 @@ public class ProgramaFidelidadeDAO {
         }
         return lista;
     }
+    public List<ProgramaFidelidade> listarComMilhasExpirando() {
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+        String sql = "SELECT *\n" +
+                "    FROM programa_fidelidade\n" +
+                "    WHERE data_expiracao BETWEEN CURDATE()\n" +
+                "    AND DATE_ADD(CURDATE(), INTERVAL 3 DAY);";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                ProgramaFidelidade programaFidelidade = new ProgramaFidelidade();
+                programaFidelidade.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                programaFidelidade.setNome(rs.getString("nome"));
+                programaFidelidade.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                programaFidelidade.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                programaFidelidade.setDuracao(rs.getInt("duracao"));
+                programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
+                programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
+                programaFidelidade.setAvaliacao(rs.getString("avaliacao"));
+                programaFidelidade.setDataExpiracaoMilhas(rs.getObject("data_expiracao", Date.class));
+                lista.add(programaFidelidade);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
 
 }

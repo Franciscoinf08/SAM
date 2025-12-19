@@ -3,12 +3,17 @@ package sam.model.service;
 
 import sam.model.common.exception.PersistenciaException;
 import sam.model.dao.NotificacaoDAO;
+import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.dao.UsuarioDAO;
 import sam.model.dao.UsuarioProgramaDAO;
 import sam.model.domain.Notificacao;
+import sam.model.domain.ProgramaFidelidade;
+import sam.model.domain.Usuario;
+import sam.model.domain.util.UsuarioTipo;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotificacaoService {
@@ -49,6 +54,33 @@ public class NotificacaoService {
             Notificacao n = new Notificacao(mensagem, titulo, idUsuario);
             enviarSeNaoExistir(n);
         }
+    }
+    public void enviarMilhasExpirando() {
+        ProgramaFidelidadeDAO pfDAO = new ProgramaFidelidadeDAO();
+        UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+        List<Usuario> lista = new ArrayList<>();
+        try {
+            lista = usuarioDAO.listarTodos();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<ProgramaFidelidade> programaFidelidades = pfDAO.listarComMilhasExpirando();
+        String titulo = "Milhas do Expirando";
+
+
+        for (ProgramaFidelidade p : programaFidelidades){
+            String mensagem = "As milhas do programa de fidelidade " + pfDAO.buscarPorId(p.getIdProgramaFidelidade()).getNome() +
+                    "estao expirando";
+            for (Usuario u : lista){
+                if (u.getTipo() == UsuarioTipo.GESTOR){
+                    Notificacao n = new Notificacao(mensagem, titulo, Math.toIntExact(u.getId()));
+                    enviarSeNaoExistir(n);
+                }
+            }
+        }
+
+
     }
     public void enviarSeNaoExistir(Notificacao notificacao) {
         try {

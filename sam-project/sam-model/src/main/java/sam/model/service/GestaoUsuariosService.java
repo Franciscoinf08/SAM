@@ -3,6 +3,7 @@ package sam.model.service;
 import sam.model.dao.UsuarioDAO;
 import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Usuario;
+import sam.model.domain.util.TipoAtividades;
 import sam.model.domain.util.UsuarioTipo;
 import sam.model.helper.UsuarioHelper;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class GestaoUsuariosService {
 
     private final UsuarioDAO usuarioDAO;
+    private final AtividadeService atividadeService = new AtividadeService();
 
     public GestaoUsuariosService() {
         usuarioDAO = UsuarioDAO.getInstance();
@@ -38,8 +40,10 @@ public class GestaoUsuariosService {
     public void cadastrar(Usuario usuario) throws PersistenciaException, SQLException {
         if (!"".equals(UsuarioHelper.validarCadastroUsuario(usuario)))
             throw new PersistenciaException(UsuarioHelper.validarCadastroUsuario(usuario));
+        String descricao =  "O usuario: " + usuario.getNome() + " foi cadastrado ao sistema";
         try {
             usuarioDAO.inserir(usuario);
+            atividadeService.registrarAtividade(TipoAtividades.CADASTRO_USUARIO, descricao, usuario.getId());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -48,12 +52,28 @@ public class GestaoUsuariosService {
     public void atualizar(Usuario usuario) throws PersistenciaException, SQLException {
         if (!"".equals(UsuarioHelper.validarAtualizacaoUsuario(usuario)))
             throw new PersistenciaException(UsuarioHelper.validarAtualizacaoUsuario(usuario));
-
+        Usuario antigo = pesquisar(usuario.getId());
+        String descricao = descricaoAlteracao(antigo, usuario);
         try {
             usuarioDAO.atualizar(usuario);
+
+            atividadeService.registrarAtividade(TipoAtividades.ALTERACAO_PERFIL, descricao, usuario.getId());
         } catch (SQLException e) {
             throw new SQLException(e);
         }
+    }
+
+    private String descricaoAlteracao(Usuario antigo, Usuario novo){
+        String descricao = "o perfil de: "+ antigo.getId()+ "foi alterado<br>" +
+                "Antigo: " +
+                "<br>Nome: " + antigo.getNome() +
+                "<br>cpf: " + antigo.getCPF() +
+                "<br>Email: " + antigo.getEmail() + "<br>" +
+                "Novo: " +
+                "<br>Nome: " + novo.getNome() +
+                "<br>cpf: " + novo.getCPF() +
+                "<br>Email: " + novo.getEmail();
+        return descricao;
     }
 
     public List<Usuario> getListaClientes(Usuario usuario) throws SQLException {

@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import sam.model.common.Conexao;
 import sam.model.dao.FeedbackDAO;
 import sam.model.dao.FormObjetivosDao;
@@ -30,16 +31,16 @@ public class HistoricoController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            Long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
-
+            HttpSession sessao = request.getSession();
+            Usuario usuario = (Usuario) sessao.getAttribute("usuario");
             List<FormObjetivos> formularios =
-                    FormObjetivosDao.buscarTodosPorUsuarioId(idUsuario);
+                    FormObjetivosDao.buscarTodos(usuario);
 
             FeedbackDAO fbDao =
                     new FeedbackDAO(Conexao.getConnection());
 
             List<Feedback> feedbacks =
-                    fbDao.listarPorUsuario(idUsuario);
+                    fbDao.listarPorUsuario(usuario.getId());
 
             request.setAttribute("formularios", formularios);
             request.setAttribute("feedbacks", feedbacks);

@@ -1,7 +1,9 @@
 package sam.controller;
 
+import jakarta.servlet.http.HttpSession;
 import sam.model.common.exception.PersistenciaException;
 import sam.model.domain.Transacao;
+import sam.model.domain.Usuario;
 import sam.model.domain.util.TransacaoTipo;
 import sam.model.service.GestaoTransacoesService;
 
@@ -22,6 +24,10 @@ public class CadastroTransacaoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+
+
         Long idProgramaFidelidade;
         Long idCliente;
         Date data;
@@ -60,7 +66,7 @@ public class CadastroTransacaoController extends HttpServlet {
         try {
             Transacao transacao = new Transacao(idProgramaFidelidade, idCliente, data, dataExpiracao, quantidade, tipo, valor, bonus);
 
-            manterTransacao.cadastrar(transacao);
+            manterTransacao.cadastrar(transacao, Math.toIntExact(usuario.getId()));
         } catch (PersistenciaException e) {
             e.printStackTrace();
             String erro = e.getLocalizedMessage();

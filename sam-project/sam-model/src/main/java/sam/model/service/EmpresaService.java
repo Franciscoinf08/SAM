@@ -3,6 +3,8 @@ package sam.model.service;
 import sam.model.common.Conexao;
 import sam.model.dao.EmpresaDAO;
 import sam.model.domain.Empresa;
+import sam.model.domain.Usuario;
+import sam.model.domain.util.TipoAtividades;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,17 +13,20 @@ import java.util.List;
 public class EmpresaService {
     private final Connection conexao;
     private final EmpresaDAO empresaDAO = new EmpresaDAO();
+    private final AtividadeService atividadeService = new AtividadeService();
     public EmpresaService() {
         this.conexao = Conexao.getConnection();
     }
 
-    public void cadastrarEmpresa(Empresa empresa){
+    public void cadastrarEmpresa(Empresa empresa, int usuarioExecutor){
+
         if(validarEmpresa(empresa)){
             throw new RuntimeException("a empresa que voce quer cadastrar nao existe ou o cnpj é invalido");
         }
         try {
             empresa.setCNPJ(empresa.getCNPJ().replaceAll("\\D","").replaceAll("\\.",""));
             empresaDAO.salvar(empresa);
+            atividadeService.registrarAtividade(TipoAtividades.CADASTRO_EMPRESA, "a empresa:" + empresa.getNome() + "foi cadastrada", (long) usuarioExecutor);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -31,9 +36,10 @@ public class EmpresaService {
     public List<Empresa> listarEmpresas(){
         return empresaDAO.listarTodas();
     }
-    public void excluir(int id){
+    public void excluir(int id, int usuarioExecutor){
         try {
             empresaDAO.excluirEmpresa(id);
+            atividadeService.registrarAtividade(TipoAtividades.CADASTRO_EMPRESA, "a empresa:" + buscarEmpresa(id).getNome() + "foi excluida", (long) usuarioExecutor);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,12 +49,24 @@ public class EmpresaService {
         return empresa;
     }
 
-    public void atualizarEmpresa(Empresa empresa){
+    public void atualizarEmpresa(Empresa empresa,int usuarioExecutor){
         if (validarEmpresa(empresa)) {
             throw new RuntimeException();
         }
         try {
+            String nomeAntigo = empresaDAO.buscarPorId(empresa.getId()).getNome();
+            String CNPJAntigo = empresaDAO.buscarPorId(empresa.getId()).getCNPJ();
+            double milheiroSegurancaAntigo = empresaDAO.buscarPorId(empresa.getId()).getMilheiroSeguranca();
             empresaDAO.atualizarEmpresa(empresa);
+            atividadeService.registrarAtividade(TipoAtividades.EDICAO_EMPRESA, "a empresa:" +"teve seus dados alterados de: <br>" +
+                    "Nome: "+ nomeAntigo +
+                    "<br>CNPJ: "+ CNPJAntigo +
+                    "<br>Milheiro de segurança: "+ milheiroSegurancaAntigo +
+                    "<br>para: " +
+                    "<br>Nome: "+ empresa.getNome() +
+                    "<br>CNPJ: "+ empresa.getCNPJ() +
+                    "<br>Milheiro de segurança: "+empresa.getMilheiroSeguranca()
+                    , (long) usuarioExecutor);
         } catch (SQLException e) {
             e.getMessage();
         }

@@ -4,10 +4,7 @@ import sam.model.common.exception.PersistenciaException;
 import sam.model.dao.TransacaoDAO;
 import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
-import sam.model.domain.util.OrdenarTransacaoPorDataExpiracao;
-import sam.model.domain.util.TransacaoStatus;
-import sam.model.domain.util.TransacaoTipo;
-import sam.model.domain.util.UsuarioTipo;
+import sam.model.domain.util.*;
 import sam.model.helper.DataHelper;
 import sam.model.helper.TransacaoHelper;
 
@@ -19,17 +16,22 @@ import java.util.List;
 public class GestaoTransacoesService {
 
     private final TransacaoDAO transacaoDAO;
+    private final AtividadeService atividadeService = new AtividadeService();
 
     public GestaoTransacoesService() {
         transacaoDAO = TransacaoDAO.getInstance();
     }
 
-    public void cadastrar(Transacao transacao) throws SQLException, PersistenciaException {
+    public void cadastrar(Transacao transacao, int usuarioExecutor) throws SQLException, PersistenciaException {
         if (!"".equals(TransacaoHelper.validarCadastroTransacao(transacao)))
             throw new PersistenciaException(TransacaoHelper.validarCadastroTransacao(transacao));
-
         try {
             transacaoDAO.inserir(transacao);
+            String descricao = "Houve uma transacao de " + transacao.getTipo() +"pelo Gestor " + usuarioExecutor;
+            if(transacao.getTipo() == TransacaoTipo.VENDA)
+                atividadeService.registrarAtividade(TipoAtividades.TRANSACAO_VENDA, descricao, (long) usuarioExecutor);
+            if(transacao.getTipo() == TransacaoTipo.COMPRA)
+                atividadeService.registrarAtividade(TipoAtividades.TRANSACAO_COMPRA, descricao, (long) usuarioExecutor);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -68,12 +70,13 @@ public class GestaoTransacoesService {
         return listaExpirando;
     }
 
-    public void remover(Long id) throws SQLException, PersistenciaException {
+    public void remover(Long id, int  usuarioExecutor) throws SQLException, PersistenciaException {
         if (transacaoDAO.pesquisar(id) == null)
             throw new PersistenciaException("A transação não existe");
-
+        String descricao = "A transacao" + id +" foi exluida pelo Gestor " + usuarioExecutor;
         try {
             transacaoDAO.remover(id);
+            atividadeService.registrarAtividade(TipoAtividades.TRANSACAO_EXCLUSAO, descricao, (long) usuarioExecutor);
         } catch (SQLException e) {
             throw new SQLException(e);
         }

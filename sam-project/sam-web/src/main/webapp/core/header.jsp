@@ -53,5 +53,6 @@
         <%} if (ControleAutorizacao.checkPermissao("ver-solicitacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-solicitacoes", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/core/dev/gerenciar-solicitacoes.jsp">Solicitações para Conta Gestor</a>
         <%}%>
+
     </div>
 </div>
