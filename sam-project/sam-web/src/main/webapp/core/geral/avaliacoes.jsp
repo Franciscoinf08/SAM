@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.dao.UsuarioDAO" %>
-<%@ page import="sam.model.common.Conexao" %>
 <%@ page import="sam.model.domain.Usuario" %>
 <%@ page import="java.util.List" %>
 

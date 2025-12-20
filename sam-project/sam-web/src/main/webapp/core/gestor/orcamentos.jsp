@@ -1,119 +1,151 @@
+<%@ page import="sam.model.dao.UsuarioDAO" %>
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+
+    UsuarioDAO udao = UsuarioDAO.getInstance();
+    List<Usuario> usuarios = udao.listarTodos();
+
+
+%>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>SAM - Orçamentos</title>
+<head>
+    <meta charset="UTF-8">
+    <title>SAM - Orçamentos</title>
 
-        <link rel="stylesheet" type="text/css" href="../../css/style.css">
-        <link rel="icon" href="/sam/imgs/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="icon" href="/sam/imgs/favicon.ico">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
-    <body>
-        <header>
-            <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
-            <h1>Orçamentos</h1>
-            <%@include file="/core/header.jsp" %>
-        </header>
+<body>
+<header>
+    <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+    <h1>Orçamentos</h1>
+    <%@include file="/core/header.jsp" %>
+</header>
 
-        <main class="dashboard">
-            <section class="content" style="flex:1 1 100%;">
-                <h2>Gerar Orçamento</h2>
-                <form class="formulario">
-                    <label for="destino">Destino:
-                        <input type="text" placeholder="Cidade ou país">
-                    </label>
+<main class="dashboard">
+    <section class="content" style="flex:1 1 100%;">
+        <h2>Gerar Orçamento</h2>
 
-                    <label for="dataIda">Data de Ida:
-                        <input type="date">
-                    </label>
+        <form class="formulario" method="POST" action="<%=request.getContextPath()%>/proposta">
+            <input type="hidden" name="idGestor" value="<%=usuario.getId()%>">
+            <label>Cliente:
+                <select name="idCliente" required>
+                    <option value="">Selecione...</option>
+                    <% for (Usuario u : usuarios) { %>
+                    <option value="<%=u.getId()%>"><%=u.getNome()%></option>
+                    <% } %>
+                </select>
+            </label>
 
-                    <label for="dataVolta">Data de Volta:
-                        <input type="date">
-                    </label>
+            <label for="origem">Origem:
+                <input type="text" name="origem" id="origem" placeholder="Cidade ou país" required>
+            </label>
 
-                    <label for="adultos">Quantidade de Adultos:
-                        <input type="number" min="1" value="1">
-                    </label>
+            <label for="destino">Destino:
+                <input type="text" name="destino" id="destino" placeholder="Cidade ou país" required>
+            </label>
 
-                    <label for="criancas">Quantidade de Crianças:
-                        <input type="number" min="0" value="0">
-                    </label>
+            <label for="dataIda">Data de Ida:
+                <input type="date" name="dataIda" id="dataIda" required>
+            </label>
 
-                    <label for="conexoes">Conexões:
-                        <select>
-                            <option>Direto</option>
-                            <option>1 Conexão</option>
-                            <option>2 Conexões</option>
-                        </select>
-                    </label>
+            <label for="dataVolta">Data de Volta:
+                <input type="date" name="dataVolta" id="dataVolta" required>
+            </label>
 
-                    <label for="companhia">Companhia Aérea:
-                        <select>
-                            <option>Indiferente</option>
-                            <option>Latam</option>
-                            <option>Azul</option>
-                            <option>Gol</option>
-                        </select>
-                    </label>
+            <label for="numAdultos">Quantidade de Adultos:
+                <input type="number" name="numAdultos" id="numAdultos" min="1" value="1" required>
+            </label>
 
-                    <button type="button">Gerar Orçamento</button>
-                </form>
-            </section>
+            <label for="numCriancas">Quantidade de Crianças:
+                <input type="number" name="numCriancas" id="numCriancas" min="0" value="0">
+            </label>
 
-            <section class="card" style="flex:1 1 100%;">
-                <h2>Comparação de Opções</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Opção</th>
-                            <th>Milhas</th>
-                            <th>Dinheiro (R$)</th>
-                            <th>Milhas + Dinheiro</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Latam Pass - Direto</td>
-                            <td>50.000</td>
-                            <td>1.200</td>
-                            <td>25.000 + 600</td>
-                            <td><button>Salvar</button>
-                                <button>Propor a um Cliente</button>
-                                <button>Excluir</button></td>
-                        </tr>
-                        <tr>
-                            <td>Smiles - 1 Conexão</td>
-                            <td>45.000</td>
-                            <td>1.400</td>
-                            <td>20.000 + 700</td>
-                            <td><button>Salvar</button>
-                                <button>Propor a um Cliente</button>
-                                <button>Excluir</button></td>
-                        </tr>
-                        <tr>
-                            <td>Azul Fidelidade - Direto</td>
-                            <td>55.000</td>
-                            <td>1.100</td>
-                            <td>30.000 + 500</td>
-                            <td><button>Salvar</button>
-                                <button>Propor a um Cliente</button>
-                                <button>Excluir</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </main>
+            <label for="valorEmDinheiro">Valor em Dinheiro (R$):
+                <input type="number" step="0.01" name="valorEmDinheiro" id="valorEmDinheiro">
+            </label>
 
-        <script src="../../js/script.js"></script>
-    </body>
+            <label for="valorEmMilhas">Valor em Milhas:
+                <input type="number" name="valorEmMilhas" id="valorEmMilhas">
+            </label>
+
+            <label for="taxas">Taxas (R$):
+                <input type="number" step="0.01" name="taxas" id="taxas">
+            </label>
+
+            <label for="observacoes">Observações:
+                <textarea name="observacoes" id="observacoes" rows="3"></textarea>
+            </label>
+
+            <button type="submit">Salvar Proposta</button>
+        </form>
+
+    </section>
+
+    <section class="card" style="flex:1 1 100%;">
+        <h2>Comparação de Opções</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Opção</th>
+                <th>Milhas</th>
+                <th>Dinheiro (R$)</th>
+                <th>Milhas + Dinheiro</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Latam Pass - Direto</td>
+                <td>50.000</td>
+                <td>1.200</td>
+                <td>25.000 + 600</td>
+                <td>
+                    <button>Salvar</button>
+                    <button>Propor a um Cliente</button>
+                    <button>Excluir</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Smiles - 1 Conexão</td>
+                <td>45.000</td>
+                <td>1.400</td>
+                <td>20.000 + 700</td>
+                <td>
+                    <button>Salvar</button>
+                    <button>Propor a um Cliente</button>
+                    <button>Excluir</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Azul Fidelidade - Direto</td>
+                <td>55.000</td>
+                <td>1.100</td>
+                <td>30.000 + 500</td>
+                <td>
+                    <button>Salvar</button>
+                    <button>Propor a um Cliente</button>
+                    <button>Excluir</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script src="../../js/script.js"></script>
+</body>
 
 </html>

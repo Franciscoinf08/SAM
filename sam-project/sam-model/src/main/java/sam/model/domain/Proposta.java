@@ -1,8 +1,6 @@
 package sam.model.domain;
 
 import java.time.LocalDate;
-import java.util.List;
-import sam.model.domain.FormObjetivos;
 
 public class Proposta {
 
@@ -11,16 +9,38 @@ public class Proposta {
     private Usuario gestor;
     private String status;
     private double valorEmDinheiro;
-    private int valorEmMilhas;
-    private String descricao;
-    private LocalDate dataCriacao;
-    private LocalDate dataResposta;
-    private LocalDate dataCancelamento;
-    private FormObjetivos objetivo;
+    private Long valorEmMilhas;
+    private double taxas;
+    private String observacoes;
+    private LocalDate dataIda;
+    private LocalDate dataVolta;
+    private String origem;
+    private String destino;
+    private int numAdultos;
+    private int numCriancas;
 
     public Proposta() {
     }
 
+    public Proposta(Usuario cliente, Usuario gestor, String status,
+                    double valorEmDinheiro, Long valorEmMilhas, double taxas,
+                    String observacoes, LocalDate dataIda, LocalDate dataVolta,
+                    String origem, String destino, int numAdultos, int numCriancas) {
+
+        this.cliente = cliente;
+        this.gestor = gestor;
+        this.status = status;
+        this.valorEmDinheiro = valorEmDinheiro;
+        this.valorEmMilhas = valorEmMilhas;
+        this.taxas = taxas;
+        this.observacoes = observacoes;
+        this.dataIda = dataIda;
+        this.dataVolta = dataVolta;
+        this.origem = origem;
+        this.destino = destino;
+        this.numAdultos = numAdultos;
+        this.numCriancas = numCriancas;
+    }
 
     public int getId() {
         return id;
@@ -29,6 +49,7 @@ public class Proposta {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public Usuario getCliente() {
         return cliente;
@@ -62,53 +83,75 @@ public class Proposta {
         this.valorEmDinheiro = valorEmDinheiro;
     }
 
-    public int getValorEmMilhas() {
+    public Long getValorEmMilhas() {
         return valorEmMilhas;
     }
 
-    public void setValorEmMilhas(int valorEmMilhas) {
+    public void setValorEmMilhas(Long valorEmMilhas) {
         this.valorEmMilhas = valorEmMilhas;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public double getTaxas() {
+        return taxas;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setTaxas(double taxas) {
+        this.taxas = taxas;
     }
 
-    public LocalDate getDataCriacao() {
-        return dataCriacao;
+    public String getObservacoes() {
+        return observacoes;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 
-    public LocalDate getDataResposta() {
-        return dataResposta;
+    public LocalDate getDataIda() {
+        return dataIda;
     }
 
-    public void setDataResposta(LocalDate dataResposta) {
-        this.dataResposta = dataResposta;
+    public void setDataIda(LocalDate dataIda) {
+        this.dataIda = dataIda;
     }
 
-    public LocalDate getDataCancelamento() {
-        return dataCancelamento;
+    public LocalDate getDataVolta() {
+        return dataVolta;
     }
 
-    public void setDataCancelamento(LocalDate dataCancelamento) {
-        this.dataCancelamento = dataCancelamento;
+    public void setDataVolta(LocalDate dataVolta) {
+        this.dataVolta = dataVolta;
     }
 
-    public FormObjetivos getObjetivo() {
-        return objetivo;
+    public String getOrigem() {
+        return origem;
     }
 
-    public void setObjetivo(FormObjetivos objetivo) {
-        this.objetivo = objetivo;
+    public void setOrigem(String origem) {
+        this.origem = origem;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+    public int getNumAdultos() {
+        return numAdultos;
+    }
+
+    public void setNumAdultos(int numAdultos) {
+        this.numAdultos = numAdultos;
+    }
+
+    public int getNumCriancas() {
+        return numCriancas;
+    }
+
+    public void setNumCriancas(int numCriancas) {
+        this.numCriancas = numCriancas;
     }
 
 }
-
