@@ -5,13 +5,14 @@ import sam.model.dao.UsuarioDAO;
 import sam.model.dao.DenunciaDAO;
 import sam.model.domain.Denuncia;
 import sam.model.domain.Usuario;
+import sam.model.domain.util.TipoAtividades;
 
 import java.sql.Connection;
 
 public class DenunciaService {
 
     private final EmailNotificador emailNotificador = new EmailNotificador();
-
+    private final AtividadeService atividadeService = new AtividadeService();
     public void registrarDenuncia(Long denuncianteId,
                                   Long denunciadoId,
                                   String motivo,
@@ -43,5 +44,7 @@ public class DenunciaService {
             denunciaDAO.inserir(denuncia);
             emailNotificador.notificarDenuncia(denuncia);
         }
+        String descricao = "O usuario " + denunciante.getNome()+ " denunciou o usuario "+denunciado.getNome() + " por " + motivo;
+        atividadeService.registrarAtividade(TipoAtividades.DENUNCIA, descricao, denuncianteId);
     }
 }

@@ -22,8 +22,10 @@ public enum TipoAtividades {
     TRANSACAO_EXCLUSAO("Exclusao de transacao"), //ja foi
 
     SOLICITACAO_GESTOR("Solicitação para Gestor"),
-    DENUNCIA("Denúncia"),
-    AVALIACAO("Avaliação");
+    TORNAR_CLIENTE("Tornar cliente"),
+    SOLICITACAO_ACEITA("Solicitacao aceita"),
+    SOLICITACAO_RECUSADA("Solicitacao recusada"),
+    DENUNCIA("Denúncia");
 
     private final String descricao;
 
