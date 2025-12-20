@@ -6,6 +6,7 @@ import sam.model.domain.Atividade;
 import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.util.TipoAtividades;
 
+import javax.print.DocFlavor;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,13 +18,13 @@ public class AtividadeService {
 
 
     public void registrarAtividade(
-            TipoAtividades tipo,
+            String tipo,
             String descricao,
             Long usuarioExecutorId
     ) throws SQLException {
 
         Atividade atividade = new Atividade();
-        atividade.setTipo(tipo.name());
+        atividade.setTipo(tipo);
         atividade.setDescricao(descricao);
         atividade.setUsuarioExecutorId(usuarioExecutorId);
         atividade.setDataHora(LocalDateTime.now());

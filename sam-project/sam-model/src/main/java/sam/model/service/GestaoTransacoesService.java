@@ -2,6 +2,8 @@ package sam.model.service;
 
 import sam.model.common.exception.PersistenciaException;
 import sam.model.dao.TransacaoDAO;
+import sam.model.domain.AtividadeReferencia;
+import sam.model.domain.Solicitacao;
 import sam.model.domain.Transacao;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.*;
@@ -10,6 +12,7 @@ import sam.model.helper.TransacaoHelper;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,11 +30,22 @@ public class GestaoTransacoesService {
             throw new PersistenciaException(TransacaoHelper.validarCadastroTransacao(transacao));
         try {
             transacaoDAO.inserir(transacao);
-            String descricao = "Houve uma transacao de " + transacao.getTipo() +"pelo Gestor " + usuarioExecutor;
+
+            Long idCliente = transacaoDAO.pesquisar(transacao.getIdCliente()).getIdCliente();
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.TRANSACAO.name());
+            ref.setEntidadeId(transacao.getId());
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(idCliente);
+            refs.add(ref);
+
+            String descricao = "Houve uma transacao de " + transacao.getTipo() +" pelo Gestor " + usuarioExecutor;
             if(transacao.getTipo() == TransacaoTipo.VENDA)
-                atividadeService.registrarAtividade(TipoAtividades.TRANSACAO_VENDA, descricao, (long) usuarioExecutor);
+                atividadeService.registrarAtividadeComReferencias(TipoAtividades.TRANSACAO_VENDA.name(), descricao, (long) usuarioExecutor, refs);
             if(transacao.getTipo() == TransacaoTipo.COMPRA)
-                atividadeService.registrarAtividade(TipoAtividades.TRANSACAO_COMPRA, descricao, (long) usuarioExecutor);
+                atividadeService.registrarAtividadeComReferencias(TipoAtividades.TRANSACAO_COMPRA.name(), descricao, (long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -73,10 +87,21 @@ public class GestaoTransacoesService {
     public void remover(Long id, int  usuarioExecutor) throws SQLException, PersistenciaException {
         if (transacaoDAO.pesquisar(id) == null)
             throw new PersistenciaException("A transação não existe");
-        String descricao = "A transacao" + id +" foi exluida pelo Gestor " + usuarioExecutor;
+        String descricao = "A transacao " + id +" foi exluida pelo Gestor " + usuarioExecutor;
         try {
             transacaoDAO.remover(id);
-            atividadeService.registrarAtividade(TipoAtividades.TRANSACAO_EXCLUSAO, descricao, (long) usuarioExecutor);
+
+            Long idCliente = transacaoDAO.pesquisar(id).getIdCliente();
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.TRANSACAO.name());
+            ref.setEntidadeId(id);
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(idCliente);
+            refs.add(ref);
+
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.TRANSACAO_EXCLUSAO.name(), descricao, (long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }

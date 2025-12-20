@@ -2,12 +2,15 @@ package sam.model.service;
 
 import sam.model.common.Conexao;
 import sam.model.dao.EmpresaDAO;
+import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.Empresa;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.TipoAtividades;
+import sam.model.domain.util.TipoEntidades;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmpresaService {
@@ -18,7 +21,7 @@ public class EmpresaService {
         this.conexao = Conexao.getConnection();
     }
 
-    public void cadastrarEmpresa(Empresa empresa, int usuarioExecutor){
+    public void cadastrarEmpresa(Empresa empresa, int usuarioExecutor) throws SQLException {
 
         if(validarEmpresa(empresa)){
             throw new RuntimeException("a empresa que voce quer cadastrar nao existe ou o cnpj é invalido");
@@ -26,7 +29,18 @@ public class EmpresaService {
         try {
             empresa.setCNPJ(empresa.getCNPJ().replaceAll("\\D","").replaceAll("\\.",""));
             empresaDAO.salvar(empresa);
-            atividadeService.registrarAtividade(TipoAtividades.CADASTRO_EMPRESA, "a empresa:" + empresa.getNome() + "foi cadastrada", (long) usuarioExecutor);
+
+            AtividadeReferencia refEmpresa = new AtividadeReferencia();
+            refEmpresa.setTipoEntidade(TipoEntidades.EMPRESA.name());
+            refEmpresa.setEntidadeId((long) empresa.getId());
+            List<AtividadeReferencia> refs = List.of(refEmpresa);
+
+            atividadeService.registrarAtividadeComReferencias(
+                    TipoAtividades.CADASTRO_EMPRESA.name(),
+                    "A empresa " + empresa.getNome() + " foi cadastrada",
+                    (long) usuarioExecutor,
+                    refs
+            );
         } catch (Exception e) {
             e.getMessage();
         }
@@ -39,7 +53,13 @@ public class EmpresaService {
     public void excluir(int id, int usuarioExecutor){
         try {
             empresaDAO.excluirEmpresa(id);
-            atividadeService.registrarAtividade(TipoAtividades.CADASTRO_EMPRESA, "a empresa:" + buscarEmpresa(id).getNome() + "foi excluida", (long) usuarioExecutor);
+
+            AtividadeReferencia refEmpresa = new AtividadeReferencia();
+            refEmpresa.setTipoEntidade(TipoEntidades.EMPRESA.name());
+            refEmpresa.setEntidadeId((long) buscarEmpresa(id).getIdEmpresa());
+            List<AtividadeReferencia> refs = List.of(refEmpresa);
+
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.CADASTRO_EMPRESA.name(), "a empresa: " + buscarEmpresa(id).getNome() + " foi excluida", (long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -57,12 +77,18 @@ public class EmpresaService {
             String nomeAntigo = empresaDAO.buscarPorId(empresa.getId()).getNome();
             String CNPJAntigo = empresaDAO.buscarPorId(empresa.getId()).getCNPJ();
             double milheiroSegurancaAntigo = empresaDAO.buscarPorId(empresa.getId()).getMilheiroSeguranca();
+
+            AtividadeReferencia refEmpresa = new AtividadeReferencia();
+            refEmpresa.setTipoEntidade(TipoEntidades.EMPRESA.name());
+            refEmpresa.setEntidadeId((long) empresa.getIdEmpresa());
+            List<AtividadeReferencia> refs = List.of(refEmpresa);
+
             empresaDAO.atualizarEmpresa(empresa);
-            atividadeService.registrarAtividade(TipoAtividades.EDICAO_EMPRESA, "a empresa:" +"teve seus dados alterados de: <br>" +
+            atividadeService.registrarAtividade(TipoAtividades.EDICAO_EMPRESA.name(), "a empresa: " + nomeAntigo +" teve seus dados alterados de: <br>" +
                     "Nome: "+ nomeAntigo +
                     "<br>CNPJ: "+ CNPJAntigo +
                     "<br>Milheiro de segurança: "+ milheiroSegurancaAntigo +
-                    "<br>para: " +
+                    "<br><br>para: <br>" +
                     "<br>Nome: "+ empresa.getNome() +
                     "<br>CNPJ: "+ empresa.getCNPJ() +
                     "<br>Milheiro de segurança: "+empresa.getMilheiroSeguranca()

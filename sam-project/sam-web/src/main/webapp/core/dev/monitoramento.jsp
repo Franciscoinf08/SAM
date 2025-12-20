@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="sam.model.domain.Atividade" %>
 <%@ page import="sam.model.domain.AtividadeReferencia" %>
+<%@ page import="sam.model.domain.util.TipoAtividades" %>
+<%@ page import="sam.model.domain.util.TipoEntidades" %>
 
 <%
     List<Atividade> atividades =
@@ -37,8 +39,10 @@
 
 <main>
 
-    <%-- ===================== LISTAGEM ===================== --%>
     <%
+        // ======================
+        // LISTAGEM DE ATIVIDADES
+        // ======================
         if (atividade == null) {
     %>
 
@@ -57,12 +61,20 @@
             <%
                 if (atividades != null && !atividades.isEmpty()) {
                     for (Atividade a : atividades) {
+
+                        String descricaoTipo;
+                        try {
+                            descricaoTipo =
+                                    TipoAtividades.valueOf(a.getTipo()).getDescricao();
+                        } catch (Exception e) {
+                            descricaoTipo = a.getTipo();
+                        }
             %>
             <tr>
                 <td><%= a.getDataHora() %></td>
-                <td><%= a.getTipo() %></td>
+                <td><%= descricaoTipo %></td>
                 <td>ID <%= a.getUsuarioExecutorId() %></td>
-                <td><%= a.getDescricao() %></td>
+                <td><%= a.getResumo() %></td>
                 <td>
                     <a href="<%= request.getContextPath() %>/atividades?action=detalhes&id=<%= a.getId() %>">
                         <button>Detalhes</button>
@@ -83,17 +95,27 @@
     </div>
 
     <%
+        // ======================
+        // DETALHES DA ATIVIDADE
+        // ======================
     } else {
+
+        String descricaoTipo;
+        try {
+            descricaoTipo =
+                    TipoAtividades.valueOf(atividade.getTipo()).getDescricao();
+        } catch (Exception e) {
+            descricaoTipo = atividade.getTipo();
+        }
     %>
 
     <div class="card" style="width: 100%;">
         <h2>Detalhes da Atividade</h2>
 
-        <p><strong>Tipo:</strong> <%= atividade.getTipo() %></p>
+        <p><strong>Tipo:</strong> <%= descricaoTipo %></p>
         <p><strong>Data/Hora:</strong> <%= atividade.getDataHora() %></p>
         <p><strong>Executor:</strong> ID <%= atividade.getUsuarioExecutorId() %></p>
-        <p><strong>Descrição:</strong> <%= atividade.getDescricao() %></p>
-
+        <p><strong>Descrição:</strong></p> <%= atividade.getDescricao() %>
         <hr>
 
         <h2>Entidades Envolvidas</h2>
@@ -107,9 +129,16 @@
             <%
                 if (referencias != null && !referencias.isEmpty()) {
                     for (AtividadeReferencia ref : referencias) {
+                        String tipoEntidade;
+                        try {
+                            tipoEntidade =
+                                    TipoEntidades.valueOf(ref.getTipoEntidade()).getDescricao();
+                        } catch (Exception e) {
+                            tipoEntidade = ref.getTipoEntidade();
+                        }
             %>
             <tr>
-                <td><%= ref.getTipoEntidade() %></td>
+                <td><%= tipoEntidade%></td>
                 <td><%= ref.getEntidadeId() %></td>
             </tr>
             <%

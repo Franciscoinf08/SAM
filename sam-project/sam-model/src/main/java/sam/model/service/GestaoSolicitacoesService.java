@@ -1,11 +1,14 @@
 package sam.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
 import sam.model.common.exception.PersistenciaException;
+import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.Solicitacao;
 import sam.model.dao.SolicitacoesDAO;
 import sam.model.domain.util.TipoAtividades;
+import sam.model.domain.util.TipoEntidades;
 
 public class GestaoSolicitacoesService {
 
@@ -38,8 +41,18 @@ public class GestaoSolicitacoesService {
                 throw new SQLException("Forma de pagamento inválida");
             }
             solicitacoesDAO.adicionarPedido(sol);
+
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.SOLICITACAO.name());
+            ref.setEntidadeId(sol.getId());
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(sol.getIdUsuario());
+            refs.add(ref);
+
             String desctricao = "O usuario " + sol.getNome() +" ID: "+ sol.getIdUsuario() +" mandou uma solicitacao para tornar-se gestor";
-            atividadeService.registrarAtividade(TipoAtividades.SOLICITACAO_GESTOR, desctricao, sol.getIdUsuario());
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.SOLICITACAO_GESTOR.name(), desctricao, sol.getIdUsuario(), refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -58,8 +71,19 @@ public class GestaoSolicitacoesService {
         try {
             long longId = Long.parseLong(id);
             solicitacoesDAO.aprovarPedido(longId);
+
+            Solicitacao sol = solicitacoesDAO.pesquisar(longId);
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.SOLICITACAO.name());
+            ref.setEntidadeId(sol.getId());
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(sol.getIdUsuario());
+            refs.add(ref);
+
             String descricao = "O usuario: "+longId+" foi aceito como gestor";
-            atividadeService.registrarAtividade(TipoAtividades.SOLICITACAO_ACEITA, descricao, (long) usuarioExecutor);
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.SOLICITACAO_ACEITA.name(), descricao, (long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -69,8 +93,19 @@ public class GestaoSolicitacoesService {
         try {
             long longId = Long.parseLong(id);
             solicitacoesDAO.recusarPedido(longId);
+
+            Solicitacao sol = solicitacoesDAO.pesquisar(longId);
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.SOLICITACAO.name());
+            ref.setEntidadeId(sol.getId());
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(sol.getIdUsuario());
+            refs.add(ref);
+
             String descricao = "O usuario: "+longId+" foi recusado como gestor";
-            atividadeService.registrarAtividade(TipoAtividades.SOLICITACAO_RECUSADA, descricao,(long) usuarioExecutor);
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.SOLICITACAO_RECUSADA.name(), descricao,(long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -98,8 +133,19 @@ public class GestaoSolicitacoesService {
         try {
             long longId = Long.parseLong(id);
             solicitacoesDAO.tornarCliente(longId);
+
+            Solicitacao sol = solicitacoesDAO.pesquisar(longId);
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.SOLICITACAO.name());
+            ref.setEntidadeId(sol.getId());
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(sol.getIdUsuario());
+            refs.add(ref);
+
             String descricao = "O usuario: "+longId+" voltou a ser cliente";
-            atividadeService.registrarAtividade(TipoAtividades.TORNAR_CLIENTE,descricao, (long) usuarioExecutor);
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.TORNAR_CLIENTE.name(),descricao, (long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }

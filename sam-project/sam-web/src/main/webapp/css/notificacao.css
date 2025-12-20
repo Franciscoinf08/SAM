@@ -16,7 +16,7 @@ main h2 {
     margin-bottom: 20px;
     border-radius: 12px;
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    transition: .2s;
+    transition: box-shadow .2s, transform .2s;
 }
 
 .notificacao:hover {
@@ -45,16 +45,38 @@ main h2 {
     margin: 12px 0;
     font-size: 15px;
     color: #333;
+    line-height: 1.5;
 }
 
+
+.mensagem .texto {
+    display: inline;
+}
+
+
+.mensagem .curta {
+    display: inline;
+}
+
+.mensagem .completa {
+    display: none;
+}
+
+
 .notificacao .mais {
+    margin-left: 6px;
+    font-size: 14px;
+    font-weight: 500;
     color: #0066ff;
     text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 .notificacao .mais:hover {
     text-decoration: underline;
 }
+
 
 .btn-lida {
     padding: 8px 15px;
@@ -63,7 +85,7 @@ main h2 {
     border-radius: 6px;
     color: white;
     cursor: pointer;
-    transition: .2s;
+    transition: background .2s;
 }
 
 .btn-lida:hover {
@@ -73,4 +95,26 @@ main h2 {
 .nao-lida {
     border-left: 6px solid #007bff;
     background: #eef5ff !important;
+}
+.lida {
+    opacity: 0.55;
+    background: #f8f8f8;
+    border-left: 6px solid #ccc;
+}
+
+.lida:hover {
+    transform: none;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+.lida .titulo {
+    font-weight: 500;
+}
+
+.lida .btn-lida {
+    background: #aaa;
+    cursor: default;
+}
+.lida .btn-lida:hover {
+    background: #aaa;
 }

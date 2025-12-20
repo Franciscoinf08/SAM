@@ -5,11 +5,14 @@ import sam.model.common.Conexao;
 import sam.model.common.exception.PersistenciaException;
 import sam.model.dao.EmpresaDAO;
 import sam.model.dao.ProgramaFidelidadeDAO;
+import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.util.TipoAtividades;
+import sam.model.domain.util.TipoEntidades;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +29,20 @@ public class ProgramaFidelidadeService {
         if(validarProgramaFidelidade(p)){
             throw new RuntimeException("Programa de Fidelidade nao e valido");
         }
+
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.EMPRESA.name());
+        ref.setEntidadeId((long) p.getIdEmpresa());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.PROGRAMA_FIDELIDADE.name());
+        ref.setEntidadeId((long) p.getIdProgramaFidelidade());
+        refs.add(ref);
+
         programaFidelidadeDAO.salvar(p);
         try {
-            atividadeService.registrarAtividade(TipoAtividades.CADASTRO_PROGRAMA, "o programa de fidelidade: " + p.getNome() + "foi cadastrado na empresa: "
-                    + empresaService.buscarEmpresa(p.getIdEmpresa()).getNome(), (long) usuarioExecutor);
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.CADASTRO_PROGRAMA.name(), "o programa de fidelidade: " + p.getNome() + " foi cadastrado na empresa: "
+                    + empresaService.buscarEmpresa(p.getIdEmpresa()).getNome(), (long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -41,10 +54,20 @@ public class ProgramaFidelidadeService {
         ProgramaFidelidade pa = buscarProgramaFidelidade(p.getIdProgramaFidelidade());
         String descricao = descricaoAlteracao(pa, p);
 
+
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.EMPRESA.name());
+        ref.setEntidadeId((long) p.getIdEmpresa());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.PROGRAMA_FIDELIDADE.name());
+        ref.setEntidadeId((long) p.getIdProgramaFidelidade());
+        refs.add(ref);
+
         try {
             programaFidelidadeDAO.atualizarProgramaFidelidade(p);
             try{
-                atividadeService.registrarAtividade(TipoAtividades.EDICAO_PROGRAMA, descricao, (long) usuarioExecutor);
+                atividadeService.registrarAtividadeComReferencias(TipoAtividades.EDICAO_PROGRAMA.name(), descricao, (long) usuarioExecutor, refs);
 
             } catch (SQLException e){
                 throw new RuntimeException("erro ao registrar atividade" + e.getMessage(), e);
@@ -62,8 +85,8 @@ public class ProgramaFidelidadeService {
         double precoMensalA = pa.getPrecoMensal();
         Date dataExpiracaoMilhasA = pa.getDataExpiracaoMilhas();
 
-        String descricao = "o programa de fidelidade: " + pa.getNome() + "da empresa: "
-                + empresaService.buscarEmpresa(p.getIdEmpresa()).getNome() +"foi alterado de: <br>"+
+        String descricao = "o programa de fidelidade: " + pa.getNome() + " da empresa: "
+                + empresaService.buscarEmpresa(p.getIdEmpresa()).getNome() +" foi alterado de: <br>"+
                 "<br>Nome: "+ nomeA+
                 "<br>Bonus de milhas: "+bonusMilhasA +
                 "<br>Quantidade de milhas por mes: "+qtdeMilhasMesA +
@@ -91,10 +114,20 @@ public class ProgramaFidelidadeService {
             throw new RuntimeException("Programa de Fidelidade nao e valido");
         }
         ProgramaFidelidade p  = buscarProgramaFidelidade(id);
+
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.EMPRESA.name());
+        ref.setEntidadeId((long) p.getIdEmpresa());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.PROGRAMA_FIDELIDADE.name());
+        ref.setEntidadeId((long) p.getIdProgramaFidelidade());
+        refs.add(ref);
+
         try{
             programaFidelidadeDAO.excluirProgramaFidelidade(id);
-            atividadeService.registrarAtividade(TipoAtividades.EXCLUSAO_PROGRAMA, "o programa de fidelidade: " + p.getNome() + "da empresa: "
-                    + empresaService.buscarEmpresa(p.getIdEmpresa()).getNome() +"foi excluido" , (long) usuarioExecutor);
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.EXCLUSAO_PROGRAMA.name(), "o programa de fidelidade: " + p.getNome() + " da empresa: "
+                    + empresaService.buscarEmpresa(p.getIdEmpresa()).getNome() +" foi excluido" , (long) usuarioExecutor, refs);
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao deletar programa de Fidelidade.");
         }

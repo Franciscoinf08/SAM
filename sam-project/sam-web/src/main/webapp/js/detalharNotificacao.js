@@ -1,27 +1,17 @@
-function mostrarMais(id) {
-    fetch(`<%=request.getContextPath()%>/notificacoes?action=detalharAjax&id=` + id)
-        .then(response => response.json())
-        .then(data => {
-            const mensagem = document.getElementById("msg-" + id);
+function toggleNotificacao(link) {
+    const mensagem = link.closest(".mensagem");
+    const curta = mensagem.querySelector(".curta");
+    const completa = mensagem.querySelector(".completa");
 
-            mensagem.innerHTML = `
-                ${data.mensagemCompleta}
-                <br><br>
-                <a href="#" onclick="fechar(${id}); return false;">mostrar menos</a>
-            `;
-        })
-        .catch(e => console.error("Erro no AJAX:", e));
-}
+    const expandida = completa.style.display === "inline";
 
-function fechar(id) {
-    fetch(`<%=request.getContextPath()%>/notificacoes?action=resumoAjax&id=` + id)
-        .then(response => response.json())
-        .then(data => {
-            const mensagem = document.getElementById("msg-" + id);
-
-            mensagem.innerHTML = `
-                ${data.resumo}
-                <a href="#" onclick="mostrarMais(${id}); return false;">mostrar mais</a>
-            `;
-        });
+    if (expandida) {
+        completa.style.display = "none";
+        curta.style.display = "inline";
+        link.textContent = "mostrar mais";
+    } else {
+        completa.style.display = "inline";
+        curta.style.display = "none";
+        link.textContent = "mostrar menos";
+    }
 }

@@ -34,24 +34,32 @@
     <%
         if(!notificacoes.isEmpty()){
             for (Notificacao n : notificacoes) {
-                if (!n.isLida()){
     %>
 
-        <li class="notificacao nao-lida">
+        <li class="notificacao <%= n.isLida() ? "lida" : "nao-lida" %>">
             <div class="notificacao-topo">
                 <h3 class="titulo"><%=n.getTitulo()%></h3>
                 <span class="data"><%=n.getData()%></span>
             </div>
 
             <p class="mensagem">
-                <%=n.getResumo()%>
-                <a href="<%=request.getContextPath()%>/notificacoes?action=detalhar" class="mais">mostrar mais</a>
+                <span class="texto curta">
+                    <%= n.getResumo() %>
+                </span>
+
+                <span class="texto completa" style="display:none;">
+                    <%= n.getDescricao() %>
+                </span>
+
+                <a href="#" class="mais" onclick="toggleNotificacao(this); return false;">
+                    mostrar mais
+                </a>
             </p>
+
 
             <a href="<%=request.getContextPath()%>/notificacoes?action=marcarComoLida&idNotificacao=<%=n.getId()%>"><button class="btn-lida">Marcar como lida</button></a>
         </li>
     <%
-                }
             }
         } else {
     %>
@@ -62,5 +70,6 @@
     <%}%>
 </main>
 <script src="<%= request.getContextPath() %>/js/script.js"></script>
+<script src="<%= request.getContextPath() %>/js/detalharNotificacao.js"></script>
 </body>
 </html>

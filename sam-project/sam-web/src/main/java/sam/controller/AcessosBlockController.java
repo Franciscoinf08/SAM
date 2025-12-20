@@ -47,7 +47,7 @@ public class AcessosBlockController extends HttpServlet {
         try {
             String usuario = (String) request.getParameter("usuario");
             String recurso = (String) request.getParameter("recurso");
-            bloqueios.ativar(recurso, usuario, Math.toIntExact(usuarioSessao.getId()));
+            bloqueios.ativar(recurso, usuario, Math.toIntExact(usuarioSessao.getId()), usuario);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class AcessosBlockController extends HttpServlet {
         try {
             String usuario = (String) request.getParameter("usuario");
             String recurso = (String) request.getParameter("recurso");
-            bloqueios.bloquear(recurso, usuario, Math.toIntExact(usuarioSessao.getId()));
+            bloqueios.bloquear(recurso, usuario, Math.toIntExact(usuarioSessao.getId()), usuario);
         } catch (Exception e) {
             e.printStackTrace();
         }

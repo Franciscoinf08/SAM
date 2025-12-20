@@ -4,10 +4,12 @@ import sam.model.common.Conexao;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.dao.UsuarioDAO;
 import sam.model.dao.UsuarioProgramaDAO;
+import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.Usuario;
 import sam.model.domain.UsuarioPrograma;
 import sam.model.domain.util.TipoAtividades;
+import sam.model.domain.util.TipoEntidades;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,8 +36,17 @@ public class UsuarioProgramaService {
             throw new RuntimeException();
         upDAO.inserir(up);
 
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+        ref.setEntidadeId((long) up.getIdUsuario());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.PROGRAMA_FIDELIDADE.name());
+        ref.setEntidadeId((long) up.getIdPrograma());
+        refs.add(ref);
+
         String descricao =  "o usuario: " + up.getIdUsuario() + " foi associado ao programa: " + up.getIdPrograma();
-        atividadeService.registrarAtividade(TipoAtividades.valueOf(TipoAtividades.ASSOCIACAO_CLIENTE_PROGRAMA.name()), descricao, (long) idUsuarioExecutor);
+        atividadeService.registrarAtividadeComReferencias(TipoAtividades.ASSOCIACAO_CLIENTE_PROGRAMA.name(), descricao, (long) idUsuarioExecutor, refs);
 
     }
     public void desassociar(UsuarioPrograma up, int idUsuarioExecutor) throws SQLException {
@@ -43,8 +54,18 @@ public class UsuarioProgramaService {
             throw new RuntimeException();
         }
         upDAO.excluir(up.getIdUsuario(),  up.getIdPrograma());
+
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+        ref.setEntidadeId((long) up.getIdUsuario());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.PROGRAMA_FIDELIDADE.name());
+        ref.setEntidadeId((long) up.getIdPrograma());
+        refs.add(ref);
+
         String descricao = "o usuario: "+up.getIdUsuario()+ " foi desassociado ao programa: " + up.getIdPrograma();
-        atividadeService.registrarAtividade(TipoAtividades.valueOf(TipoAtividades.DESASSOCIACAO_CLIENTE_PROGRAMA.name()), descricao, (long) idUsuarioExecutor);
+        atividadeService.registrarAtividadeComReferencias(TipoAtividades.DESASSOCIACAO_CLIENTE_PROGRAMA.name(), descricao, (long) idUsuarioExecutor,refs);
     }
     public List<ProgramaFidelidade> listarNaoAssociados(int idUsuario) throws SQLException {
         Usuario usuario = uDAO.pesquisar((long) idUsuario);
@@ -70,31 +91,5 @@ public class UsuarioProgramaService {
         if (usuario == null)
             throw new RuntimeException("usuario nao encontrado");
         return pfDAO.listarAssociados(usuario);
-    }
-
-    public List<Integer> buscarUsuariosComProgramaExpirando(int dias) {
-        List<Integer> usuarios = new ArrayList<>();
-
-        String sql = """
-        SELECT DISTINCT up.usuario_id
-        FROM usuario_programa up
-        JOIN programa_fidelidade pf
-          ON pf.idProgramaFidelidade = up.programa_id
-        WHERE DATE_ADD(up.data_associacao, INTERVAL pf.duracao MONTH)
-              <= NOW() + INTERVAL ? DAY
-    """;
-
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, dias);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                usuarios.add(rs.getInt("usuario_id"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return usuarios;
     }
 }

@@ -2,12 +2,15 @@ package sam.model.service;
 
 import sam.model.dao.UsuarioDAO;
 import sam.model.common.exception.PersistenciaException;
+import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.TipoAtividades;
+import sam.model.domain.util.TipoEntidades;
 import sam.model.domain.util.UsuarioTipo;
 import sam.model.helper.UsuarioHelper;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestaoUsuariosService {
@@ -42,8 +45,15 @@ public class GestaoUsuariosService {
             throw new PersistenciaException(UsuarioHelper.validarCadastroUsuario(usuario));
         String descricao =  "O usuario: " + usuario.getNome() + " foi cadastrado ao sistema";
         try {
+
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(usuario.getId());
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+
             usuarioDAO.inserir(usuario);
-            atividadeService.registrarAtividade(TipoAtividades.CADASTRO_USUARIO, descricao, usuario.getId());
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.CADASTRO_USUARIO.name(), descricao, usuario.getId(), refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -56,20 +66,24 @@ public class GestaoUsuariosService {
         String descricao = descricaoAlteracao(antigo, usuario);
         try {
             usuarioDAO.atualizar(usuario);
-
-            atividadeService.registrarAtividade(TipoAtividades.ALTERACAO_PERFIL, descricao, usuario.getId());
+            AtividadeReferencia ref = new AtividadeReferencia();
+            ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+            ref.setEntidadeId(usuario.getId());
+            List<AtividadeReferencia> refs = new ArrayList<>();
+            refs.add(ref);
+            atividadeService.registrarAtividadeComReferencias(TipoAtividades.ALTERACAO_PERFIL.name(), descricao, usuario.getId(), refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
     private String descricaoAlteracao(Usuario antigo, Usuario novo){
-        String descricao = "o perfil de: "+ antigo.getId()+ "foi alterado<br>" +
+        String descricao = "o perfil de: "+ antigo.getId()+ " foi alterado.<br>" +
                 "Antigo: " +
                 "<br>Nome: " + antigo.getNome() +
                 "<br>cpf: " + antigo.getCPF() +
                 "<br>Email: " + antigo.getEmail() + "<br>" +
-                "Novo: " +
+                "<br>Novo: <br>" +
                 "<br>Nome: " + novo.getNome() +
                 "<br>cpf: " + novo.getCPF() +
                 "<br>Email: " + novo.getEmail();

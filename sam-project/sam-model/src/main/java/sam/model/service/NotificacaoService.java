@@ -10,6 +10,7 @@ import sam.model.domain.Notificacao;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.UsuarioTipo;
+import sam.model.helper.EnviarEmailHelper;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -18,6 +19,8 @@ import java.util.List;
 
 public class NotificacaoService {
     private NotificacaoDAO notificacaoDAO;
+    private final EnviarEmailHelper enviarEmailHelper = new EnviarEmailHelper();
+    private final GestaoUsuariosService usuariosService = new GestaoUsuariosService();
 
     public NotificacaoService() {
         this.notificacaoDAO = new NotificacaoDAO();
@@ -38,9 +41,10 @@ public class NotificacaoService {
 
         try{
             notificacaoDAO.salvar(notificacao);
-
+            Usuario usuario = usuariosService.pesquisar((long) notificacao.getDestinatario());
+            enviarEmailHelper.enviarEmail(usuario.getEmail(), notificacao.getTitulo(), notificacao.getDescricao());
         } catch (SQLException e) {
-            throw new RuntimeException("erroi ao enviar notificacao" + e.getMessage(),e);
+            throw new RuntimeException("erro ao enviar notificacao" + e.getMessage(),e);
         }
 
     }
@@ -58,7 +62,7 @@ public class NotificacaoService {
     public void enviarMilhasExpirando() {
         ProgramaFidelidadeDAO pfDAO = new ProgramaFidelidadeDAO();
         UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
-        List<Usuario> lista = new ArrayList<>();
+        List<Usuario> lista;
         try {
             lista = usuarioDAO.listarTodos();
         } catch (SQLException e) {
@@ -85,7 +89,9 @@ public class NotificacaoService {
     public void enviarSeNaoExistir(Notificacao notificacao) {
         try {
             notificacaoDAO.salvarSeNaoExistir(notificacao);
-        } catch (PersistenciaException e) {
+            Usuario usuario = usuariosService.pesquisar((long) notificacao.getDestinatario());
+            enviarEmailHelper.enviarEmail(usuario.getEmail(), notificacao.getTitulo(), notificacao.getDescricao());
+        } catch (PersistenciaException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

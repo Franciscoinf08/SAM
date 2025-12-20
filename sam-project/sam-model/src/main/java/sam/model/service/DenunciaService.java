@@ -3,11 +3,15 @@ package sam.model.service;
 import sam.model.common.Conexao;
 import sam.model.dao.UsuarioDAO;
 import sam.model.dao.DenunciaDAO;
+import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.Denuncia;
 import sam.model.domain.Usuario;
 import sam.model.domain.util.TipoAtividades;
+import sam.model.domain.util.TipoEntidades;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DenunciaService {
 
@@ -45,6 +49,6 @@ public class DenunciaService {
             emailNotificador.notificarDenuncia(denuncia);
         }
         String descricao = "O usuario " + denunciante.getNome()+ " denunciou o usuario "+denunciado.getNome() + " por " + motivo;
-        atividadeService.registrarAtividade(TipoAtividades.DENUNCIA, descricao, denuncianteId);
+        atividadeService.registrarAtividade(TipoAtividades.DENUNCIA.name(), descricao, denuncianteId);
     }
 }

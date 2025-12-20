@@ -63,4 +63,11 @@ public class Atividade {
     public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
     }
+
+    public String getResumo() {
+        if (descricao == null) return "";
+        return descricao.length() <= 80
+                ? descricao
+                : descricao.substring(0, 80) + "...";
+    }
 }
