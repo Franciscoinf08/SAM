@@ -350,3 +350,10 @@ button a{
     color: white !important;
     text-decoration: none;
 }
+td.acoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+

@@ -85,7 +85,7 @@ public class ControleAutorizacao {
         permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
-        
+
         permissao = new Permissao("relatorios");
         permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
         permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
@@ -131,6 +131,12 @@ public class ControleAutorizacao {
         permissao = new Permissao("monitoramento");
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
+
+        permissao = new Permissao("ver-propostas");
+        permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
+        permissoes.put(permissao.getRecurso(), permissao);
+
+
     }
     
     public static boolean checkPermissao(String recurso, UsuarioTipo usuario) {

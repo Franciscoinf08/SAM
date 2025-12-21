@@ -9,8 +9,7 @@ public class Denuncia {
     private String detalhes;
     private String status;
 
-    public Denuncia(int id, Usuario denunciante, Usuario denunciado, String motivo, String detalhes) {
-        this.id = id;
+    public Denuncia(Usuario denunciante, Usuario denunciado, String motivo, String detalhes) {
         this.denunciante = denunciante;
         this.denunciado = denunciado;
         this.motivo = motivo;
