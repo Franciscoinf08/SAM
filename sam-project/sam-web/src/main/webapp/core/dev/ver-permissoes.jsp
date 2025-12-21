@@ -61,7 +61,11 @@
                     {"relatorios", "Relatórios"},
                     {"transacoes-gestor", "Transações Gestor"},
                     {"campanhas", "Campanhas"},
-                    {"solicitar-gestor", "Solicitar Conta Gestor"}
+                    {"solicitar-gestor", "Solicitar Conta Gestor"},
+                    {"historico", "Históricos"},
+                    {"visualizar-historico", "Visualizar Historico"},
+                    {"visualizar-formulario", "Visualizar Formulários"},
+                    {"monitoramento", "Monitoramento de atividades"}
                 };
 
                 for (String[] p : permissoes) {
