@@ -4,6 +4,7 @@ import sam.model.common.exception.PersistenciaException;
 import sam.model.dao.PerguntaTicketDAO;
 import sam.model.domain.PerguntaTicket;
 import sam.model.domain.Usuario;
+import sam.model.domain.util.TipoAtividades;
 import sam.model.helper.PerguntaTicketHelper;
 
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.List;
 public class GestaoPerguntasTicketService {
 
     private final PerguntaTicketDAO perguntaTicketDAO;
+    private final AtividadeService atividadeService = new AtividadeService();
 
     public GestaoPerguntasTicketService() {
         perguntaTicketDAO = PerguntaTicketDAO.getInstance();
@@ -23,6 +25,8 @@ public class GestaoPerguntasTicketService {
 
         try {
             perguntaTicketDAO.inserir(pergunta);
+            String descricao = "o usuario "+ pergunta.getIdUsuario() + " enviou um ticket";
+            atividadeService.registrarAtividade(TipoAtividades.CADASTRAR_TICKET.name(), descricao, pergunta.getIdUsuario());
         } catch (SQLException e) {
             throw new SQLException(e);
         }

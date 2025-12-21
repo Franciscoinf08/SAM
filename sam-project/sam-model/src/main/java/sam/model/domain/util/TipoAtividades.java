@@ -5,7 +5,6 @@ public enum TipoAtividades {
     ALTERACAO_PERFIL("Alteração de Perfil"), //ja foi
     BLOQUEIO_ACESSO_USUARIO("Bloqueio de Usuário"), //ja foi
     ATIVACAO_ACESSO_USUARIO("Ativacao de Usuario"), //ja foi
-    MUDANCA_SENHA("Mudança de Senha"),
 
     CADASTRO_EMPRESA("Cadastro de Empresa"), //ja foi
     EDICAO_EMPRESA("Edição de Empresa"), //ja foi
@@ -27,8 +26,8 @@ public enum TipoAtividades {
     SOLICITACAO_RECUSADA("Solicitacao para gestor recusada"), //ja foi
     DENUNCIA("Denúncia"),
 
-    BLOQUEIO_USUARIO("usuario bloqueado por outro "),
-    DESBLOQUEIO_USUARIO("usuario desbloqueado por outro "),
+    BLOQUEIO_USUARIO("usuario bloqueado por outro "), //ja foi
+    DESBLOQUEIO_USUARIO("usuario desbloqueado por outro "), //ja foi
     ACEITAR_SOLICITACAO_ASSOCIAR("associacao cliente gestor aceita "), //ja foi
     ACEITAR_SOLICITACAO_DESASSOCIAR("desassociacao cliente gestor aceita"), //ja foi
 
@@ -37,7 +36,10 @@ public enum TipoAtividades {
 
     RECUSAR_DESASOCIACAO_CLIENTE("desassociacao cliente gestor recusada"), //ja foi
     RECUSAR_SOLICITACAO_SEM_TIPO("solicitacao sem tipo especificado recusada"),
-    RECUSAR_ASSOCIACAO_CLIENTE("associacao cliente gestor recusada"); //ja foi
+    RECUSAR_ASSOCIACAO_CLIENTE("associacao cliente gestor recusada"),//ja foi
+
+    CADASTRAR_TICKET("um usuario cadastrou um ticket"); // ja foi
+
 
     private final String descricao;
 
