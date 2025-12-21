@@ -64,10 +64,9 @@
         } else {
     %>
         </ul>
-
-
         <p>voce nao tem notificacoes no momento</p>
     <%}%>
+
 </main>
 <script src="<%= request.getContextPath() %>/js/script.js"></script>
 <script src="<%= request.getContextPath() %>/js/detalharNotificacao.js"></script>

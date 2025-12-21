@@ -38,7 +38,6 @@ public class NotificacaoService {
         }
     }
     public void enviar(Notificacao notificacao) throws SQLException {
-
         try{
             notificacaoDAO.salvar(notificacao);
             Usuario usuario = usuariosService.pesquisar((long) notificacao.getDestinatario());

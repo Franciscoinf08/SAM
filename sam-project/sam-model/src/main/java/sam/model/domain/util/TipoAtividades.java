@@ -21,11 +21,23 @@ public enum TipoAtividades {
     TRANSACAO_COMPRA("Transação de Compra"), //ja foi
     TRANSACAO_EXCLUSAO("Exclusao de transacao"), //ja foi
 
-    SOLICITACAO_GESTOR("Solicitação para Gestor"),
-    TORNAR_CLIENTE("Tornar cliente"),
-    SOLICITACAO_ACEITA("Solicitacao aceita"),
-    SOLICITACAO_RECUSADA("Solicitacao recusada"),
-    DENUNCIA("Denúncia");
+    SOLICITACAO_GESTOR("Solicitação para Gestor"), //ja foi
+    TORNAR_CLIENTE("Tornar cliente"), //ja foi
+    SOLICITACAO_ACEITA("Solicitacao para gestor aceita"), //ja foi
+    SOLICITACAO_RECUSADA("Solicitacao para gestor recusada"), //ja foi
+    DENUNCIA("Denúncia"),
+
+
+
+    ACEITAR_SOLICITACAO_ASSOCIAR("associacao cliente gestor aceita "), //ja foi
+    ACEITAR_SOLICITACAO_DESASSOCIAR("desassociacao cliente gestor aceita"), //ja foi
+
+    SOLICITACAO_ASSOCIACAO("solicitacao de associacao cliente gestor"), //ja foi
+    SOLICITACAO_DESASSOCIACAO("solicitacao de desassociacao cliente gestor"), //ja foi
+
+    RECUSAR_DESASOCIACAO_CLIENTE("desassociacao cliente gestor recusada"), //ja foi
+    RECUSAR_SOLICITACAO_SEM_TIPO("solicitacao sem tipo especificado recusada"),
+    RECUSAR_ASSOCIACAO_CLIENTE("associacao cliente gestor recusada"); //ja foi
 
     private final String descricao;
 

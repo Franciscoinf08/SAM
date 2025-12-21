@@ -72,6 +72,7 @@ public class NotificacaoController extends HttpServlet {
     private void listarNotificacoes(HttpServletRequest request, HttpServletResponse response){
         HttpSession sessao = request.getSession();
         Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+
         GestaoUsuariosService gestaoUsuariosService = new GestaoUsuariosService();
         int idUsuario = Math.toIntExact(usuario.getId());
         List<Notificacao> lista;
