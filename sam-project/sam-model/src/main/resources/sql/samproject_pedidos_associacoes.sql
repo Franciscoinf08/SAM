@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: localhost    Database: samproject
+-- Host: 127.0.0.1    Database: samproject
 -- ------------------------------------------------------
 -- Server version	8.0.44
 
@@ -28,7 +28,7 @@ CREATE TABLE `pedidos_associacoes` (
   `idGestor` int DEFAULT NULL,
   `tipo` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `pedidos_associacoes` (
 
 LOCK TABLES `pedidos_associacoes` WRITE;
 /*!40000 ALTER TABLE `pedidos_associacoes` DISABLE KEYS */;
+INSERT INTO `pedidos_associacoes` VALUES (33,1,2,'ASSOCIAR'),(34,4,2,'DESASSOCIAR'),(35,7,2,'ASSOCIAR'),(36,8,2,'ASSOCIAR');
 /*!40000 ALTER TABLE `pedidos_associacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-21 10:49:16
+-- Dump completed on 2025-12-21 20:54:36

@@ -1,3 +1,9 @@
+-- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: samproject
+-- ------------------------------------------------------
+-- Server version	8.0.44
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -27,7 +33,7 @@ CREATE TABLE `respostas_ticket` (
   KEY `id_pergunta` (`id_pergunta`),
   CONSTRAINT `respostas_ticket_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `respostas_ticket_ibfk_2` FOREIGN KEY (`id_pergunta`) REFERENCES `perguntas_ticket` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +42,7 @@ CREATE TABLE `respostas_ticket` (
 
 LOCK TABLES `respostas_ticket` WRITE;
 /*!40000 ALTER TABLE `respostas_ticket` DISABLE KEYS */;
+INSERT INTO `respostas_ticket` VALUES (1,3,1,'asdasdaq','ATIVA');
 /*!40000 ALTER TABLE `respostas_ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -47,3 +54,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-12-21 20:54:37
