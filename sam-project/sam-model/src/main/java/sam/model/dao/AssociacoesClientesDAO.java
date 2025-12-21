@@ -160,4 +160,28 @@ public class AssociacoesClientesDAO {
         return lista;
     }
     
+    public AssociacaoCliente pesquisar(Long idPedido) throws SQLException {
+        AssociacaoCliente pedido = null;
+        String sql = "SELECT * FROM pedidos_associacoes WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+            preparedStatement.setLong(1, idPedido);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idGestor = rs.getLong("idGestor");
+                Long idCliente = rs.getLong("idCliente");
+                AssociacaoClienteTipo tipo = AssociacaoClienteTipo.valueOf(rs.getString("tipo"));
+
+                pedido = new AssociacaoCliente(idCliente, idGestor, tipo);
+                pedido.setId(id);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao pesquisar usuário", e);
+        }
+        return pedido;
+    }
+    
 }
