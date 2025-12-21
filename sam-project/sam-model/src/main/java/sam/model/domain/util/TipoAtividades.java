@@ -3,8 +3,8 @@ package sam.model.domain.util;
 public enum TipoAtividades {
     CADASTRO_USUARIO("Cadastro de Usuário"), //ja foi
     ALTERACAO_PERFIL("Alteração de Perfil"), //ja foi
-    BLOQUEIO_USUARIO("Bloqueio de Usuário"), //ja foi
-    ATIVACAO_USUARIO("Ativacao de Usuario"), //ja foi
+    BLOQUEIO_ACESSO_USUARIO("Bloqueio de Usuário"), //ja foi
+    ATIVACAO_ACESSO_USUARIO("Ativacao de Usuario"), //ja foi
     MUDANCA_SENHA("Mudança de Senha"),
 
     CADASTRO_EMPRESA("Cadastro de Empresa"), //ja foi
@@ -27,8 +27,8 @@ public enum TipoAtividades {
     SOLICITACAO_RECUSADA("Solicitacao para gestor recusada"), //ja foi
     DENUNCIA("Denúncia"),
 
-
-
+    BLOQUEIO_USUARIO("usuario bloqueado por outro "),
+    DESBLOQUEIO_USUARIO("usuario desbloqueado por outro "),
     ACEITAR_SOLICITACAO_ASSOCIAR("associacao cliente gestor aceita "), //ja foi
     ACEITAR_SOLICITACAO_DESASSOCIAR("desassociacao cliente gestor aceita"), //ja foi
 

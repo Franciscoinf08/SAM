@@ -91,6 +91,7 @@
             <%}%>
         </main>
         <script src="/sam/js/script.js"></script>
+        <script src="/sam/js/pesquisar.js"></script>
     </body>
 
 </html>

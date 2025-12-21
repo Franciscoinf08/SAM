@@ -72,8 +72,26 @@ public class GestaoAssociacoesClientesService {
     }
     
     public void recusar(Long idPedido) throws SQLException {
+        AssociacaoCliente associacaoCliente = associacoesDAO.pesquisar(idPedido);
+
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+        ref.setEntidadeId(associacaoCliente.getIdGestor());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+        ref.setEntidadeId(associacaoCliente.getIdCliente());
+        refs.add(ref);
+
+        String descricao1 = "o usuario "+associacaoCliente.getIdCliente()+ " recusou a solicitacao de associacao do "+ associacaoCliente.getIdGestor();
+        String descricao2 = "o usuario "+associacaoCliente.getIdCliente()+ " recusou a solicitacao de desassociacao do "+ associacaoCliente.getIdGestor();
+
         try {
             associacoesDAO.deleta(idPedido);
+            if(associacaoCliente.getTipo() == AssociacaoClienteTipo.ASSOCIAR)
+                atividadeService.registrarAtividadeComReferencias(TipoAtividades.RECUSAR_ASSOCIACAO_CLIENTE.name(), descricao1, associacaoCliente.getIdCliente(), refs);
+            else
+                atividadeService.registrarAtividadeComReferencias(TipoAtividades.RECUSAR_DESASOCIACAO_CLIENTE.name(), descricao2, associacaoCliente.getIdCliente(), refs);
         } catch (SQLException e) {
             throw new SQLException(e);
         }

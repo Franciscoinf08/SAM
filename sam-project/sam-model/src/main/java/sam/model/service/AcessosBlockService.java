@@ -31,7 +31,7 @@ public class AcessosBlockService {
 
         String descricao = "o usuario: "+ usuario + " foi bloqueado pelo desenvolvedor: "+ usuarioExecutor;
         bloqueios.bloquear(recurso, usuario);
-        atividadeService.registrarAtividadeComReferencias(TipoAtividades.BLOQUEIO_USUARIO.name(), descricao, (long) usuarioExecutor, refs);
+        atividadeService.registrarAtividadeComReferencias(TipoAtividades.BLOQUEIO_ACESSO_USUARIO.name(), descricao, (long) usuarioExecutor, refs);
     }
 
     public void ativar(String recurso, String usuario, int usuarioExecutor, String usuarioBloqueado) throws SQLException {
@@ -45,7 +45,7 @@ public class AcessosBlockService {
         List<AtividadeReferencia> refs = new ArrayList<>();
         refs.add(ref);
 
-        atividadeService.registrarAtividadeComReferencias(TipoAtividades.ATIVACAO_USUARIO.name(), descricao, (long) usuarioExecutor, refs);
+        atividadeService.registrarAtividadeComReferencias(TipoAtividades.ATIVACAO_ACESSO_USUARIO.name(), descricao, (long) usuarioExecutor, refs);
     }
 
     public boolean check(String recurso, String usuario) throws SQLException {
