@@ -121,6 +121,12 @@ public class ControleAutorizacao {
         permissao = new Permissao("ver-solicitacoes");
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
+
+        permissao = new Permissao("ver-propostas");
+        permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
+        permissoes.put(permissao.getRecurso(), permissao);
+
+
     }
     
     public static boolean checkPermissao(String recurso, UsuarioTipo usuario) {

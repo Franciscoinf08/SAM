@@ -317,3 +317,10 @@ table td {
     display: flex;
     flex-direction: column;
 }
+td.acoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
