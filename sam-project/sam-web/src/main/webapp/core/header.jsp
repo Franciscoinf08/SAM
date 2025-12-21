@@ -15,10 +15,9 @@
     <%if (ControleAutorizacao.checkPermissao("notificacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("notificacoes", usuario.getCPF())) {%>
     <a href="<%=request.getContextPath()%>/notificacoes?action=listar">Notificações</a>
     <%} if (ControleAutorizacao.checkPermissao("suporte", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("suporte", usuario.getCPF())) {%>
-    <a href="/sam/core/geral/suporte.jsp">Suporte</a>
-    <%} if (ControleAutorizacao.checkPermissao("faq", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("faq", usuario.getCPF())) {%>
-    <a href="/sam/core/geral/faq.jsp">FAQ</a>
     <a href="<%=request.getContextPath()%>/core/geral/suporte.jsp">Suporte</a>
+    <%} if (ControleAutorizacao.checkPermissao("faq", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("faq", usuario.getCPF())) {%>
+    <a href="<%=request.getContextPath()%>/core/geral/faq.jsp">FAQ</a>
     <%} if (ControleAutorizacao.checkPermissao("monitoramento", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("suporte", usuario.getCPF())) {%>
     <a href="<%=request.getContextPath()%>/atividades">Monitoramento</a>
     <%}%>
@@ -51,19 +50,17 @@
         <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/core/geral/relatorios.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>
-        <a href="/sam/core/geral/avaliacoes.jsp">Avaliações</a>
+        <a href="<%=request.getContextPath()%>/core/geral/avaliacoes.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
-        <a href="/sam/core/geral/relatorios.jsp">Relatórios</a>
+        <a href="<%=request.getContextPath()%>/core/geral/relatorios.jsp">Relatórios</a>
         <%} if (ControleAutorizacao.checkPermissao("campanhas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("campanhas", usuario.getCPF())) {%>
-        <a href="/sam/core/gestor/planos.jsp">Campanhas</a>
-        <a href="<%=request.getContextPath()%>/core/geral/avaliacoes.jsp">Relatórios</a>
+        <a href="<%=request.getContextPath()%>/core/gestor/planos.jsp">Campanhas</a>
         <%} if (ControleAutorizacao.checkPermissao("ver-usuarios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-usuarios", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/core/dev/visualizar-usuarios.jsp">Ver Usuários</a>
         <%} if (ControleAutorizacao.checkPermissao("ver-solicitacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-solicitacoes", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/core/dev/gerenciar-solicitacoes.jsp">Solicitações para Conta Gestor</a>
-        <a href="/sam/core/dev/gerenciar-solicitacoes.jsp">Solicitações para Conta Gestor</a>
         <%} if (ControleAutorizacao.checkPermissao("ver-propostas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-propostas", usuario.getCPF())) {%>
-        <a href="/sam/core/cliente/visualizacaoPropostas.jsp">Visualizar Propostas</a>
+        <a href="<%=request.getContextPath()%>/core/cliente/visualizacaoPropostas.jsp">Visualizar Propostas</a>
         <%}%>
 
     </div>

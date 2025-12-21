@@ -15,7 +15,6 @@ import sam.model.domain.Denuncia;
 import java.io.File;
 
 public class EnviarEmailHelper {
-public class    EnviarEmailHelper {
 
     public String getRandom() {
         Random rnd = new Random();

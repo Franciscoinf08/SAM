@@ -37,7 +37,7 @@ public class HistoricoController extends HttpServlet {
                     FormObjetivosDao.buscarTodos(usuario);
 
             FeedbackDAO fbDao =
-                    new FeedbackDAO(Conexao.getConnection());
+                    new FeedbackDAO();
 
             List<Feedback> feedbacks =
                     fbDao.listarPorUsuario(usuario.getId());

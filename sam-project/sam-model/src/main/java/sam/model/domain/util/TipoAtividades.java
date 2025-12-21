@@ -35,9 +35,7 @@ public enum TipoAtividades {
     SOLICITACAO_DESASSOCIACAO("solicitacao de desassociacao cliente gestor"), //ja foi
 
     RECUSAR_DESASOCIACAO_CLIENTE("desassociacao cliente gestor recusada"), //ja foi
-    RECUSAR_SOLICITACAO_SEM_TIPO("solicitacao sem tipo especificado recusada"),
     RECUSAR_ASSOCIACAO_CLIENTE("associacao cliente gestor recusada"),//ja foi
-
     CADASTRAR_TICKET("um usuario cadastrou um ticket"); // ja foi
 
 
