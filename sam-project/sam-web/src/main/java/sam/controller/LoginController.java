@@ -26,18 +26,8 @@ public class LoginController extends HttpServlet {
             Usuario usuario = manterUsuario.pesquisarConta(cpf, senha);
             request.getSession().setAttribute("usuario", usuario);
 
-            String jsp = "";
-            switch (usuario.getTipo()) {
-                case CLIENTE:
-                    jsp = "/sam/core/cliente/dashboard.jsp";
-                    break;
-                case GESTOR:
-                    jsp = "/sam/core/gestor/apuracao.jsp";
-                    break;
-                case DESENVOLVEDOR:
-                    jsp = "/sam/core/geral/perfil.jsp";
-                    break;
-            }
+            String jsp = "/sam/core/geral/inicio.jsp";
+            
             response.sendRedirect(jsp);
         } catch (PersistenciaException e) {
             e.printStackTrace();

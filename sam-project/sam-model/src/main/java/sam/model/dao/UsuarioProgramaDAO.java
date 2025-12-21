@@ -44,6 +44,16 @@ public class UsuarioProgramaDAO{
             e.getMessage();
         }
     }
+
+    public void excluirTodos(Integer idUsuario) {
+        String sql = "delete from usuario_programa where usuario_id = ?";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
     public List<Integer> buscarUsuariosComProgramaExpirando(int dias) {
         List<Integer> usuarios = new ArrayList<>();
         System.out.println("Esta chegando no dao de usuario programa");
