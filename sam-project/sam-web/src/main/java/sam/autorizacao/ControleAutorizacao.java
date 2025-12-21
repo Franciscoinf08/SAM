@@ -121,6 +121,21 @@ public class ControleAutorizacao {
         permissao = new Permissao("ver-solicitacoes");
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
+
+        permissao = new Permissao("historico");
+        permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
+        permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
+        permissoes.put(permissao.getRecurso(), permissao);
+
+        permissao = new Permissao("visualizar-historico");
+        permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
+        permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
+        permissoes.put(permissao.getRecurso(), permissao);
+
+        permissao = new Permissao("visualizar-formulario");
+        permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
+        permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
+        permissoes.put(permissao.getRecurso(), permissao);
     }
     
     public static boolean checkPermissao(String recurso, UsuarioTipo usuario) {

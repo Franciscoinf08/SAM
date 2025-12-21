@@ -18,6 +18,7 @@
 <header>
     <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Historico de Usuario</h1>
+    <%@include file="/core/header.jsp" %>
 </header>
 
 <main>

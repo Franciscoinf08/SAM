@@ -36,7 +36,7 @@ public class HistoricoController extends HttpServlet {
                     FormObjetivosDao.buscarTodosPorUsuarioId(idUsuario);
 
             FeedbackDAO fbDao =
-                    new FeedbackDAO(Conexao.getConnection());
+                    new FeedbackDAO();
 
             List<Feedback> feedbacks =
                     fbDao.listarPorUsuario(idUsuario);
@@ -50,7 +50,8 @@ public class HistoricoController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("erro", e.getMessage());
-            response.sendRedirect("/core/mensagens-erro.jsp");
+            response.sendRedirect(request.getContextPath() + "/core/mensagens-erro.jsp");
+
 
         }
     }

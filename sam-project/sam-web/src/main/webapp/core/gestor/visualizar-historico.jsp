@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>SAM - Visualizar Historico</title>
 
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css  ">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
     <link rel="icon" href="/sam/imgs/favicon.ico">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +22,7 @@
 <header>
     <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Historicos</h1>
+    <%@include file="/core/header.jsp" %>
 </header>
 
 <main>

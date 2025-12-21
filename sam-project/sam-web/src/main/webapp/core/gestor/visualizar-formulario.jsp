@@ -20,6 +20,7 @@
 <header>
     <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Formulario</h1>
+    <%@include file="/core/header.jsp" %>
 </header>
 
 <main class="container">
