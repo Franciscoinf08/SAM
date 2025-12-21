@@ -5,6 +5,14 @@
     font-family: "Montserrat", sans-serif;
 }
 
+body {
+    background-color: #000039;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
 :root {
     --bg:#f5f7fb;
     --card:#ffffff;
@@ -139,3 +147,4 @@
     text-align: left;
     font-size: 2em;
 }
+

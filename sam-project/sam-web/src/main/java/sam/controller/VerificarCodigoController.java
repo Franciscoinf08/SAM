@@ -44,7 +44,7 @@ public class VerificarCodigoController extends HttpServlet {
             if (destinoSucesso != null && !destinoSucesso.isEmpty()) {
                 request.getRequestDispatcher(destinoSucesso).forward(request, response);
             } else {
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                request.getRequestDispatcher("/sam/index.jsp").forward(request, response);
             }
         //RETIRAR DEPOIS
         } else {

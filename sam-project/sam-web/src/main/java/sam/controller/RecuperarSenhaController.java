@@ -40,6 +40,9 @@ public class RecuperarSenhaController extends HttpServlet {
                 request.setAttribute("mensagem", "Código enviado! Confira seu e-mail.");
                 request.setAttribute("emailEnviado", true);
                 request.getRequestDispatcher("core/geral/esqueceu-senha.jsp").forward(request, response);
+            } else if (!test) {
+                request.setAttribute("erro", "Erro ao enviar o email");
+                request.getRequestDispatcher("core/mensagens-erro.jsp").forward(request, response);
             }
         }
     }
