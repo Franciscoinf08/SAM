@@ -29,7 +29,7 @@ public class GestaoUsuariosService {
         try {
             return usuarioDAO.pesquisarPorCPFSenha(cpf, senha);
         } catch (PersistenciaException e) {
-            throw new PersistenciaException(e);
+            throw new PersistenciaException(e.getLocalizedMessage());
         } catch (SQLException e) {
             throw new SQLException(e);
         }

@@ -7,7 +7,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="java.sql.Date" %>
 <%@ page import="java.sql.SQLException" %>
 
 <!DOCTYPE html>
