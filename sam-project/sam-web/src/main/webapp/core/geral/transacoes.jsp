@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.domain.util.UsuarioTipo" %>
 <%@ page import="sam.model.service.GestaoUsuariosService" %>
-<%@ page import="sam.model.service.ProgramaFidelidadeService" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.sql.Date" %>
@@ -33,7 +32,10 @@
         <main class="content">
             <h2>Registrar Transação</h2>
             <div class="formulario">
-                <form name="formCadastroTransacao" onsubmit="return validarCamposCadastroTransacao(document.formCadastroTransacao)" action="/sam/CadastroTransacaoController" method="POST">
+                <form name="formCadastroTransacao"
+                      onsubmit="return validarCamposCadastroTransacao(document.formCadastroTransacao)"
+                      action="/sam/CadastroTransacaoController"
+                      method="POST">
                     <%
                         GestaoUsuariosService manterUsuario = new GestaoUsuariosService();
                         if (usuario.getTipo() == UsuarioTipo.GESTOR) {
@@ -49,7 +51,7 @@
                         </select>
                     </label>
                     <%} else {%>
-                    <label>
+                    <label for="cliente">
                         <input name="cliente" id="cliente" type="hidden" value="<%= usuario.getId() %>">
                     </label>
                     <%}%>

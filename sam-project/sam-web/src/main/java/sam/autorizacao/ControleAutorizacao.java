@@ -79,6 +79,12 @@ public class ControleAutorizacao {
         permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
         permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
         permissoes.put(permissao.getRecurso(), permissao);
+
+        permissao = new Permissao("faq");
+        permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
+        permissao.addUsuarioGrupo(UsuarioTipo.CLIENTE);
+        permissao.addUsuarioGrupo(UsuarioTipo.DESENVOLVEDOR);
+        permissoes.put(permissao.getRecurso(), permissao);
         
         permissao = new Permissao("relatorios");
         permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);

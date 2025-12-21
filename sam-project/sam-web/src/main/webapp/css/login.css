@@ -5,16 +5,24 @@
     align-items: center;
 }
 
+.links {
+    text-align: center;
+}
+
+.links p {
+    margin: 1em 0;
+}
+
 #alterna {
     text-align: center;
     margin-bottom: 10px;
 }
 
-#link-alterna {
+#link-alterna, #link-faq {
     font-weight: bold;
 }
 
-#link-alterna:hover {
+#link-alterna:hover, #link-faq:hover {
     cursor: pointer;
 }
 
