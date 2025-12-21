@@ -14,12 +14,13 @@ public class DenunciaDAO {
     private final Connection conexao;
 
     public DenunciaDAO() {
-         this.conexao = Conexao.getConnection();
+
+        this.conexao = Conexao.getConnection();
     }
 
 
     public void inserir(Denuncia denuncia) throws SQLException {
-        String sql = "INSERT INTO denuncia (id_denunciante, id_denunciado, motivo, detalhes, status) " +
+        String sql = "INSERT INTO denuncia (idDenunciante, idDenunciado, motivo, detalhes, status) " +
                      "VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setLong(1, denuncia.getDenunciante().getId());
@@ -41,31 +42,30 @@ public class DenunciaDAO {
                      "u1.id AS idDenunciante, u1.nome AS nomeDenunciante, u1.email AS emailDenunciante, u1.cpf AS cpfDenunciante, u1.tipo AS tipoDenunciante, " +
                      "u2.id AS idDenunciado, u2.nome AS nomeDenunciado, u2.email AS emailDenunciado, u2.cpf AS cpfDenunciado, u2.tipo AS tipoDenunciado " +
                      "FROM denuncia d " +
-                     "JOIN usuario u1 ON d.id_denunciante = u1.id " +
-                     "JOIN usuario u2 ON d.id_denunciado = u2.id";
+                     "JOIN usuario u1 ON d.idDenunciante = u1.id " +
+                     "JOIN usuario u2 ON d.idDenunciado = u2.id";
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Usuario denunciante = new Usuario(
-                    rs.getString("nomeDenunciante"),
-                    rs.getString("emailDenunciante"),
-                    rs.getString("cpfDenunciante"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("cpf"),
                     null,
-                    UsuarioTipo.valueOf(rs.getString("tipoDenunciante"))
+                    UsuarioTipo.valueOf(rs.getString("tipo"))
             );
             denunciante.setId(rs.getLong("idDenunciante"));
 
             Usuario denunciado = new Usuario(
-                    rs.getString("nomeDenunciado"),
-                    rs.getString("emailDenunciado"),
-                    rs.getString("cpfDenunciado"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("cpf"),
                     null,
-                    UsuarioTipo.valueOf(rs.getString("tipoDenunciado"))
+                    UsuarioTipo.valueOf(rs.getString("tipo"))
             );
             denunciado.setId(rs.getLong("idDenunciado"));
 
             Denuncia d = new Denuncia(
-                    rs.getInt("id"),
                     denunciante,
                     denunciado,
                     rs.getString("motivo"),
@@ -82,33 +82,32 @@ public class DenunciaDAO {
                      "u1.id AS idDenunciante, u1.nome AS nomeDenunciante, u1.email AS emailDenunciante, u1.cpf AS cpfDenunciante, u1.tipo AS tipoDenunciante, " +
                      "u2.id AS idDenunciado, u2.nome AS nomeDenunciado, u2.email AS emailDenunciado, u2.cpf AS cpfDenunciado, u2.tipo AS tipoDenunciado " +
                      "FROM denuncia d " +
-                     "JOIN usuario u1 ON d.id_denunciante = u1.id " +
-                     "JOIN usuario u2 ON d.id_denunciado = u2.id " +
+                     "JOIN usuario u1 ON d.idDenunciante = u1.id " +
+                     "JOIN usuario u2 ON d.idDenunciado = u2.id " +
                      "WHERE d.id = ?";
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
             Usuario denunciante = new Usuario(
-                    rs.getString("nomeDenunciante"),
-                    rs.getString("emailDenunciante"),
-                    rs.getString("cpfDenunciante"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("cpf"),
                     null,
-                    UsuarioTipo.valueOf(rs.getString("tipoDenunciante"))
+                    UsuarioTipo.valueOf(rs.getString("tipo"))
             );
             denunciante.setId(rs.getLong("idDenunciante"));
 
             Usuario denunciado = new Usuario(
-                    rs.getString("nomeDenunciado"),
-                    rs.getString("emailDenunciado"),
-                    rs.getString("cpfDenunciado"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("cpf"),
                     null,
-                    UsuarioTipo.valueOf(rs.getString("tipoDenunciado"))
+                    UsuarioTipo.valueOf(rs.getString("tipo"))
             );
             denunciado.setId(rs.getLong("idDenunciado"));
 
             Denuncia d = new Denuncia(
-                    rs.getInt("id"),
                     denunciante,
                     denunciado,
                     rs.getString("motivo"),
@@ -121,7 +120,7 @@ public class DenunciaDAO {
     }
 
     public void atualizar(Denuncia denuncia) throws SQLException {
-        String sql = "UPDATE denuncia SET id_denunciante = ?, id_denunciado = ?, motivo = ?, detalhes = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE denuncia SET idDenunciante = ?, idDenunciado = ?, motivo = ?, detalhes = ?, status = ? WHERE id = ?";
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setLong(1, denuncia.getDenunciante().getId());
         stmt.setLong(2, denuncia.getDenunciado().getId());

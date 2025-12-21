@@ -42,10 +42,10 @@
         <a href="/sam/core/gestor/mensagens.jsp">Mensagens e Avisos</a>
         <%} if (ControleAutorizacao.checkPermissao("acesso-clientes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("acesso-clientes", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/usuarioPrograma?action=listar">Meus clientes</a>
-        <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
-        <a href="/sam/core/geral/relatorios.jsp">Avaliações</a>
         <%} if (ControleAutorizacao.checkPermissao("relatorios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("relatorios", usuario.getCPF())) {%>
-        <a href="/sam/core/geral/avaliacoes.jsp">Relatórios</a>
+        <a href="/sam/core/geral/avaliacoes.jsp">Avaliações</a>
+        <%} if (ControleAutorizacao.checkPermissao("avaliacoes", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("avaliacoes", usuario.getCPF())) {%>
+        <a href="/sam/core/geral/relatorios.jsp">Relatórios</a>
         <%} if (ControleAutorizacao.checkPermissao("campanhas", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("campanhas", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/planos.jsp">Campanhas</a>
         <%} if (ControleAutorizacao.checkPermissao("ver-usuarios", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("ver-usuarios", usuario.getCPF())) {%>
