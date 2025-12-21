@@ -69,6 +69,9 @@
         </h1>
 
         <section class="pergunta-card" <% if (usuario.getTipo() != UsuarioTipo.DESENVOLVEDOR) { %>style="margin-bottom:5vw"<%}%>>
+            <h2>
+                <%= manterUsuario.pesquisar(pergunta.getIdUsuario()).getNome() %>:
+            </h2>
             <h1><%= pergunta.getTitulo() %></h1>
             <p style="white-space:pre-line;"><%= pergunta.getDescricao() %></p>
         </section>
