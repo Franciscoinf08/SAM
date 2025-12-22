@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: localhost    Database: samproject
+-- Host: 127.0.0.1    Database: samproject
 -- ------------------------------------------------------
 -- Server version	8.0.44
 
@@ -16,31 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cliente_gestor`
+-- Table structure for table `perguntas_faq`
 --
 
-DROP TABLE IF EXISTS `cliente_gestor`;
+DROP TABLE IF EXISTS `perguntas_faq`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cliente_gestor` (
+CREATE TABLE `perguntas_faq` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `cliente_id` int DEFAULT NULL,
-  `gestor_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cliente_id` (`cliente_id`),
-  KEY `gestor_id` (`gestor_id`),
-  CONSTRAINT `cliente_gestor_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `cliente_gestor_ibfk_2` FOREIGN KEY (`gestor_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `titulo` varchar(200) DEFAULT NULL,
+  `pergunta` text,
+  `resposta` text,
+  `status` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cliente_gestor`
+-- Dumping data for table `perguntas_faq`
 --
 
-LOCK TABLES `cliente_gestor` WRITE;
-/*!40000 ALTER TABLE `cliente_gestor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cliente_gestor` ENABLE KEYS */;
+LOCK TABLES `perguntas_faq` WRITE;
+/*!40000 ALTER TABLE `perguntas_faq` DISABLE KEYS */;
+INSERT INTO `perguntas_faq` VALUES (1,'FAQ DOIDO AI','DETALHE DE PORGUTA DOIDA AI ','RESPOSTA DOIDA AI ','ATIVA');
+/*!40000 ALTER TABLE `perguntas_faq` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-29 20:03:05
+-- Dump completed on 2025-12-21 20:54:38

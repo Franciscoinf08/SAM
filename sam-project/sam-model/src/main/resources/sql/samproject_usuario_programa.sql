@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: localhost    Database: samproject
+-- Host: 127.0.0.1    Database: samproject
 -- ------------------------------------------------------
 -- Server version	8.0.44
 
@@ -27,12 +27,13 @@ CREATE TABLE `usuario_programa` (
   `usuario_id` int NOT NULL,
   `programa_id` int NOT NULL,
   `saldo_milhas` double DEFAULT '0',
+  `data_associacao` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   KEY `programa_id` (`programa_id`),
   CONSTRAINT `usuario_programa_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `usuario_programa_ibfk_2` FOREIGN KEY (`programa_id`) REFERENCES `programa_fidelidade` (`idProgramaFidelidade`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,6 @@ CREATE TABLE `usuario_programa` (
 
 LOCK TABLES `usuario_programa` WRITE;
 /*!40000 ALTER TABLE `usuario_programa` DISABLE KEYS */;
-INSERT INTO `usuario_programa` VALUES (1,4,1,0),(2,1,1,0),(3,4,2,0);
 /*!40000 ALTER TABLE `usuario_programa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-29 20:03:06
+-- Dump completed on 2025-12-21 20:54:37

@@ -43,6 +43,23 @@ public class PropostaService {
             throw new RuntimeException("Erro ao inserir proposta:" + e.getMessage());
         }
     }
+    public void excluirProposta(Long idProposta) {
+        try {
+
+            propostaDAO.excluir(idProposta);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao excluir proposta", e);
+        }
+    }
+
+    public void atualizarStatus(Long idProposta, StatusProposta statusProposta) {
+        String status = statusProposta.name();
+        try {
+            propostaDAO.atualizarStatus(idProposta, status);
+        }catch (Exception e){
+            throw new RuntimeException("Erro ao atualizar proposta:" + e.getMessage());
+        }
+    }
 }
 
 

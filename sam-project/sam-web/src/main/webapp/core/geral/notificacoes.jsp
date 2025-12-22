@@ -1,6 +1,6 @@
+<%@ page import="java.util.List" %>
+<%@ page import="sam.model.domain.Notificacao" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
-<%@page import="sam.model.domain.Notificacao"%>
 
 <html>
 <head>
@@ -8,6 +8,7 @@
     <title>SAM - Notificações</title>
 
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style.css">
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/notificacao.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,59 +18,57 @@
 </head>
 <body>
 <header>
-    <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+    <img id="logotipo" src="<%=request.getContextPath()%>/imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Notificações</h1>
     <%@include file="/core/header.jsp" %>
 </header>
 
 <main>
+    <%
+        List<Notificacao> notificacoes = (List<Notificacao>) request.getAttribute("listaNotificacoes");
+
+    %>
     <h2>Notificações</h2>
 
-    <table border="1">
-        <tr>
-            <th>Título</th>
-            <th>Mensagem</th>
-            <th>Data</th>
-            <th>Status</th>
-            <th>Ação</th>
-        </tr>
+    <ul class="notificacoes">
+    <%
+        if(!notificacoes.isEmpty()){
+            for (Notificacao n : notificacoes) {
+    %>
 
-        <%
-            List<Notificacao> lista = (List<Notificacao>) request.getAttribute("lista");
+        <li class="notificacao <%= n.isLida() ? "lida" : "nao-lida" %>">
+            <div class="notificacao-topo">
+                <h3 class="titulo"><%=n.getTitulo()%></h3>
+                <span class="data"><%=n.getData()%></span>
+            </div>
 
-            if (lista != null && !lista.isEmpty()) {
-                for (Notificacao n : lista) {
-        %>
-        <tr>
-            <td><%= n.getTitulo() %></td>
-            <td><%= n.getMensagem() %></td>
-            <td><%= n.getDataDoEnvio() %></td>
-            <td><%= n.isLida() ? "Lida" : "Nova" %></td>
-            <td>
-                <% if (!n.isLida()) { %>
-                <form method="post" action="<%= request.getContextPath() %>/notificacoes">
-                    <input type="hidden" name="acao" value="lida">
-                    <input type="hidden" name="id" value="<%= n.getId() %>">
-                    <button type="submit">Marcar como lida</button>
-                </form>
-                <% } %>
-            </td>
-        </tr>
+            <p class="mensagem">
+                <span class="texto curta">
+                    <%= n.getResumo() %>
+                </span>
 
-        <%
+                <span class="texto completa" style="display:none;">
+                    <%= n.getDescricao() %>
+                </span>
+
+                <a href="#" class="mais" onclick="toggleNotificacao(this); return false;">
+                    mostrar mais
+                </a>
+            </p>
+
+
+            <a href="<%=request.getContextPath()%>/notificacoes?action=marcarComoLida&idNotificacao=<%=n.getId()%>"><button class="btn-lida">Marcar como lida</button></a>
+        </li>
+    <%
             }
         } else {
-        %>
+    %>
+        </ul>
+        <p>voce nao tem notificacoes no momento</p>
+    <%}%>
 
-        <tr>
-            <td colspan="5">Nenhuma notificação encontrada.</td>
-        </tr>
-
-        <%
-            }
-        %>
-
-    </table>
 </main>
+<script src="<%= request.getContextPath() %>/js/script.js"></script>
+<script src="<%= request.getContextPath() %>/js/detalharNotificacao.js"></script>
 </body>
 </html>

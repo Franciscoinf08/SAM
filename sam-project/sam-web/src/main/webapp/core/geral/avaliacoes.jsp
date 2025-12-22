@@ -1,3 +1,4 @@
+<%@page import="sam.model.service.UsuariosBlockService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.dao.UsuarioDAO" %>
 <%@ page import="sam.model.domain.Usuario" %>
@@ -9,6 +10,7 @@
     List<Usuario> usuarios = udao.listarTodos();
 
 
+    UsuariosBlockService gestaoBlock = new UsuariosBlockService();
 %>
 
 <!DOCTYPE html>
@@ -39,9 +41,10 @@
             <label>Usuário avaliado:
                 <select name="idAvaliado" required>
                     <option value="">Selecione...</option>
-                    <% for (Usuario u : usuarios) { %>
+                    <% for (Usuario u : usuarios) {
+                        if(!gestaoBlock.check(usuario.getId(), u.getId()) && !gestaoBlock.check(u.getId(), usuario.getId())){%>
                         <option value="<%=u.getId()%>"><%=u.getNome()%></option>
-                    <% } %>
+                    <% }} %>
                 </select>
             </label>
 

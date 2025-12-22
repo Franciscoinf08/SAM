@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Proposta {
 
-    private int id;
+    private Long id;
     private Usuario cliente;
     private Usuario gestor;
     private String status;
@@ -42,11 +42,11 @@ public class Proposta {
         this.numCriancas = numCriancas;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

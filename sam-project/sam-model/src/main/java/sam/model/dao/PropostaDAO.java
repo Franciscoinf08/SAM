@@ -6,7 +6,6 @@ import sam.model.domain.Usuario;
 import sam.model.domain.util.UsuarioTipo;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +17,13 @@ public class PropostaDAO {
         this.conexao = Conexao.getConnection();
     }
 
-    public void inserir(Proposta proposta) throws SQLException{
+
+    public void inserir(Proposta proposta) throws SQLException {
         String sql = """
             INSERT INTO proposta
-            (idCliente, idGestor, status, valorEmDinheiro, valorEmMilhas, taxas,
-             observacoes, dataIda, dataVolta, origem, destino, numAdultos, numCriancas)
+            (idCliente, idGestor, origem, destino, dataIda, dataVolta,
+             numAdultos, numCriancas, valorEmDinheiro, valorEmMilhas,
+             taxas, observacoes, status)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
@@ -30,91 +31,103 @@ public class PropostaDAO {
 
             stmt.setLong(1, proposta.getCliente().getId());
             stmt.setLong(2, proposta.getGestor().getId());
-            stmt.setString(3, proposta.getStatus());
-            stmt.setDouble(4, proposta.getValorEmDinheiro());
-            stmt.setLong(5, proposta.getValorEmMilhas());
-            stmt.setDouble(6, proposta.getTaxas());
-            stmt.setString(7, proposta.getObservacoes());
-            stmt.setDate(8, Date.valueOf(proposta.getDataIda()));
-            stmt.setDate(9, Date.valueOf(proposta.getDataVolta()));
-            stmt.setString(10, proposta.getOrigem());
-            stmt.setString(11, proposta.getDestino());
-            stmt.setInt(12, proposta.getNumAdultos());
-            stmt.setInt(13, proposta.getNumCriancas());
+            stmt.setString(3, proposta.getOrigem());
+            stmt.setString(4, proposta.getDestino());
+            stmt.setDate(5, Date.valueOf(proposta.getDataIda()));
+            stmt.setDate(6, Date.valueOf(proposta.getDataVolta()));
+            stmt.setInt(7, proposta.getNumAdultos());
+            stmt.setInt(8, proposta.getNumCriancas());
+            stmt.setDouble(9, proposta.getValorEmDinheiro());
+            stmt.setLong(10, proposta.getValorEmMilhas());
+            stmt.setDouble(11, proposta.getTaxas());
+            stmt.setString(12, proposta.getObservacoes());
+            stmt.setString(13, proposta.getStatus());
 
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir proposta" + e.getMessage());
+            throw new RuntimeException("Erro ao inserir proposta: " + e.getMessage(), e);
         }
     }
+
+
 
     public void atualizar(Proposta proposta) throws SQLException {
         String sql = """
             UPDATE proposta SET
-                status = ?,
+                origem = ?,
+                destino = ?,
+                dataIda = ?,
+                dataVolta = ?,
+                numAdultos = ?,
+                numCriancas = ?,
                 valorEmDinheiro = ?,
                 valorEmMilhas = ?,
                 taxas = ?,
                 observacoes = ?,
-                dataIda = ?,
-                dataVolta = ?,
-                origem = ?,
-                destino = ?,
-                numAdultos = ?,
-                numCriancas = ?
+                status = ?
             WHERE id = ?
         """;
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setString(1, proposta.getStatus());
-            stmt.setDouble(2, proposta.getValorEmDinheiro());
-            stmt.setLong(3, proposta.getValorEmMilhas());
-            stmt.setDouble(4, proposta.getTaxas());
-            stmt.setString(5, proposta.getObservacoes());
-            stmt.setDate(6, Date.valueOf(proposta.getDataIda()));
-            stmt.setDate(7, Date.valueOf(proposta.getDataVolta()));
-            stmt.setString(8, proposta.getOrigem());
-            stmt.setString(9, proposta.getDestino());
-            stmt.setInt(10, proposta.getNumAdultos());
-            stmt.setInt(11, proposta.getNumCriancas());
-            stmt.setInt(12, proposta.getId());
+            stmt.setString(1, proposta.getOrigem());
+            stmt.setString(2, proposta.getDestino());
+            stmt.setDate(3, Date.valueOf(proposta.getDataIda()));
+            stmt.setDate(4, Date.valueOf(proposta.getDataVolta()));
+            stmt.setInt(5, proposta.getNumAdultos());
+            stmt.setInt(6, proposta.getNumCriancas());
+            stmt.setDouble(7, proposta.getValorEmDinheiro());
+            stmt.setLong(8, proposta.getValorEmMilhas());
+            stmt.setDouble(9, proposta.getTaxas());
+            stmt.setString(10, proposta.getObservacoes());
+            stmt.setString(11, proposta.getStatus());
+            stmt.setLong(12, proposta.getId());
 
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar proposta" + e.getMessage());
+            throw new RuntimeException("Erro ao atualizar proposta: " + e.getMessage(), e);
         }
     }
 
-    public void excluir(int id) throws SQLException{
+
+
+    public void excluir(Long id) throws SQLException{
         String sql = "DELETE FROM proposta WHERE id = ?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao excluir proposta" + e.getMessage());
+            throw new RuntimeException("Erro ao excluir proposta: " + e.getMessage(), e);
         }
     }
 
-    public Proposta buscarPorId(int id) throws SQLException {
-        String sql = """
-            SELECT p.*,
-                   c.id   AS id, c.nome AS nome, c.email AS email,
-                   c.cpf  AS cpf, c.tipo AS tipo,
-                   g.id   AS id, g.nome AS nome, g.email AS email,
-                   g.cpf  AS cpf, g.tipo AS tipo
-            FROM proposta p
-            JOIN usuario c ON c.id = p.idCliente
-            JOIN usuario g ON g.id = p.idGestor
-            WHERE p.id = ?
-        """;
+    public void atualizarStatus(Long idProposta, String statusProposta) {
+        String sql = "UPDATE proposta SET status = ? WHERE id = ?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setString(1, statusProposta);
+            stmt.setLong(2, idProposta);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar status da proposta" + e.getMessage());
+        }
+    }
+
+
+
+
+    public Proposta buscarPorId(Long id) {
+        String sql = baseSelect() + " WHERE p.id = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -122,26 +135,17 @@ public class PropostaDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar proposta" + e.getMessage());
+            throw new RuntimeException("Erro ao buscar proposta: " + e.getMessage(), e);
         }
 
         return null;
     }
 
-    public List<Proposta> listarTodos() throws SQLException {
-        List<Proposta> lista = new ArrayList<>();
 
-        String sql = """
-            SELECT p.*,
-                   c.id   AS id, c.nome AS nome, c.email AS email,
-                   c.cpf  AS cpf, c.tipo AS tipo,
-                   g.id   AS id, g.nome AS nome, g.email AS email,
-                   g.cpf  AS cpf, g.tipo AS tipo
-            FROM proposta p
-            JOIN usuario c ON c.id = p.idCliente
-            JOIN usuario g ON g.id = p.idGestor
-            ORDER BY p.id
-        """;
+
+    public List<Proposta> listarTodos() throws SQLException{
+        List<Proposta> lista = new ArrayList<>();
+        String sql = baseSelect() + " ORDER BY p.id DESC";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -151,31 +155,101 @@ public class PropostaDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar proposta" + e.getMessage());
+            throw new RuntimeException("Erro ao listar propostas: " + e.getMessage(), e);
         }
 
         return lista;
     }
 
-    private Proposta montarProposta(ResultSet rs) throws SQLException {
+
+
+    public List<Proposta> listarPorCliente(Long idCliente) throws SQLException{
+        List<Proposta> lista = new ArrayList<>();
+        String sql = baseSelect() + " WHERE p.idCliente = ? ORDER BY p.id DESC";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setLong(1, idCliente);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                lista.add(montarProposta(rs));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar propostas do cliente: " + e.getMessage(), e);
+        }
+
+        return lista;
+    }
+
+
+
+    public List<Proposta> listarPorGestor(Long idGestor) throws SQLException{
+        List<Proposta> lista = new ArrayList<>();
+        String sql = baseSelect() + " WHERE p.idGestor = ? ORDER BY p.id DESC ";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setLong(1, idGestor);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                lista.add(montarProposta(rs));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar propostas do gestor: " + e.getMessage(), e);
+        }
+
+        return lista;
+    }
+
+
+
+    private String baseSelect() {
+        return """
+            SELECT
+                p.*,
+
+                c.id    AS cliente_id,
+                c.nome  AS cliente_nome,
+                c.email AS cliente_email,
+                c.cpf   AS cliente_cpf,
+                c.tipo  AS cliente_tipo,
+
+                g.id    AS gestor_id,
+                g.nome  AS gestor_nome,
+                g.email AS gestor_email,
+                g.cpf   AS gestor_cpf,
+                g.tipo  AS gestor_tipo
+
+            FROM proposta p
+            JOIN usuarios c ON c.id = p.idCliente
+            JOIN usuarios g ON g.id = p.idGestor
+        """;
+    }
+
+
+    private Proposta montarProposta(ResultSet rs) throws SQLException{
 
         Usuario cliente = new Usuario(
-                rs.getString("nome"),
-                rs.getString("email"),
-                rs.getString("cpf"),
+                rs.getString("cliente_nome"),
+                rs.getString("cliente_email"),
+                rs.getString("cliente_cpf"),
                 null,
-                UsuarioTipo.valueOf(rs.getString("tipo"))
+                UsuarioTipo.valueOf(rs.getString("cliente_tipo"))
         );
-        cliente.setId(rs.getLong("id"));
+        cliente.setId(rs.getLong("cliente_id"));
 
         Usuario gestor = new Usuario(
-                rs.getString("nome"),
-                rs.getString("email"),
-                rs.getString("cpf"),
+                rs.getString("gestor_nome"),
+                rs.getString("gestor_email"),
+                rs.getString("gestor_cpf"),
                 null,
-                UsuarioTipo.valueOf(rs.getString("tipoGestor"))
+                UsuarioTipo.valueOf(rs.getString("gestor_tipo"))
         );
-        gestor.setId(rs.getLong("id"));
+        gestor.setId(rs.getLong("gestor_id"));
 
         Proposta proposta = new Proposta(
                 cliente,
@@ -192,6 +266,8 @@ public class PropostaDAO {
                 rs.getInt("numAdultos"),
                 rs.getInt("numCriancas")
         );
+
+        proposta.setId(rs.getLong("id"));
 
         return proposta;
     }

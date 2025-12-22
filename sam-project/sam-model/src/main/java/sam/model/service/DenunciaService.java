@@ -23,7 +23,6 @@ public class DenunciaService {
 
     public void registrarDenuncia(Long denuncianteId, Long denunciadoId, String motivo, String detalhes) throws Exception {
 
-
         UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
 
         Usuario denunciante = usuarioDAO.pesquisar(denuncianteId);
@@ -41,6 +40,7 @@ public class DenunciaService {
             throw new RuntimeException("Erro ao inserir denuncia:" + e.getMessage());
         }finally{
             emailHelper.enviarEmailDenuncia(denuncia);
+
         }
 
     }

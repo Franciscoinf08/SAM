@@ -1,4 +1,4 @@
-const textoLinkEl = document.querySelector("#alterna");
+const textoLinkEl = document.querySelector(".alterna");
 const toggleLinkEl = document.querySelector("#link-alterna");
 const loginEl = document.querySelector("#login");
 const cadastroEl = document.querySelector("#cadastro");

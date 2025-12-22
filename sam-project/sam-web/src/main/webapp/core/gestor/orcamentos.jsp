@@ -1,13 +1,9 @@
 <%@ page import="sam.model.dao.UsuarioDAO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="sam.model.dao.PropostaDAO" %>
+<%@ page import="sam.model.domain.Proposta" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
 
-    UsuarioDAO udao = UsuarioDAO.getInstance();
-    List<Usuario> usuarios = udao.listarTodos();
-
-
-%>
 
 
 <!DOCTYPE html>
@@ -33,6 +29,14 @@
     <h1>Orçamentos</h1>
     <%@include file="/core/header.jsp" %>
 </header>
+
+<%
+
+    UsuarioDAO udao = UsuarioDAO.getInstance();
+    List<Usuario> usuarios = udao.getListaClientes(usuario);
+
+
+%>
 
 <main class="dashboard">
     <section class="content" style="flex:1 1 100%;">
@@ -93,54 +97,57 @@
         </form>
 
     </section>
+    <%
+        PropostaDAO pDAO = new PropostaDAO();
+        List<Proposta> listaPropostas = pDAO.listarPorGestor(usuario.getId());
+
+    %>
 
     <section class="card" style="flex:1 1 100%;">
         <h2>Comparação de Opções</h2>
         <table>
             <thead>
             <tr>
-                <th>Opção</th>
-                <th>Milhas</th>
-                <th>Dinheiro (R$)</th>
-                <th>Milhas + Dinheiro</th>
+                <th>Origem ⭢ Destino</th>
+                <th>Cliente</th>
+                <th>Status</th>
                 <th>Ações</th>
             </tr>
             </thead>
             <tbody>
+            <% if (listaPropostas != null && !listaPropostas.isEmpty()) { %>
+            <% for (Proposta p : listaPropostas) { %>
             <tr>
-                <td>Latam Pass - Direto</td>
-                <td>50.000</td>
-                <td>1.200</td>
-                <td>25.000 + 600</td>
                 <td>
-                    <button>Salvar</button>
-                    <button>Propor a um Cliente</button>
-                    <button>Excluir</button>
+                    <%= p.getOrigem() %> ⭢ <%= p.getDestino() %>
+                </td>
+
+                <td>
+                    <%= p.getCliente().getNome() %>
+                </td>
+
+                <td>
+                    <%= p.getStatus() %>
+                </td>
+                <td class="acoes">
+                    <a href="<%=request.getContextPath()%>/core/geral/detalhesProposta.jsp?id=<%=p.getId()%>">
+                        <button>Detalhes</button>
+                    </a>
+
+                    <a href="<%=request.getContextPath()%>/proposta?action=excluir&id=<%=p.getId()%>"
+                       onclick="return confirm('Deseja realmente excluir esta proposta?')">
+                        <button>Excluir</button>
+                    </a>
                 </td>
             </tr>
+            <% } %>
+            <% } else { %>
             <tr>
-                <td>Smiles - 1 Conexão</td>
-                <td>45.000</td>
-                <td>1.400</td>
-                <td>20.000 + 700</td>
-                <td>
-                    <button>Salvar</button>
-                    <button>Propor a um Cliente</button>
-                    <button>Excluir</button>
-                </td>
+                <td colspan="4">Nenhuma proposta encontrada.</td>
             </tr>
-            <tr>
-                <td>Azul Fidelidade - Direto</td>
-                <td>55.000</td>
-                <td>1.100</td>
-                <td>30.000 + 500</td>
-                <td>
-                    <button>Salvar</button>
-                    <button>Propor a um Cliente</button>
-                    <button>Excluir</button>
-                </td>
-            </tr>
+            <% } %>
             </tbody>
+
         </table>
     </section>
 </main>

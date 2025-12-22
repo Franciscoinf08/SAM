@@ -1,3 +1,9 @@
+-- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: samproject
+-- ------------------------------------------------------
+-- Server version	8.0.44
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -32,7 +38,7 @@ CREATE TABLE `transacoes` (
   KEY `id_cliente` (`id_cliente`),
   CONSTRAINT `transacoes_ibfk_1` FOREIGN KEY (`id_programa`) REFERENCES `programa_fidelidade` (`idProgramaFidelidade`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `transacoes_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +47,7 @@ CREATE TABLE `transacoes` (
 
 LOCK TABLES `transacoes` WRITE;
 /*!40000 ALTER TABLE `transacoes` DISABLE KEYS */;
-INSERT INTO `transacoes` VALUES (1,1,4,'2025-11-26',NULL,1,'VENDA',0.01,0.00,'ATIVA');
+INSERT INTO `transacoes` VALUES (1,1,4,'2025-11-26',NULL,1,'VENDA',0.01,0.00,'ATIVA'),(2,68,1,'2025-12-19','2025-12-20',1,'COMPRA',0.01,127.00,'EXPIRADA'),(3,68,1,'2025-12-19',NULL,1123,'VENDA',123.00,0.00,'ATIVA');
 /*!40000 ALTER TABLE `transacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,3 +59,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-12-21 20:54:37

@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import sam.model.domain.util.StatusProposta;
 import sam.model.service.PropostaService;
 
 import java.io.IOException;
@@ -34,12 +35,54 @@ public class PropostaController extends HttpServlet {
             double taxas = Double.parseDouble(request.getParameter("taxas"));
 
             propostaService.registrarProposta(idCliente,idGestor, origem, destino, observacoes, dataIda, dataVolta, numAdultos, numCriancas, valorEmDinheiro, valorEmMilhas, taxas);
-            response.sendRedirect(request.getContextPath() + "/core/gestor/orcamentos.jsp"
-            );
+            response.sendRedirect(request.getContextPath() + "/core/gestor/orcamentos.jsp");
         } catch (Exception e) {
             request.setAttribute("erro", e.getMessage());
             request.getRequestDispatcher("/core/gestor/orcamentos.jsp")
                     .forward(request, response);
         }
     }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if ("excluir".equals(action)) {
+            try {
+                Long idProposta = Long.parseLong(request.getParameter("id"));
+
+                propostaService.excluirProposta(idProposta);
+
+                response.sendRedirect("core/gestor/orcamentos.jsp");
+
+            } catch (Exception e) {
+                throw new ServletException("Erro ao excluir proposta", e);
+            }
+        }else  if ("cancelar".equals(action)) {
+            try {
+                Long idProposta = Long.parseLong(request.getParameter("id"));
+                StatusProposta statusProposta = StatusProposta.CANCELADA;
+                propostaService.atualizarStatus(idProposta, statusProposta);
+
+                response.sendRedirect("core/cliente/visualizacaoPropostas.jsp");
+
+            }catch (Exception e) {
+                throw new ServletException("Erro ao cancelar proposta", e);
+            }
+
+        } else if ("aprovar".equals(action)) {
+            try {
+                Long idProposta = Long.parseLong(request.getParameter("id"));
+                StatusProposta statusProposta = StatusProposta.APROVADA;
+                propostaService.atualizarStatus(idProposta, statusProposta);
+                response.sendRedirect("core/cliente/visualizacaoPropostas.jsp");
+            }catch (Exception e) {
+                throw new ServletException("Erro ao aprovar proposta", e);
+            }
+
+        }
+
+    }
+
 }

@@ -32,6 +32,7 @@ public class ListarUsuariosController extends HttpServlet {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            request.setAttribute("erro", e.getMessage());
             response.sendRedirect("/core/mensagens-erro.jsp");
         }
     }

@@ -76,6 +76,9 @@ public class UsuarioProgramaController extends HttpServlet {
     }
 
     private void associar(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+
         String idUsuario = request.getParameter("idUsuario");
         String idPrograma = request.getParameter("idPrograma");
         UsuarioPrograma usuarioPrograma = new UsuarioPrograma(
@@ -83,7 +86,7 @@ public class UsuarioProgramaController extends HttpServlet {
                 Integer.parseInt(idPrograma)
         );
         try {
-            usuarioProgramaService.associar(usuarioPrograma);
+            usuarioProgramaService.associar(usuarioPrograma, Math.toIntExact(usuario.getId()));
             response.sendRedirect(request.getContextPath() + "/usuarioPrograma?action=programas&idUsuario=" + idUsuario);
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
@@ -113,7 +116,7 @@ public class UsuarioProgramaController extends HttpServlet {
         UsuarioPrograma usuarioPrograma = new UsuarioPrograma(Integer.parseInt(idUsuario), Integer.parseInt(idPrograma));
 
         try {
-            usuarioProgramaService.desassociar(usuarioPrograma);
+            usuarioProgramaService.desassociar(usuarioPrograma, Integer.parseInt(idUsuario));
             response.sendRedirect(request.getContextPath() + "/usuarioPrograma?action=programas&idUsuario=" + idUsuario);
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);

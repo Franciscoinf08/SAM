@@ -118,15 +118,15 @@ h2 {
     min-width: 35vw;
 }
 
-.formulario label {
+.formulario label, .popup label {
     display: block;
     margin-top: 10px;
     font-weight: 500;
 }
 
-.formulario input,
-.formulario select,
-.formulario textarea {
+.formulario input, .popup input,
+.formulario select, .popup select,
+.formulario textarea, .popup textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -147,6 +147,20 @@ h2 {
     border-radius: 20px;
     padding: 2.5%;
     margin: 10% 0;
+}
+
+.acoes {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.acoes img {
+    height: 1em;
+}
+
+.acoes button {
+    aspect-ratio: 1 / 1;
 }
 
 button {
@@ -317,3 +331,29 @@ table td {
     display: flex;
     flex-direction: column;
 }
+
+.popup {
+    position: fixed;
+    left: 30vw;
+    right: 30vw;
+    top: 20vh;
+    min-height: 40vh;
+
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
+}
+
+button a{
+    color: white !important;
+    text-decoration: none;
+}
+td.acoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+

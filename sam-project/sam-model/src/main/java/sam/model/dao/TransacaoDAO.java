@@ -57,7 +57,10 @@ public class TransacaoDAO implements GenericDAO<Transacao, Long> {
 
     @Override
     public void atualizar(Transacao transacao) throws SQLException {
-        String sql = "UPDATE transacoes SET id_programa = ?, id_cliente = ?, data = ?, data_expiracao = ?, quantidade = ?, tipo = ?, valor = ?, bonus = ? WHERE id = ? AND status = \"ATIVA\"";
+        String sql = "UPDATE transacoes SET id_programa = ?," +
+                     " id_cliente = ?, data = ?, data_expiracao = ?," +
+                     " quantidade = ?, tipo = ?, valor = ?, bonus = ?" +
+                     " WHERE id = ? AND status = \"ATIVA\"";
 
         try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
             preparedStatement.setLong(1, transacao.getIdProgramaFidelidade());
