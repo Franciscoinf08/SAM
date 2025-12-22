@@ -54,6 +54,9 @@
         <a href="/sam/core/dev/gerenciar-solicitacoes.jsp">Solicitações para Conta Gestor</a>
         <%} if (ControleAutorizacao.checkPermissao("visualizar-historico", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("historico", usuario.getCPF())) {%>
         <a href="/sam/ListarUsuariosController">Listagem de Usuarios</a>
+        <%} if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo()) && !ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>
+        <a href="/sam/core/gestor/orcamentos.jsp">Orcamentos</a>
         <%}%>
+
     </div>
 </div>

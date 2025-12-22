@@ -60,15 +60,15 @@
 
             <form autocomplete="off" action="/sam/VerificarCodigoController" method="POST">
                 <div class="code-input">
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d1" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d2" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d3" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d4" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d5" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d6" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
                 </div>
 
-                <input type="hidden" name="destinoSucesso" value="AlterarSenhaController">
+                <input type="hidden" name="destinoSucesso" value="/core/geral/alterar-senha.jsp">
                 <input type="hidden" name="destinoFalha" value="index.jsp">
 
                 <button class="verify" type="submit">Verificar</button>

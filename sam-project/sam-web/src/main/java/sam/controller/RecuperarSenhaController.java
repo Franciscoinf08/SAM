@@ -42,7 +42,7 @@ public class RecuperarSenhaController extends HttpServlet {
                 request.getRequestDispatcher("core/geral/esqueceu-senha.jsp").forward(request, response);
             } else if (!test) {
                 request.setAttribute("erro", "Erro ao enviar o email");
-                request.getRequestDispatcher("core/mensagens-erro.jsp").forward(request, response);
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
         }
     }

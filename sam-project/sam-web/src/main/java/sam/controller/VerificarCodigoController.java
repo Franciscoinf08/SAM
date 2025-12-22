@@ -34,20 +34,10 @@ public class VerificarCodigoController extends HttpServlet {
 
             session.removeAttribute("codigoVerificacao");
 
+            session.setAttribute("codigoValidado", true);
+
             request.getRequestDispatcher(destinoSucesso).forward(request, response);
-
-        //DEBUG PRA NAO TER QUE FICAR OLHANDO O EMAIL TODA HORA
-        //RETIRAR DEPOIS
-        } else if(codigoDigitado.equals("111111")) {
-            session.removeAttribute("codigoVerificacao");
-
-            if (destinoSucesso != null && !destinoSucesso.isEmpty()) {
-                request.getRequestDispatcher(destinoSucesso).forward(request, response);
-            } else {
-                request.getRequestDispatcher("/sam/index.jsp").forward(request, response);
-            }
-        //RETIRAR DEPOIS
-        } else {
+        }else {
             request.setAttribute("erro", "Código incorreto. Tente novamente.");
             request.setAttribute("emailEnviado", true);
 
