@@ -44,7 +44,7 @@
                         List<Usuario> visitados = gestao.listarTodos();
                         for(Usuario v : visitados){
                         if(!v.equals(usuario) && v.getTipo() != UsuarioTipo.DESENVOLVEDOR){%>
-                    <li><a href="perfil-visitado.jsp?id=<%=v.getId()%>"><%=v.getNome()%></a></li>
+                    <li><a href="/sam/core/geral/perfil-visitado.jsp?id=<%=v.getId()%>"><%=v.getNome()%></a></li>
                     <%}}%>
                 </ul>
             </div>

@@ -16,6 +16,8 @@
 #itemsList {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column
 }
 
 #itemsList li {
