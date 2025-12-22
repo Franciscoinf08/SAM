@@ -2,7 +2,6 @@ package sam.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -54,8 +53,8 @@ public class UsuariosBlockController extends HttpServlet {
     public String desbloquear(HttpServletRequest request) {
         String jsp;
         try {
-            Long idVisitado = Long.valueOf(request.getParameter("idVisitado")); //ID A SER BLOQUEADO
-            Long idUsuario = Long.valueOf(request.getParameter("idUsuario")); // ID A BLOQUEAR
+            Long idVisitado = Long.valueOf(request.getParameter("idVisitado")); //ID A SER DESBLOQUEADO
+            Long idUsuario = Long.valueOf(request.getParameter("idUsuario")); // ID A DESBLOQUEAR
             
             UsuariosBlockService gestao = new UsuariosBlockService();
             gestao.desbloquear(idUsuario, idVisitado);
