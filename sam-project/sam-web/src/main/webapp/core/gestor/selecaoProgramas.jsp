@@ -43,6 +43,7 @@
             <th>Duracao</th>
             <th>Bonus de Milhas</th>
             <th>Preco</th>
+            <th>Data de Expiracao<br> de Milhas</th>
             <th>Ações</th>
         </tr>
         <%
@@ -59,8 +60,8 @@
             <td><%=pf.getQtdeMilhasMes()%></td>
             <td><%=pf.getDuracao()%></td>
             <td><%=pf.getBonusMilhas()%></td>
+            <td><%=pf.getDataExpiracaoMilhas()%></td>
             <td><%=pf.getPrecoMensal()%></td>
-
 
             <td>
                 <form action="<%=request.getContextPath()%>/usuarioPrograma" method="post">

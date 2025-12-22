@@ -1,51 +1,43 @@
 package sam.model.domain;
 
-import sam.model.domain.util.AlcanceNotificacao;
-import sam.model.domain.util.TipoNotificacao;
 
 import java.time.LocalDateTime;
 
 public class Notificacao {
+    int idNotificacao;
+    LocalDateTime data;
+    String descricao;
+    String titulo;
+    int idDestinatario;
+    boolean lida;
 
-    private long id;
-    private String titulo;
-    private String mensagem;
-    private LocalDateTime dataDoEnvio;
-    private TipoNotificacao tipo;
-    private AlcanceNotificacao alcance;
-    private boolean lida = false;
-    private Usuario destinatario;
-
-    public Notificacao() {
-        this.dataDoEnvio = LocalDateTime.now();
-    }
-
-    public Notificacao(String titulo, String mensagem, Usuario destinatario,
-                       TipoNotificacao tipo, AlcanceNotificacao alcance) {
+    public Notificacao(String descricao, String titulo, int idDestinatario) {
+        this.data = LocalDateTime.now();
+        this.descricao = descricao;
         this.titulo = titulo;
-        this.mensagem = mensagem;
-        this.destinatario = destinatario;
-        this.tipo = tipo;
-        this.alcance = alcance;
-        this.dataDoEnvio = LocalDateTime.now();
-    }
-
-    public Notificacao(Notificacao original) {
-        this.titulo = original.titulo;
-        this.mensagem = original.mensagem;
-        this.tipo = original.tipo;
-        this.alcance = original.alcance;
-        this.destinatario = original.destinatario;
-        this.dataDoEnvio = LocalDateTime.now();
+        this.idDestinatario = idDestinatario;
         this.lida = false;
     }
 
-    public long getId() {
-        return id;
+    public Notificacao() {
+        this.data = LocalDateTime.now();
     }
 
-    public void setId(long id) {
-        this.id = id;
+
+    public LocalDateTime getData() {
+        return data;
+    }
+
+    public void setData(LocalDateTime data) {
+        this.data = data;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getTitulo() {
@@ -56,36 +48,12 @@ public class Notificacao {
         this.titulo = titulo;
     }
 
-    public String getMensagem() {
-        return mensagem;
+    public int getDestinatario() {
+        return idDestinatario;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }
-
-    public LocalDateTime getDataDoEnvio() {
-        return dataDoEnvio;
-    }
-
-    public void setDataDoEnvio(LocalDateTime dataDoEnvio) {
-        this.dataDoEnvio = dataDoEnvio;
-    }
-
-    public TipoNotificacao getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoNotificacao tipo) {
-        this.tipo = tipo;
-    }
-
-    public AlcanceNotificacao getAlcance() {
-        return alcance;
-    }
-
-    public void setAlcance(AlcanceNotificacao alcance) {
-        this.alcance = alcance;
+    public void setDestinatario(int idDestinatario) {
+        this.idDestinatario = idDestinatario;
     }
 
     public boolean isLida() {
@@ -95,12 +63,17 @@ public class Notificacao {
     public void setLida(boolean lida) {
         this.lida = lida;
     }
-
-    public Usuario getDestinatario() {
-        return destinatario;
+    public String getResumo() {
+        if (descricao == null) return "";
+        return descricao.length() <= 80
+                ? descricao
+                : descricao.substring(0, 80) + "...";
     }
 
-    public void setDestinatario(Usuario destinatario) {
-        this.destinatario = destinatario;
+    public int getId() {
+        return idNotificacao;
+    }
+    public void setId(int idNotificacao) {
+        this.idNotificacao = idNotificacao;
     }
 }

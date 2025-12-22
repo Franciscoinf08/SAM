@@ -45,5 +45,44 @@ public class UsuarioProgramaDAO{
         }
     }
 
+    public void excluirTodos(Integer idUsuario) {
+        String sql = "delete from usuario_programa where usuario_id = ?";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+    public List<Integer> buscarUsuariosComProgramaExpirando(int dias) {
+        List<Integer> usuarios = new ArrayList<>();
+        System.out.println("Esta chegando no dao de usuario programa");
+        String sql = """
+        SELECT DISTINCT up.usuario_id
+        FROM usuario_programa up
+        JOIN programa_fidelidade pf
+            ON pf.idProgramaFidelidade = up.programa_id
+        WHERE DATE_ADD(
+                  up.data_associacao,
+                  INTERVAL pf.duracao MONTH
+              ) <= DATE_ADD(NOW(), INTERVAL ? DAY)
+    """;
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, dias);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    usuarios.add(rs.getInt("usuario_id"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "Erro ao buscar usuários com programa expirando", e
+            );
+        }
+
+        return usuarios;
+    }
 
 }

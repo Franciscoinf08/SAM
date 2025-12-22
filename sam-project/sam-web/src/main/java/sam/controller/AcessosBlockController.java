@@ -8,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import sam.model.domain.Usuario;
 import sam.model.service.AcessosBlockService;
 
 @WebServlet(name = "AcessosBlockController", urlPatterns = {"/AcessosBlockController"})
@@ -40,20 +42,24 @@ public class AcessosBlockController extends HttpServlet {
     }
 
     public void ativar(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        Usuario usuarioSessao = (Usuario) sessao.getAttribute("usuario");
         try {
             String usuario = (String) request.getParameter("usuario");
             String recurso = (String) request.getParameter("recurso");
-            bloqueios.ativar(recurso, usuario);
+            bloqueios.ativar(recurso, usuario, Math.toIntExact(usuarioSessao.getId()), usuario);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void bloquear(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        Usuario usuarioSessao = (Usuario) sessao.getAttribute("usuario");
         try {
             String usuario = (String) request.getParameter("usuario");
             String recurso = (String) request.getParameter("recurso");
-            bloqueios.bloquear(recurso, usuario);
+            bloqueios.bloquear(recurso, usuario, Math.toIntExact(usuarioSessao.getId()), usuario);
         } catch (Exception e) {
             e.printStackTrace();
         }

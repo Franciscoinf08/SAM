@@ -57,10 +57,8 @@ public class processarObjetivos extends HttpServlet {
 
         if (isUpdate) {
             try {
-                // Assume que o ID no seu Model é Integer (int)
                 formObjetivos.setId(Integer.parseInt(idFormularioStr));
             } catch (NumberFormatException e) {
-                // Erro se o ID não for um número válido, trata como falha.
                 System.err.println("ID de formulário inválido para atualização.");
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de formulário inválido.");
                 return;

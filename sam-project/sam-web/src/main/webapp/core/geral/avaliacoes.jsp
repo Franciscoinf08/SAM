@@ -1,12 +1,16 @@
+<%@page import="sam.model.service.UsuariosBlockService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="sam.model.dao.UsuarioDAO" %>
-<%@ page import="sam.model.common.Conexao" %>
 <%@ page import="sam.model.domain.Usuario" %>
 <%@ page import="java.util.List" %>
 
 <%
+
     UsuarioDAO udao = UsuarioDAO.getInstance();
     List<Usuario> usuarios = udao.listarTodos();
+
+
+    UsuariosBlockService gestaoBlock = new UsuariosBlockService();
 %>
 
 <!DOCTYPE html>
@@ -15,13 +19,13 @@
 <head>
     <meta charset="UTF-8">
     <title>SAM - Avaliações</title>
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 
 <body>
 <header>
-    <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+    <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Avaliações</h1>
     <%@include file="/core/header.jsp" %>
 </header>
@@ -32,18 +36,15 @@
     <section class="card" style="flex:1 1 100%;">
         <h2>Adicionar Avaliação</h2>
 
-        <form class="formulario" id="formAvaliacao" action="/sam/feedback?action=" method="POST">
-
-            <!-- autor (usuario logado) -->
+        <form class="formulario" id="formAvaliacao" action="<%= request.getContextPath() %>/feedback" method="POST">
             <input type="hidden" name="idAutor" value="<%=usuario.getId()%>">
-
-            <!-- usuario avaliado -->
             <label>Usuário avaliado:
                 <select name="idAvaliado" required>
                     <option value="">Selecione...</option>
-                    <% for (Usuario u : usuarios) { %>
+                    <% for (Usuario u : usuarios) {
+                        if(!gestaoBlock.check(usuario.getId(), u.getId()) && !gestaoBlock.check(u.getId(), usuario.getId())){%>
                         <option value="<%=u.getId()%>"><%=u.getNome()%></option>
-                    <% } %>
+                    <% }} %>
                 </select>
             </label>
 
@@ -69,9 +70,8 @@
     <section class="card" style="flex:1 1 100%;">
         <h2>Denunciar Usuário</h2>
 
-        <form class="formulario" action="/sam/feedback?action=denuncia" method="POST">
+        <form class="formulario" action="<%= request.getContextPath() %>/denuncia" method="POST">
 
-            <!-- denunciante (us logado) -->
             <input type="hidden" name="idDenunciante" value="<%=usuario.getId()%>">
 
             <label>Usuário denunciado:
@@ -102,6 +102,7 @@
     </section>
 
 </main>
+<script src="<%= request.getContextPath() %>/js/script.js"></script>
 
 </body>
 </html>

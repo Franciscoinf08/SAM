@@ -38,7 +38,6 @@
                 <input type="text" name="nome" required value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getNome() : "" %>">
             </label>
 
-
             <label>
                 <span>Bonus de Milhas</span>
                 <input type="number" name="bonusMilhas" required  value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getBonusMilhas(): "" %>">
@@ -51,6 +50,16 @@
             <label>
                 <span> Milhas por mês</span>
                 <input type="number" name="qtdeMilhasMes" required  value="<%= request.getAttribute("programa") != null ? ((ProgramaFidelidade)request.getAttribute("programa")).getQtdeMilhasMes() : "" %>">
+            </label>
+
+            <label>
+                <span>Data de Expiracao das Milhas </span>
+                <input type="date" name="dataExpiracao" required value="<%=
+    request.getAttribute("programa") != null
+        ? new java.text.SimpleDateFormat("dd-MM-yyyy")
+            .format(((ProgramaFidelidade)request.getAttribute("programa")).getDataExpiracaoMilhas())
+        : ""
+%>">
             </label>
 
             <label>

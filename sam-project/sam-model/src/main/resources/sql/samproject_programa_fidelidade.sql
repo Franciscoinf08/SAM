@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: localhost    Database: samproject
+-- Host: 127.0.0.1    Database: samproject
 -- ------------------------------------------------------
 -- Server version	8.0.44
 
@@ -31,10 +31,11 @@ CREATE TABLE `programa_fidelidade` (
   `empresa_id` int DEFAULT NULL,
   `precoMes` double DEFAULT NULL,
   `avaliacao` varchar(50) DEFAULT NULL,
+  `data_expiracao` date DEFAULT NULL,
   PRIMARY KEY (`idProgramaFidelidade`),
   KEY `empresa_id` (`empresa_id`),
   CONSTRAINT `programa_fidelidade_ibfk_1` FOREIGN KEY (`empresa_id`) REFERENCES `empresa` (`idEmpresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +44,7 @@ CREATE TABLE `programa_fidelidade` (
 
 LOCK TABLES `programa_fidelidade` WRITE;
 /*!40000 ALTER TABLE `programa_fidelidade` DISABLE KEYS */;
-INSERT INTO `programa_fidelidade` VALUES (1,'a',1,1,1,25,1,'Desvantajoso'),(2,'b',1,1,1,27,1,'Desvantajoso');
+INSERT INTO `programa_fidelidade` VALUES (68,'t',321,1312,1321,29,321,'Muito vantajoso','2026-01-10'),(71,'programa',123,123,123,29,123,'Muito vantajoso','2322-03-12'),(72,'Teste das notificacoes automaticas',123,123,22,29,123,'Muito vantajoso','2025-12-21');
 /*!40000 ALTER TABLE `programa_fidelidade` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-29 20:03:07
+-- Dump completed on 2025-12-21 20:54:37

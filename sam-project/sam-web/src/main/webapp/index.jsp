@@ -18,6 +18,18 @@
     </head>
 
     <body>
+
+    <%
+        String mensagem = (String) request.getAttribute("mensagem");
+        if (mensagem != null) {
+    %>
+    <script>
+        alert("<%= mensagem %>");
+    </script>
+    <%
+        }
+    %>
+
         <header>
             <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
             <h1>Login e Cadastro</h1>

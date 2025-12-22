@@ -94,6 +94,10 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
+                Long idGestor = rs.getLong("id_gestor");
+                if (rs.wasNull()) {
+                    idGestor = null;
+                }
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String cpf = rs.getString("cpf");
@@ -101,6 +105,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
                 String tipo = rs.getString("tipo");
                 usuario = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipo));
                 usuario.setId(id);
+                usuario.setIdGestor(idGestor);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);
@@ -118,12 +123,17 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 Long id = rs.getLong("id");
+                Long idGestor = rs.getLong("id_gestor");
+                if (rs.wasNull()) {
+                    idGestor = null;
+                }
                 String nome = rs.getString("nome");
                 String cpf = rs.getString("cpf");
                 String senha = rs.getString("senha");
                 String tipo = rs.getString("tipo");
                 usuario = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipo));
                 usuario.setId(id);
+                usuario.setIdGestor(idGestor);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);
@@ -141,12 +151,17 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 Long id = rs.getLong("id");
+                Long idGestor = rs.getLong("id_gestor");
+                if (rs.wasNull()) {
+                    idGestor = null;
+                }
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String senha = rs.getString("senha");
                 String tipo = rs.getString("tipo");
                 usuario = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipo));
                 usuario.setId(id);
+                usuario.setIdGestor(idGestor);
             }
         } catch (SQLException e) {
             throw new SQLException("Erro ao pesquisar usuário", e);
@@ -182,8 +197,13 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
                 String senha = rs.getString("senha");
                 String tipo = rs.getString("tipo");
                 Long id = rs.getLong("id");
+                Long idGestor = rs.getLong("id_gestor");
+                if (rs.wasNull()) {
+                    idGestor = null;
+                }
                 Usuario cliente = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipo));
                 cliente.setId(id);
+                cliente.setIdGestor(idGestor);
 
                 listaClientes.add(cliente);
             }
@@ -205,6 +225,10 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
             while (rs.next()) {
 
                 Long id = rs.getLong("id");
+                Long idGestor = rs.getLong("id_gestor");
+                if (rs.wasNull()) {
+                    idGestor = null;
+                }
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String cpf = rs.getString("cpf");
@@ -213,6 +237,7 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
 
                 Usuario usuario = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipoUser));
                 usuario.setId(id);
+                usuario.setIdGestor(idGestor);
 
                 lista.add(usuario);
             }
@@ -238,8 +263,13 @@ public class UsuarioDAO implements GenericDAO<Usuario, Long> {
                 String senha = rs.getString("senha");
                 String tipo = rs.getString("tipo");
                 Long id = rs.getLong("id");
+                Long idGestor = rs.getLong("id_gestor");
+                if (rs.wasNull()) {
+                    idGestor = null;
+                }
                 Usuario cliente = new Usuario(nome, email, cpf, senha, UsuarioTipo.strTo(tipo));
                 cliente.setId(id);
+                cliente.setIdGestor(idGestor);
 
                 listaClientes.add(cliente);
             }

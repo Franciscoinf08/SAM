@@ -1,19 +1,22 @@
 package sam.controller;
 
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
+
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+
+import sam.model.domain.Usuario;
+import sam.model.helper.EnviarEmailHelper;
+
+import sam.model.helper.EnviarEmailHelper;
 import sam.model.service.GestaoSolicitacoesService;
 import sam.model.domain.Solicitacao;
 import sam.model.domain.util.Status;
@@ -100,10 +103,12 @@ public class SolicitacoesContaGestorController extends HttpServlet {
 
     public String aprovar(HttpServletRequest request) {
         String jsp;
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
-            gestao.aprovarPedido(id);
+            gestao.aprovarPedido(id, Math.toIntExact(usuario.getId()));
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,10 +119,12 @@ public class SolicitacoesContaGestorController extends HttpServlet {
 
     public String recusar(HttpServletRequest request) {
         String jsp;
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
-            gestao.recusarPedido(id);
+            gestao.recusarPedido(id, Math.toIntExact(usuario.getId()));
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,7 +173,7 @@ public class SolicitacoesContaGestorController extends HttpServlet {
                 Files.copy(is, arquivoSalvo.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
 
-            EnviarEmailController sm = new EnviarEmailController();
+            EnviarEmailHelper sm = new EnviarEmailHelper();
             boolean sucesso = sm.enviarEmailSolicitacaoGestor(nome, email, formaPagamento, arquivoSalvo.getAbsolutePath());
 
             request.setAttribute("sucesso", String.valueOf(sucesso));
@@ -193,10 +200,12 @@ public class SolicitacoesContaGestorController extends HttpServlet {
 
     public String tornarCliente(HttpServletRequest request) {
         String jsp;
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
         try {
             GestaoSolicitacoesService gestao = new GestaoSolicitacoesService();
             String id = request.getParameter("id");
-            gestao.tornarCliente(id);
+            gestao.tornarCliente(id, Math.toIntExact(usuario.getId()));
 
             jsp = "/core/dev/gerenciar-solicitacoes.jsp";
         } catch (Exception e) {
