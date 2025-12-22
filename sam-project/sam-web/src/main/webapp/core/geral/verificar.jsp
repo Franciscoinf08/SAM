@@ -63,7 +63,7 @@
                 <input type="hidden" name="senha" value="<%= session.getAttribute("senha") %>">
             </div>
 
-            <input type="hidden" name="destinoSucesso" value="CadastroController">
+            <input type="hidden" name="destinoSucesso" value="/CadastroController">
             <input type="hidden" name="destinoFalha" value="/core/geral/verificar.jsp">
 
             <button class="verify" type="submit">Verificar</button>

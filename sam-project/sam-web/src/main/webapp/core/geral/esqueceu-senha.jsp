@@ -94,7 +94,7 @@
 </script>
 
 <%}%>
-//ALTERNAR ENTRE INPUTS
+
 <%
     Boolean emailEnviado = (Boolean) request.getAttribute("emailEnviado");
 %>

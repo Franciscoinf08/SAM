@@ -92,6 +92,10 @@
         <%} if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo()) &&
                 !ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>
         <a href="/sam/core/gestor/orcamentos.jsp">Orçamentos</a>
+
+        <%} if (ControleAutorizacao.checkPermissao("visualizar-historico", usuario.getTipo()) &&
+                !ControleAutorizacao.checkBloqueio("historico", usuario.getCPF())) {%>
+        <a href="/sam/ListarUsuariosController">Listagem de Usuarios</a>
         <%}%>
 
     </div>

@@ -45,6 +45,7 @@ public class GestaoUsuariosService {
             throw new PersistenciaException(UsuarioHelper.validarCadastroUsuario(usuario));
         String descricao =  "O usuario: " + usuario.getNome() + " foi cadastrado ao sistema";
         try {
+            usuarioDAO.inserir(usuario);
 
             AtividadeReferencia ref = new AtividadeReferencia();
             ref.setTipoEntidade(TipoEntidades.USUARIO.name());
@@ -52,7 +53,6 @@ public class GestaoUsuariosService {
             List<AtividadeReferencia> refs = new ArrayList<>();
             refs.add(ref);
 
-            usuarioDAO.inserir(usuario);
             atividadeService.registrarAtividadeComReferencias(TipoAtividades.CADASTRO_USUARIO.name(), descricao, usuario.getId(), refs);
         } catch (SQLException e) {
             throw new SQLException(e);

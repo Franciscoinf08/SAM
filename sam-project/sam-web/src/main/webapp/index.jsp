@@ -89,8 +89,12 @@
                         Acesse o FAQ
                     </span>
                 </p>
+                <p class="link">
+                    <span onclick="window.location.href = '/sam/core/geral/esqueceu-senha.jsp'">
+                        Esqueci minha senha
+                    </span>
+                </p>
             </div>
-            <a href="/sam/core/geral/esqueceu-senha.jsp" id="esqueceu-senha">Esquecei minha senha</a>
         </footer>
 
         <%@include file="/core/mensagens-erro.jsp"%>
