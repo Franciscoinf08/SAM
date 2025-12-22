@@ -6,6 +6,7 @@ import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProgramaFidelidadeDAO {
@@ -17,7 +18,7 @@ public class ProgramaFidelidadeDAO {
 
 
     public ProgramaFidelidade salvar(ProgramaFidelidade programa) {
-        String sql = "INSERT INTO programa_fidelidade (nome, bonusMilhas, qtdeMilhasMes, duracao, empresa_id, precoMes, avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO programa_fidelidade (nome, bonusMilhas, qtdeMilhasMes, duracao, empresa_id, precoMes, avaliacao, data_expiracao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, programa.getNome());
             stmt.setDouble(2, programa.getBonusMilhas());
@@ -26,6 +27,7 @@ public class ProgramaFidelidadeDAO {
             stmt.setInt(5, programa.getIdEmpresa());
             stmt.setDouble(6, programa.getPrecoMensal());
             stmt.setString(7, programa.getAvaliacao());
+            stmt.setObject(8, programa.getDataExpiracaoMilhas());
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -63,6 +65,7 @@ public class ProgramaFidelidadeDAO {
                     p.setIdEmpresa(rs.getInt("empresa_id"));
                     p.setNome(rs.getString("nome"));
                     p.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                    p.setDataExpiracaoMilhas(rs.getObject("data_expiracao", Date.class));
                     lista.add(p);
                 }
             }
@@ -86,6 +89,7 @@ public class ProgramaFidelidadeDAO {
                 programaFidelidade.setDuracao(rs.getInt("duracao"));
                 programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
                 programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
+                programaFidelidade.setDataExpiracaoMilhas(rs.getDate("data_expiracao"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,7 +98,7 @@ public class ProgramaFidelidadeDAO {
     }
 
     public void atualizarProgramaFidelidade(ProgramaFidelidade programaFidelidade) throws SQLException {
-        String sql = "UPDATE programa_fidelidade SET nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ?, precoMes = ?, avaliacao = ? WHERE idProgramaFidelidade = ?";
+        String sql = "UPDATE programa_fidelidade SET nome = ?, bonusMilhas = ?, qtdeMilhasMes = ?, duracao = ?, precoMes = ?, avaliacao = ?, data_expiracao = ? WHERE idProgramaFidelidade = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, programaFidelidade.getNome());
             stmt.setDouble(2, programaFidelidade.getBonusMilhas());
@@ -102,7 +106,8 @@ public class ProgramaFidelidadeDAO {
             stmt.setInt(4, programaFidelidade.getDuracao());
             stmt.setDouble(5, programaFidelidade.getPrecoMensal());
             stmt.setString(6, programaFidelidade.getAvaliacao());
-            stmt.setInt(7, programaFidelidade.getIdProgramaFidelidade());
+            stmt.setObject(7, programaFidelidade.getDataExpiracaoMilhas());
+            stmt.setInt(8, programaFidelidade.getIdProgramaFidelidade());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -116,7 +121,7 @@ public class ProgramaFidelidadeDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Erro ao excluir o programa de fidelidade", e);
+            throw new SQLException("Erro ao excluir o programa de fidelidade" + e.getMessage(), e);
         }
     }
 
@@ -136,6 +141,7 @@ public class ProgramaFidelidadeDAO {
                     programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
                     programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
                     programaFidelidade.setAvaliacao(rs.getString("avaliacao"));
+                    programaFidelidade.setDataExpiracaoMilhas(rs.getObject("data_expiracao", Date.class));
                     lista.add(programaFidelidade);
                 }
             }
@@ -161,6 +167,7 @@ public class ProgramaFidelidadeDAO {
                 programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
                 programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
                 programaFidelidade.setAvaliacao(rs.getString("avaliacao"));
+                programaFidelidade.setDataExpiracaoMilhas(rs.getObject("data_expiracao", Date.class));
                 lista.add(programaFidelidade);
             }
         } catch (SQLException e) {
@@ -182,7 +189,7 @@ public class ProgramaFidelidadeDAO {
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setLong(1, usuario.getId()); // Não precisa converter
+            stmt.setLong(1, usuario.getId());
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -196,7 +203,7 @@ public class ProgramaFidelidadeDAO {
                     p.setIdEmpresa(rs.getInt("empresa_id"));
                     p.setNome(rs.getString("nome"));
                     p.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
-
+                    p.setDataExpiracaoMilhas(rs.getObject("data_expiracao", Date.class));
                     lista.add(p);
                 }
             }
@@ -227,10 +234,37 @@ public class ProgramaFidelidadeDAO {
                 programa.setPrecoMensal(rs.getDouble("precoMes"));
                 programa.setIdEmpresa(rs.getInt("empresa_id"));
                 programa.setAvaliacao(rs.getString("avaliacao"));
+                programa.setDataExpiracaoMilhas(rs.getObject("data_expiracao", Date.class));
                 lista.add(programa);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return lista;
+    }
+    public List<ProgramaFidelidade> listarComMilhasExpirando() {
+        List<ProgramaFidelidade> lista = new ArrayList<>();
+        String sql = "SELECT *\n" +
+                "    FROM programa_fidelidade\n" +
+                "    WHERE data_expiracao BETWEEN CURDATE()\n" +
+                "    AND DATE_ADD(CURDATE(), INTERVAL 3 DAY);";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                ProgramaFidelidade programaFidelidade = new ProgramaFidelidade();
+                programaFidelidade.setIdProgramaFidelidade(rs.getInt("idProgramaFidelidade"));
+                programaFidelidade.setNome(rs.getString("nome"));
+                programaFidelidade.setBonusMilhas(rs.getDouble("bonusMilhas"));
+                programaFidelidade.setQtdeMilhasMes(rs.getInt("qtdeMilhasMes"));
+                programaFidelidade.setDuracao(rs.getInt("duracao"));
+                programaFidelidade.setPrecoMensal(rs.getDouble("precoMes"));
+                programaFidelidade.setIdEmpresa(rs.getInt("empresa_id"));
+                programaFidelidade.setAvaliacao(rs.getString("avaliacao"));
+                programaFidelidade.setDataExpiracaoMilhas(rs.getObject("data_expiracao", Date.class));
+                lista.add(programaFidelidade);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return lista;
     }

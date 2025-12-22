@@ -4,12 +4,18 @@ import sam.model.common.Conexao;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.dao.UsuarioDAO;
 import sam.model.dao.UsuarioProgramaDAO;
+import sam.model.domain.AtividadeReferencia;
 import sam.model.domain.ProgramaFidelidade;
 import sam.model.domain.Usuario;
 import sam.model.domain.UsuarioPrograma;
+import sam.model.domain.util.TipoAtividades;
+import sam.model.domain.util.TipoEntidades;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioProgramaService {
@@ -17,6 +23,7 @@ public class UsuarioProgramaService {
     private UsuarioDAO uDAO;
     private ProgramaFidelidadeDAO pfDAO;
     private final Connection conexao;
+    private final AtividadeService atividadeService = new AtividadeService();
 
     public UsuarioProgramaService() {
         this.conexao = Conexao.getConnection();
@@ -24,21 +31,41 @@ public class UsuarioProgramaService {
         this.uDAO = UsuarioDAO.getInstance();
         this.pfDAO = new ProgramaFidelidadeDAO();
     }
-    public void associar(UsuarioPrograma up) throws SQLException {
-        System.out.println("ID USUARIO = " + up.getIdUsuario());
-        System.out.println("ID PROGRAMA = " + up.getIdPrograma());
-        System.out.println("USUARIO ENCONTRADO = " + uDAO.pesquisar((long) up.getIdUsuario()));
-        System.out.println("PROGRAMA ENCONTRADO = " + pfDAO.buscarPorId(up.getIdPrograma()));
-        System.out.println("VALIDAÇÃO = " + validarAssociacao(up));
+    public void associar(UsuarioPrograma up, int idUsuarioExecutor) throws SQLException {
         if (!validarAssociacao(up))
             throw new RuntimeException();
         upDAO.inserir(up);
+
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+        ref.setEntidadeId((long) up.getIdUsuario());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.PROGRAMA_FIDELIDADE.name());
+        ref.setEntidadeId((long) up.getIdPrograma());
+        refs.add(ref);
+
+        String descricao =  "o usuario: " + up.getIdUsuario() + " foi associado ao programa: " + up.getIdPrograma();
+        atividadeService.registrarAtividadeComReferencias(TipoAtividades.ASSOCIACAO_CLIENTE_PROGRAMA.name(), descricao, (long) idUsuarioExecutor, refs);
+
     }
-    public void desassociar(UsuarioPrograma up) throws SQLException {
+    public void desassociar(UsuarioPrograma up, int idUsuarioExecutor) throws SQLException {
         if(!validarAssociacao(up)){
             throw new RuntimeException();
         }
         upDAO.excluir(up.getIdUsuario(),  up.getIdPrograma());
+
+        AtividadeReferencia ref = new AtividadeReferencia();
+        ref.setTipoEntidade(TipoEntidades.USUARIO.name());
+        ref.setEntidadeId((long) up.getIdUsuario());
+        List<AtividadeReferencia> refs = new ArrayList<>();
+        refs.add(ref);
+        ref.setTipoEntidade(TipoEntidades.PROGRAMA_FIDELIDADE.name());
+        ref.setEntidadeId((long) up.getIdPrograma());
+        refs.add(ref);
+
+        String descricao = "o usuario: "+up.getIdUsuario()+ " foi desassociado ao programa: " + up.getIdPrograma();
+        atividadeService.registrarAtividadeComReferencias(TipoAtividades.DESASSOCIACAO_CLIENTE_PROGRAMA.name(), descricao, (long) idUsuarioExecutor,refs);
     }
     public List<ProgramaFidelidade> listarNaoAssociados(int idUsuario) throws SQLException {
         Usuario usuario = uDAO.pesquisar((long) idUsuario);
@@ -46,6 +73,7 @@ public class UsuarioProgramaService {
 
         return pfDAO.listarNaoAssociados(usuario);
     }
+
     private boolean validarAssociacao(UsuarioPrograma usuarioPrograma) throws SQLException {
         int idUsuario = usuarioPrograma.getIdUsuario();
         int idPrograma = usuarioPrograma.getIdPrograma();

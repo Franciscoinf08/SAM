@@ -10,7 +10,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import sam.model.domain.Empresa;
+import sam.model.domain.Usuario;
 import sam.model.service.EmpresaService;
 
 @WebServlet(name = "EmpresaController", urlPatterns = {"/empresa"})
@@ -71,19 +73,25 @@ public class EmpresaController extends HttpServlet {
 
     private void inserirEmpresa(HttpServletRequest request, HttpServletResponse response)
             throws IOException, SQLException {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
         Empresa empresa = new Empresa(
                 request.getParameter("nomeEmpresa"),
                 request.getParameter("cnpj"),
                 Double.parseDouble(request.getParameter("milheiroSeguranca"))
         );
-        empresaService.cadastrarEmpresa(empresa);
+
+        empresaService.cadastrarEmpresa(empresa, Math.toIntExact(usuario.getId()));
         response.sendRedirect(request.getContextPath() + "/empresa");
     }
 
     private void excluirEmpresa(HttpServletRequest request, HttpServletResponse response)
             throws IOException{
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+
         int id = Integer.parseInt(request.getParameter("id"));
-        empresaService.excluir(id);
+        empresaService.excluir(id, Math.toIntExact(usuario.getId()));
         response.sendRedirect(request.getContextPath() + "/empresa");
     }
 
@@ -105,10 +113,13 @@ public class EmpresaController extends HttpServlet {
 
     private void atualizarEmpresa(HttpServletRequest request, HttpServletResponse response)
             throws IOException, SQLException {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+
         int id = Integer.parseInt(request.getParameter("id"));
         Empresa empresa = new Empresa(request.getParameter("nomeEmpresa"), request.getParameter("cnpj"), Double.parseDouble(request.getParameter("milheiroSeguranca")));
         empresa.setIdEmpresa(id);
-        empresaService.atualizarEmpresa(empresa);
+        empresaService.atualizarEmpresa(empresa, Math.toIntExact(usuario.getId()));
         response.sendRedirect(request.getContextPath() + "/empresa");
     }
 }

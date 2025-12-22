@@ -1,0 +1,45 @@
+.perguntas {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2.5vw;
+
+    margin-bottom: 5vw;
+}
+
+.pergunta-entry {
+    background: white;
+    border-radius: 10px;
+    padding: 1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 47.5%;
+}
+
+.pergunta-entry p {
+    margin: 1em 0;
+}
+
+.respostas article, .pergunta-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 25%;
+    margin-bottom: 2em;
+}
+
+.voltar {
+    margin-bottom: 1em;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.voltar:hover, .titulo-ticket:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.titulo-ticket {
+    margin-top: 0.5em;
+}

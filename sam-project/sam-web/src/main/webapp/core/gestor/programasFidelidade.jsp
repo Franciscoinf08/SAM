@@ -36,11 +36,13 @@
                 <th>Duração (meses)</th>
                 <th>Preço Mensal (R$)</th>
                 <th>Avaliação</th>
+                <th>Data de Expiracao<br> de Milhas</th>
                 <th>Ações</th>
             </tr>
 
             <%
                 for (ProgramaFidelidade p : programas){
+
             %>
             <tr>
                 <td><%= p.getIdProgramaFidelidade() %></td>
@@ -50,6 +52,9 @@
                 <td><%= p.getDuracao() %></td>
                 <td><%= p.getPrecoMensal() %></td>
                 <td><%= p.getAvaliaco() %></td>
+                <td>
+                    <%= new java.text.SimpleDateFormat("dd/MM/yyyy").format(p.getDataExpiracaoMilhas()) %>
+                </td>
                 <td>
                     <a href="<%= request.getContextPath() %>/programaFidelidade?action=editar&id=<%= p.getIdProgramaFidelidade()%>&idEmpresa=<%=request.getAttribute("idEmpresa")%>">
                         <button>Editar</button>

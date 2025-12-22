@@ -9,6 +9,7 @@ public class Usuario {
     private final String cpf;
     private String senha;
     private UsuarioTipo tipo;
+    private Long idGestor;
 
     public Usuario(String cpf) {
         this.cpf = cpf;
@@ -21,6 +22,7 @@ public class Usuario {
         this.cpf = cpf;
         this.senha = senha;
         tipo = UsuarioTipo.CLIENTE;
+        this.idGestor = null;
     }
 
     public Usuario(String nome, String email, String cpf, String senha, UsuarioTipo tipo) {
@@ -29,6 +31,7 @@ public class Usuario {
         this.cpf = cpf;
         this.senha = senha;
         this.tipo = tipo;
+        this.idGestor = null;
     }
 
     public Usuario(Usuario usuario) {
@@ -38,6 +41,7 @@ public class Usuario {
         cpf = usuario.getCPF();
         senha = usuario.getSenha();
         tipo = usuario.getTipo();
+        idGestor = usuario.getIdGestor();
     }
 
     @Override
@@ -67,4 +71,8 @@ public class Usuario {
     public UsuarioTipo getTipo() { return tipo; }
 
     public void setTipo(UsuarioTipo tipo) { this.tipo = tipo; }
+    
+    public Long getIdGestor() { return idGestor; }
+
+    public void setIdGestor(Long idGestor) { this.idGestor = idGestor; }
 }

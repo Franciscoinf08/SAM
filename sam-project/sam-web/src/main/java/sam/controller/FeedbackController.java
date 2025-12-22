@@ -10,30 +10,25 @@ import java.io.IOException;
 @WebServlet(name="feedback", urlPatterns = {"/feedback"})
 public class FeedbackController extends HttpServlet {
 
-    private FeedbackService service;
-
-    @Override
-    public void init() throws ServletException {
-        service = new FeedbackService();
-    }
+    private final FeedbackService feedbackService =  new FeedbackService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         try {
-            long autorId = Long.parseLong(request.getParameter("autorId"));
-            long avaliadoId = Long.parseLong(request.getParameter("avaliadoId"));
-            Integer nota = Integer.parseInt(request.getParameter("nota"));
+            long idAutor = Long.parseLong(request.getParameter("idAutor"));
+            long idAvaliado = Long.parseLong(request.getParameter("idAvaliado"));
+            int nota = Integer.parseInt(request.getParameter("nota"));
             String comentario = request.getParameter("comentario");
 
-            service.registrarFeedback(autorId, avaliadoId, nota, comentario);
+            feedbackService.registrarFeedback(idAutor, idAvaliado, nota, comentario);
 
-            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?sucesso=1");
+            response.sendRedirect(request.getContextPath() + "/core/geral/avaliacoes.jsp?sucesso=1");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("views/avaliacoes/avaliacoes.jsp?erro=1");
+            response.sendRedirect(request.getContextPath() + "/core/geral/avaliacoes.jsp?erro=1");
         }
     }
 }

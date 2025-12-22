@@ -8,8 +8,7 @@ public class Feedback {
     private String comentario;
     private Integer nota; 
 
-    public Feedback(int id, Usuario autor, Usuario avaliado, String comentario, int nota) {
-        this.id = id;
+    public Feedback(Usuario autor, Usuario avaliado, String comentario, int nota) {
         this.autor = autor;
         this.avaliado = avaliado;
         this.comentario = comentario;

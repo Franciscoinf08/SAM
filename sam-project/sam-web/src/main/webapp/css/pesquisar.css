@@ -1,0 +1,39 @@
+#corpo-inicio {
+    text-align: center;
+}
+
+#searchInput {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    width: 400px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+#itemsList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
+}
+
+#itemsList li {
+    padding: 8px;
+    width: 400px;
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    background-color: #f6f6f6;
+    list-style-type: none;
+}
+
+li a{
+    color: black !important;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none;
+}

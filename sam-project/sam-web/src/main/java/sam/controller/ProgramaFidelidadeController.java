@@ -4,23 +4,28 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpSession;
 import sam.model.dao.EmpresaDAO;
+import sam.model.domain.Notificacao;
+import sam.model.domain.Usuario;
 import sam.model.service.AvaliadorProgramaFidelidadeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import sam.model.dao.ProgramaFidelidadeDAO;
 import sam.model.domain.ProgramaFidelidade;
+import sam.model.service.NotificacaoService;
 import sam.model.service.ProgramaFidelidadeService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "ProgramaFidelidadeController", urlPatterns = {"/programaFidelidade"})
 public class ProgramaFidelidadeController extends HttpServlet {
 
     private final ProgramaFidelidadeService pfs = new ProgramaFidelidadeService();
-
+    private final NotificacaoService notificacaoService = new NotificacaoService();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -104,6 +109,8 @@ public class ProgramaFidelidadeController extends HttpServlet {
 
     private void adicionarProgramaFidelidade(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
 
         String nome = request.getParameter("nome");
         double bonusMilhas = Double.parseDouble(request.getParameter("bonusMilhas"));
@@ -111,21 +118,28 @@ public class ProgramaFidelidadeController extends HttpServlet {
         int duracao = Integer.parseInt(request.getParameter("duracao"));
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         double preco = Double.parseDouble(request.getParameter("preco"));
+        String dataStr = request.getParameter("dataExpiracao");
+        java.sql.Date dataExpiracao = java.sql.Date.valueOf(dataStr);
 
         AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), new ProgramaFidelidadeDAO());
 
         ProgramaFidelidade programa = new ProgramaFidelidade(
-                nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa
+                nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa, dataExpiracao
         );
 
+        Notificacao notificacao = new Notificacao("Um novo programa de fidelidade foi cadastrado com duracao de: "+
+                duracao+ " e data de expiracao das milhas para dia: " + dataExpiracao,"Programa de fidelidade cadastrado", Math.toIntExact(usuario.getId()));
+        notificacaoService.enviar(notificacao);
 
-        pfs.cadastrarProgramaFidelidade(programa);
+        pfs.cadastrarProgramaFidelidade(programa, Math.toIntExact(usuario.getId()));
         avaliador.avaliarPrograma(programa);
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
     }
 
     private void editarProgramaFidelidade(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
 
         int id = Integer.parseInt(request.getParameter("id"));
         String nome = request.getParameter("nome");
@@ -134,11 +148,13 @@ public class ProgramaFidelidadeController extends HttpServlet {
         int duracao = Integer.parseInt(request.getParameter("duracao"));
         int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         double preco = Double.parseDouble(request.getParameter("preco"));
+        String dataStr = request.getParameter("dataExpiracao");
+        java.sql.Date dataExpiracao = java.sql.Date.valueOf(dataStr);
 
-        ProgramaFidelidade programa = new ProgramaFidelidade(nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa);
+        ProgramaFidelidade programa = new ProgramaFidelidade(nome, bonusMilhas, qtdeMilhasMes, duracao, preco, idEmpresa, dataExpiracao);
         programa.setIdProgramaFidelidade(id);
 
-        pfs.atualizarProgramaFidelidade(programa);
+        pfs.atualizarProgramaFidelidade(programa, Math.toIntExact(usuario.getId()));
         AvaliadorProgramaFidelidadeService avaliador = new AvaliadorProgramaFidelidadeService(new EmpresaDAO(), new ProgramaFidelidadeDAO());
         avaliador.avaliarPrograma(programa);
         response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
@@ -146,11 +162,13 @@ public class ProgramaFidelidadeController extends HttpServlet {
 
     private void excluirProgramaFidelidade(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+        int id = Integer.parseInt(request.getParameter("id"));
+        int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
 
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
-            pfs.deletarProgramaFidelidade(id);
+            pfs.deletarProgramaFidelidade(id, Math.toIntExact(usuario.getId()));
             response.sendRedirect(request.getContextPath() + "/programaFidelidade?action=listar&idEmpresa=" + idEmpresa);
         } catch (Exception e) {
             throw new ServletException("Erro ao excluir programa de fidelidade.", e);

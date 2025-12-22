@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: localhost    Database: samproject
+-- Host: 127.0.0.1    Database: samproject
 -- ------------------------------------------------------
 -- Server version	8.0.44
 
@@ -39,7 +39,7 @@ CREATE TABLE `solicitacoes_gestor` (
 
 LOCK TABLES `solicitacoes_gestor` WRITE;
 /*!40000 ALTER TABLE `solicitacoes_gestor` DISABLE KEYS */;
-INSERT INTO `solicitacoes_gestor` VALUES (4,'j','aaa@gmail.com','boleto','RECUSADO',0),(5,'j','aaa@gmail.com','boleto','APROVADO',5),(6,'Ana','gpt@gmail.com','boleto','AGUARDANDO',8),(7,'aaaa','anas@gmail.com','boleto','CANCELADO',9),(8,'aaaa','anas@gmail.com','cartao','PENDENTE',9);
+INSERT INTO `solicitacoes_gestor` VALUES (4,'j','aaa@gmail.com','boleto','RECUSADO',0),(5,'j','aaa@gmail.com','boleto','RECUSADO',5),(6,'Ana','gpt@gmail.com','boleto','RECUSADO',8),(7,'aaaa','anas@gmail.com','boleto','CANCELADO',9),(8,'aaaa','anas@gmail.com','cartao','PENDENTE',9);
 /*!40000 ALTER TABLE `solicitacoes_gestor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-29 20:03:05
+-- Dump completed on 2025-12-21 20:54:37

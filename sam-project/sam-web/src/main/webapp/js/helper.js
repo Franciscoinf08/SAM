@@ -142,7 +142,6 @@ function validarCamposCadastroTransacao(form) {
 
     if (bonus === "") {
         form.bonus.value = "0";
-        bonus = form.bonus.value;
     } else if (bonus !== "0")
         strConfirmacao += `\n Bônus: ${bonus}`;
 
@@ -199,23 +198,6 @@ function validarEmail(email) {
         dominio.indexOf(" ") === -1 &&
         dominio.indexOf(".") >= 1 &&
         dominio.lastIndexOf(".") < dominio.length - 1;
-}
-
-/*
-* GERADOR DAS MENSAGENS DE ERRO
-*/
-
-function gerarMensagemErro(erro) {
-    let body = document.body;
-    let mensagemErroEl = document.createElement("div");
-    let conteudo = document.createTextNode(erro);
-
-    mensagemErroEl.appendChild(conteudo);
-    mensagemErroEl.classList.add("mensagem-card");
-    body.appendChild(mensagemErroEl);
-
-    setTimeout(() => { mensagemErroEl.style.top = "4em"; }, 1);
-    setTimeout(() => { mensagemErroEl.style.display = "none"; }, 4000);
 }
 
 function validarSolicitarPagamento(form) {

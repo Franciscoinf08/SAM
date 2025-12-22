@@ -113,7 +113,7 @@ Esse software tem a missão de automatizar e facilitar a análise de transaçõe
 | 2      | CSU07       | 6 - Verônica           |
 | 3      | CSU13       | 1 - Fransisco          | -
 | 3      | -           | 2 - Gabriel Marrocos   | -
-| 3      | CSU06       | 3 - Mateus Tertuliano  |
+| 3      | CSU15       | 3 - Mateus Tertuliano  |
 | 3      | CSU18       | 4 - Mateus Vasconcelos | -
 | 3      | CSU09       | 5 - Thiérs             |
 | 3      | CSU03, CSU17| 6 - Verônica           |
