@@ -136,7 +136,6 @@ public class ControleAutorizacao {
         permissao.addUsuarioGrupo(UsuarioTipo.GESTOR);
         permissoes.put(permissao.getRecurso(), permissao);
 
-
     }
 
     public static boolean checkPermissao(String recurso, UsuarioTipo usuario) {

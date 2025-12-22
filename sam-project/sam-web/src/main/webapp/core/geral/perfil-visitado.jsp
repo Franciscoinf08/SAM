@@ -79,8 +79,6 @@
                             <p><%=visitado.getEmail()%></p>
                         </div>
                         <div class="acoes-visitado">
-                            <button>Avaliações/Denúncia</button>
-                            <button>Relatórios</button>
                             <button><a href="/sam/userBlock?acao=Bloquear&idVisitado=<%=visitado.getId()%>&idUsuario=<%=usuario.getId()%>">Bloquear</a></button>
                             <% if(usuario.getTipo() == UsuarioTipo.GESTOR && visitado.getTipo() == UsuarioTipo.CLIENTE && visitado.getIdGestor() == null){%>
                             <button><a href="/sam/associacoes?acao=Adicionar&idCliente=<%=visitado.getId()%>&idGestor=<%=usuario.getId()%>">Adicionar cliente</a></button>

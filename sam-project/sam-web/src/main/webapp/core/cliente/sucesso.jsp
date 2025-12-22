@@ -7,9 +7,7 @@
 </head>
 <body id="body-sucesso">
     <header>
-        <img id="logotipo" src="/sam/imgs/logotipo.png" alt="Logotipo SAM">
-        <h1>Dashboard</h1>
-        <%@include file="/core/header.jsp" %>
+        <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
     </header>
     <section id="secao-geral">
         <div class="div-sucesso">

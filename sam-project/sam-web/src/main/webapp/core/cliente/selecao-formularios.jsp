@@ -1,16 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="sam.model.domain.Usuario"%>
-<%@page import="sam.controller.LoginController"%>
 <%@page import="sam.model.domain.FormObjetivos"%>
 <%@page import="java.util.List"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="sam.model.service.GestaoFormulariosService" %>
 
 <%
-    LoginController.validarSessao(request, response);
-    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+    Usuario user = (Usuario) request.getSession().getAttribute("usuario");
     String contextPath = request.getContextPath();
-    List<FormObjetivos> formularios = GestaoFormulariosService.listarForms(usuario);
+    List<FormObjetivos> formularios = GestaoFormulariosService.listarForms(user);
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 %>
@@ -25,22 +23,9 @@
 <body>
 
 <header>
-    <img id="logotipo" src="<%= contextPath %>/imgs/logotipo.png" alt="Logotipo SAM">
-    <h1>Dashboard</h1>
-    <nav>
-        <a href="<%= contextPath %>/core/cliente/dashboard.jsp" class="active">Dashboard</a>
-        <a href="<%= contextPath %>/core/transacoes.jsp">Transações</a>
-        <a href="<%= contextPath %>/core/notificacoes.jsp">Notificações</a>
-        <a href="<%= contextPath %>/core/suporte.jsp">Suporte</a>
-    </nav>
-    <h1><%=usuario.getNome()%></h1>
-    <div class="hamburger-menu">
-
-        <button id="hamburger-btn">&#9776;</button>
-        <div id="hamburger-dropdown" class="dropdown-content">
-            <a href="<%= contextPath %>/core/perfil.jsp">Visualizar Perfil</a>
-        </div>
-    </div>
+    <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
+    <h1>Meus formulários</h1>
+    <%@include file="/core/header.jsp"%>
 </header>
 
 <main>
@@ -95,5 +80,6 @@
         </tbody>
     </table>
 </main>
+<script src="<%= request.getContextPath() %>/js/script.js"></script>
 </body>
 </html>

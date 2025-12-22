@@ -95,7 +95,7 @@
 
         <%} if (ControleAutorizacao.checkPermissao("visualizar-historico", usuario.getTipo()) &&
                 !ControleAutorizacao.checkBloqueio("historico", usuario.getCPF())) {%>
-        <a href="/sam/ListarUsuariosController">Listagem de Usuarios</a>
+        <a href="/sam/ListarUsuariosController">Histórico de Usuário</a>
         <%}%>
 
     </div>

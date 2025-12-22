@@ -20,7 +20,7 @@
 
 <body>
 <header>
-    <img id="logotipo" src="../../imgs/logotipo.png" alt="Logotipo SAM">
+    <img id="logotipo" src="<%= request.getContextPath() %>/imgs/logotipo.png" alt="Logotipo SAM">
     <h1>Historicos</h1>
     <%@include file="/core/header.jsp" %>
 </header>
@@ -72,6 +72,6 @@
     </div>
 </main>
 
-
+<script src="<%= request.getContextPath() %>/js/script.js"></script>
 </body>
 </html>
