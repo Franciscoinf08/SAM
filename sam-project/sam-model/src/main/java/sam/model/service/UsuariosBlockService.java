@@ -54,7 +54,6 @@ public class UsuariosBlockService {
     }
 
     public void desbloquear(Long idUsuario, Long idBloqueado) throws SQLException {
-        bloqueios.desbloquear(idUsuario, idBloqueado);
         AtividadeReferencia ref = new AtividadeReferencia();
         ref.setTipoEntidade(TipoEntidades.USUARIO.name());
         ref.setEntidadeId(idUsuario);
@@ -63,7 +62,7 @@ public class UsuariosBlockService {
         ref.setTipoEntidade(TipoEntidades.USUARIO.name());
         ref.setEntidadeId(idBloqueado);
         refs.add(ref);
-        bloqueios.bloquear(idUsuario, idBloqueado);
+        bloqueios.desbloquear(idUsuario, idBloqueado);
         String descricao = "o usuario "+ idUsuario+" desbloqueou o usuario " + idBloqueado;
         atividadeService.registrarAtividadeComReferencias(TipoAtividades.DESBLOQUEIO_USUARIO.name(), descricao, idUsuario, refs);
     }
