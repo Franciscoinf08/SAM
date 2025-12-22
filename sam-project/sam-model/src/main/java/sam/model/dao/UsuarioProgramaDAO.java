@@ -56,7 +56,6 @@ public class UsuarioProgramaDAO{
     }
     public List<Integer> buscarUsuariosComProgramaExpirando(int dias) {
         List<Integer> usuarios = new ArrayList<>();
-        System.out.println("Esta chegando no dao de usuario programa");
         String sql = """
         SELECT DISTINCT up.usuario_id
         FROM usuario_programa up
