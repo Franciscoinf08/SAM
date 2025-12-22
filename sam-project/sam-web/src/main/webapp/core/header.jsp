@@ -60,6 +60,7 @@
                 !ControleAutorizacao.checkBloqueio("mensagens-avisos", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/notificacoes?action=formulario">Enviar mensagens</a>
 
+
         <%} if (ControleAutorizacao.checkPermissao("acesso-clientes", usuario.getTipo()) &&
                 !ControleAutorizacao.checkBloqueio("acesso-clientes", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/usuarioPrograma?action=listar">Meus clientes</a>
@@ -87,6 +88,10 @@
         <%} if (ControleAutorizacao.checkPermissao("ver-propostas", usuario.getTipo()) &&
                 !ControleAutorizacao.checkBloqueio("ver-propostas", usuario.getCPF())) {%>
         <a href="<%=request.getContextPath()%>/core/cliente/visualizacaoPropostas.jsp">Visualizar Propostas</a>
+
+        <%} if (ControleAutorizacao.checkPermissao("orcamentos", usuario.getTipo()) &&
+                !ControleAutorizacao.checkBloqueio("orcamentos", usuario.getCPF())) {%>
+        <a href="/sam/core/gestor/orcamentos.jsp">Orçamentos</a>
         <%}%>
 
     </div>
