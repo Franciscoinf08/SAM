@@ -44,7 +44,7 @@ public class UserVerifyController extends HttpServlet {
                 request.getRequestDispatcher("core/geral/verificar.jsp").forward(request, response);
             } else {
                 request.setAttribute("mensagem", "Não foi possível enviar o e-mail de verificação.");
-                request.getRequestDispatcher("core/geral/verificar.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         }
     }

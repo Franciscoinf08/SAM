@@ -21,9 +21,12 @@ public class ListarUsuariosController extends HttpServlet {
 
         try {
             UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
-            List<Usuario> usuarios = usuarioDAO.listarTodos();
+
+            List<Usuario> usuarios =
+                    usuarioDAO.listarPorTipo("CLIENTE");
 
             request.setAttribute("usuarios", usuarios);
+
             request.getRequestDispatcher("/core/gestor/visualizar-historico.jsp")
                     .forward(request, response);
 

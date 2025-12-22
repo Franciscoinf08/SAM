@@ -22,9 +22,10 @@
 
     if (codigoDigitado != null) {
         if (codigoDigitado.equals(codigoSessao)) {
-            response.sendRedirect("alterar-senha.jsp");
+            request.getRequestDispatcher("core/geral/alterar-senha.jsp").forward(request, response);
         } else {
             request.setAttribute("erro", "Código incorreto. Tente novamente.");
+            request.getRequestDispatcher("core/mensagens-erro.jsp").forward(request, response);
         }
     }
 %>
@@ -57,18 +58,18 @@
         <section id="input-codigo">
             <p class="small">Insira o código de 6 dígitos enviado para o seu e-mail ou celular.</p>
 
-            <form autocomplete="off" action="/sam/RecuperarSenhaController" method="POST">
+            <form autocomplete="off" action="/sam/VerificarCodigoController" method="POST">
                 <div class="code-input">
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
-                    <input maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d1" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d2" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d3" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d4" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d5" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
+                    <input name="d6" maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric" />
                 </div>
 
-                <input type="hidden" name="destinoSucesso" value="AlterarSenhaController">
-                <input type="hidden" name="destinoFalha" value="/core/index.jsp">
+                <input type="hidden" name="destinoSucesso" value="/core/geral/alterar-senha.jsp">
+                <input type="hidden" name="destinoFalha" value="index.jsp">
 
                 <button class="verify" type="submit">Verificar</button>
             </form>
@@ -112,7 +113,6 @@
     });
 </script>
 
-//ALTERNAR ENTRE INPUTS
 
 <script src="<%= request.getContextPath() %>/js/verificacao.js"></script>
 

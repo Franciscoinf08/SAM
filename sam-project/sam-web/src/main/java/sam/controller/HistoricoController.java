@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import sam.model.common.Conexao;
 import sam.model.dao.FeedbackDAO;
 import sam.model.dao.FormObjetivosDao;
@@ -31,27 +30,28 @@ public class HistoricoController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            HttpSession sessao = request.getSession();
-            Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+            Long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
+
             List<FormObjetivos> formularios =
-                    FormObjetivosDao.buscarTodos(usuario);
+                    FormObjetivosDao.buscarTodosPorUsuarioId(idUsuario);
 
             FeedbackDAO fbDao =
                     new FeedbackDAO();
 
             List<Feedback> feedbacks =
-                    fbDao.listarPorUsuario(usuario.getId());
+                    fbDao.listarPorUsuario(idUsuario);
 
             request.setAttribute("formularios", formularios);
             request.setAttribute("feedbacks", feedbacks);
 
-            request.getRequestDispatcher("/jsp/cliente/historico.jsp")
+            request.getRequestDispatcher("/core/gestor/historico.jsp")
                     .forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("erro", e.getMessage());
-            response.sendRedirect("/core/mensagens-erro.jsp");
+            response.sendRedirect(request.getContextPath() + "/core/mensagens-erro.jsp");
+
 
         }
     }

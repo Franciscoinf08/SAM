@@ -13,12 +13,14 @@
 <div class="container" style="max-width:400px; margin:auto; padding:20px;">
     <h2>Alterar Senha</h2>
 
-    <form id="formAlterar" method="POST" action="${pageContext.request.contextPath}/AlterarSenhaController">
+    <form id="formAlterar" method="POST" action="<%= request.getContextPath() %>/AlterarSenhaController">
         <label>Nova senha</label>
-        <input type="password" id="senha1" name="senha1" required>
+        <input type="password" name="senha1" required>
 
-        <label>Confirme a nova senha</label>
-        <input type="password" id="senha2" name="senha2" required>
+        <label>Confirmar senha</label>
+        <input type="password" name="senha2" required>
+
+        <button type="submit">Alterar senha</button>
 
         <p id="erroSenha" style="color:red; display:none; margin-top:10px;">
             As senhas não correspondem.

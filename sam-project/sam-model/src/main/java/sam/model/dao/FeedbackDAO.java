@@ -14,14 +14,13 @@ public class FeedbackDAO {
     private final Connection conexao;
 
     public FeedbackDAO() {
-
         this.conexao = Conexao.getConnection();
     }
 
     public void inserir(Feedback feedback) throws SQLException {
 
         String sql = "INSERT INTO feedback(idAutor, idAvaliado, comentario, nota) " +
-                     "VALUES (?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?)";
 
         PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setLong(1, feedback.getAutor().getId());
@@ -41,13 +40,13 @@ public class FeedbackDAO {
         List<Feedback> lista = new ArrayList<>();
 
         String sql =
-                "SELECT f.id, f.comentario, f.nota, " +
-                "u1.id AS idAutor, u1.nome AS nomeAutor, u1.email AS emailAutor, u1.cpf AS cpfAutor, u1.tipo AS tipoAutor, " +
-                "u2.id AS idAvaliado, u2.nome AS nomeAvaliado, u2.email AS emailAvaliado, u2.cpf AS cpfAvaliado, u2.tipo AS tipoAvaliado " +
-                "FROM feedback f " +
-                "JOIN usuario u1 ON f.idAutor = u1.id " +
-                "JOIN usuario u2 ON f.idAvaliado = u2.id " +
-                "WHERE f.idAvaliado = ?";
+                "SELECT f.idFeedback AS id, f.comentario, f.nota, " +
+                        "u1.id AS idAutor, u1.nome AS nomeAutor, u1.email AS emailAutor, u1.cpf AS cpfAutor, u1.tipo AS tipoAutor, " +
+                        "u2.id AS idAvaliado, u2.nome AS nomeAvaliado, u2.email AS emailAvaliado, u2.cpf AS cpfAvaliado, u2.tipo AS tipoAvaliado " +
+                        "FROM feedback f " +
+                        "JOIN usuarios u1 ON f.idAutor = u1.id " +
+                        "JOIN usuarios u2 ON f.idAvaliado = u2.id " +
+                        "WHERE f.idAvaliado = ?";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setLong(1, idAvaliado);
@@ -56,20 +55,20 @@ public class FeedbackDAO {
         while (rs.next()) {
 
             Usuario autor = new Usuario(
-                    rs.getString("nome"),
-                    rs.getString("email"),
-                    rs.getString("cpf"),
+                    rs.getString("nomeAutor"),
+                    rs.getString("emailAutor"),
+                    rs.getString("cpfAutor"),
                     null,
-                    UsuarioTipo.valueOf(rs.getString("tipo"))
+                    UsuarioTipo.valueOf(rs.getString("tipoAutor"))
             );
             autor.setId(rs.getLong("idAutor"));
 
             Usuario avaliado = new Usuario(
-                    rs.getString("nome"),
-                    rs.getString("email"),
-                    rs.getString("cpf"),
+                    rs.getString("nomeAvaliado"),
+                    rs.getString("emailAvaliado"),
+                    rs.getString("cpfAvaliado"),
                     null,
-                    UsuarioTipo.valueOf(rs.getString("tipo"))
+                    UsuarioTipo.valueOf(rs.getString("tipoAvaliado"))
             );
             avaliado.setId(rs.getLong("idAvaliado"));
 
@@ -79,6 +78,7 @@ public class FeedbackDAO {
                     rs.getString("comentario"),
                     rs.getInt("nota")
             );
+            f.setId(rs.getInt("id"));
 
             lista.add(f);
         }
